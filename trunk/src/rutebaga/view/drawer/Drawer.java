@@ -3,6 +3,7 @@ package rutebaga.view.drawer;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Shape;
@@ -28,9 +29,11 @@ public abstract class Drawer {
 	public abstract void drawPoint( Point p );
 	public abstract void drawString( Point p, String string );
 	
-	public abstract void setDrawColor( Color draw );
-	public abstract void setFont( Font font );
-	public abstract void setClipping( Shape clipping );
+	protected abstract void setDrawColor( Color draw );
+	protected abstract void setFont( Font font );
+	protected abstract void setClipping( Shape clipping );
+	
+	public abstract FontMetrics getFontMetrics();
 	
 	public void setAttribute( Attribute attr ) {
 		this.attribute = attr;

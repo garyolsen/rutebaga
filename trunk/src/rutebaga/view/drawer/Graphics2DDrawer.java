@@ -3,6 +3,7 @@ package rutebaga.view.drawer;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -62,17 +63,21 @@ public class Graphics2DDrawer extends Drawer {
 		g2d.drawString(string, p.x, p.y);
 	}
 
-	public void setClipping(Shape clipping) {
+	protected void setClipping(Shape clipping) {
 		g2d.setClip( clipping );
 	}
 
-	public void setDrawColor(Color draw) {
+	protected void setDrawColor(Color draw) {
 		g2d.setColor( draw );
 	}
 
 
-	public void setFont(Font font) {
+	protected void setFont(Font font) {
 		g2d.setFont( font );
+	}
+
+	public FontMetrics getFontMetrics() {
+		return g2d.getFontMetrics();
 	}
 
 }

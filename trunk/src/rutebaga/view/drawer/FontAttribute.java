@@ -2,7 +2,7 @@ package rutebaga.view.drawer;
 
 import java.awt.Font;
 
-public class FontAttribute implements Attribute{
+public class FontAttribute implements Attribute {
 	
 	private Font font;
 
