@@ -1,5 +1,12 @@
 package rutebaga.view;
 
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Shape;
+
 /**
  * @author Ryan
  *
@@ -13,4 +20,23 @@ package rutebaga.view;
  */
 public abstract class Drawer {
 
+	private Attribute attribute;
+	
+	public abstract void drawImage( Point p, Image img );
+	public abstract void drawRectangle( Point p, int width, int height );
+	public abstract void drawLine( Point begin, Point end );
+	public abstract void drawPoint( Point p );
+	public abstract void drawString( Point p, String string );
+	
+	public abstract void setDrawColor( Color draw );
+	public abstract void setFont( Font font );
+	public abstract void setClipping( Shape clipping );
+	
+	public void setAttribute( Attribute attr ) {
+		this.attribute = attr;
+	}
+	
+	public Attribute getAttribute() {
+		return attribute;
+	}
 }
