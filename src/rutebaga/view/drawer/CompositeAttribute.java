@@ -1,4 +1,4 @@
-package rutebaga.view;
+package rutebaga.view.drawer;
 
 import java.util.Collections;
 import java.util.HashSet;

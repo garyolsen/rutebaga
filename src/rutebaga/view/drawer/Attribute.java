@@ -1,4 +1,4 @@
-package rutebaga.view;
+package rutebaga.view.drawer;
 
 public interface Attribute {
 
