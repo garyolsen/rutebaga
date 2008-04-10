@@ -1,46 +1,100 @@
 package rutebaga.commons;
 
 /**
- * A vector in 2D-space.  Vectors are immutable.
+ * A vector in space.
  * 
  * @author Gary LosHuertos
  * 
  */
 public class Vector {
 
-	private final double x;
-	private final double y;
-
-	public Vector(double x, double y) {
-		this.x = x;
-		this.y = y;
+	private final double[] components;
+	private Double magnitude;
+	private int dimension;
+	
+	public Vector(double ... components)
+	{
+		dimension = components.length;
+		this.components = new double[dimension];
+		for(int idx=0; idx<components.length; idx++)
+		{
+			this.components[idx] = components[idx];
+		}
 	}
-
-	public double getX() {
-		return x;
+	
+	private Vector(int dimension)
+	{
+		this.components = new double[dimension];
 	}
-
-	public double getY() {
-		return y;
+	
+	public double get(int idx)
+	{
+		return components[idx];
 	}
-
-	public Vector plus(Vector rhs) {
-		return new Vector(this.x + rhs.x, this.y + rhs.y);
+	
+	public double getMagnitude()
+	{
+		if(magnitude == null)
+		{
+			magnitude = 0.0;
+			for(double c : components)
+			{
+				magnitude += c*c; 
+			}
+			magnitude = Math.sqrt(magnitude);
+		}
+		return magnitude;
 	}
-
-	public Vector minus(Vector rhs) {
-		return new Vector(this.x - rhs.x, this.y - rhs.y);
+	
+	private void check(Vector rhs)
+	{
+		if(dimension != rhs.dimension)
+			throw new IncompatibleDimensionException(dimension, rhs.dimension);
 	}
-
-	/**
-	 * @return	the dot product of the two vectors
-	 */
-	public double dot(Vector rhs) {
-		return this.x * rhs.x + this.y * rhs.y;
+	
+	public Vector plus(Vector rhs)
+	{
+		check(rhs);
+		Vector rval = new Vector(dimension);
+		double components[] = rval.components;
+		for(int idx=0; idx<dimension; idx++)
+		{
+			components[idx] = this.components[idx] + rhs.components[idx];
+		}
+		return rval;
 	}
-
-	public Vector negate() {
-		return new Vector(-this.x, -this.y);
+	
+	public Vector minus(Vector rhs)
+	{
+		check(rhs);
+		Vector rval = new Vector(dimension);
+		double components[] = rval.components;
+		for(int idx=0; idx<dimension; idx++)
+		{
+			components[idx] = this.components[idx] - rhs.components[idx];
+		}
+		return rval;
 	}
-
+	
+	public double dot(Vector rhs)
+	{
+		check(rhs);
+		double rval = 0;
+		for(int idx=0; idx<dimension; idx++)
+		{
+			rval += components[idx]*rhs.components[idx];
+		}
+		return rval;
+	}
+	
+	public Vector negate()
+	{
+		Vector rval = new Vector(dimension);
+		double components[] = rval.components;
+		for(int idx=0; idx<dimension; idx++)
+		{
+			components[idx] = -this.components[idx];
+		}
+		return rval;
+	}
 }
