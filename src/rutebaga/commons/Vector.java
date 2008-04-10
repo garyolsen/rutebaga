@@ -27,6 +27,10 @@ public class Vector {
 		this.components = new double[dimension];
 	}
 	
+	/**
+	 * @param idx Index of a component in this Vector.
+	 * @return double Component of this Vector at the location specified by idx.
+	 */
 	public double get(int idx)
 	{
 		return components[idx];

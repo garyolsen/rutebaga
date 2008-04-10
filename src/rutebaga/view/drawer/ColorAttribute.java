@@ -34,7 +34,7 @@ public class ColorAttribute implements Attribute {
 	/**
 	 * Set the Color of this ColorAttribute.
 	 * 
-	 * @param Color
+	 * @param color The Color you woud like to set this attribute to.
 	 */
 	public void setColor( Color color ) {
 		this.color = color;
@@ -43,7 +43,7 @@ public class ColorAttribute implements Attribute {
 	/**
 	 * Returns the Color of this ColorAttribute.
 	 * 
-	 * @return
+	 * @return Java.awt.Color The Color this attribute is currently set to.
 	 */
 	public Color getColor() {
 		return color;
