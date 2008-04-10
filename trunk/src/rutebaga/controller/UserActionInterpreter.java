@@ -23,7 +23,7 @@ import rutebaga.view.ViewFacade;
  * All interpreters may also accept KeyEvents from the View, which will push these
  * events to the Controller if they are not consumed by the user interface. This allows
  * interpreters to implement functionality such as key-based movement during game play.
- * KeyEvents "bubble down" in the same manner that ticks do—when eventsFallThrough is
+ * KeyEvents "bubble down" in the same manner that ticks do when eventsFallThrough is
  * false, KeyEvents are consumed.
  */
 public interface UserActionInterpreter extends KeyListener {

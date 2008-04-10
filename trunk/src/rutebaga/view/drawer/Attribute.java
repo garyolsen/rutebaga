@@ -8,7 +8,7 @@ package rutebaga.view.drawer;
  * without having to directly call the Drawer's 
  * individual methods. These Attributes can be 
  * preserved within the Drawer so that Attributes can 
- * continue to effect any subsequent draw(…) calls 
+ * continue to effect any subsequent draw() calls 
  * to the Drawer.
  */
 
