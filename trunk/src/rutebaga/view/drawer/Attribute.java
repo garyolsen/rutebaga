@@ -14,5 +14,11 @@ package rutebaga.view.drawer;
 
 public interface Attribute {
 
+	/**
+	 * Applies color, font, and clipping preferences embodied
+	 * in this Attribute to the Drawer.	
+	 * 
+	 * @param drawer
+	 */
 	public void apply( Drawer drawer );
 }
