@@ -1,17 +1,21 @@
 package rutebaga.controller;
 
 /**
- * @author may
  * 
  * Given a set of Instances, ActionDeterminer produces a list of named Commands
- * in the form of an ElementalList. ActionDeterminer exposes a single operation,
- * determineActions, which uses a Filter todetermine which Instance in a set of
+ * in the form of an {@link ElementalList}. ActionDeterminer exposes a single operation,
+ * {@link #determineActions()}, which uses a {@link Filter} to determine which {@link Instance} in a set of
  * Instances should be targeted. Once it determines the target, it determines
  * which actions are appropriate for the targeted Instance.
  * 
- * For instance, if an Entity is present at a Location, it will be targeted and
- * Commands encapsulating actions appropriate for an Entity, such as attacking
+ * For instance, if an {@link Entity} is present at a {@link Location}, it will be targeted and
+ * {@link Command}s encapsulating actions appropriate for an Entity, such as attacking
  * or talking, will be generated.
+ * @author may
+ * @see ElementalList
+ * @see Filter
+ * @see Instance
+ * @see Command
  */
 public class ActionDeterminer {
 	/*
