@@ -1,5 +1,6 @@
 package rutebaga.view.rwt;
 
+import java.awt.AWTEvent;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -12,7 +13,7 @@ public abstract class ViewComponent {
 	private ViewComponent parent;
 	@SuppressWarnings("unused") //TODO
 	private boolean isVisible, hasFocus, dirtyBounds;
-	private Point screenPosition;
+	private Point screenPosition = new Point(0,0);
 	
 	public abstract void draw( Drawer draw );
 
@@ -69,7 +70,11 @@ public abstract class ViewComponent {
 		dirtyBounds = true;
 	}
 	
-	protected void processKeyEvent( KeyEvent event ) {}
-	protected void processMouseEvent( MouseEvent event ) {}
-	protected void processMouseMotionEvent( MouseEvent event ) {}
+	protected void processKeyEvent( KeyEvent event ) { eventReceived(event);}
+	protected void processMouseEvent( MouseEvent event ) {eventReceived(event);}
+	protected void processMouseMotionEvent( MouseEvent event ) {eventReceived(event);}
+	
+	private void eventReceived( AWTEvent e ) {
+		System.out.println("ViewComponent: " + this + " received " + e);
+	}
 }

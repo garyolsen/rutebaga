@@ -12,9 +12,10 @@ public class ButtonComponent extends ViewComponent {
 	
 	private String label;
 	private boolean toggle = false;
+	private int width, height;
 	
 	private CompositeAttribute untoggled, toggled;
-	private FontAttribute font ;
+	private FontAttribute font;
 
 	public ButtonComponent() {
 		font = new FontAttribute( new Font("Arial", Font.PLAIN, 10));
@@ -26,6 +27,9 @@ public class ButtonComponent extends ViewComponent {
 		toggled = new CompositeAttribute();
 		toggled.addAttribute( font );
 		toggled.addAttribute( new ColorAttribute( Color.DARK_GRAY ) );
+		
+		width = 10;
+		height = 10;
 	}
 	
 	public ButtonComponent(String label) {
@@ -42,23 +46,33 @@ public class ButtonComponent extends ViewComponent {
 	
 	private void drawUntoggled( Drawer draw ) {
 		draw.setAttribute( untoggled );
-		//draw.drawRectangle(getLocation(), this.getBounds().getWidth(), this.getBounds().getHeight());
+		draw.drawRectangle(getLocation(), width, height);
 		
 		Point centeredText = new Point();
 		FontMetrics fm = draw.getFontMetrics();
 	
-		//centeredText.x = this.getLocation() + (this.getBounds().getWidth() / 2) - ( fm.stringWidth(label) / 2 );
-		//centeredText.x = this.getLocation() + (this.getBounds().getWidth() / 2) + ( font.getFont().getSize() / 2 );
+		centeredText.x = this.getLocation().x + (width / 2) - ( fm.stringWidth(label) / 2 );
+		centeredText.y = this.getLocation().y + (height / 2) + ( font.getFont().getSize() / 2 );
 		
 		draw.drawString( centeredText , label);
 	}
 	
 	private void drawToggled( Drawer draw ) {
+		draw.setAttribute( toggled );
+		draw.drawRectangle(getLocation(), width, height);
 		
+		Point centeredText = new Point();
+		FontMetrics fm = draw.getFontMetrics();
+	
+		centeredText.x = this.getLocation().x + (width / 2) - ( fm.stringWidth(label) / 2 );
+		centeredText.y = this.getLocation().y + (height / 2) + ( font.getFont().getSize() / 2 );
+		
+		draw.drawString( centeredText , label);
 	}
 	
 	protected void processMouseEvent( MouseEvent event ) {
-		
+		if(event.getID() == MouseEvent.MOUSE_CLICKED)
+			toggle = !toggle;
 	}
 
 }
