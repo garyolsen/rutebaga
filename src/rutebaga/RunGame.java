@@ -2,9 +2,9 @@
 package rutebaga;
 
 /**
- * @author Will
  *
  * Compile and run RunGame to play the game.
+ * @author Will
  */
 public class RunGame {
 
