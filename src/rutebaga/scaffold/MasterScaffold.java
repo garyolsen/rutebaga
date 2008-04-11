@@ -24,4 +24,20 @@ public class MasterScaffold
 	{
 		this.builders.put(id, builder);
 	}
+	
+	public void build()
+	{
+		for(String id : builders.keySet())
+		{
+			get(id);
+		}
+	}
+	
+	public void registerBuilder(Builder builder)
+	{
+		for(String id : builder.availableIds())
+		{
+			builders.put(id, builder);
+		}
+	}
 }
