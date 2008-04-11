@@ -22,7 +22,8 @@ public class ViewFacade {
 	}
 	
 	public void renderFrame() {
-		
+		if(view != null)
+			view.renderFrame();
 	}
 	
 	public void createTitleScreen( ElementalList list ) {
