@@ -34,8 +34,13 @@ public class MatrixTest
 		{ 2, 1 },
 		{ 1, 0 } };
 		print(new Matrix(compsA).times(new Matrix(compsB)));
-		
-		for(Vector v : mA.asVectors())
+
+		for (Vector v : mA.asVectors())
+		{
+			print(v);
+		}
+		System.out.println();
+		for (Vector v : new Matrix(mA.asVectors()).asVectors())
 		{
 			print(v);
 		}
@@ -43,9 +48,9 @@ public class MatrixTest
 
 	public static void print(Matrix m)
 	{
-		for (int x = 0; x < m.getDimX(); x++)
+		for (int y = 0; y < m.getDimY(); y++)
 		{
-			for (int y = 0; y < m.getDimY(); y++)
+			for (int x = 0; x < m.getDimX(); x++)
 			{
 				System.out.print(m.get(x, y) + "\t");
 			}
