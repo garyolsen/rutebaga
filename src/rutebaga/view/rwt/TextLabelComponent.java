@@ -41,5 +41,9 @@ public class TextLabelComponent extends ViewComponent {
 	public void setFontColor( Color color ) {
 		this.color.setColor( color );
 	}
+	
+	public void setLabel( String label ) {
+		this.label = label;
+	}
 
 }
