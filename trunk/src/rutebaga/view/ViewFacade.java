@@ -1,15 +1,24 @@
 package rutebaga.view;
 
+
 import rutebaga.commons.Vector;
 import rutebaga.controller.Command;
 import rutebaga.controller.ElementalList;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.TextFieldListener;
+import rutebaga.view.rwt.View;
 
 public class ViewFacade {
+	
+	private View view;
 
 	public void constructView( int width, int height ) {
-		
+		view = new View( width, height);
+	}
+	
+	public void constructFullscreenView() {
+		view = new View(800, 600);
+		view.setFullscreen();
 	}
 	
 	public void renderFrame() {
