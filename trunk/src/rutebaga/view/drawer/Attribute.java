@@ -18,7 +18,8 @@ public interface Attribute {
 	 * Applies color, font, and clipping preferences embodied
 	 * in this Attribute to the Drawer.	
 	 * 
-	 * @param drawer
+	 * @param drawer The {@link Drawer} to which this Attribute should be applied.
+	 * @see Drawer
 	 */
 	public void apply( Drawer drawer );
 }
