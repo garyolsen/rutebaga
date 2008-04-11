@@ -43,7 +43,7 @@ public class ElipseBounds extends Bounds {
 	 * Returns the radii of this ElipseBounds.
 	 * 
 	 * @return A {@link Vector} representing the radii of this ElipseBounds.
-	 *         Each component of the {@link Vecor} represents the elipse's
+	 *         Each component of the {@link Vector} represents the elipse's
 	 *         radius in the corresponding direction.
 	 * @see Vector
 	 */

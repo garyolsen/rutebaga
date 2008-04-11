@@ -94,7 +94,7 @@ public class CompositeCommand implements Command {
 	 * Determines whether it is feasible to execute this CompositeCommand, using
 	 * this CompositeCommand's Rule for determining feasibility.
 	 * 
-	 * @see CompositeCommand.setFeasibilityRule
+	 * @see CompositeCommand#setFeasibilityRule(Rule)
 	 */
 	public boolean isFeasible() {
 		return rule.determine(commands.iterator());

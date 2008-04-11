@@ -16,7 +16,7 @@ public class Vector
 	/**
 	 * Creates a new Vector using the specified components.
 	 * 
-	 * @param double
+	 * @param components
 	 *            The components to insert into the new Vector.
 	 */
 	public Vector(double... components)
