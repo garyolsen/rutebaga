@@ -11,5 +11,9 @@ package rutebaga.controller;
  * @see QueueCommand
  */
 public interface CommandQueue {
+	/**
+	 * Add a Command to this CommandQueue to be executed at a later time.
+	 * @param command the command to add to this queue
+	 */
 	public void queueCommand(Command command);
 }
