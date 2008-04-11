@@ -10,10 +10,11 @@ import rutebaga.controller.ListElement;
  * it agnostic of its meaning, but Command objects may be used in any context.
  * Clients of Commands should be aware that Commands may have state and change
  * their feasibility arbitrarily without notification.
-  * @author may
+ * 
+ * @author may
  * @see ActionDeterminer
  * @see ListElement
-*/
+ */
 public interface Command {
 	/**
 	 * Returns the feasibility state of this Command. The execute operation
@@ -31,6 +32,7 @@ public interface Command {
 	 * isFeasible is true each time. An implementation can require that execute
 	 * not be invoked more than once by causing isFeasible to become false after
 	 * execute is called.
+	 * 
 	 * @see #isFeasible()
 	 */
 	public void execute();
