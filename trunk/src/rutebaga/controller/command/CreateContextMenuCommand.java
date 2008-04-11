@@ -1,5 +1,6 @@
-package rutebaga.controller;
+package rutebaga.controller.command;
 
+import rutebaga.controller.ElementalList;
 import rutebaga.view.ViewFacade;
 
 /**
@@ -40,14 +41,14 @@ public abstract class CreateContextMenuCommand implements Command {
 	/**
 	 * Asks the ViewFacade to open a context menu with the list of elements
 	 * specified. 
-	 * @see rutebaga.controller.Command#execute()
+	 * @see rutebaga.controller.command.Command#execute()
 	 */
 	public abstract void execute();
 
 	/**
 	 * Always returns true, indicating that this command may always be executed.
 	 * 
-	 * @see rutebaga.controller.Command#isFeasible()
+	 * @see rutebaga.controller.command.Command#isFeasible()
 	 */
 	public boolean isFeasible() {
 		return true;

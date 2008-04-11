@@ -1,6 +1,7 @@
 package rutebaga.controller;
 
 import java.awt.event.KeyListener;
+import java.awt.event.ActionListener;
 import rutebaga.view.ViewFacade;
 
 /**
@@ -13,26 +14,33 @@ import rutebaga.view.ViewFacade;
  * interpreter. The {@link #uninstallActionInterpreter()} operation is invoked
  * when an interpreter is deactivated.
  * 
- * UserActionInterpreters must offer a {@link #tick()} method, which will be invoked by the
- * GameDaemon whenever the interpreter is active. The eventsFallThrough
- * attribute signifies to the daemon whether or not this interpreter is
- * consuming ticks. If eventsFallThrough is false, when this interpreter
- * receives a tick invocation, it should be the final interpreter to receive
- * that notification during that tick. When eventsFallThrough is true, the
- * daemon is free to notify other active interpreters of the tick after
+ * UserActionInterpreters must offer a {@link #tick()} method, which will be
+ * invoked by the GameDaemon whenever the interpreter is active. The
+ * eventsFallThrough attribute signifies to the daemon whether or not this
+ * interpreter is consuming ticks. If eventsFallThrough is false, when this
+ * interpreter receives a tick invocation, it should be the final interpreter to
+ * receive that notification during that tick. When eventsFallThrough is true,
+ * the daemon is free to notify other active interpreters of the tick after
  * notifying this one.
  * 
- * All interpreters may also accept {@link java.awt.event.KeyEvent KeyEvents} from the View, which will push
- * these events to the Controller if they are not consumed by the user
- * interface. This allows interpreters to implement functionality such as
- * key-based movement during game play. KeyEvents "bubble down" in the same
- * manner that ticks do when eventsFallThrough is false, KeyEvents are consumed.
+ * All interpreters may also accept {@link java.awt.event.KeyEvent KeyEvents}
+ * from the View, which will push these events to the Controller if they are not
+ * consumed by the user interface. This allows interpreters to implement
+ * functionality such as key-based movement during game play. KeyEvents "bubble
+ * down" in the same manner that ticks do when eventsFallThrough is false,
+ * KeyEvents are consumed.
+ * 
+ * UserActionInterpreters should also accept ActionEvents, which may come from
+ * the View or Controller. This allows interpreters to implement functionality
+ * such as click-based actions during game play. ActionEvents "bubble down" in
+ * the same manner that KeyEvents do.
+ * 
  * @see Command
  * @see GameDaemon
  * @see java.awt.event.KeyEvent
  * @author may
  */
-public interface UserActionInterpreter extends KeyListener {
+public interface UserActionInterpreter extends KeyListener, ActionListener {
 
 	/**
 	 * Signifies whether events should "fall through" this UserActionInterpreter

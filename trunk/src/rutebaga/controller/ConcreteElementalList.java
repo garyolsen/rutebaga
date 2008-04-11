@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import rutebaga.controller.command.Command;
+
 /**
  * 
  * ConcreteElementalList is a basic implementation of {@link ElementalList} that

@@ -1,5 +1,7 @@
 package rutebaga.controller;
 
+import rutebaga.controller.command.Command;
+
 /**
  * 
  * ListElements are discrete elements in an itemized list. Each ListElement

@@ -1,4 +1,4 @@
-package rutebaga.controller;
+package rutebaga.controller.command;
 
 /**
  * 
@@ -11,9 +11,9 @@ package rutebaga.controller;
  * (The CommandQueue is expected to execute the component Command at a later
  * time, but QueueCommand does not guarantee that its component Command's
  * execute operation will ever be invoked.)
-* @author may
-* @see Command
-  */
+ * @author may
+ * @see Command
+ */
 public class QueueCommand implements Command {
 
 	private final CommandQueue queue;
