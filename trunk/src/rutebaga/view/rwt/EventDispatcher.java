@@ -1,5 +1,6 @@
 package rutebaga.view.rwt;
 
+import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -23,21 +24,30 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	}
 	
 	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+			System.exit(0);
+		
 		for(ViewComponent vc : registeredComponents)
 			if(vc.hasFocus())
 				vc.processKeyEvent(e);
+		
+		eventReceivedTest(e);
 	}
 
 	public void keyReleased(KeyEvent e) {
 		for(ViewComponent vc : registeredComponents)
 			if(vc.hasFocus())
 				vc.processKeyEvent(e);
+		
+		eventReceivedTest(e);
 	}
 
 	public void keyTyped(KeyEvent e) {
 		for(ViewComponent vc : registeredComponents)
 			if(vc.hasFocus())
 				vc.processKeyEvent(e);
+		
+		eventReceivedTest(e);
 	}
 
 	
@@ -45,16 +55,22 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	public void mouseClicked(MouseEvent e) {
 		for(ViewComponent vc : containsMouse)
 			vc.processMouseEvent(e);
+		
+		eventReceivedTest(e);
 	}
 	
 	public void mousePressed(MouseEvent e) {
 		for(ViewComponent vc : containsMouse)
 			vc.processMouseEvent(e);
+		
+		eventReceivedTest(e);
 	}
 
 	public void mouseReleased(MouseEvent e) {
 		for(ViewComponent vc : containsMouse)
 			vc.processMouseEvent(e);
+		
+		eventReceivedTest(e);
 	}
 	
 	
@@ -81,6 +97,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 				}
 			}
 		
+		eventReceivedTest(e);
 	}
 
 	public void mouseMoved(MouseEvent e) {
@@ -100,6 +117,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 				}
 			}
 		
+		eventReceivedTest(e);
 	}
 	
 	private void mouseEntered(ViewComponent vc, MouseEvent e) {
@@ -114,6 +132,9 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		return new MouseEvent(e.getComponent(), MouseEvent.MOUSE_ENTERED, e.getWhen(), e.getModifiers(), e.getX(), e.getY(), e.getClickCount(), e.isPopupTrigger()	);
 	}
 	
+	private void eventReceivedTest(AWTEvent e) {
+		System.out.println("Received: " + e);
+	}
 }
 
 
