@@ -7,7 +7,8 @@ package rutebaga.commons;
  * @author Gary
  * 
  */
-public class Matrix {
+public class Matrix
+{
 
 	private final int dimX;
 
@@ -23,7 +24,8 @@ public class Matrix {
 	 * @param dimY
 	 *            The height of the new Matrix.
 	 */
-	public Matrix(int dimX, int dimY) {
+	public Matrix(int dimX, int dimY)
+	{
 		this.dimX = dimX;
 		this.dimY = dimY;
 		components = new double[dimX * dimY];
@@ -35,11 +37,44 @@ public class Matrix {
 	 * @param components
 	 *            the components to be inserted into the new Matrix.
 	 */
-	public Matrix(double[][] components) {
+	public Matrix(double[][] components)
+	{
 		this(components.length, components[0].length);
-		for (int x = 0; x < dimX; x++) {
-			for (int y = 0; y < dimY; y++) {
+		for (int x = 0; x < dimX; x++)
+		{
+			for (int y = 0; y < dimY; y++)
+			{
 				this.set(x, y, components[x][y]);
+			}
+		}
+	}
+
+	/**
+	 * Constructs a matrix from an array of vectors. Null values will be
+	 * ignored.
+	 * 
+	 * @param vectors
+	 */
+	public Matrix(Vector[] vectors)
+	{
+		int dimX = vectors.length;
+		Integer dimY = null;
+		for (int idx = 0; idx < vectors.length; idx++)
+			if (vectors[idx] == null)
+				dimX--;
+			else if (dimY == null)
+				dimY = vectors[idx].getDimension();
+		this.dimX = dimX;
+		this.dimY = dimY;
+		this.components = new double[dimX * dimY];
+		for (int idx = 0, ptr = 0; idx < vectors.length; idx++)
+		{
+			if (vectors[idx] != null)
+			{
+				for (int loop = 0; loop < vectors[idx].getDimension(); loop++, ptr++)
+				{
+					this.components[ptr] = vectors[idx].get(loop);
+				}
 			}
 		}
 	}
@@ -49,7 +84,8 @@ public class Matrix {
 	 * 
 	 * @return The width of the Matrix.
 	 */
-	public int getDimX() {
+	public int getDimX()
+	{
 		return dimX;
 	}
 
@@ -58,7 +94,8 @@ public class Matrix {
 	 * 
 	 * @return The height of the Matrix.
 	 */
-	public int getDimY() {
+	public int getDimY()
+	{
 		return dimY;
 	}
 
@@ -72,7 +109,8 @@ public class Matrix {
 	 *            The y coordinate of the desired component.
 	 * @return The component corresponding to the specified coordinates.
 	 */
-	public double get(int x, int y) {
+	public double get(int x, int y)
+	{
 		return components[resolve(x, y)];
 	}
 
@@ -88,11 +126,13 @@ public class Matrix {
 	 *            The value to set to the component corresponding tot he given
 	 *            coordinates.
 	 */
-	public void set(int x, int y, double value) {
+	public void set(int x, int y, double value)
+	{
 		this.components[resolve(x, y)] = value;
 	}
 
-	private int resolve(int x, int y) {
+	private int resolve(int x, int y)
+	{
 		return x * dimY + y;
 	}
 
@@ -104,9 +144,11 @@ public class Matrix {
 	 *            A Matrix to add to this Matrix.
 	 * @return The Matrix that is the sum of this Matrix and the Matrix rhs.
 	 */
-	public Matrix plus(Matrix rhs) {
+	public Matrix plus(Matrix rhs)
+	{
 		Matrix rval = new Matrix(this.dimX, this.dimY);
-		for (int idx = 0; idx < dimX * dimY; idx++) {
+		for (int idx = 0; idx < dimX * dimY; idx++)
+		{
 			rval.components[idx] = this.components[idx] + rhs.components[idx];
 		}
 		return rval;
@@ -121,9 +163,11 @@ public class Matrix {
 	 * @return The Matrix that is the difference between this Matrix and the
 	 *         Matrix rhs.
 	 */
-	public Matrix minus(Matrix rhs) {
+	public Matrix minus(Matrix rhs)
+	{
 		Matrix rval = new Matrix(this.dimX, this.dimY);
-		for (int idx = 0; idx < dimX * dimY; idx++) {
+		for (int idx = 0; idx < dimX * dimY; idx++)
+		{
 			rval.components[idx] = this.components[idx] - rhs.components[idx];
 		}
 		return rval;
@@ -137,12 +181,16 @@ public class Matrix {
 	 *            A Matrix to multiply with this Matrix.
 	 * @return The Matrix that is the product of this Matrix and the Matrix rhs.
 	 */
-	public Matrix times(Matrix rhs) {
+	public Matrix times(Matrix rhs)
+	{
 		Matrix rval = new Matrix(this.dimX, rhs.dimY);
-		for (int y = 0; y < rval.dimY; y++) {
-			for (int x = 0; x < rval.dimX; x++) {
+		for (int y = 0; y < rval.dimY; y++)
+		{
+			for (int x = 0; x < rval.dimX; x++)
+			{
 				double value = 0;
-				for (int idx = 0; idx < this.dimY; idx++) {
+				for (int idx = 0; idx < this.dimY; idx++)
+				{
 					double item = rhs.get(idx, y);
 					item *= this.get(x, idx);
 					value += item;
@@ -161,9 +209,11 @@ public class Matrix {
 	 *            The value to scale this Matrix by.
 	 * @return The Matrix that is the product of this Matrix and the scalar.
 	 */
-	public Matrix times(double scalar) {
+	public Matrix times(double scalar)
+	{
 		Matrix rval = new Matrix(this.dimX, this.dimY);
-		for (int idx = 0; idx < dimX * dimY; idx++) {
+		for (int idx = 0; idx < dimX * dimY; idx++)
+		{
 			rval.components[idx] = this.components[idx] * scalar;
 		}
 		return rval;
@@ -176,9 +226,11 @@ public class Matrix {
 	 *         Matrix.
 	 * @see Vector
 	 */
-	public Vector[] asVectors() {
+	public Vector[] asVectors()
+	{
 		Vector[] rval = new Vector[dimX];
-		for (int idx = 0; idx < dimX; idx++) {
+		for (int idx = 0; idx < dimX; idx++)
+		{
 			rval[idx] = new Vector(components, idx * dimY, (idx + 1) * dimY);
 		}
 		return rval;

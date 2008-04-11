@@ -51,7 +51,7 @@ public class Vector
 	 */
 	public Vector(double[] components, int start, int end)
 	{
-		this.dimension = start - end;
+		this.dimension = end - start;
 		this.components = new double[dimension];
 		for (int idx = start; idx < end; idx++)
 			this.components[idx - start] = components[idx];
