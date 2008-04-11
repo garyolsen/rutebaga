@@ -27,7 +27,7 @@ public class NPCEntityType {
 	 * @param npc
 	 */
 	public void tick( NPCEntity npc ) {
-		//TODO breaks LoD
+		//XXX breaks LoD
 		npc.getBrain().tick(npc);
 	}
 	
@@ -69,7 +69,7 @@ public class NPCEntityType {
 	 * @param npc
 	 */
 	public void speak( NPCEntity npc ) {
-		//TODO breaks LoD
+		//XXX breaks LoD
 		npc.getBrain().speak(npc);
 	}
 	
@@ -79,7 +79,7 @@ public class NPCEntityType {
 	 * @param npc
 	 */
 	public void barter( NPCEntity npc ) {
-		//TODO break LoD
+		//XXX breaks LoD
 		npc.getBrain().barter(npc);
 	}
 
@@ -91,7 +91,7 @@ public class NPCEntityType {
 	 */
 	public void takeHostileGesture(NPCEntity npc, Entity entity) {
 		npc.setTarget(entity);
-		//TODO break LoD
+		//TXXX breaks LoD
 		npc.getBrain().makeHostile(npc);
 	}
 
@@ -103,7 +103,7 @@ public class NPCEntityType {
 	 */
 	public void takeFriendlyGesture(NPCEntity npc, Entity entity) {
 		npc.setTarget(entity);
-		//TODO break LoD
+		//XXX breaks LoD
 		npc.getBrain().makeFriendly(npc);
 	}
 	
