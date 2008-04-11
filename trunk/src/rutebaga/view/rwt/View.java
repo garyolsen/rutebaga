@@ -10,6 +10,7 @@ import java.awt.image.BufferStrategy;
 import java.util.HashSet;
 import java.util.Set;
 
+import rutebaga.view.FPSTextComponent;
 import rutebaga.view.drawer.*;
 
 public class View {
@@ -40,9 +41,8 @@ public class View {
 		if( fullscreen )
 			device.setFullScreenWindow(window);
 		
-		window.createBufferStrategy(2);
-		
 		window.setVisible(true);
+		window.createBufferStrategy(2);
 	}
 	
 	private void setupDispatcher() {
@@ -58,7 +58,7 @@ public class View {
 		drawer = new Graphics2DDrawer((Graphics2D) strategy.getDrawGraphics());
 	}
 	
-	public synchronized void renderFrame() {
+	public void renderFrame() {
 		if(!strategy.contentsLost()) {
 			Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();
 			
@@ -89,7 +89,7 @@ public class View {
 		View view = new View( 800, 600, true);
 		
 		
-		TextLabelComponent text = new TextLabelComponent("test");
+		TextLabelComponent text = new FPSTextComponent();
 		text.setLocation(100,100);
 		text.setFontColor( Color.BLUE );
 		text.setFont(new Font("Times New Roman", Font.PLAIN, 20));
