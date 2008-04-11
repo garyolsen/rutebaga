@@ -6,33 +6,35 @@ import java.util.Stack;
 import java.util.Iterator;
 
 /**
- * @author may
  * 
- * CompositeCommand is an implementation of Command that contains a collection
+ * CompositeCommand is an implementation of {@link Command} that contains a collection
  * of Commands which may all be executed “simultaneously”. Specifically, when
- * CompositeCommand's execute operation is invoked, it invokes execute on all
+ * CompositeCommand's {@link #execute()} operation is invoked, it invokes execute on all
  * Commands that have been added to it (in no guaranteed order).
  * 
- * Clients may also specify a Rule, parameterized by Iterator&lt;Command&gt;, to
- * specify how the CompositeCommand should respond to isFeasible queries. The
+ * Clients may also specify a {@link rutebaga.commons.Rule}, parameterized by Iterator&lt;Command&gt;, to
+ * specify how the CompositeCommand should respond to {@link #isFeasible()} queries. The
  * default feasibility Rule returns true if and only if the set of Commands is
  * non-empty and all composited Commands' isFeasible operations return true.
  * 
  * CompositeCommand has "set-semantics"--you may add a unique Command to it only
  * once and there can be no duplicates. If you want a CompositeCommand that
  * executes a given Command more than once, implement it yourself.
+ * @author may
+ * @see rutebaga.commons.Rule
+ * @see Command
  */
 public class CompositeCommand implements Command {
 
 	/**
 	 * A private shared copy of the default feasibility Rule, which only returns
-	 * true for isFeasible if this CompositeCommand's set of Commands is
-	 * non-empty and all its Commands return true for isFeasible.
+	 * true for {@link #isFeasible()} if this CompositeCommand's set of {@link Command}s is
+	 * non-empty and all its Commands return true for {@link #isFeasible()}.
 	 */
 	private static final Rule<Iterator<Command>> defaultFeasibilityRule = new DefaultFeasibilityRule();
 
 	/**
-	 * The feasibility Rule used by this CompositeCommand.
+	 * The feasibility {@link Rule} used by this CompositeCommand.
 	 */
 	private Rule<Iterator<Command>> rule;
 
@@ -42,14 +44,16 @@ public class CompositeCommand implements Command {
 	private final HashSet<Command> commands;
 
 	/**
-	 * Create an empty CompositeCommand with the default feasibility Rule.
+	 * Create an empty CompositeCommand with the default feasibility {@link rutebaga.commons.Rule}.
+	 * @see rutebaga.commons.Rule
 	 */
 	public CompositeCommand() {
 		this(null);
 	}
 
 	/**
-	 * Create an empty CompositeCommand with the specified feasibility Rule.
+	 * Create an empty CompositeCommand with the specified feasibility {@link rutebaga.commons.Rule}.
+	 * @see rutebaga.commons.Rule
 	 */
 	public CompositeCommand(Rule<Iterator<Command>> rule) {
 		setFeasibilityRule(rule);

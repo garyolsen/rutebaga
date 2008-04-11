@@ -5,14 +5,13 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * @author may
  * 
- * ConcreteElementalList is a basic implementation of ElementalList that
- * composites several named Commands. The ConcreteElementalList is also labeled,
+ * ConcreteElementalList is a basic implementation of {@link ElementalList} that
+ * composites several named {@link Command}s. The ConcreteElementalList is also labeled,
  * as required by its interface.
  * 
- * ConcreteElementalList offers two add mutators, one which adds a named
- * String-Command pair and one which adds a set of Commands in the form of an
+ * ConcreteElementalList offers two add mutators, one which {@link #add(String, Command) adds} a named
+ * String-Command pair and one which {@link #add(ElementalList) adds} a set of Commands in the form of an
  * ElementalList. Composited Commands cannot be removed, but can be accessed via
  * the Iterator, as per the interface. The Iterator will return ListElements
  * containing the Commands in the same order they were added to the
@@ -21,7 +20,8 @@ import java.util.NoSuchElementException;
  * ElementalList Iterator returns them. Duplicate Commands are both possible and
  * allowed, so clients of ConcreteElementalList must take care to avoid
  * duplicates if they desire Set semantics.
- */
+  * @author may
+*/
 public class ConcreteElementalList implements ElementalList {
 
 	/**
