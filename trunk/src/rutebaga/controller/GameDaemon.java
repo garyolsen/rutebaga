@@ -22,7 +22,7 @@ import java.util.LinkedList;
  * at an appropriate time.
  * 
  * @see Command
- * @see rutebaga.view.ViewFacad
+ * @see rutebaga.view.ViewFacade
  * @author may
  * @see UserActionInterpreter
  */

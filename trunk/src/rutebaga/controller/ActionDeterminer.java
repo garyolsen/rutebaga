@@ -1,7 +1,7 @@
 package rutebaga.controller;
 
 /**
- * 
+ * TODO: resolve all the references here once the referenced classes actually exist
  * Given a set of Instances, ActionDeterminer produces a list of named Commands
  * in the form of an {@link ElementalList}. ActionDeterminer exposes a single operation,
  * {@link #determineActions()}, which uses a {@link Filter} to determine which {@link Instance} in a set of

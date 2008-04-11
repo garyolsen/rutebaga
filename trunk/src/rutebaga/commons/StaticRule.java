@@ -23,11 +23,11 @@ public class StaticRule<T> implements Rule<T> {
 
 	/**
 	 * Returns the static value of this StaticRule. The same as calling
-	 * {@link #determine(T)}.
+	 * {@link #determine(Object)}.
 	 * 
 	 * @return the value of this StaticRule. The same as evaluating
-	 *         {@link #determine(T)}
-	 * @see #determine(T)
+	 *         {@link #determine(Object)}
+	 * @see #determine(Object)
 	 */
 	public boolean isValue() {
 		return value;
@@ -40,7 +40,7 @@ public class StaticRule<T> implements Rule<T> {
 	 * @param context
 	 *            The context in which this StaticRule will be evaluated.
 	 * @return The evaluation of this StaticRule in the provided context.
-	 * @see rutebaga.commons.Rule#determine(null)
+	 * @see rutebaga.commons.Rule#determine(Object)
 	 * @see #isValue()
 	 */
 	public boolean determine(T context) {
