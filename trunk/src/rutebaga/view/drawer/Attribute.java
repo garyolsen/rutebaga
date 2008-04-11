@@ -1,7 +1,6 @@
 package rutebaga.view.drawer;
 
 /**
- * @author Ryan
  * 
  * The Attribute interface provides the ability for
  * ViewComponents to specify drawing information 
@@ -10,7 +9,8 @@ package rutebaga.view.drawer;
  * preserved within the Drawer so that Attributes can 
  * continue to effect any subsequent draw() calls 
  * to the Drawer.
- */
+  * @author Ryan
+*/
 
 public interface Attribute {
 

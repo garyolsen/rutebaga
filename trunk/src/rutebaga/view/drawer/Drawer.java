@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.Shape;
 
 /**
- * @author Ryan
  *
  * The Drawer abstract class allows for all information
  * being drawn out by the Windowing Toolkit to be
@@ -18,6 +17,7 @@ import java.awt.Shape;
  * for reuse of the Windowing Toolkit on a variety
  * of mediums without having to revisit the actual
  * ViewComponents.
+ * @author Ryan
  */
 public abstract class Drawer {
 

@@ -3,12 +3,12 @@ package rutebaga.view.drawer;
 import java.awt.Color;
 
 /**
- * @author Ryan
  *
  * Color Attribute provides the ability for ViewComponents
  * to specify their color without directly calling 
  * the Drawer's individual methods.
- */
+  * @author Ryan
+*/
 public class ColorAttribute implements Attribute {
 	
 	/**

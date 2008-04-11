@@ -11,11 +11,11 @@ import java.awt.Shape;
 
 
 /**
- * @author Ryan
  *
  * The Graphics2DDrawer uses Java.awt.Graphics2D to
  * draw primitives and text to the screen.
- */
+ * @author Ryan
+  */
 public class Graphics2DDrawer extends Drawer {
 	
 	private Graphics2D g2d;
