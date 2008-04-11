@@ -3,22 +3,25 @@ package rutebaga.controller;
 import java.util.Iterator;
 
 /**
- * @author may
  * 
- * DynamicElementalList is an implementation of ElementalList which dynamically
- * constructs the ListElements returned by its Iterator on the fly (when the
- * Iterator is requested). This is a generic class that should be parameterized
- * by the type of thing to be represented in the list. The DynamicElementalList
- * must be initialized with a ListElementSource and a ListElementFactory, both
- * of which must be parameterized by the same type as the DynamicElementalList.
- * The ListElementSource is used to produce objects of the parameterizing type.
- * These objects are then fed to the ListElementFactory, which creates the
- * ListElements returned by the DynamicElementalList's Iterator.
+ * DynamicElementalList is an implementation of {@link ElementalList} which
+ * dynamically constructs the {@link ListElement ListElements} returned by its
+ * Iterator on the fly (when the Iterator is requested). The
+ * DynamicElementalList must be initialized with a {@link ListElementSource} and a
+ * {@link ListElementFactory}, both of which must be parameterized by the same type as
+ * the DynamicElementalList. The ListElementSource is used to produce objects of
+ * the parameterizing type. These objects are then fed to the
+ * ListElementFactory, which creates the ListElements returned by the
+ * DynamicElementalList's Iterator.
  * 
  * The DynamicElementalList may internally cache ListElements if it detects that
  * the source has not changed.
- * 
+ * @see ListElement
+ * @see ListElementSource
+ * @see ListElementFactory
+ * @author may
  * @param <ElementType>
+ *            the type of thing to be represented in the list.
  */
 public class DynamicElementalList<ElementType> implements ElementalList {
 
@@ -36,13 +39,16 @@ public class DynamicElementalList<ElementType> implements ElementalList {
 
 	/**
 	 * Create a new DynamicElementalList with the specified Source of the
-	 * parameterizing ElementType and the specified Factory for creating
-	 * ListElements from the parameterizing ElementType.
+	 * parameterizing ElementType and the specified {@link ListElementFactory} for creating
+	 * {@link ListElement ListElements} from the parameterizing ElementType.
 	 * 
 	 * @param source
-	 *            the ListElementSource for this DynamicElementalList
+	 *            the {@link ListElementSource} for this DynamicElementalList
 	 * @param factory
-	 *            the ListElementFactory for this DynamicElementalList
+	 *            the {@link ListElementFactory} for this DynamicElementalList
+	 *            @see ListElementSource
+	 *            @see ListElementFactory
+	 *            @see ListElement
 	 */
 	public DynamicElementalList(ListElementSource<ElementType> source,
 			ListElementFactory<ElementType> factory) {
@@ -53,18 +59,21 @@ public class DynamicElementalList<ElementType> implements ElementalList {
 		this.factory = factory;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Gets the current label for this DynamicElementalList describing the collection
+	 * as a whole.
 	 * 
+	 * @return the label for this DynamicElementalList
 	 * @see rutebaga.controller.ElementalList#getLabel()
 	 */
 	public String getLabel() {
 		return source.getLabel();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
+	 * Gets an Iterator over the {@link ListElement ListElements} of this DynamicElementalList.
+	 * @see ListElement
+	 * @return an Iterator of ListElements
 	 * @see java.lang.Iterable#iterator()
 	 */
 	public Iterator<ListElement> iterator() {

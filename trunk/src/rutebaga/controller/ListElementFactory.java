@@ -1,19 +1,22 @@
 package rutebaga.controller;
 
 /**
- * @author may
- *
- * A ListElementFactory is used to create ListElements for objects
+  *
+ * A ListElementFactory is used to create {@link ListElement ListElements} for objects
  * of the parameterizing type.
+ * @see ListElement
  *
- * @param <ElementType>
- */
+ * @param <ElementType> The type of the elements to be generated.
+ * @author may
+ * @see ListElementSource
+*/
 public interface ListElementFactory<ElementType> {
 
 	/**
-	 * Produces a ListElement containing the specified element.
+	 * Produces a {@link ListElement} containing the specified element.
 	 * @param element the element to make a ListElement for
 	 * @return a ListElement representing the specified element.
+	 * @see ListElement
 	 */
 	public ListElement makeElement(ElementType element);
 }
