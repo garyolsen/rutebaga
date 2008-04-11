@@ -85,19 +85,4 @@ public class View {
 			vc.draw( drawer );
 	}
 	
-	public static void main(String args[]) {
-		View view = new View( 800, 600, true);
-		
-		
-		TextLabelComponent text = new FPSTextComponent();
-		text.setLocation(100,100);
-		text.setFontColor( Color.BLUE );
-		text.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		
-		view.addViewComponent(text);
-		
-		while(true)
-			view.renderFrame();
-	}
-	
 }
