@@ -3,18 +3,19 @@ package rutebaga.controller;
 import java.util.Iterator;
 
 /**
- * @author may
  * 
  * ListElementSource is used to produce objects of a certain type for a
- * DynamicElementalList.
- * 
- * @param <ElementType>
+ * {@link DynamicElementalList}.
+ * @see DynamicElementalList
+ * @param <ElementType> The type of the elements to be generated.
+ * @author may
  */
 public interface ListElementSource<ElementType> {
 	/**
 	 * Gets the current label that should be assigned to the
-	 * DynamicElementalList as a whole.
+	 * {@link DynamicElementalList} as a whole.
 	 * @return the label of the ElementalList as a whole.
+	 * @see DynamicElementalList
 	 */
 	public String getLabel();
 
