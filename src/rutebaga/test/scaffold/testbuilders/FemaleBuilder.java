@@ -3,13 +3,13 @@ package rutebaga.test.scaffold.testbuilders;
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
 
-public class MaleBuilder implements Builder
+public class FemaleBuilder implements Builder
 {
-	private static String[] ids = { "frank", "bob", "mark" };
+	private static String[] ids = { "carol", "ruth", "cindy" };
 	
 	private static enum Types
 	{
-		FRANK, BOB, MARK;
+		CAROL, RUTH, CINDY;
 	}
 
 	public String[] availableIds()
@@ -27,20 +27,20 @@ public class MaleBuilder implements Builder
 		TestObject cast = (TestObject) object;
 		switch(Types.valueOf(id.toUpperCase()))
 		{
-		case FRANK:
-			cast.setName("Frank");
-			cast.setAge(20);
-			cast.setFriend((TestObject) scaffold.get("carol"));
-			break;
-		case BOB:
-			cast.setName("Bob");
-			cast.setAge(19);
+		case CAROL:
+			cast.setName("Carol");
+			cast.setAge(22);
 			cast.setFriend((TestObject) scaffold.get("frank"));
 			break;
-		case MARK:
-			cast.setName("Mark");
-			cast.setAge(21);
-			cast.setFriend((TestObject) scaffold.get("mark"));
+		case RUTH:
+			cast.setName("Ruth");
+			cast.setAge(23);
+			cast.setFriend((TestObject) scaffold.get("cindy"));
+			break;
+		case CINDY:
+			cast.setName("Cindy");
+			cast.setAge(24);
+			cast.setFriend((TestObject) scaffold.get("carol"));
 			break;
 		}
 	}
