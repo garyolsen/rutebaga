@@ -21,13 +21,13 @@ public class View {
 	
 	private Set<ViewComponent> components = new HashSet<ViewComponent>();
 	
-	public View( int width, int height, boolean fullscreen ) {
-		setupWindow( width, height, fullscreen );
+	public View( int width, int height) {
+		setupWindow( width, height );
 		setupDispatcher();
 		setupDrawer();
 	}
 	
-	private void setupWindow( int width, int height, boolean fullscreen ) {
+	private void setupWindow( int width, int height) {
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		
 		GraphicsDevice device = env.getDefaultScreenDevice();
@@ -36,11 +36,17 @@ public class View {
 		window.setIgnoreRepaint(true);
 		window.setUndecorated(true);
 		
-		if( fullscreen )
-			device.setFullScreenWindow(window);
+			
 		
 		window.setVisible(true);
 		window.createBufferStrategy(2);
+	}
+	
+	public void setFullscreen() {
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		
+		GraphicsDevice device = env.getDefaultScreenDevice();
+		device.setFullScreenWindow(window);
 	}
 	
 	private void setupDispatcher() {

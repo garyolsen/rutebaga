@@ -3,14 +3,14 @@ package rutebaga.test.view;
 import java.awt.Color;
 import java.awt.Font;
 
-import rutebaga.view.FPSTextComponent;
+import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.rwt.TextLabelComponent;
 import rutebaga.view.rwt.View;
 
 public class ViewTest {
 
 	public static void main(String args[]) {
-		View view = new View( 800, 600, true);
+		View view = new View( 800, 600);
 		
 		
 		TextLabelComponent text = new FPSTextComponent();
