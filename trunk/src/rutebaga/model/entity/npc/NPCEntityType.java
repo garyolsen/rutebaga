@@ -16,7 +16,7 @@ public class NPCEntityType {
 	public NPCEntity make() {
 		
 		NPCEntity newNPCEntity = new NPCEntity(this);
-		newNPCEntity.setBrain( new SimpleBrain() );
+		newNPCEntity.setBrain( new NPCSimpleBrain() );
 		return newNPCEntity;
 		
 	}

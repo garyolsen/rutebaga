@@ -12,4 +12,28 @@ package rutebaga.model.entity;
  */
 public class EntityType {
 
+	public void tick() {
+		
+	}
+	
+	//public void move( Entity entity, Direction direction, double p ) {
+	//	
+	//}
+	
+	//public void teleport( Entity entity, Location location) {
+	//	
+	//}
+	
+	//public Vision getVision( Entity entity ) {
+	//	return null;
+	//}
+	
+	public void hostilityTo( Entity source, Entity target ) {
+		
+	}
+	
+	public void mount( Entity entity, Vehicle vehicle ) {
+		
+	}
+	
 }

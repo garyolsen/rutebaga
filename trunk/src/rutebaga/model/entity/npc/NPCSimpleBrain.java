@@ -1,6 +1,6 @@
 package rutebaga.model.entity.npc;
 
-public class SimpleBrain implements NPCBrain{
+public class NPCSimpleBrain implements NPCBrain{
 
 	private NPCState currentState = NPCState.initialState;
 	
