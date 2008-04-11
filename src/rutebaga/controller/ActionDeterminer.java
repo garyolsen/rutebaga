@@ -8,7 +8,7 @@ package rutebaga.controller;
  * Instances should be targeted. Once it determines the target, it determines
  * which actions are appropriate for the targeted Instance.
  * 
- * For instance, if an {@link Entity} is present at a {@link Location}, it will be targeted and
+ * For instance, if an {@link rutebaga.model.entity.Entity Entity} is present at a {@link Location}, it will be targeted and
  * {@link Command}s encapsulating actions appropriate for an Entity, such as attacking
  * or talking, will be generated.
  * @author may
