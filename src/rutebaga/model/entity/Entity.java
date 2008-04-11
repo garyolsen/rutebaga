@@ -14,6 +14,6 @@ package rutebaga.model.entity;
  * @author Nick
  * @see EntityType
  */
-public class Entity {
+public abstract class Entity {
 
 }

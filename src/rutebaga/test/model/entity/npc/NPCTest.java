@@ -1,6 +1,6 @@
 package rutebaga.test.model.entity.npc;
 
-import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCEntityType;
 
@@ -14,12 +14,12 @@ public class NPCTest {
 		npc.speak();
 		npc.barter();
 		
-		npc.takeHostileGesture(new Entity());
+		npc.takeHostileGesture(new CharEntity());
 		
 		npc.speak();
 		npc.barter();
 		
-		npc.takeFriendlyGesture(new Entity());
+		npc.takeFriendlyGesture(new CharEntity());
 		
 		npc.speak();
 		npc.barter();
