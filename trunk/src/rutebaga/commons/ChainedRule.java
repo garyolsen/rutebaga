@@ -6,10 +6,10 @@ import java.util.Set;
 /**
  * A rule based on a series of other rules.
  * 
- * The behavior is determined by the default value of the rule: a default value
- * of true implies AND semantics (the rule is true iff all rules are true),
- * whereas a default value of false implies OR semantics (the rule is false iff
- * all rules are false).
+ * For a ChainedRule, behavior is determined by the default value of the
+ * {@link Rule}: a default value of true implies AND semantics (the rule is
+ * true iff all rules are true), whereas a default value of false implies OR
+ * semantics (the rule is false iff all rules are false).
  * 
  * @author Gary LosHuertos
  * 
@@ -26,14 +26,17 @@ public class ChainedRule<T> implements Rule<T> {
 	 * 
 	 * @param defaultValue
 	 *            A boolean value that determines the default behavior of this
-	 *            ChainRule.
+	 *            ChainRule. True implies AND semantics (the rule is true iff
+	 *            all rules are true). False implies OR semantics (the rule is
+	 *            false iff all rules are false).
 	 */
 	public ChainedRule(boolean defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 
 	/**
-	 * Returns the default value if this rule holds in the specified context.
+	 * Returns the the status of this rule in the specified context.  The semantics of the ChainedRule is specified by the
+	 * default value.
 	 * 
 	 * @param context
 	 *            the context in which the rule runs.
