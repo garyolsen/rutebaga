@@ -1,7 +1,6 @@
 package rutebaga.view.rwt;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
@@ -10,7 +9,6 @@ import java.awt.image.BufferStrategy;
 import java.util.HashSet;
 import java.util.Set;
 
-import rutebaga.view.FPSTextComponent;
 import rutebaga.view.drawer.*;
 
 public class View {

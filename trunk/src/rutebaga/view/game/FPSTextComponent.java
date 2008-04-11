@@ -1,4 +1,4 @@
-package rutebaga.view;
+package rutebaga.view.game;
 
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.TextLabelComponent;
