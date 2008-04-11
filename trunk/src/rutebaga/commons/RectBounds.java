@@ -1,5 +1,11 @@
 package rutebaga.commons;
 
+/**
+ * A rectangular bounds.
+ * 
+ * @author Gary LosHuertos
+ * 
+ */
 public class RectBounds extends Bounds {
 	private Vector size;
 
