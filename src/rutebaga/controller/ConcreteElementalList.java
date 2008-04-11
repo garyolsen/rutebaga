@@ -150,9 +150,25 @@ public class ConcreteElementalList implements ElementalList {
 	 */
 	private class SingleCommandElementalList implements ElementalList {
 
+		/**
+		 * The label of the ListElement "contained" by this
+		 * SingleCommandElementalList.
+		 */
 		private String label;
+		
+		/**
+		 * The command of the ListElement "contained" by this
+		 * SingleCommandElementalList. 
+		 */
 		private Command command;
 		
+		/**
+		 * Create a new SingleCommandElementalList with the specified label
+		 * and command.  If label is null, it will be replaced by the empty
+		 * string.
+		 * @param label the label of the ListElement to be contained by this SingleCommandElementalList
+		 * @param command the command of the ListElement to be contained by this SingleCommandElementalList
+		 */
 		public SingleCommandElementalList(String label, Command command) {
 			this.label = (label == null ? label : "");
 			this.command = command;
@@ -162,6 +178,11 @@ public class ConcreteElementalList implements ElementalList {
 			return label;
 		}
 
+		/**
+		 * Returns an Iterator over a single ListElement defined by the label
+		 * and command this SingleCommandElementalList was created with.
+		 * @see java.lang.Iterable#iterator()
+		 */
 		public Iterator<ListElement> iterator() {
 			return new Iterator<ListElement>() {
 				private boolean visited = false;
