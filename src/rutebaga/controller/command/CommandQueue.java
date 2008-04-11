@@ -1,4 +1,4 @@
-package rutebaga.controller;
+package rutebaga.controller.command;
 
 /**
  * 

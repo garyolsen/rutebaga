@@ -1,4 +1,4 @@
-package rutebaga.controller;
+package rutebaga.controller.command;
 
 import rutebaga.commons.Vector;
 
@@ -22,7 +22,7 @@ public class CreateRootContextMenuCommand extends CreateContextMenuCommand {
 	 * Create a root context menu with the previously specified ElementalList at
 	 * the previously given map location.
 	 * 
-	 * @see rutebaga.controller.Command#execute()
+	 * @see rutebaga.controller.command.Command#execute()
 	 */
 	public void execute() {
 		getViewFacade().createRootContextMenu(getElements(), location);

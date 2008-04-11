@@ -1,5 +1,7 @@
 package rutebaga.controller;
 
+import rutebaga.controller.command.Command;
+
 /**
  * TODO: resolve all the references here once the referenced classes actually exist
  * Given a set of Instances, ActionDeterminer produces a list of named Commands

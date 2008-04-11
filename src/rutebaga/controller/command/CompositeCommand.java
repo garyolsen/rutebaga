@@ -1,4 +1,4 @@
-package rutebaga.controller;
+package rutebaga.controller.command;
 
 import rutebaga.commons.Rule;
 import java.util.HashSet;
@@ -8,7 +8,7 @@ import java.util.Iterator;
 /**
  * 
  * CompositeCommand is an implementation of {@link Command} that contains a collection
- * of Commands which may all be executed “simultaneously”. Specifically, when
+ * of Commands which may all be executed “simultaneously�?. Specifically, when
  * CompositeCommand's {@link #execute()} operation is invoked, it invokes execute on all
  * Commands that have been added to it (in no guaranteed order).
  * 
