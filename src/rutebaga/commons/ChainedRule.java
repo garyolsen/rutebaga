@@ -39,7 +39,7 @@ public class ChainedRule<T> implements Rule<T> {
 	 *            the context in which the rule runs.
 	 * @return A boolean corresponding to this Rule's agreement with the default
 	 *         value in the given context.
-	 * @see rutebaga.commons.Rule#determine(null)
+	 * @see rutebaga.commons.Rule#determine(Object)
 	 */
 	public boolean determine(T context) {
 		for (Rule<T> rule : rules)

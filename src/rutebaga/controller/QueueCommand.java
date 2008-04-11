@@ -6,7 +6,7 @@ package rutebaga.controller;
  * Command on the CommandQueue when its {@link #execute()} is invoked. This
  * component Command, as well as the CommandQueue to enqueue the command in,
  * must be specified when the QueueCommand is created. QueueCommand instances
- * are immutable. {@link isFeasible()} forwards to the component Command.
+ * are immutable. {@link #isFeasible()} forwards to the component Command.
  * 
  * (The CommandQueue is expected to execute the component Command at a later
  * time, but QueueCommand does not guarantee that its component Command's
