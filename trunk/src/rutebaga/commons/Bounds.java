@@ -1,12 +1,16 @@
 package rutebaga.commons;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Interface for declaring a bounds within space.
  * 
  * @author Gary LosHuertos
  * 
  */
-public abstract class Bounds {
+public abstract class Bounds
+{
 	public abstract boolean contains(Vector v);
 
 	/**
@@ -23,14 +27,56 @@ public abstract class Bounds {
 	 * @see Matrix
 	 * @see Vector
 	 */
-	public Matrix filter(Matrix m) {
+	public Matrix filter(Matrix m)
+	{
 		Vector[] vectors = m.asVectors();
 
-		for (int idx = 0; idx < vectors.length; idx++) {
+		for (int idx = 0; idx < vectors.length; idx++)
+		{
 			if (!contains(vectors[idx]))
 				vectors[idx] = null;
 		}
 
 		return new Matrix(vectors);
+	}
+
+	/**
+	 * Filters the given set of vectors into a set containing only vectors
+	 * within this bounds.
+	 * 
+	 * @param vectors
+	 *            the sample vector set
+	 * @return the vector set within the bounds
+	 */
+	public Set<Vector> filter(Set<Vector> vectors)
+	{
+		Set<Vector> rval = new HashSet<Vector>();
+		for (Vector vector : vectors)
+		{
+			if (this.contains(vector))
+				rval.add(vector);
+		}
+		return rval;
+	}
+
+	/**
+	 * Filters the given set of vectors into a set containing only vectors
+	 * within this bounds, displaced by an offset.
+	 * 
+	 * @param vectors
+	 *            the sample vector set
+	 * @param offset
+	 *            the offset to use
+	 * @return the vector set within the bounds
+	 */
+	public Set<Vector> filter(Set<Vector> vectors, Vector offset)
+	{
+		Set<Vector> rval = new HashSet<Vector>();
+		for (Vector vector : vectors)
+		{
+			if (this.contains(vector.plus(offset)))
+				rval.add(vector);
+		}
+		return rval;
 	}
 }
