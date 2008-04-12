@@ -4,7 +4,7 @@ import rutebaga.commons.Vector;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 
-public class Instance
+public abstract class Instance
 {
 	private Location location;
 	private PhysicsContainer physicsContainer;
@@ -16,7 +16,7 @@ public class Instance
 
 	public Environment getEnvironment()
 	{
-		return location.getEnvironment();
+		return location == null ? null : location.getEnvironment();
 	}
 
 	public Vector getTile()
@@ -58,4 +58,8 @@ public class Instance
 	{
 		this.physicsContainer = physicsContainer;
 	}
+	
+	public abstract boolean blocks(Instance other);
+	public abstract double getMass();
+	public abstract double getFriction();
 }

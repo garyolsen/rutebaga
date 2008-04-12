@@ -1,5 +1,6 @@
 package rutebaga.model.environment;
 
+import rutebaga.commons.ObjectUtils;
 import rutebaga.commons.Vector;
 
 public class InternalContainer
@@ -9,6 +10,17 @@ public class InternalContainer
 		private Vector coordinate;
 		private Vector tile;
 		private Environment environment;
+		private final Instance instance;
+		
+		public Location(Instance instance)
+		{
+			this.instance = instance;
+		}
+		
+		protected Instance getInstance()
+		{
+			return instance;
+		}
 
 		protected Vector getCoordinate()
 		{
@@ -37,16 +49,37 @@ public class InternalContainer
 
 		protected void setTile(Vector tile)
 		{
-			this.tile = tile;
+			if (!ObjectUtils.equals(this.tile, tile))
+			{
+				this.tile = tile;
+			}
 		}
 
 	}
 
 	protected static class PhysicsContainer
 	{
-		private Vector momentum;
-		private Vector appliedImpulse;
-		private Vector velocity;
+		private Vector momentum = new Vector(0, 0);
+		private Vector appliedImpulse = new Vector(0, 0);
+		private Vector velocity = new Vector(0, 0);
+		private final Instance instance;
+		
+		public PhysicsContainer(Instance instance)
+		{
+			this.instance = instance;
+		}
+		
+		protected Instance getInstance()
+		{
+			return instance;
+		}
+		
+		protected void update(double friction)
+		{
+			double mass = instance.getMass();
+			this.velocity = momentum.plus(appliedImpulse).times(1/mass);
+			appliedImpulse = appliedImpulse.times(0);
+		}
 
 		public void applyImpulse(Vector impulse)
 		{
