@@ -10,9 +10,19 @@ import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 
 /**
- * An physical environment of entities.
+ * An physical environment of entities in tile-space.
+ * 
+ * Tile-space is a spatial region which contains an infinite number of
+ * coordinates, each of which can be identified as being part of a discrete
+ * tile.
+ * 
+ * The relation of the environment's tile-space and actual space is provided by
+ * a TileConvertor.
  * 
  * @author Gary LosHuertos
+ * 
+ * @see TileConvertor
+ * @see Instance
  * 
  */
 public class Environment
