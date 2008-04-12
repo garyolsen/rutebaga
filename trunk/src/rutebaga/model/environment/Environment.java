@@ -145,7 +145,7 @@ public class Environment
 	 *            the instance requiring access
 	 * @param tile
 	 *            the tile access is being requested to
-	 * @return whether or not access is granted
+	 * @return whether or not access is blocked
 	 */
 	protected boolean blocked(Instance instance, Vector tile)
 	{
