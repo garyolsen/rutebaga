@@ -15,6 +15,20 @@ public class Vector
 	private Double magnitude;
 	private final int dimension;
 
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("< ");
+		for(double component : components)
+		{
+			sb.append(component);
+			sb.append(" ");
+		}
+		sb.append(">");
+		return sb.toString();
+	}
+
 	/**
 	 * Creates a new Vector using the specified components.
 	 * 
@@ -30,7 +44,7 @@ public class Vector
 			this.components[idx] = components[idx];
 		}
 	}
-
+	
 	/**
 	 * Constructs a new vector using components from a specified range of an
 	 * array.
@@ -46,7 +60,7 @@ public class Vector
 		for (int idx = start; idx < end; idx++)
 			this.components[idx - start] = components[idx];
 	}
-
+	
 	/**
 	 * Creates a new, empty Vector of the specified dimension.
 	 * 
@@ -122,6 +136,11 @@ public class Vector
 	public int getDimension()
 	{
 		return dimension;
+	}
+
+	public Vector getDirection()
+	{
+		return this.times(1/this.getMagnitude());
 	}
 
 	/**
@@ -212,6 +231,17 @@ public class Vector
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = this.components[idx] + rhs.components[idx];
+		}
+		return rval;
+	}
+
+	public Vector times(double factor)
+	{
+		Vector rval = new Vector(dimension);
+		double components[] = rval.components;
+		for (int idx = 0; idx < dimension; idx++)
+		{
+			components[idx] = this.components[idx]*factor;
 		}
 		return rval;
 	}
