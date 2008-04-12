@@ -1,6 +1,5 @@
 package rutebaga.model.environment;
 
-import rutebaga.commons.ObjectUtils;
 import rutebaga.commons.Vector;
 
 /**
