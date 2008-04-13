@@ -7,51 +7,66 @@ import java.util.Set;
 import rutebaga.commons.Bounds;
 import rutebaga.commons.Vector;
 
+/**
+ * Tracks the position of instances within a bounds centered upon an instance.
+ * 
+ * The use of BoundsTracker is much more efficient than querying an
+ * <code>Environment<code>
+ * continuously.
+ * 
+ * @author Gary LosHuertos
+ * 
+ * @see Environment
+ *
+ */
 public class BoundsTracker implements MovementListener
 {
 	private Environment monitoredEnvironment;
 
-	private Bounds bounds;
 	private Instance monitoredInstance;
 	private Set<Vector> tilesWithinBounds;
 
 	private Set<Instance> insideInstances = new HashSet<Instance>();
 
-	public BoundsTracker(Bounds bounds, Instance instance,
-			Environment environment)
+	/**
+	 * Constructs a new BoundsTracker.
+	 * 
+	 * @param bounds
+	 *            the bounds to monitor (centered upon the instance)
+	 * @param instance
+	 *            the instance to center upon
+	 */
+	public BoundsTracker(Bounds bounds, Instance instance)
 	{
-		this.bounds = bounds;
 		this.monitoredInstance = instance;
-		this.monitoredEnvironment = environment;
-		environment.registerMovementListener(this);
+		this.monitoredEnvironment = instance.getEnvironment();
+		this.monitoredEnvironment.registerMovementListener(this);
 		tilesWithinBounds = bounds.locationSet(1.0);
 		recheck();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.MovementListener#onMovement(rutebaga.model.environment.MovementEvent)
+	 */
 	public void onMovement(MovementEvent event)
 	{
-		// System.out.println("[BoundsTracker] Received event: " +
-		// event.getInstance());
+		// FIXME not stable when the centered instance leaves the environment
 		Instance movedInstance = event.getInstance();
 		// first determine if the instance moved
 		if (event.getInstance() != monitoredInstance)
 		{
-			// System.out.println("[BoundsTracker] Not the monitored instance");
 			// check if the instance is inside
 			boolean inside = checkInstance(movedInstance);
-			// System.out.println("[BoundsTracker] " + (inside ? "Inside" : "Not
-			// inside"));
 			if (insideInstances.contains(movedInstance))
 			{
-				// System.out.println("[BoundsTracker] Moved out of
-				// boundaries");
 				// the instance has been moved out of the boundaries
 				if (!inside)
 					insideInstances.remove(movedInstance);
 			}
 			else
 			{
-				// System.out.println("[BoundsTracker] Moved into boundaries");
 				// the instance has moved into the boundaries
 				if (inside)
 					insideInstances.add(movedInstance);
@@ -64,26 +79,37 @@ public class BoundsTracker implements MovementListener
 		}
 	}
 
+	/**
+	 * Refreshes the contents of the tracker directly from the environment.
+	 */
 	private void recheck()
 	{
-		// System.out.println("[BoundsTracker] Performing recheck");
 		insideInstances.clear();
 		for (Vector tile : tilesWithinBounds)
 		{
-			insideInstances.addAll(monitoredEnvironment.instancesAt(tile.plus(monitoredInstance.getTile())));
+			insideInstances.addAll(monitoredEnvironment.instancesAt(tile
+					.plus(monitoredInstance.getTile())));
 		}
 		insideInstances.remove(monitoredInstance);
 	}
 
+	/**
+	 * Checks whether or not an instance is within the bounds.
+	 * 
+	 * @param instance
+	 *            the instance to check
+	 * @return true if the instance is within the bounds; false otherwise
+	 */
 	private boolean checkInstance(Instance instance)
 	{
 		Vector location = instance.getTile();
 		Vector offset = this.monitoredInstance.getTile();
-		// System.out.println("[BoundsTracker] Looking for " +
-		// location.minus(offset));
 		return tilesWithinBounds.contains(location.minus(offset));
 	}
 
+	/**
+	 * @return the instances contained within the tracked bounds
+	 */
 	public Set<Instance> getInstances()
 	{
 		return Collections.unmodifiableSet(insideInstances);
