@@ -1,8 +1,17 @@
 package rutebaga.model.entity;
 
+import rutebaga.model.entity.stats.ConcreteStats;
+import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
 
-public class CharEntity extends Entity {
+public class CharEntity extends Entity
+{
+	private ConcreteStats stats = new ConcreteStats(this);
+
+	public CharEntity(EntityType type)
+	{
+		super(type);
+	}
 
 	@Override
 	public boolean blocks(Instance other)
@@ -22,14 +31,13 @@ public class CharEntity extends Entity {
 	public double getMass()
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return 1.0;
 	}
 
 	@Override
-	public void tick()
+	public Stats getStats()
 	{
-		// TODO Auto-generated method stub
-		
+		return stats;
 	}
 
 }

@@ -29,7 +29,7 @@ public abstract class Entity extends Instance
 	private EntityType type;
 	
 	private Map<Object, EntityEffect> eventsQueue = new HashMap<Object, EntityEffect>();
-
+	
 	public Entity(EntityType type)
 	{
 		this.type = type;
@@ -54,6 +54,11 @@ public abstract class Entity extends Instance
 	protected Map<Object, EntityEffect> getEventsQueue()
 	{
 		return eventsQueue;
+	}
+	
+	public final void tick()
+	{
+		if(this.type != null) type.tick(this);
 	}
 	
 	
