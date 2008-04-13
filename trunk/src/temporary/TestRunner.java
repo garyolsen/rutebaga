@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 
 import rutebaga.commons.Vector;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
@@ -99,7 +100,7 @@ public class TestRunner
 			}
 		}
 
-		avatar = new Entity()
+		avatar = new Entity(null)
 		{
 
 			@Override
@@ -121,9 +122,10 @@ public class TestRunner
 			}
 
 			@Override
-			public void tick()
+			public Stats getStats()
 			{
-
+				// TODO Auto-generated method stub
+				return null;
 			}
 
 		};
