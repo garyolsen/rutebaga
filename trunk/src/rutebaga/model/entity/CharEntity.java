@@ -1,5 +1,7 @@
 package rutebaga.model.entity;
 
+import rutebaga.model.entity.inventory.ConcreteInventory;
+import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.ConcreteStats;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
@@ -7,6 +9,7 @@ import rutebaga.model.environment.Instance;
 public class CharEntity extends Entity
 {
 	private ConcreteStats stats = new ConcreteStats(this);
+	private ConcreteInventory inventory = new ConcreteInventory(this);
 
 	public CharEntity(EntityType type)
 	{
@@ -38,6 +41,12 @@ public class CharEntity extends Entity
 	public Stats getStats()
 	{
 		return stats;
+	}
+
+	@Override
+	public Inventory getInventory()
+	{
+		return inventory;
 	}
 
 }
