@@ -40,4 +40,11 @@ public class TestInstance extends Instance
 	{
 		return 1.0;
 	}
+
+	@Override
+	public void tick()
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }
