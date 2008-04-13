@@ -4,13 +4,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Interface for declaring a bounds within space.
+ * Base class for a discrete bounds within space.
+ * 
+ * As mentioned, a bounds must be discrete; a bounds such as "all areas below
+ * y=2" is not sufficient (as a location set could not possibly be generated).
  * 
  * @author Gary LosHuertos
  * 
  */
 public abstract class Bounds
 {
+	/**
+	 * Tests whether or not the given vector is within the bounds.
+	 * 
+	 * This operation is stable when v is null.
+	 * 
+	 * @param v
+	 *            the vector to check
+	 * @return true if v is within these bounds, false otherwise
+	 */
 	public abstract boolean contains(Vector v);
 
 	/**
@@ -78,5 +90,26 @@ public abstract class Bounds
 				rval.add(vector);
 		}
 		return rval;
+	}
+
+	/**
+	 * Determines the rectangular bounding box of this bounds.
+	 * 
+	 * This bounding box is defined as the smallest surface that can fully
+	 * contain these bounds, for which each face must be orthogonal to or
+	 * parallel to every vector axis of the coordinate system.
+	 * 
+	 * @return the bounding box of this bounds
+	 */
+	public abstract VectorRectangle getBoundingBox();
+
+	/**
+	 * @param scale
+	 * @return
+	 */
+	public Set<Vector> locationSet(double scale)
+	{
+		Set<Vector> rval = getBoundingBox().locationSet(scale);
+		return filter(rval);
 	}
 }
