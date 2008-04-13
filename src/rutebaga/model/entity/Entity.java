@@ -1,5 +1,7 @@
 package rutebaga.model.entity;
 
+import rutebaga.model.environment.Instance;
+
 /**
  * Entity stores the state related to an Entity in a physical environment. Entities
  * are objects defined by certain anthropomorphic attributes, such as containing
@@ -14,6 +16,6 @@ package rutebaga.model.entity;
  * @author Nick
  * @see EntityType
  */
-public abstract class Entity {
+public abstract class Entity extends Instance {
 
 }

@@ -147,4 +147,11 @@ public abstract class Instance
 	{
 		this.physicsContainer = physicsContainer;
 	}
+	
+	public Vector getMomentum()
+	{
+		return physicsContainer.getMomentum();
+	}
+	
+	public abstract void tick();
 }

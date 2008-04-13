@@ -6,7 +6,7 @@ package rutebaga.commons;
  * @author Gary LosHuertos
  * 
  */
-public class ElipseBounds extends Bounds
+public class EllipseBounds extends Bounds
 {
 	private Vector center;
 
@@ -25,7 +25,7 @@ public class ElipseBounds extends Bounds
 	 *            {@link Vector}.
 	 * @see Vector
 	 */
-	public ElipseBounds(Vector center, Vector size)
+	public EllipseBounds(Vector center, Vector size)
 	{
 		this.center = center;
 		this.radii = size;

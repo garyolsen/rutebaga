@@ -22,9 +22,12 @@ import rutebaga.commons.Vector;
 public class BoundsTracker implements MovementListener
 {
 	private Environment monitoredEnvironment;
-
+	private Bounds bounds;
+	
 	private Instance monitoredInstance;
 	private Set<Vector> tilesWithinBounds;
+	
+	private boolean init = false;
 
 	private Set<Instance> insideInstances = new HashSet<Instance>();
 
@@ -38,11 +41,17 @@ public class BoundsTracker implements MovementListener
 	 */
 	public BoundsTracker(Bounds bounds, Instance instance)
 	{
+		this.bounds = bounds;
 		this.monitoredInstance = instance;
-		this.monitoredEnvironment = instance.getEnvironment();
+	}
+	
+	private void init()
+	{
+		this.monitoredEnvironment = monitoredInstance.getEnvironment();
 		this.monitoredEnvironment.registerMovementListener(this);
 		tilesWithinBounds = bounds.locationSet(1.0);
 		recheck();
+		init = true;
 	}
 
 	/*
@@ -52,6 +61,7 @@ public class BoundsTracker implements MovementListener
 	 */
 	public void onMovement(MovementEvent event)
 	{
+		if(!init) init();
 		// FIXME not stable when the centered instance leaves the environment
 		Instance movedInstance = event.getInstance();
 		// first determine if the instance moved
@@ -112,6 +122,7 @@ public class BoundsTracker implements MovementListener
 	 */
 	public Set<Instance> getInstances()
 	{
+		if(!init) init();
 		return Collections.unmodifiableSet(insideInstances);
 	}
 }

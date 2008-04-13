@@ -9,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import rutebaga.commons.Bounds;
 import rutebaga.commons.Vector;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 
@@ -133,6 +134,7 @@ public class Environment
 	{
 		updatePhysics();
 		performMovement();
+		for(Instance instance : instances) instance.tick();
 	}
 
 	/**
@@ -198,12 +200,14 @@ public class Environment
 			Vector newTile = tileConvertor.tileOf(newCoordinate);
 			if (blocked(instance, newTile))
 			{
+				System.out.println("blocked");
 				PhysicsContainer physics = instance.getPhysicsContainer();
 				physics.setMomentum(physics.getMomentum().times(0.0));
 				physics.setVelocity(physics.getVelocity().times(0.0));
 			}
 			else
 			{
+				System.out.println("moving to " + newCoordinate);
 				Location location = instance.getLocation();
 				MovementEvent event = new MovementEvent(instance, instance
 						.getCoordinate(), instance.getTile());
@@ -220,6 +224,7 @@ public class Environment
 	 */
 	protected void updatePhysics()
 	{
+		System.out.println("mark");
 		for (Vector tile : tileCache.keySet())
 		{
 			double friction = frictionAt(tile);
@@ -252,6 +257,7 @@ public class Environment
 
 			Set<Instance> newInstances = getInstanceSetAt(newTile);
 			newInstances.add(instance);
+			reverseTileCache.put(instance, newTile);
 		}
 	}
 
@@ -274,7 +280,7 @@ public class Environment
 		{
 			rval.addAll(tileCache.get(tile));
 		}
-		return rval;
+		return Collections.unmodifiableSet(rval);
 	}
 
 	/**
@@ -329,5 +335,15 @@ public class Environment
 			tileCache.put(tile, set);
 		}
 		return set;
+	}
+	
+	public Set<Vector> getSpace()
+	{
+		return Collections.unmodifiableSet(tileCache.keySet());
+	}
+	
+	public int getDimension()
+	{
+		return tileConvertor.getDimension();
 	}
 }
