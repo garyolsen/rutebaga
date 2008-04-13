@@ -1,12 +1,13 @@
 package rutebaga.commons;
 
 /**
- * A circular bounds.
+ * A ellipsoid bounds.
  * 
  * @author Gary LosHuertos
  * 
  */
-public class ElipseBounds extends Bounds {
+public class ElipseBounds extends Bounds
+{
 	private Vector center;
 
 	private Vector radii;
@@ -24,9 +25,39 @@ public class ElipseBounds extends Bounds {
 	 *            {@link Vector}.
 	 * @see Vector
 	 */
-	public ElipseBounds(Vector center, Vector size) {
+	public ElipseBounds(Vector center, Vector size)
+	{
 		this.center = center;
 		this.radii = size;
+	}
+
+	/**
+	 * Returns true if this {@link Vector} falls into these ElipeBounds.
+	 * 
+	 * @return The boolean corresponding to whether this {@link Vector} is
+	 *         within the ElipseBounds.
+	 * @param v
+	 *            Whether or not this {@link Vector} is contained in the
+	 *            ElipseBounds
+	 */
+	public boolean contains(Vector v)
+	{
+		if (v == null)
+			return false;
+		double value = 0;
+		for (int idx = 0; value <= 1 && idx < v.getDimension(); idx++)
+		{
+			double numerator = (v.get(idx) - center.get(idx));
+			numerator *= numerator;
+			value += numerator / radii.get(idx);
+		}
+		return value <= 1;
+	}
+
+	@Override
+	public VectorRectangle getBoundingBox()
+	{
+		return new VectorRectangle(center.minus(radii), radii.times(2));
 	}
 
 	/**
@@ -35,7 +66,8 @@ public class ElipseBounds extends Bounds {
 	 * @return A {@link Vector} representing the center of this ElipseBounds.
 	 * @see Vector
 	 */
-	public Vector getCenter() {
+	public Vector getCenter()
+	{
 		return center;
 	}
 
@@ -47,7 +79,8 @@ public class ElipseBounds extends Bounds {
 	 *         radius in the corresponding direction.
 	 * @see Vector
 	 */
-	public Vector getRadii() {
+	public Vector getRadii()
+	{
 		return radii;
 	}
 
@@ -59,7 +92,8 @@ public class ElipseBounds extends Bounds {
 	 *            ElipseBounds.
 	 * @see Vector
 	 */
-	public void setCenter(Vector center) {
+	public void setCenter(Vector center)
+	{
 		this.center = center;
 	}
 
@@ -72,25 +106,8 @@ public class ElipseBounds extends Bounds {
 	 *            The {@link Vector} with components corresponding to the
 	 *            ElipseBound's new radii.
 	 */
-	public void setRadii(Vector size) {
+	public void setRadii(Vector size)
+	{
 		this.radii = size;
-	}
-
-	/**
-	 * Returns true if this {@link Vector} falls into these ElipeBounds.
-	 * @return The boolean corresponding to wether this {@link Vector} is within
-	 *         the ElipseBounds.
-	 * @param v
-	 *            Wether or not this {@link Vector} is contained in the
-	 *            ElipseBounds
-	 */
-	public boolean contains(Vector v) {
-		double value = 0;
-		for (int idx = 0; value <= 1 && idx < v.getDimension(); idx++) {
-			double numerator = (v.get(idx) - center.get(idx));
-			numerator *= numerator;
-			value += numerator / radii.get(idx);
-		}
-		return value <= 1;
 	}
 }
