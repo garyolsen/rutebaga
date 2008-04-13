@@ -5,14 +5,25 @@ import java.util.Map;
 
 /**
  * The MasterScaffold initializes and keeps track of Objects that are "on the
- * scaffold" used in game initialization.
+ * scaffold" and used in game initialization.
  * 
  * MasterScaffold is responsible for providing access to Objects based on a
  * unique key. MasterScaffold delegates responsibility for initializing and
  * creating objects to the {@link Builder} registered with that key.
  * 
+ * There should be a {@link Builder} registered on the MasterScaffold to handle
+ * any foreseeable call to {@link #get(String)}.
+ * <p>
+ * Following is the intended use of MasterScaffold
+ * <ol>
+ * <li>Register all required builders.
+ * <li>Call {@link #build()} to initialize all Objects.
+ * <li>Use {@link #get(String)} as needed.
+ * </ol>
  * @author Gary
  * @see Builder
+ * @see #registerBuilder(Builder)
+ * @see #get(String)
  */
 public class MasterScaffold {
 	private Map<String, Object> scaffold = new HashMap<String, Object>();
@@ -38,10 +49,40 @@ public class MasterScaffold {
 		return scaffold.get(id);
 	}
 
+	/**
+	 * Adds a {@link Builder} to the MasterScaffold. Unlike
+	 * {@link #registerBuilder(Builder)}, which instructs the MasterScaffold to
+	 * use the provided Builder on calls to {@link #get(String)} for all id
+	 * Strings that {@link Builder} understands, setBuilder(String,Builder}
+	 * instructs the MasterScaffold to use the provided {@link Builder} on calls
+	 * to {@link #get(String)} only for this id String.
+	 * 
+	 * @param id
+	 *            The String identifying a type of Object that should be
+	 *            associated with the Builder builder.
+	 * @param builder
+	 *            A {@link Builder} to add to the MasterScaffold for building
+	 *            Objects associated with this specific String id.
+	 * @see Builder
+	 * @see #get(String)
+	 * @see #registerBuilder(Builder)
+	 */
 	public void setBuilder(String id, Builder builder) {
 		this.builders.put(id, builder);
 	}
 
+	/**
+	 * Because Objects are lazy-loaded when {@link #get(String)} is called,
+	 * build() should be called once before any call to {@link #get(String)}
+	 * (after all the {@link Builder Builders} have been registered with the
+	 * MasterScaffold). This guarantees that any Object returned is not in an
+	 * inconsistent state, and moreover any call to {@link #get(String)} won't
+	 * take too long as all the hard work of Object initialization is taken care
+	 * of with build().
+	 * 
+	 * @see #get(String)
+	 * @see Builder
+	 */
 	public void build() {
 		for (String id : builders.keySet()) {
 			get(id);
@@ -49,16 +90,20 @@ public class MasterScaffold {
 	}
 
 	/**
-	 * Adds a {@link Builder} to the MasterScaffold. There must be a
-	 * {@link Builder} registered on the MasterScaffold to handle any possible
-	 * call to {@link #get(String)}. Each particular {@link Builder} registered
-	 * will handle a particular type. Each Builder will know how to initialize
-	 * at least one instance of its type based on a String passed to
-	 * {@link #get(String)};
+	 * Adds a {@link Builder} to the MasterScaffold. Each registered
+	 * {@link Builder} should know how to handle at least one particular type
+	 * based on a String passed into {@link #get(String)}. Unlike
+	 * {@link #setBuilder(String, Builder)}, which instructs the MasterScaffold
+	 * to use the specified {@link Builder} only in the case of the specified
+	 * identifying String, registerBuilder(Builder) instructs the MasterScaffold
+	 * to use the provided {@link Builder} on all calls to {@link #get(String)}
+	 * for Strings the specified {@link Builder} understands.
 	 * 
 	 * @param builder
 	 *            A {@link Builder} to add to the MasterScaffold.
 	 * @see Builder
+	 * @see #setBuilder(String, Builder)
+	 * @see #get(String)
 	 */
 	public void registerBuilder(Builder builder) {
 		for (String id : builder.availableIds()) {
