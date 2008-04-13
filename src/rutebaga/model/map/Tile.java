@@ -4,11 +4,12 @@ import rutebaga.model.environment.Instance;
 
 public class Tile extends Instance
 {
+	private TerrainType terrain;
+	
 	@Override
 	public boolean blocks(Instance other)
 	{
-		// TODO add blocking logic (glosh)
-		return false;
+		return other.able(this.terrain);
 	}
 
 	@Override

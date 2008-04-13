@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 
 import rutebaga.commons.Vector;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Environment;
@@ -25,8 +26,8 @@ public class TestRunner
 	{
 		GraphicsManager manager = new GraphicsManager();
 		TestImageConverter.manager = manager;
-		manager.init(640, 480);
-		Vector screen = new Vector(640, 480);
+		manager.init(1440, 900);
+		Vector screen = new Vector(1440, 900);
 		manager.registerKeyListener(new KeyListener()
 		{
 			public void keyPressed(KeyEvent e)
@@ -121,6 +122,9 @@ public class TestRunner
 			{
 				return 1;
 			}
+			
+			@Override
+			public Object accept(EntityEffect e) { return null; }
 
 			@Override
 			public Stats getStats()

@@ -6,6 +6,7 @@ import java.util.Set;
 import rutebaga.commons.Vector;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
+import rutebaga.model.map.TerrainType;
 
 /**
  * An physical instance within a tile-space.
@@ -17,10 +18,20 @@ import rutebaga.model.environment.InternalContainer.PhysicsContainer;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Instance
-{
+public abstract class Instance {
 	private Location location;
 	private PhysicsContainer physicsContainer;
+	private MovementAttributes movementAttributes = new MovementAttributes();
+
+	/**
+	 * Checks to see whether an instance is allowed to be over a terrain type.
+	 * 
+	 * @param terrain
+	 * @return Boolean
+	 */
+	public Boolean able(TerrainType terrain) {
+		return movementAttributes.able(terrain);
+	}
 
 	/**
 	 * Applies a viscous (transient) impulse to this instance.
@@ -28,8 +39,7 @@ public abstract class Instance
 	 * @param impulse
 	 *            the impulse to be applied
 	 */
-	public void applyImpulse(Vector impulse)
-	{
+	public void applyImpulse(Vector impulse) {
 		this.physicsContainer.applyImpulse(impulse);
 	}
 
@@ -39,8 +49,7 @@ public abstract class Instance
 	 * @param momentum
 	 *            the impulse to be added to the momentum
 	 */
-	public void applyMomentum(Vector momentum)
-	{
+	public void applyMomentum(Vector momentum) {
 		this.physicsContainer.applyMomentum(momentum);
 	}
 
@@ -58,8 +67,7 @@ public abstract class Instance
 	/**
 	 * @return the set of the instances that share this instance's tile
 	 */
-	public Set<Instance> getCoexistantInstances()
-	{
+	public Set<Instance> getCoexistantInstances() {
 		Set<Instance> rval = new HashSet<Instance>();
 		rval.addAll(getEnvironment().instancesAt(this.getTile()));
 		rval.remove(this);
@@ -69,16 +77,14 @@ public abstract class Instance
 	/**
 	 * @return the coordinate of this instance in space
 	 */
-	public Vector getCoordinate()
-	{
+	public Vector getCoordinate() {
 		return location.getCoordinate();
 	}
 
 	/**
 	 * @return the environment that this instance is in (if any)
 	 */
-	public Environment getEnvironment()
-	{
+	public Environment getEnvironment() {
 		return location == null ? null : location.getEnvironment();
 	}
 
@@ -90,40 +96,47 @@ public abstract class Instance
 	public abstract double getFriction();
 
 	/**
+	 * @return the location container for this instance
+	 */
+	protected Location getLocation() {
+		return location;
+	}
+
+	/**
 	 * @return the mass of this instance
 	 */
 	public abstract double getMass();
 
+	public Vector getMomentum() {
+		return physicsContainer.getMomentum();
+	}
+
+	/**
+	 * @return the terrain movement attributes of this instance
+	 */
+	public MovementAttributes getMovementAttributes() {
+		return movementAttributes;
+	}
+
+	/**
+	 * @return the physics container for this instance
+	 */
+	protected PhysicsContainer getPhysicsContainer() {
+		return physicsContainer;
+	}
+
 	/**
 	 * @return the coordinate of this instance in tile-space
 	 */
-	public Vector getTile()
-	{
+	public Vector getTile() {
 		return location.getTile();
 	}
 
 	/**
 	 * @return the (instantaneous) velocity of this instance
 	 */
-	public Vector getVelocity()
-	{
+	public Vector getVelocity() {
 		return this.physicsContainer.getVelocity();
-	}
-
-	/**
-	 * @return the location container for this instance
-	 */
-	protected Location getLocation()
-	{
-		return location;
-	}
-
-	/**
-	 * @return the physics container for this instance
-	 */
-	protected PhysicsContainer getPhysicsContainer()
-	{
-		return physicsContainer;
 	}
 
 	/**
@@ -132,8 +145,7 @@ public abstract class Instance
 	 * @param location
 	 *            the new location
 	 */
-	protected void setLocation(Location location)
-	{
+	protected void setLocation(Location location) {
 		this.location = location;
 	}
 
@@ -143,15 +155,9 @@ public abstract class Instance
 	 * @param physicsContainer
 	 *            the new container
 	 */
-	protected void setPhysicsContainer(PhysicsContainer physicsContainer)
-	{
+	protected void setPhysicsContainer(PhysicsContainer physicsContainer) {
 		this.physicsContainer = physicsContainer;
 	}
-	
-	public Vector getMomentum()
-	{
-		return physicsContainer.getMomentum();
-	}
-	
+
 	public abstract void tick();
 }

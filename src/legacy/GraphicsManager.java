@@ -95,11 +95,12 @@ public class GraphicsManager
 
 		try
 		{
-			device.setDisplayMode(new DisplayMode(width, height, 32, 60));
+			//device.setDisplayMode(new DisplayMode(width, height, 32, 60));
 		}
-		catch (Throwable t)
+		catch (Exception t)
 		{
 			device.setDisplayMode(oldMode);
+			t.printStackTrace();
 			System.exit(0);
 		}
 
