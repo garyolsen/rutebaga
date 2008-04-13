@@ -24,6 +24,7 @@ public class EntityType {
 			//XXX LOD violation
 			entity.getEventsQueue().get(id).affect(entity, id);
 		}
+		entity.getEventsQueue().clear();
 	}
 	
 	//public void move( Entity entity, Direction direction, double p ) {
