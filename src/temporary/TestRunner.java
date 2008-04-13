@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 
 import rutebaga.commons.Vector;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
@@ -123,6 +124,13 @@ public class TestRunner
 
 			@Override
 			public Stats getStats()
+			{
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public Inventory getInventory()
 			{
 				// TODO Auto-generated method stub
 				return null;
