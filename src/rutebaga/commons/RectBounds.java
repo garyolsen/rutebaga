@@ -36,6 +36,7 @@ public class RectBounds extends Bounds {
 	 * @see Vector
 	 */
 	public boolean contains(Vector v) {
+		if(v == null) return false;
 		boolean contains = true;
 		// each element v[idx] must be
 		// between lower[idx] and lower[idx]+size[idx]
@@ -44,6 +45,7 @@ public class RectBounds extends Bounds {
 			double lower = this.lower.get(idx);
 			double upper = lower + size.get(idx);
 			contains = contains && NumberUtils.between(value, lower, upper);
+			contains = contains || Double.doubleToLongBits(value) == Double.doubleToLongBits(upper);
 		}
 		return contains;
 	}
@@ -82,6 +84,12 @@ public class RectBounds extends Bounds {
 	 */
 	public void setSize(Vector size) {
 		this.size = size;
+	}
+
+	@Override
+	public VectorRectangle getBoundingBox()
+	{
+		return new VectorRectangle(lower, size);
 	}
 
 }
