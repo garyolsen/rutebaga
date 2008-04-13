@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import rutebaga.commons.UIDProvider;
+import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
 
@@ -36,6 +37,8 @@ public abstract class Entity extends Instance
 	}
 	
 	public abstract Stats getStats();
+	
+	public abstract Inventory getInventory();
 
 	/**
 	 * Queues an effect to be applied to this entity.
