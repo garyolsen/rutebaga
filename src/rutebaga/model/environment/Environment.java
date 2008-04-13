@@ -2,9 +2,12 @@ package rutebaga.model.environment;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
+import rutebaga.commons.Bounds;
 import rutebaga.commons.Vector;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
@@ -30,10 +33,11 @@ public class Environment
 	private Set<Instance> instances = new InstanceSet();
 	private Map<Vector, InstanceSet> tileCache = new HashMap<Vector, InstanceSet>();
 	private Map<Instance, Vector> reverseTileCache = new HashMap<Instance, Vector>();
+	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
 	private TileConvertor tileConvertor;
 
 	/**
-	 * Constructs a new Environment using the given convertor to define the
+	 * Constructs a new Environment using the given converter to define the
 	 * tile-space.
 	 * 
 	 * @param convertor
@@ -105,13 +109,7 @@ public class Environment
 	 */
 	public Set<Instance> instancesAt(Vector tile)
 	{
-		InstanceSet set = tileCache.get(tile);
-		if (set == null)
-		{
-			set = new InstanceSet();
-			tileCache.put(tile, set);
-		}
-		return Collections.unmodifiableSet(set);
+		return Collections.unmodifiableSet(getInstanceSetAt(tile));
 	}
 
 	/**
@@ -194,6 +192,8 @@ public class Environment
 		for (Instance instance : instances)
 		{
 			Vector velocity = instance.getVelocity();
+			if (velocity.getMagnitude() <= 0.0001)
+				continue;
 			Vector newCoordinate = instance.getCoordinate().plus(velocity);
 			Vector newTile = tileConvertor.tileOf(newCoordinate);
 			if (blocked(instance, newTile))
@@ -205,9 +205,12 @@ public class Environment
 			else
 			{
 				Location location = instance.getLocation();
+				MovementEvent event = new MovementEvent(instance, instance
+						.getCoordinate(), instance.getTile());
 				location.setCoordinate(newCoordinate);
 				location.setTile(newTile);
 				updateTileOf(instance);
+				notifyListeners(event);
 			}
 		}
 	}
@@ -247,8 +250,84 @@ public class Environment
 				currentInstances.remove(instance);
 			}
 
-			Set<Instance> newInstances = instancesAt(newTile);
+			Set<Instance> newInstances = getInstanceSetAt(newTile);
 			newInstances.add(instance);
 		}
+	}
+
+	/**
+	 * Gets all instances within a certain bounds, when placed in this
+	 * environment at a particular center.
+	 * 
+	 * @param bounds
+	 *            the bounds to use to filter
+	 * @param center
+	 *            the center of the bounds
+	 * @return the set of instances within the bounds
+	 */
+	public Set<Instance> getInstances(Bounds bounds, Vector center)
+	{
+		Set<Instance> rval = new HashSet<Instance>();
+		Set<Vector> tiles = tileCache.keySet();
+		tiles = bounds.filter(tiles, center);
+		for (Vector tile : tiles)
+		{
+			rval.addAll(tileCache.get(tile));
+		}
+		return rval;
+	}
+
+	/**
+	 * Registers a movement listener with this environment.
+	 * 
+	 * @param listener	the listener to register
+	 * 
+	 * @see MovementListener
+	 */
+	public void registerMovementListener(MovementListener listener)
+	{
+		this.listeners.add(listener);
+	}
+
+	/**
+	 * Unregisters a movement listener with this environment.
+	 * 
+	 * @param listener	the listener to unregister
+	 * 
+	 * @see MovementListener
+	 */
+	public void unregisterMovementListener(MovementListener listener)
+	{
+		this.listeners.remove(listener);
+	}
+
+	/**
+	 * Notifies all listeners of a movement event.
+	 * 
+	 * @param event	the movement event
+	 * 
+	 * @see MovementEvent
+	 */
+	private void notifyListeners(MovementEvent event)
+	{
+		for (MovementListener listener : listeners)
+			listener.onMovement(event);
+	}
+	
+	/**
+	 * Gets the set of instances at a tile, creating the set if null.
+	 * 
+	 * @param tile	the tile to query
+	 * @return	the set of instances at the tile
+	 */
+	private Set<Instance> getInstanceSetAt(Vector tile)
+	{
+		InstanceSet set = tileCache.get(tile);
+		if (set == null)
+		{
+			set = new InstanceSet();
+			tileCache.put(tile, set);
+		}
+		return set;
 	}
 }
