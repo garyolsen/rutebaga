@@ -23,7 +23,7 @@ import rutebaga.commons.Vector;
  * @author Gary LosHuertos
  *
  */
-public class RectTileConvertor implements TileConvertor
+public class Rect2DTileConvertor implements TileConvertor
 {
 	/* (non-Javadoc)
 	 * @see rutebaga.model.environment.TileConvertor#tileOf(rutebaga.commons.Vector)
@@ -49,5 +49,10 @@ public class RectTileConvertor implements TileConvertor
 		rval.add(tile.plus(new Vector(1, 0)));
 		rval.add(tile.plus(new Vector(-1, 0)));
 		return rval;
+	}
+
+	public int getDimension()
+	{
+		return 2;
 	}
 }

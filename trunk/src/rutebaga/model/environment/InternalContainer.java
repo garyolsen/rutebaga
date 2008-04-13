@@ -99,9 +99,12 @@ public final class InternalContainer
 		protected void update(double friction)
 		{
 			double mass = instance.getMass();
+			double frictionCoeff = 0.1;
+			this.momentum = this.momentum.times(1-frictionCoeff);
+			this.appliedImpulse = this.appliedImpulse.times(1-frictionCoeff);
 			this.velocity = momentum.plus(appliedImpulse).times(1 / mass);
-			appliedImpulse = appliedImpulse.times(0);
-			//TODO add support for friction
+			appliedImpulse = appliedImpulse.times(0.7);
+			//TODO add REAL support for friction
 		}
 
 		public void applyImpulse(Vector impulse)

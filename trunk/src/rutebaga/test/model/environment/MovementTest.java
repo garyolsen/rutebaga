@@ -6,14 +6,14 @@ import rutebaga.commons.Vector;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.RectTileConvertor;
+import rutebaga.model.environment.Rect2DTileConvertor;
 
 public class MovementTest
 {
 	public static void main(String ... args)
 	{
 		TestInstance first = new TestInstance("Alice");
-		Environment environment = new Environment(new RectTileConvertor());
+		Environment environment = new Environment(new Rect2DTileConvertor());
 		boolean success = environment.add(first, new Vector(6, 6));
 		
 		if(!success) System.out.println("Failed");
