@@ -9,7 +9,7 @@ import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
-import rutebaga.test.model.map.Tile;
+import rutebaga.model.map.Tile;
 
 import legacy.GraphicsManager;
 import legacy.KeyBuffer;

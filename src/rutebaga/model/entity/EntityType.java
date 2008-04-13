@@ -1,5 +1,6 @@
 package rutebaga.model.entity;
 
+
 /**
  * 
  * EntityType is used by {@link Entity} to define its type. Most of an Entity's
@@ -12,8 +13,17 @@ package rutebaga.model.entity;
  */
 public class EntityType {
 
-	public void tick() {
-		
+	public void tick(Entity entity) {
+		flushEffectQueue(entity);
+	}
+	
+	private void flushEffectQueue(Entity entity)
+	{
+		for(Object id : entity.getEventsQueue().keySet())
+		{
+			//XXX LOD violation
+			entity.getEventsQueue().get(id).affect(entity, id);
+		}
 	}
 	
 	//public void move( Entity entity, Direction direction, double p ) {

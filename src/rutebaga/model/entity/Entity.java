@@ -1,6 +1,13 @@
 package rutebaga.model.entity;
 
-import rutebaga.model.entity.effect.EntityEffect;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import rutebaga.commons.UIDProvider;
+import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
 
 /**
@@ -19,6 +26,16 @@ import rutebaga.model.environment.Instance;
  */
 public abstract class Entity extends Instance
 {
+	private EntityType type;
+	
+	private Map<Object, EntityEffect> eventsQueue = new HashMap<Object, EntityEffect>();
+
+	public Entity(EntityType type)
+	{
+		this.type = type;
+	}
+	
+	public abstract Stats getStats();
 
 	/**
 	 * Queues an effect to be applied to this entity.
@@ -27,6 +44,18 @@ public abstract class Entity extends Instance
 	 *            the effect to apply
 	 * @return the token identifying the effect's application
 	 */
-	public abstract Object accept(EntityEffect effect);
+	public Object accept(EntityEffect effect)
+	{
+		Object uid = UIDProvider.getUID();
+		eventsQueue.put(uid, effect);
+		return uid;
+	}
+
+	protected Map<Object, EntityEffect> getEventsQueue()
+	{
+		return eventsQueue;
+	}
+	
+	
 
 }
