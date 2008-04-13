@@ -1,4 +1,4 @@
-package rutebaga.model.entity.effect;
+package rutebaga.model.entity;
 
 
 public abstract class ReversibleEntityEffect extends EntityEffect

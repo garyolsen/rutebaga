@@ -14,7 +14,7 @@ import legacy.GraphicsManager;
 
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.Instance;
-import rutebaga.test.model.map.Tile;
+import rutebaga.model.map.Tile;
 
 public class TestImageConverter
 {

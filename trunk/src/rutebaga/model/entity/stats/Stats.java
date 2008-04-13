@@ -2,6 +2,6 @@ package rutebaga.model.entity.stats;
 
 public interface Stats
 {
-	//FIXME temporary-- expand interface (glosh)
-	double getStatValue(StatisticId stat);
+	double getValue(StatisticId stat);
+	StatValue getStatObject(StatisticId stat);
 }
