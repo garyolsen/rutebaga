@@ -14,7 +14,7 @@ import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 
 /**
- * An physical environment of entities in tile-space.
+ * A physical environment of entities in tile-space.
  * 
  * Tile-space is a spatial region which contains an infinite number of
  * coordinates, each of which can be identified as being part of a discrete
