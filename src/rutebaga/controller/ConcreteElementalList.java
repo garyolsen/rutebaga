@@ -1,7 +1,7 @@
 package rutebaga.controller;
 
-import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 import rutebaga.controller.command.Command;
@@ -9,11 +9,12 @@ import rutebaga.controller.command.Command;
 /**
  * 
  * ConcreteElementalList is a basic implementation of {@link ElementalList} that
- * composites several named {@link Command}s. The ConcreteElementalList is also labeled,
- * as required by its interface.
+ * composites several named {@link Command}s. The ConcreteElementalList is also
+ * labeled, as required by its interface.
  * 
- * ConcreteElementalList offers two add mutators, one which {@link #add(String, Command) adds} a named
- * String-Command pair and one which {@link #add(ElementalList) adds} a set of Commands in the form of an
+ * ConcreteElementalList offers two add mutators, one which
+ * {@link #add(String, Command) adds} a named String-Command pair and one which
+ * {@link #add(ElementalList) adds} a set of Commands in the form of an
  * ElementalList. Composited Commands cannot be removed, but can be accessed via
  * the Iterator, as per the interface. The Iterator will return ListElements
  * containing the Commands in the same order they were added to the
@@ -22,9 +23,11 @@ import rutebaga.controller.command.Command;
  * ElementalList Iterator returns them. Duplicate Commands are both possible and
  * allowed, so clients of ConcreteElementalList must take care to avoid
  * duplicates if they desire Set semantics.
-  * @author may
-*/
-public class ConcreteElementalList implements ElementalList {
+ * 
+ * @author may
+ */
+public class ConcreteElementalList implements ElementalList
+{
 
 	/**
 	 * The label of this ConcreteElementalList.
@@ -44,7 +47,8 @@ public class ConcreteElementalList implements ElementalList {
 	 * @param label
 	 *            the String element to add to this list
 	 */
-	public void add(String label) {
+	public void add(String label)
+	{
 		add(label, null);
 	}
 
@@ -58,7 +62,8 @@ public class ConcreteElementalList implements ElementalList {
 	 * @param command
 	 *            the Command to associate with this list element
 	 */
-	public void add(String label, Command command) {
+	public void add(String label, Command command)
+	{
 		// To hell with efficiency!
 		list.add(new SingleCommandElementalList(label, command));
 	}
@@ -73,7 +78,8 @@ public class ConcreteElementalList implements ElementalList {
 	 *            the ElementalList to add as a child to this
 	 *            ConcreteElementalList
 	 */
-	public void add(ElementalList list) {
+	public void add(ElementalList list)
+	{
 		if (list != null)
 			this.list.add(list);
 	}
@@ -83,7 +89,8 @@ public class ConcreteElementalList implements ElementalList {
 	 * 
 	 * @see rutebaga.controller.ElementalList#getLabel()
 	 */
-	public String getLabel() {
+	public String getLabel()
+	{
 		return label;
 	}
 
@@ -93,7 +100,8 @@ public class ConcreteElementalList implements ElementalList {
 	 * @param label
 	 *            the new label
 	 */
-	public void setLabel(String label) {
+	public void setLabel(String label)
+	{
 		this.label = (label == null ? label : "");
 	}
 
@@ -106,7 +114,8 @@ public class ConcreteElementalList implements ElementalList {
 	 * @see ElementalList#iterator()
 	 * @see java.lang.Iterable#iterator()
 	 */
-	public Iterator<ListElement> iterator() {
+	public Iterator<ListElement> iterator()
+	{
 		return new ConcreteElementalListIterator();
 	}
 
@@ -118,7 +127,8 @@ public class ConcreteElementalList implements ElementalList {
 	 * in turn.
 	 */
 	private class ConcreteElementalListIterator implements
-			Iterator<ListElement> {
+			Iterator<ListElement>
+	{
 		private Iterator<ElementalList> lists = ConcreteElementalList.this.list
 				.iterator();
 
@@ -129,7 +139,8 @@ public class ConcreteElementalList implements ElementalList {
 		 * ElementalList visited or an unvisited ElementalList contained by this
 		 * ConcreteElementalList.
 		 */
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return lists.hasNext() || currentList.hasNext();
 		}
 
@@ -138,9 +149,11 @@ public class ConcreteElementalList implements ElementalList {
 		 * 
 		 * @return an unvisited ListElement
 		 */
-		public ListElement next() {
+		public ListElement next()
+		{
 			// currentList is spent, go to next
-			while (currentList == null || !currentList.hasNext()) {
+			while (currentList == null || !currentList.hasNext())
+			{
 				// lists are spent...the end
 				if (!lists.hasNext())
 					throw new NoSuchElementException("No further ListElements");
@@ -152,7 +165,8 @@ public class ConcreteElementalList implements ElementalList {
 		/**
 		 * Don't even think about it.
 		 */
-		public void remove() throws UnsupportedOperationException {
+		public void remove() throws UnsupportedOperationException
+		{
 			throw new UnsupportedOperationException("Bad! Bad!");
 		}
 	}
@@ -165,7 +179,8 @@ public class ConcreteElementalList implements ElementalList {
 	 * the label-command pair the SingleCommandElementalList was constructed
 	 * with.
 	 */
-	private class SingleCommandElementalList implements ElementalList {
+	private class SingleCommandElementalList implements ElementalList
+	{
 
 		/**
 		 * The label of the ListElement "contained" by this
@@ -190,12 +205,14 @@ public class ConcreteElementalList implements ElementalList {
 		 *            the command of the ListElement to be contained by this
 		 *            SingleCommandElementalList
 		 */
-		public SingleCommandElementalList(String label, Command command) {
+		public SingleCommandElementalList(String label, Command command)
+		{
 			this.label = (label == null ? label : "");
 			this.command = command;
 		}
 
-		public String getLabel() {
+		public String getLabel()
+		{
 			return label;
 		}
 
@@ -205,33 +222,42 @@ public class ConcreteElementalList implements ElementalList {
 		 * 
 		 * @see java.lang.Iterable#iterator()
 		 */
-		public Iterator<ListElement> iterator() {
-			return new Iterator<ListElement>() {
+		public Iterator<ListElement> iterator()
+		{
+			return new Iterator<ListElement>()
+			{
 				private boolean visited = false;
 
-				public boolean hasNext() {
+				public boolean hasNext()
+				{
 					return !visited;
 				}
 
-				public ListElement next() {
+				public ListElement next()
+				{
 					if (visited)
 						throw new NoSuchElementException(
 								"Only one ListElement!");
-					else {
+					else
+					{
 						visited = true;
-						return new ListElement() {
-							public String getLabel() {
+						return new ListElement()
+						{
+							public String getLabel()
+							{
 								return SingleCommandElementalList.this.label;
 							}
 
-							public Command getCommand() {
+							public Command getCommand()
+							{
 								return SingleCommandElementalList.this.command;
 							}
 						};
 					}
 				}
 
-				public void remove() throws UnsupportedOperationException {
+				public void remove() throws UnsupportedOperationException
+				{
 					throw new UnsupportedOperationException(
 							"Mommy, make the bad man stop ><");
 				}

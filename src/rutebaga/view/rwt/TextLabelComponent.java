@@ -9,14 +9,14 @@ import rutebaga.view.drawer.Drawer;
 import rutebaga.view.drawer.FontAttribute;
 
 /**
- * Provides the simple ability of displaying a
- * String to the view with whatever Font or Color attributes that have been
- * specified.
+ * Provides the simple ability of displaying a String to the view with whatever
+ * Font or Color attributes that have been specified.
  * 
  * @author Ryan
  * 
  */
-public class TextLabelComponent extends ViewComponent {
+public class TextLabelComponent extends ViewComponent
+{
 
 	private String label;
 
@@ -26,7 +26,8 @@ public class TextLabelComponent extends ViewComponent {
 
 	private CompositeAttribute composite;
 
-	private TextLabelComponent() {
+	private TextLabelComponent()
+	{
 		font = new FontAttribute(new Font("Arial", Font.PLAIN, 10));
 		color = new ColorAttribute(Color.BLACK);
 		composite = new CompositeAttribute();
@@ -36,39 +37,53 @@ public class TextLabelComponent extends ViewComponent {
 
 	/**
 	 * Constructs a new TextLabelComponent for displaying the specified String.
-	 * @param label Text to display.
+	 * 
+	 * @param label
+	 *            Text to display.
 	 */
-	public TextLabelComponent(String label) {
+	public TextLabelComponent(String label)
+	{
 		this();
 		this.label = label;
 	}
 
-	public void draw(Drawer draw) {
+	@Override
+	public void draw(Drawer draw)
+	{
 		draw.setAttribute(composite);
 		draw.drawString(this.getLocation(), label);
 	}
 
 	/**
 	 * Changes the Font used to draw this TextLabelComponent.
-	 * @param font The font to use.
+	 * 
+	 * @param font
+	 *            The font to use.
 	 */
-	public void setFont(Font font) {
+	public void setFont(Font font)
+	{
 		this.font.setFont(font);
 	}
 
 	/**
 	 * Changes the Color to draw this TextLabelComponent in.
-	 * @param color The new Color of the text.
+	 * 
+	 * @param color
+	 *            The new Color of the text.
 	 */
-	public void setFontColor(Color color) {
+	public void setFontColor(Color color)
+	{
 		this.color.setColor(color);
 	}
 
 	/**
 	 * Changes the text stored in this TextLabelComponent.
-	 * @param label The new text.
+	 * 
+	 * @param label
+	 *            The new text.
 	 */
-	public void setLabel(String label) {
+	public void setLabel(String label)
+	{
 		this.label = label;
 	}
 

@@ -1,6 +1,11 @@
 package legacy;
 
-import java.awt.*;
+import java.awt.DisplayMode;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
@@ -21,7 +26,8 @@ public class GraphicsManager
 
 	public Image createImage(int width, int height)
 	{
-		return this.getGraphicsConfiguration().createCompatibleImage(width, height, Transparency.BITMASK);
+		return this.getGraphicsConfiguration().createCompatibleImage(width,
+				height, Transparency.BITMASK);
 	}
 
 	/**
@@ -95,7 +101,7 @@ public class GraphicsManager
 
 		try
 		{
-			//device.setDisplayMode(new DisplayMode(width, height, 32, 60));
+			// device.setDisplayMode(new DisplayMode(width, height, 32, 60));
 		}
 		catch (Exception t)
 		{
@@ -106,10 +112,12 @@ public class GraphicsManager
 
 		frame.createBufferStrategy(2);
 		bufferStrategy = frame.getBufferStrategy();
-		
+
 		System.out.println("INITIALIZED GRAPHICS MANAGER");
-		System.out.println("MULTIBUFFER: " + bufferStrategy.getCapabilities().isMultiBufferAvailable());
-		System.out.println("PAGE FLIPPING: " + bufferStrategy.getCapabilities().isPageFlipping());
+		System.out.println("MULTIBUFFER: "
+				+ bufferStrategy.getCapabilities().isMultiBufferAvailable());
+		System.out.println("PAGE FLIPPING: "
+				+ bufferStrategy.getCapabilities().isPageFlipping());
 	}
 
 	/**

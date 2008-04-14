@@ -32,10 +32,10 @@ public class RectBoundsTest
 		{
 			MatrixTest.print(v);
 		}
-		
+
 		System.out.println();
-		
-		for(Vector v : bounds.locationSet(2))
+
+		for (Vector v : bounds.locationSet(2))
 		{
 			System.out.println(v);
 		}

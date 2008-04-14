@@ -16,7 +16,8 @@ import java.util.Set;
  * @param <T>
  *            the context type
  */
-public class ChainedRule<T> implements Rule<T> {
+public class ChainedRule<T> implements Rule<T>
+{
 	private final boolean defaultValue;
 
 	private Set<Rule<T>> rules = new HashSet<Rule<T>>();
@@ -30,13 +31,14 @@ public class ChainedRule<T> implements Rule<T> {
 	 *            all rules are true). False implies OR semantics (the rule is
 	 *            false iff all rules are false).
 	 */
-	public ChainedRule(boolean defaultValue) {
+	public ChainedRule(boolean defaultValue)
+	{
 		this.defaultValue = defaultValue;
 	}
 
 	/**
-	 * Returns the the status of this rule in the specified context.  The semantics of the ChainedRule is specified by the
-	 * default value.
+	 * Returns the the status of this rule in the specified context. The
+	 * semantics of the ChainedRule is specified by the default value.
 	 * 
 	 * @param context
 	 *            the context in which the rule runs.
@@ -44,7 +46,8 @@ public class ChainedRule<T> implements Rule<T> {
 	 *         value in the given context.
 	 * @see rutebaga.commons.Rule#determine(Object)
 	 */
-	public boolean determine(T context) {
+	public boolean determine(T context)
+	{
 		for (Rule<T> rule : rules)
 			if (rule.determine(context) != defaultValue)
 				return !defaultValue;

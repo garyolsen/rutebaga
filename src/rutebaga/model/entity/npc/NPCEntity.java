@@ -1,6 +1,6 @@
 package rutebaga.model.entity.npc;
 
-import rutebaga.model.entity.*;
+import rutebaga.model.entity.Entity;
 
 /**
  * NPCEntity is a sub-type of {@link Entity} and adds needed functionality to an
@@ -12,14 +12,16 @@ import rutebaga.model.entity.*;
  * @author Nicholas Stamas
  * 
  */
-public class NPCEntity {
+public class NPCEntity
+{
 
 	private NPCEntityType type;
 
 	private Entity target;
 	private NPCBrain brain;
 
-	protected NPCEntity(NPCEntityType type) {
+	protected NPCEntity(NPCEntityType type)
+	{
 		this.type = type;
 	}
 
@@ -29,7 +31,8 @@ public class NPCEntity {
 	 * 
 	 * @see NPCEntityType
 	 */
-	public void tick() {
+	public void tick()
+	{
 		type.tick(this);
 	}
 
@@ -40,7 +43,8 @@ public class NPCEntity {
 	 * @see NPCEntityType
 	 * @return True if the target is in sight.
 	 */
-	public boolean targetInSight() {
+	public boolean targetInSight()
+	{
 		return type.targetInSight(this);
 	}
 
@@ -51,7 +55,8 @@ public class NPCEntity {
 	 * @see NPCEntityType
 	 * @return True if the target is in attack range.
 	 */
-	public boolean targetInRange() {
+	public boolean targetInRange()
+	{
 		return type.targetInRange(this);
 	}
 
@@ -62,7 +67,8 @@ public class NPCEntity {
 	 *            {@link rutebaga.model.entity.Entity Entity} to target.
 	 * @see rutebaga.model.entity.Entity
 	 */
-	public void setTarget(Entity target) {
+	public void setTarget(Entity target)
+	{
 		this.target = target;
 	}
 
@@ -72,7 +78,8 @@ public class NPCEntity {
 	 * 
 	 * @see NPCEntityType
 	 */
-	public void speak() {
+	public void speak()
+	{
 		type.speak(this);
 	}
 
@@ -87,7 +94,8 @@ public class NPCEntity {
 	 *            hostile gesture against.
 	 * @see rutebaga.model.entity.Entity
 	 */
-	public void takeHostileGesture(Entity entity) {
+	public void takeHostileGesture(Entity entity)
+	{
 		type.takeHostileGesture(this, entity);
 	}
 
@@ -102,7 +110,8 @@ public class NPCEntity {
 	 *            friendly gesture towards.
 	 * @see rutebaga.model.entity.Entity
 	 */
-	public void takeFriendlyGesture(Entity entity) {
+	public void takeFriendlyGesture(Entity entity)
+	{
 		type.takeFriendlyGesture(this, entity);
 	}
 
@@ -112,7 +121,8 @@ public class NPCEntity {
 	 * 
 	 * @see NPCEntityType
 	 */
-	public void barter() {
+	public void barter()
+	{
 		type.barter(this);
 	}
 
@@ -123,25 +133,31 @@ public class NPCEntity {
 	 * @return The {@link rutebaga.model.entity.Entity Entity} currently being
 	 *         targeted by this NPCEntity.
 	 */
-	public Entity getTarget() {
+	public Entity getTarget()
+	{
 		return target;
 	}
 
 	/**
 	 * Sets this NPCEntity's current {@link NPCBrain}.
-	 * @param brain The {@link NPCBrain} to be inserted into this NPCEntity.
+	 * 
+	 * @param brain
+	 *            The {@link NPCBrain} to be inserted into this NPCEntity.
 	 * @see NPCBrain
 	 */
-	public void setBrain(NPCBrain brain) {
+	public void setBrain(NPCBrain brain)
+	{
 		this.brain = brain;
 	}
 
-	/** 
+	/**
 	 * Returns this NPCEntity's current {@link NPCBrain}.
+	 * 
 	 * @return The {@link NPCBrain} currently controlling this NPCEntity.
 	 * @see NPCBrain
 	 */
-	public NPCBrain getBrain() {
+	public NPCBrain getBrain()
+	{
 		return this.brain;
 	}
 }

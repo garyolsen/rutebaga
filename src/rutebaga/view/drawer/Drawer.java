@@ -17,7 +17,8 @@ import java.awt.Shape;
  * 
  * @author Ryan
  */
-public abstract class Drawer {
+public abstract class Drawer
+{
 
 	private Attribute attribute;
 
@@ -94,15 +95,18 @@ public abstract class Drawer {
 	 * @param attr
 	 *            The Attribute to set for this Drawer.
 	 */
-	public void setAttribute(Attribute attr) {
+	public void setAttribute(Attribute attr)
+	{
 		this.attribute = attr;
 	}
 
 	/**
 	 * Returns the current {@link Attribute Attriubtes}.
+	 * 
 	 * @return The Attribute currently being used in this Drawer.
 	 */
-	public Attribute getAttribute() {
+	public Attribute getAttribute()
+	{
 		return attribute;
 	}
 }

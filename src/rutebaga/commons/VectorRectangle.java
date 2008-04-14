@@ -51,7 +51,7 @@ public class VectorRectangle
 					{
 						// carry to the next digit
 						start[component] = lowerBound.get(component);
-						start[component+1] += scale;
+						start[component + 1] += scale;
 					}
 				}
 				else
@@ -60,7 +60,7 @@ public class VectorRectangle
 				}
 			}
 		}
-		
+
 		return rval;
 	}
 }

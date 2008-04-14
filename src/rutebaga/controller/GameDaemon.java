@@ -28,9 +28,9 @@ import rutebaga.view.ViewFacade;
  * interpreters are given references to the GameDaemon and
  * {@link rutebaga.view.ViewFacade ViewFacade}.
  * 
- * The GameDaemon also maintains a queue of {@link Command Commands}. Commands that manipulate
- * the model should always be queued so they can be executed in sequential order
- * at an appropriate time.
+ * The GameDaemon also maintains a queue of {@link Command Commands}. Commands
+ * that manipulate the model should always be queued so they can be executed in
+ * sequential order at an appropriate time.
  * 
  * @see Command
  * @see rutebaga.view.ViewFacade
@@ -38,7 +38,8 @@ import rutebaga.view.ViewFacade;
  * @see UserActionInterpreter
  */
 public class GameDaemon extends KeyAdapter implements CommandQueue,
-		InterpreterManager {
+		InterpreterManager
+{
 
 	private ViewFacade facade;
 
@@ -50,8 +51,9 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 
 	/**
 	 * Constructs a new GameDaemon.
- 	 */
-	private GameDaemon(ViewFacade view, boolean queued) {
+	 */
+	private GameDaemon(ViewFacade view, boolean queued)
+	{
 		if (view == null)
 			throw new NullPointerException();
 		facade = view;
@@ -60,39 +62,50 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		eventsAreQueued = queued;
 	}
 
-	public static GameDaemon initialize() {
+	public static GameDaemon initialize()
+	{
 		return initialize(false);
 	}
 
-	public static GameDaemon initialize(boolean queueEvents) {
+	public static GameDaemon initialize(boolean queueEvents)
+	{
 		ViewFacade facade = new ViewFacade();
 		return new GameDaemon(facade, queueEvents);
 	}
 
 	/**
-	 * Allows clients to automatically queue a {@link rutebaga.controller.command.Command}.
-	 * @param command The Command to queue.
+	 * Allows clients to automatically queue a
+	 * {@link rutebaga.controller.command.Command}.
+	 * 
+	 * @param command
+	 *            The Command to queue.
 	 * @see rutebaga.controller.CommandQueue#queueCommand(rutebaga.controller.Command)
 	 */
-	public void queueCommand(Command command) {
+	public void queueCommand(Command command)
+	{
 		commandQueue.offer(command);
 	}
 
-	protected void processCommandQueue() {
-		while (!commandQueue.isEmpty()) {
+	protected void processCommandQueue()
+	{
+		while (!commandQueue.isEmpty())
+		{
 			Command command = commandQueue.poll();
 			command.execute();
 		}
 	}
 
-	public void activate(UserActionInterpreter uai) {
+	public void activate(UserActionInterpreter uai)
+	{
 		uai.installActionInterpreter(this, facade);
 		interpreterStack.push(uai);
 	}
 
-	public void deactivate(UserActionInterpreter uai) {
+	public void deactivate(UserActionInterpreter uai)
+	{
 		// Remove uai from the stack along with all interpreters above it
-		while (!interpreterStack.isEmpty()) {
+		while (!interpreterStack.isEmpty())
+		{
 			UserActionInterpreter i = interpreterStack.pop();
 			i.uninstallActionInterpreter();
 			if (i.equals(uai))
@@ -100,99 +113,131 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		}
 	}
 
-	public void keyPressed(final KeyEvent e) {
-		processEvent(new EventCommand() {
-			public void act(UserActionInterpreter uai) {
+	@Override
+	public void keyPressed(final KeyEvent e)
+	{
+		processEvent(new EventCommand()
+		{
+			@Override
+			public void act(UserActionInterpreter uai)
+			{
 				uai.keyPressed(e);
 			}
 		});
 	}
 
-	public void actionPerformed(final ActionEvent e) {
-		processEvent(new EventCommand() {
-			public void act(UserActionInterpreter uai) {
+	public void actionPerformed(final ActionEvent e)
+	{
+		processEvent(new EventCommand()
+		{
+			@Override
+			public void act(UserActionInterpreter uai)
+			{
 				uai.actionPerformed(e);
 			}
 		});
 	}
 
-	public void tick() {
-		processEvent(new EventCommand() {
-			public void act(UserActionInterpreter uai) {
+	public void tick()
+	{
+		processEvent(new EventCommand()
+		{
+			@Override
+			public void act(UserActionInterpreter uai)
+			{
 				uai.tick();
 			}
 		});
 	}
 
-	private void processEvent(Command command) {
+	private void processEvent(Command command)
+	{
 		if (eventsAreQueued)
 			queueCommand(command);
 		else
 			command.execute();
 	}
 
-	private abstract class EventCommand implements Command {
-		public boolean isFeasible() {
+	private abstract class EventCommand implements Command
+	{
+		public boolean isFeasible()
+		{
 			return true;
 		}
-		
-		public void execute() {
-			for (UserActionInterpreter uai: interpreterStack) {
+
+		public void execute()
+		{
+			for (UserActionInterpreter uai : interpreterStack)
+			{
 				act(uai);
 				if (!uai.eventsFallThrough())
 					break;
 			}
 		}
-		
+
 		public abstract void act(UserActionInterpreter uai);
 	}
 
-	private class InterpreterStack implements Iterable<UserActionInterpreter> {
+	private class InterpreterStack implements Iterable<UserActionInterpreter>
+	{
 		private Vector<UserActionInterpreter> stack = new Vector<UserActionInterpreter>();
 
 		private int modCount = 0;
 
-		public void push(UserActionInterpreter uai) {
+		public void push(UserActionInterpreter uai)
+		{
 			stack.add(uai);
 		}
 
-		public UserActionInterpreter pop() {
+		public UserActionInterpreter pop()
+		{
 			return stack.remove(stack.size() - 1);
 		}
 
-		public UserActionInterpreter peek() {
+		public UserActionInterpreter peek()
+		{
 			return stack.get(stack.size() - 1);
 		}
 
-		public boolean isEmpty() {
+		public boolean isEmpty()
+		{
 			return stack.isEmpty();
 		}
 
-		public Iterator<UserActionInterpreter> iterator() {
-			return new Iterator<UserActionInterpreter>() {
+		public Iterator<UserActionInterpreter> iterator()
+		{
+			return new Iterator<UserActionInterpreter>()
+			{
 				int cursor = stack.size();
 
 				int expectedModCount = modCount;
 
-				public boolean hasNext() {
+				public boolean hasNext()
+				{
 					return cursor != 0;
 				}
 
-				public UserActionInterpreter next() {
-					try {
+				public UserActionInterpreter next()
+				{
+					try
+					{
 						checkForComodification();
 						return stack.get(--cursor);
-					} catch (IndexOutOfBoundsException e) {
+					}
+					catch (IndexOutOfBoundsException e)
+					{
 						checkForComodification();
 						throw new NoSuchElementException();
 					}
 				}
 
-				public void remove() throws UnsupportedOperationException {
+				public void remove() throws UnsupportedOperationException
+				{
 					throw new UnsupportedOperationException();
 				}
 
-				private void checkForComodification() {
+				private void checkForComodification()
+				{
 					if (modCount != expectedModCount)
 						throw new ConcurrentModificationException();
 				}

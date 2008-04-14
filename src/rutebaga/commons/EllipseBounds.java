@@ -30,22 +30,25 @@ public class EllipseBounds extends Bounds
 		this.center = center;
 		this.radii = size;
 	}
-	
+
 	/**
 	 * Constructs an ellipsoid bounds centered at the origin.
 	 * 
-	 * @param radii	the radii of the ellipsoid
+	 * @param radii
+	 *            the radii of the ellipsoid
 	 */
-	public EllipseBounds(Vector radii) {
-		
+	public EllipseBounds(Vector radii)
+	{
+
 		double arr[] = new double[radii.getDimension()];
-		for ( int i = 0; i < arr.length; i++ ) {
+		for (int i = 0; i < arr.length; i++)
+		{
 			arr[i] = 0;
 		}
-		
+
 		center = new Vector(arr);
 		this.radii = radii;
-		
+
 	}
 
 	/**
@@ -57,6 +60,7 @@ public class EllipseBounds extends Bounds
 	 *            Whether or not this {@link Vector} is contained in the
 	 *            ElipseBounds
 	 */
+	@Override
 	public boolean contains(Vector v)
 	{
 		if (v == null)
@@ -66,7 +70,7 @@ public class EllipseBounds extends Bounds
 		{
 			double numerator = (v.get(idx) - center.get(idx));
 			numerator *= numerator;
-			value += numerator / (radii.get(idx)*radii.get(idx));
+			value += numerator / (radii.get(idx) * radii.get(idx));
 		}
 		return value <= 1;
 	}

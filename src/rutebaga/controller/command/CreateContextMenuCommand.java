@@ -12,7 +12,8 @@ import rutebaga.view.ViewFacade;
  * sub-context menu with the specified list of Commands (in the form of an
  * ElementalList).
  */
-public abstract class CreateContextMenuCommand implements Command {
+public abstract class CreateContextMenuCommand implements Command
+{
 
 	private ElementalList elements;
 
@@ -24,7 +25,8 @@ public abstract class CreateContextMenuCommand implements Command {
 	 * @param list
 	 *            a list of elements to display
 	 */
-	public final void setElements(ElementalList list) {
+	public final void setElements(ElementalList list)
+	{
 		elements = list;
 	}
 
@@ -34,13 +36,15 @@ public abstract class CreateContextMenuCommand implements Command {
 	 * 
 	 * @param view
 	 */
-	public final void setViewFacade(ViewFacade view) {
+	public final void setViewFacade(ViewFacade view)
+	{
 		facade = view;
 	}
 
 	/**
 	 * Asks the ViewFacade to open a context menu with the list of elements
-	 * specified. 
+	 * specified.
+	 * 
 	 * @see rutebaga.controller.command.Command#execute()
 	 */
 	public abstract void execute();
@@ -50,25 +54,30 @@ public abstract class CreateContextMenuCommand implements Command {
 	 * 
 	 * @see rutebaga.controller.command.Command#isFeasible()
 	 */
-	public boolean isFeasible() {
+	public boolean isFeasible()
+	{
 		return true;
 	}
-	
+
 	/**
 	 * Provides access to this CreateContextMenuCommand's ViewFacade, allowing
 	 * subclasses to access it in their execute method.
+	 * 
 	 * @return
 	 */
-	protected ViewFacade getViewFacade() { 
+	protected ViewFacade getViewFacade()
+	{
 		return facade;
 	}
-	
+
 	/**
-	 * Provides access to this CreateContextMenuCommand's ElementalList, allowing
-	 * subclasses to access it in their execute method. 
+	 * Provides access to this CreateContextMenuCommand's ElementalList,
+	 * allowing subclasses to access it in their execute method.
+	 * 
 	 * @return this CreateContextMenuCommand's ElementalList
 	 */
-	protected ElementalList getElements() {
+	protected ElementalList getElements()
+	{
 		return elements;
 	}
 }

@@ -37,26 +37,27 @@ public class ConcreteInventory implements Inventory
 		if (!equipped.contains(item))
 		{
 			equipped.add(item);
-			
+
 			Set<EntityEffect> unequipEffects = new HashSet<EntityEffect>();
-			for(ReversibleEntityEffect effect : item.getReversibleEquipEffects())
+			for (ReversibleEntityEffect effect : item
+					.getReversibleEquipEffects())
 			{
 				Object id = parent.accept(effect);
 				EntityEffect reverse = effect.getReverseEffect(id);
 				unequipEffects.add(reverse);
 			}
 			onUnequipEffects.put(item, unequipEffects);
-			
-			for(EntityEffect effect : item.getPermanentEquipEffects())
+
+			for (EntityEffect effect : item.getPermanentEquipEffects())
 			{
 				parent.accept(effect);
 			}
 		}
 	}
-	
+
 	public void unequip(Item item)
 	{
-		for(EntityEffect reverse : onUnequipEffects.remove(item))
+		for (EntityEffect reverse : onUnequipEffects.remove(item))
 		{
 			parent.accept(reverse);
 		}

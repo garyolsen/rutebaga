@@ -6,7 +6,8 @@ package rutebaga.controller.command;
  * 
  * @author may
  */
-public class CreateSubContextMenuCommand extends CreateContextMenuCommand {
+public class CreateSubContextMenuCommand extends CreateContextMenuCommand
+{
 	/**
 	 * Causes the previously specified
 	 * {@link rutebaga.view.ViewFacade ViewFacade} to open a sub context menu
@@ -14,7 +15,9 @@ public class CreateSubContextMenuCommand extends CreateContextMenuCommand {
 	 * 
 	 * @see rutebaga.controller.Command#execute()
 	 */
-	public void execute() {
+	@Override
+	public void execute()
+	{
 		getViewFacade().createSubContextMenu(getElements());
 	}
 }

@@ -31,17 +31,17 @@ public class MovementEvent
 	{
 		return instance.getTile();
 	}
-	
+
 	public Vector getOldCoordinate()
 	{
 		return oldCoordinate;
 	}
-	
+
 	public Vector getOldTile()
 	{
 		return oldTile;
 	}
-	
+
 	public Set<MovementListener> getInstanceListeners()
 	{
 		return instance.getMovementListeners();

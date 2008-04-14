@@ -22,7 +22,8 @@ import rutebaga.controller.command.Command;
  * @see rutebaga.model.environment.Instance
  * @see rutebaga.controller.command.Command
  */
-public class ActionDeterminer {
+public class ActionDeterminer
+{
 	/*
 	 * TODO: Implement this class.
 	 */

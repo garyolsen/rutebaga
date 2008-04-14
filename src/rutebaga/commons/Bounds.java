@@ -12,7 +12,8 @@ import java.util.Set;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Bounds {
+public abstract class Bounds
+{
 	/**
 	 * Tests whether or not the given vector is within the bounds.
 	 * 
@@ -38,10 +39,12 @@ public abstract class Bounds {
 	 * @see Matrix
 	 * @see Vector
 	 */
-	public Matrix filter(Matrix m) {
+	public Matrix filter(Matrix m)
+	{
 		Vector[] vectors = m.asVectors();
 
-		for (int idx = 0; idx < vectors.length; idx++) {
+		for (int idx = 0; idx < vectors.length; idx++)
+		{
 			if (!contains(vectors[idx]))
 				vectors[idx] = null;
 		}
@@ -57,9 +60,11 @@ public abstract class Bounds {
 	 *            The sample Vector set.
 	 * @return the Vector set within this Bounds.
 	 */
-	public Set<Vector> filter(Set<Vector> vectors) {
+	public Set<Vector> filter(Set<Vector> vectors)
+	{
 		Set<Vector> rval = new HashSet<Vector>();
-		for (Vector vector : vectors) {
+		for (Vector vector : vectors)
+		{
 			if (this.contains(vector))
 				rval.add(vector);
 		}
@@ -76,9 +81,11 @@ public abstract class Bounds {
 	 *            The offset to use.
 	 * @return The Vector set within this Bounds.
 	 */
-	public Set<Vector> filter(Set<Vector> vectors, Vector offset) {
+	public Set<Vector> filter(Set<Vector> vectors, Vector offset)
+	{
 		Set<Vector> rval = new HashSet<Vector>();
-		for (Vector vector : vectors) {
+		for (Vector vector : vectors)
+		{
 			if (this.contains(vector.plus(offset)))
 				rval.add(vector);
 		}
@@ -102,10 +109,12 @@ public abstract class Bounds {
 	 * @param scale
 	 *            Controls the resolution of the location set returned. For any
 	 *            {@link Vector} in the returned set, the closest another Vector
-	 *            can be is the distance of one basis Vector scaled by this scale.
+	 *            can be is the distance of one basis Vector scaled by this
+	 *            scale.
 	 * @return A set of location Vectors that are within this Bounds.
 	 */
-	public Set<Vector> locationSet(double scale) {
+	public Set<Vector> locationSet(double scale)
+	{
 		Set<Vector> rval = getBoundingBox().locationSet(scale);
 		return filter(rval);
 	}

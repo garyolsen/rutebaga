@@ -3,9 +3,9 @@ package rutebaga.model.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-import rutebaga.commons.Vector;
 import rutebaga.commons.EllipseBounds;
 import rutebaga.commons.UIDProvider;
+import rutebaga.commons.Vector;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
@@ -27,20 +27,20 @@ import rutebaga.model.environment.Instance;
 public abstract class Entity extends Instance
 {
 	private EntityType type;
-	
+
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
-	
+
 	private EllipseBounds visionBounds;
 	private Vision vision;
-	
+
 	public Entity(EntityType type)
 	{
 		this.type = type;
-		visionBounds = new EllipseBounds( new Vector( 10, 10 ) );
-		// XXX: connascence of timing 
+		visionBounds = new EllipseBounds(new Vector(10, 10));
+		// XXX: connascence of timing
 		vision = new Vision(this);
 	}
-	
+
 	/**
 	 * Queues an effect to be applied to this entity.
 	 * 
@@ -54,7 +54,7 @@ public abstract class Entity extends Instance
 		effectQueue.put(uid, effect);
 		return uid;
 	}
-	
+
 	protected Map<Object, EntityEffect> getEffectQueue()
 	{
 		return effectQueue;
@@ -63,29 +63,36 @@ public abstract class Entity extends Instance
 	public abstract Inventory getInventory();
 
 	public abstract Stats getStats();
-	
-	public EllipseBounds getVisionBounds() {
+
+	public EllipseBounds getVisionBounds()
+	{
 		return visionBounds;
 	}
-	
-	public Vision getVision() {
+
+	public Vision getVision()
+	{
 		return vision;
 	}
 
-	public Vector getVisionRadius() {
+	public Vector getVisionRadius()
+	{
 		return visionBounds.getRadii();
 	}
 
-	public void setVisionBounds(EllipseBounds visionBounds) {
+	public void setVisionBounds(EllipseBounds visionBounds)
+	{
 		this.visionBounds = visionBounds;
 	}
 
-	public void setVisionRadius(Vector visionRadius) {
-		visionBounds.setRadii( visionRadius );
+	public void setVisionRadius(Vector visionRadius)
+	{
+		visionBounds.setRadii(visionRadius);
 	}
 
+	@Override
 	public final void tick()
 	{
-		if(this.type != null) type.tick(this);
+		if (this.type != null)
+			type.tick(this);
 	}
 }

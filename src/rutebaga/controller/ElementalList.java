@@ -2,6 +2,8 @@ package rutebaga.controller;
 
 import java.util.Iterator;
 
+import rutebaga.controller.command.Command;
+
 /**
  * 
  * An ElementalList is an ordered collection of {@link ListElement ListElements}.
@@ -15,7 +17,8 @@ import java.util.Iterator;
  * @see Command
  * @see ListElement
  */
-public interface ElementalList extends Iterable<ListElement> {
+public interface ElementalList extends Iterable<ListElement>
+{
 
 	/**
 	 * Gets the current label for this ElementalList describing the collection
@@ -26,7 +29,9 @@ public interface ElementalList extends Iterable<ListElement> {
 	public String getLabel();
 
 	/**
-	 * Gets an Iterator over the {@link ListElement ListElements} of this ElementalList.
+	 * Gets an Iterator over the {@link ListElement ListElements} of this
+	 * ElementalList.
+	 * 
 	 * @see ListElement
 	 * @return an Iterator of ListElements
 	 */

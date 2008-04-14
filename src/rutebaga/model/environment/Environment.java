@@ -83,7 +83,7 @@ public class Environment
 			// returns an instance of this type
 			instance.getEnvironment().remove(instance);
 		}
-		
+
 		MovementEvent event = new MovementEvent(instance, null, null);
 
 		// add to this environment
@@ -100,7 +100,7 @@ public class Environment
 
 		// update tile cache
 		updateTileOf(instance);
-		
+
 		notifyListeners(event);
 
 		return true;
@@ -124,7 +124,8 @@ public class Environment
 	 */
 	public void remove(Instance instance)
 	{
-		MovementEvent event = new MovementEvent(instance, instance.getCoordinate(), instance.getTile());
+		MovementEvent event = new MovementEvent(instance, instance
+				.getCoordinate(), instance.getTile());
 		instances.remove(instance);
 		Vector tile = reverseTileCache.remove(instance);
 		instancesAt(tile).remove(instance);
@@ -139,7 +140,8 @@ public class Environment
 	{
 		updatePhysics();
 		performMovement();
-		for(Instance instance : instances) instance.tick();
+		for (Instance instance : instances)
+			instance.tick();
 	}
 
 	/**
@@ -152,7 +154,8 @@ public class Environment
 	 *            the tile access is being requested to
 	 * @return whether or not access is blocked
 	 */
-	protected boolean blocked(Instance instance, Vector tile, boolean emptyBlocks)
+	protected boolean blocked(Instance instance, Vector tile,
+			boolean emptyBlocks)
 	{
 		InstanceSet instances = tileCache.get(tile);
 		if (instances == null || instances.size() == 0)
@@ -207,7 +210,8 @@ public class Environment
 			{
 				PhysicsContainer physics = instance.getPhysicsContainer();
 				physics.setMomentum(physics.getMomentum().times(0.0));
-				physics.setAppliedImpulse(physics.getAppliedImpulse().times(0.0));
+				physics.setAppliedImpulse(physics.getAppliedImpulse()
+						.times(0.0));
 				physics.setVelocity(physics.getVelocity().times(0.0));
 			}
 			else
@@ -289,7 +293,8 @@ public class Environment
 	/**
 	 * Registers a movement listener with this environment.
 	 * 
-	 * @param listener	the listener to register
+	 * @param listener
+	 *            the listener to register
 	 * 
 	 * @see MovementListener
 	 */
@@ -301,7 +306,8 @@ public class Environment
 	/**
 	 * Unregisters a movement listener with this environment.
 	 * 
-	 * @param listener	the listener to unregister
+	 * @param listener
+	 *            the listener to unregister
 	 * 
 	 * @see MovementListener
 	 */
@@ -313,7 +319,8 @@ public class Environment
 	/**
 	 * Notifies all listeners of a movement event.
 	 * 
-	 * @param event	the movement event
+	 * @param event
+	 *            the movement event
 	 * 
 	 * @see MovementEvent
 	 */
@@ -321,19 +328,20 @@ public class Environment
 	{
 		for (MovementListener listener : listeners)
 			listener.onMovement(event);
-		for(MovementListener listener : event.getInstanceListeners())
+		for (MovementListener listener : event.getInstanceListeners())
 		{
 			// only notify listeners once
-			if(!listeners.contains(listener))
+			if (!listeners.contains(listener))
 				listener.onMovement(event);
 		}
 	}
-	
+
 	/**
 	 * Gets the set of instances at a tile, creating the set if null.
 	 * 
-	 * @param tile	the tile to query
-	 * @return	the set of instances at the tile
+	 * @param tile
+	 *            the tile to query
+	 * @return the set of instances at the tile
 	 */
 	private Set<Instance> getInstanceSetAt(Vector tile)
 	{
@@ -345,12 +353,12 @@ public class Environment
 		}
 		return set;
 	}
-	
+
 	public Set<Vector> getSpace()
 	{
 		return Collections.unmodifiableSet(tileCache.keySet());
 	}
-	
+
 	public int getDimension()
 	{
 		return tileConvertor.getDimension();

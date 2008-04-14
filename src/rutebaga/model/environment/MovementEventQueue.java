@@ -6,13 +6,12 @@ import java.util.List;
 public class MovementEventQueue
 {
 	private List<MovementEvent> events = new LinkedList<MovementEvent>();
-	
-	
+
 	public void onMovement(MovementEvent event)
 	{
 		this.events.add(event);
 	}
-	
+
 	public List<MovementEvent> poll()
 	{
 		List<MovementEvent> rval = events;

@@ -15,7 +15,8 @@ import rutebaga.controller.ListElement;
  * @see ActionDeterminer
  * @see ListElement
  */
-public interface Command {
+public interface Command
+{
 	/**
 	 * Returns the feasibility state of this Command. The execute operation
 	 * should not be invoked if isFeasible returns false.

@@ -6,7 +6,7 @@ import java.util.HashSet;
  * Convenience wrapper.
  * 
  * @author Gary LosHuertos
- *
+ * 
  */
 public class InstanceSet extends HashSet<Instance>
 {

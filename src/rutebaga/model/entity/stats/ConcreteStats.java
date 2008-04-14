@@ -21,10 +21,10 @@ public class ConcreteStats implements Stats
 	{
 		return parent;
 	}
-	
+
 	public StatValue getStatObject(StatisticId stat)
 	{
-		if(!stats.containsKey(stat))
+		if (!stats.containsKey(stat))
 		{
 			stats.put(stat, new StatValue());
 		}
@@ -35,7 +35,7 @@ public class ConcreteStats implements Stats
 	{
 		return getStatObject(stat).getValue();
 	}
-	
+
 	public void modifyStat(StatModification modification, Object id)
 	{
 		this.statModifications.put(id, modification);
@@ -43,7 +43,7 @@ public class ConcreteStats implements Stats
 		double newValue = modification.getAmount() + current;
 		getStatObject(modification.getStat()).setValue(newValue);
 	}
-	
+
 	public void undo(Object id)
 	{
 		StatModification modification = this.statModifications.remove(id);
@@ -51,5 +51,5 @@ public class ConcreteStats implements Stats
 		double newValue = current - modification.getAmount();
 		getStatObject(modification.getStat()).setValue(newValue);
 	}
-	
+
 }

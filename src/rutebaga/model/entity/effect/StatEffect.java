@@ -15,8 +15,8 @@ public class StatEffect extends ReversibleEntityEffect
 		super();
 		this.modification = modification;
 	}
-	
-	public StatEffect (StatisticId statId, double amount)
+
+	public StatEffect(StatisticId statId, double amount)
 	{
 		this(new StatModification(statId, amount));
 	}
@@ -30,7 +30,7 @@ public class StatEffect extends ReversibleEntityEffect
 	@Override
 	protected void affect(Entity entity, Object id)
 	{
-		//XXX LOD violation
+		// XXX LOD violation
 		entity.getStats().modifyStat(modification, id);
 	}
 
