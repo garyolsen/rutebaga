@@ -28,8 +28,8 @@ public class TestRunner
 	{
 		GraphicsManager manager = new GraphicsManager();
 		TestImageConverter.manager = manager;
-		manager.init(1440, 900);
-		Vector screen = new Vector(1440, 900);
+		manager.init(1280, 800);
+		Vector screen = new Vector(1280, 800);
 		manager.registerKeyListener(new KeyListener()
 		{
 			public void keyPressed(KeyEvent e)
@@ -59,9 +59,9 @@ public class TestRunner
 
 		Environment environment = new Environment(new Rect2DTileConvertor());
 		
-		for (int x = 0; x < 30; x++)
+		for (int x = -5; x < 35; x++)
 		{
-			for (int y = 0; y < 70; y++)
+			for (int y = -5; y < 75; y++)
 			{
 				Vector location = new Vector(x, y);
 				Tile tile = new Tile()
@@ -128,25 +128,11 @@ public class TestRunner
 			@Override
 			public Object accept(EntityEffect e) { return null; }
 
-			@Override
-			public Stats getStats()
-			{
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public Inventory getInventory()
-			{
-				// TODO Auto-generated method stub
-				return null;
-			}
-
 		};
 
 		environment.add(avatar, new Vector(10, 10));
 
-		EnvironmentRenderer renderer = new EnvironmentRenderer(environment);
+		EntityRenderer renderer = new EntityRenderer(avatar);
 
 		long frame = 0;
 		long time, sleepTime;
@@ -178,8 +164,8 @@ public class TestRunner
 				}
 
 			frame++;
-			System.out.println(frame + "\t"
-					+ (1000 / (System.currentTimeMillis() - time)));
+//			System.out.println(frame + "\t"
+//					+ (1000 / (System.currentTimeMillis() - time)));
 		}
 	}
 
