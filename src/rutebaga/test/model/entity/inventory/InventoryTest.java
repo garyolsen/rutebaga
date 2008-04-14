@@ -11,16 +11,24 @@ import rutebaga.model.entity.ReversibleEntityEffect;
 import rutebaga.model.entity.effect.StatEffect;
 import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.item.EquippableItem;
+import rutebaga.model.item.Item;
+import rutebaga.model.item.ItemType;
 
 public class InventoryTest
 {
 	public static final StatisticId strengthId = new StatisticId("Strength");
-	
-	public static void main(String ... args)
+
+	public static void main(String... args)
 	{
 		Entity entity = new CharEntity(new EntityType());
-		EquippableItem sword = new EquippableItem()
+		Item sword = new Item(new ItemType()
+		{
+			@Override
+			public Item makeItem()
+			{
+				return null;
+			}
+		})
 		{
 
 			@Override
@@ -59,27 +67,31 @@ public class InventoryTest
 			@Override
 			public void tick()
 			{
-				
+
 			}
-			
+
 		};
-		
+
 		System.out.println("before: " + entity.getStats().getValue(strengthId));
-		
+
 		entity.getInventory().equip(sword);
-		
-		System.out.println("after equip, before tick: " + entity.getStats().getValue(strengthId));
-		
+
+		System.out.println("after equip, before tick: "
+				+ entity.getStats().getValue(strengthId));
+
 		entity.tick();
-		
-		System.out.println("after tick: " + entity.getStats().getValue(strengthId));
-		
+
+		System.out.println("after tick: "
+				+ entity.getStats().getValue(strengthId));
+
 		entity.getInventory().unequip(sword);
-		
-		System.out.println("after unequip, before tick: " + entity.getStats().getValue(strengthId));
-		
+
+		System.out.println("after unequip, before tick: "
+				+ entity.getStats().getValue(strengthId));
+
 		entity.tick();
-		
-		System.out.println("after tick: " + entity.getStats().getValue(strengthId));
+
+		System.out.println("after tick: "
+				+ entity.getStats().getValue(strengthId));
 	}
 }
