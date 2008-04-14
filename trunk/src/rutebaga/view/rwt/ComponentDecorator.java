@@ -21,7 +21,8 @@ import rutebaga.view.drawer.Drawer;
  * @author Ryan
  * 
  */
-public abstract class ComponentDecorator extends ViewComponent {
+public abstract class ComponentDecorator extends ViewComponent
+{
 
 	private final ViewComponent decorated;
 
@@ -32,11 +33,14 @@ public abstract class ComponentDecorator extends ViewComponent {
 	 * @param decorated
 	 *            The ViewComponent to be decorated.
 	 */
-	public ComponentDecorator(ViewComponent decorated) {
+	public ComponentDecorator(ViewComponent decorated)
+	{
 		this.decorated = decorated;
 	}
 
-	public void draw(Drawer draw) {
+	@Override
+	public void draw(Drawer draw)
+	{
 		decorated.draw(draw);
 	}
 

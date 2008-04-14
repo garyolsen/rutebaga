@@ -1,7 +1,6 @@
 package legacy;
 
-public enum KeyState {
-	Pressed,
-	PressedOnce,
-	Released
+public enum KeyState
+{
+	Pressed, PressedOnce, Released
 }

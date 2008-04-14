@@ -7,35 +7,49 @@ import rutebaga.model.entity.npc.NPCState;
  * @author nicholasstamas
  * 
  */
-public class Attack extends NPCState {
+public class Attack extends NPCState
+{
 
-	public NPCState barter(NPCEntity npc) {
+	@Override
+	public NPCState barter(NPCEntity npc)
+	{
 		System.out.println("I'm super mad. I'm in no mood for bartering!");
 		return this;
 	}
 
-	public NPCState makeFriendly(NPCEntity npc) {
+	@Override
+	public NPCState makeFriendly(NPCEntity npc)
+	{
 		return NPCState.wander;
 	}
 
-	public NPCState makeHostile(NPCEntity npc) {
+	@Override
+	public NPCState makeHostile(NPCEntity npc)
+	{
 		return this;
 	}
 
-	public NPCState speak(NPCEntity npc) {
+	@Override
+	public NPCState speak(NPCEntity npc)
+	{
 		System.out.println("I'm attacking you! Be very afraid!");
 		return this;
 	}
 
-	public NPCState tick(NPCEntity npc) {
-		if ( npc.targetInRange() && npc.targetInSight() ) {
-			//npc.attackTarget();
+	@Override
+	public NPCState tick(NPCEntity npc)
+	{
+		if (npc.targetInRange() && npc.targetInSight())
+		{
+			// npc.attackTarget();
 			return this;
 		}
-		else if ( npc.targetInSight() ){
+		else if (npc.targetInSight())
+		{
 			return NPCState.chase;
 		}
-		else {
+		else
+		{
 			return NPCState.wander;
 		}
 	}

@@ -5,8 +5,9 @@ import rutebaga.scaffold.MasterScaffold;
 
 public class MaleBuilder implements Builder
 {
-	private static String[] ids = { "frank", "bob", "mark" };
-	
+	private static String[] ids =
+	{ "frank", "bob", "mark" };
+
 	private static enum Types
 	{
 		FRANK, BOB, MARK;
@@ -25,7 +26,7 @@ public class MaleBuilder implements Builder
 	public void initialize(String id, Object object, MasterScaffold scaffold)
 	{
 		TestObject cast = (TestObject) object;
-		switch(Types.valueOf(id.toUpperCase()))
+		switch (Types.valueOf(id.toUpperCase()))
 		{
 		case FRANK:
 			cast.setName("Frank");
@@ -44,6 +45,5 @@ public class MaleBuilder implements Builder
 			break;
 		}
 	}
-	
-	
+
 }

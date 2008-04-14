@@ -8,7 +8,8 @@ package rutebaga.commons;
  * @param <T>
  *            The context for this Rule.
  */
-public class StaticRule<T> implements Rule<T> {
+public class StaticRule<T> implements Rule<T>
+{
 	private final boolean value;
 
 	/**
@@ -17,7 +18,8 @@ public class StaticRule<T> implements Rule<T> {
 	 * @param value
 	 *            will define the evaluation of this StaticRule.
 	 */
-	public StaticRule(boolean value) {
+	public StaticRule(boolean value)
+	{
 		this.value = value;
 	}
 
@@ -29,7 +31,8 @@ public class StaticRule<T> implements Rule<T> {
 	 *         {@link #determine(Object)}
 	 * @see #determine(Object)
 	 */
-	public boolean isValue() {
+	public boolean isValue()
+	{
 		return value;
 	}
 
@@ -43,7 +46,8 @@ public class StaticRule<T> implements Rule<T> {
 	 * @see rutebaga.commons.Rule#determine(Object)
 	 * @see #isValue()
 	 */
-	public boolean determine(T context) {
+	public boolean determine(T context)
+	{
 		return value;
 	}
 

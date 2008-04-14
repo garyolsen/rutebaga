@@ -24,13 +24,17 @@ package rutebaga.view.rwt;
  * @author Ryan
  * 
  */
-public class ContextMenu extends ComponentDecorator {
+public class ContextMenu extends ComponentDecorator
+{
 
 	/**
 	 * Contructs a ContextMenu as a decorator of the specified ViewComponent.
-	 * @param decorated The ViewComponent to be decorated.
+	 * 
+	 * @param decorated
+	 *            The ViewComponent to be decorated.
 	 */
-	public ContextMenu(ViewComponent decorated) {
+	public ContextMenu(ViewComponent decorated)
+	{
 		super(decorated);
 		// TODO Auto-generated constructor stub
 	}

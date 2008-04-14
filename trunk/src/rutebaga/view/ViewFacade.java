@@ -27,7 +27,8 @@ import rutebaga.view.rwt.View;
  * @see rutebaga.view.rwt.EventDispatcher
  * 
  */
-public class ViewFacade {
+public class ViewFacade
+{
 
 	private View view;
 
@@ -41,7 +42,8 @@ public class ViewFacade {
 	 *            Height of the game.
 	 * @see rutebaga.view.rwt.View#View(int, int)
 	 */
-	public void constructView(int width, int height) {
+	public void constructView(int width, int height)
+	{
 		view = new View(width, height);
 	}
 
@@ -52,7 +54,8 @@ public class ViewFacade {
 	 * 
 	 * @see rutebaga.view.rwt.View#View(int, int)
 	 */
-	public void constructFullscreenView() {
+	public void constructFullscreenView()
+	{
 		view = new View(800, 600);
 		view.setFullscreen();
 	}
@@ -62,7 +65,8 @@ public class ViewFacade {
 	 * will call {@link rutebaga.view.rwt.View#renderFrame()}. Otherwise
 	 * nothing is done.
 	 */
-	public void renderFrame() {
+	public void renderFrame()
+	{
 		if (view != null)
 			view.renderFrame();
 	}
@@ -73,7 +77,8 @@ public class ViewFacade {
 	 * @param list
 	 *            A list of choises for the player.
 	 */
-	public void createTitleScreen(ElementalList list) {
+	public void createTitleScreen(ElementalList list)
+	{
 
 	}
 
@@ -90,7 +95,8 @@ public class ViewFacade {
 	 *            The {@link Command} for what to do on cancelation.
 	 */
 	public void createAvatarCreationScreen(TextFieldListener listener,
-			ElementalList list, Command accept, Command cancel) {
+			ElementalList list, Command accept, Command cancel)
+	{
 
 	}
 
@@ -103,7 +109,8 @@ public class ViewFacade {
 	 *            The location to spawn the menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createRootContextMenu(ElementalList list, Vector vector) {
+	public ContextMenu createRootContextMenu(ElementalList list, Vector vector)
+	{
 		return null;
 	}
 
@@ -115,7 +122,8 @@ public class ViewFacade {
 	 *            A list of choices for the player.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createSubContextMenu(ElementalList list) {
+	public ContextMenu createSubContextMenu(ElementalList list)
+	{
 		return null;
 	}
 
@@ -129,7 +137,8 @@ public class ViewFacade {
 	 *            The amount of information per scrollable page.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createScrollMenu(ElementalList list, int pageSize) {
+	public ContextMenu createScrollMenu(ElementalList list, int pageSize)
+	{
 		return null;
 	}
 
@@ -142,7 +151,8 @@ public class ViewFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createDialogMenu(ElementalList list, Vector vector) {
+	public ContextMenu createDialogMenu(ElementalList list, Vector vector)
+	{
 		return null;
 	}
 
@@ -152,7 +162,8 @@ public class ViewFacade {
 	 * @param list
 	 *            A list of items to be presented to the player.
 	 */
-	public void createWarningBox(ElementalList list) {
+	public void createWarningBox(ElementalList list)
+	{
 
 	}
 
@@ -163,7 +174,8 @@ public class ViewFacade {
 	 * @param menu
 	 *            A ContextMenu to be closed.
 	 */
-	public void closeContextMenu(ContextMenu menu) {
+	public void closeContextMenu(ContextMenu menu)
+	{
 
 	}
 }

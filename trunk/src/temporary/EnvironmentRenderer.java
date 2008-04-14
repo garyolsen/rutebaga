@@ -46,8 +46,9 @@ public class EnvironmentRenderer
 		double minPrim[] = new double[min.length];
 		for (int idx = 0; idx < min.length; idx++)
 			minPrim[idx] = min[idx];
-		
-		if(offset == null) offset = new Vector(minPrim, 0, 2);
+
+		if (offset == null)
+			offset = new Vector(minPrim, 0, 2);
 
 		draw(g, Tile.class, offset);
 		draw(g, Entity.class, offset);

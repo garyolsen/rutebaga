@@ -11,8 +11,9 @@ public class VectorRectTest
 	 */
 	public static void main(String[] args)
 	{
-		VectorRectangle boundingBox = new VectorRectangle(new Vector(0, 0, 0), new Vector(2, 2, 2));
-		for(Vector v : boundingBox.locationSet(1))
+		VectorRectangle boundingBox = new VectorRectangle(new Vector(0, 0, 0),
+				new Vector(2, 2, 2));
+		for (Vector v : boundingBox.locationSet(1))
 		{
 			System.out.println(v);
 		}

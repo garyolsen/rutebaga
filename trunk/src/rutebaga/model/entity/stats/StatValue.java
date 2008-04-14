@@ -2,7 +2,7 @@ package rutebaga.model.entity.stats;
 
 public class StatValue
 {
-	//FIXME add stat range
+	// FIXME add stat range
 	private double value;
 
 	public double getValue()

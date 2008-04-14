@@ -21,9 +21,9 @@ public class TestInstance extends Instance
 	@Override
 	public boolean blocks(Instance other)
 	{
-		if(other instanceof TestInstance)
+		if (other instanceof TestInstance)
 		{
-			if(((TestInstance) other).name.equals(this.name))
+			if (((TestInstance) other).name.equals(this.name))
 				return true;
 		}
 		return false;
@@ -45,6 +45,6 @@ public class TestInstance extends Instance
 	public void tick()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

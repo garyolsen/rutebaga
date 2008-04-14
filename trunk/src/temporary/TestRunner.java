@@ -4,20 +4,17 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import legacy.GraphicsManager;
+import legacy.KeyBuffer;
 import rutebaga.commons.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.EntityType;
-import rutebaga.model.entity.inventory.Inventory;
-import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
-
-import legacy.GraphicsManager;
-import legacy.KeyBuffer;
 
 public class TestRunner
 {
@@ -58,7 +55,7 @@ public class TestRunner
 		manager.registerKeyListener(buffer);
 
 		Environment environment = new Environment(new Rect2DTileConvertor());
-		
+
 		for (int x = -5; x < 35; x++)
 		{
 			for (int y = -5; y < 75; y++)
@@ -104,7 +101,7 @@ public class TestRunner
 			}
 		}
 
-		avatar = new CharEntity( new EntityType() )
+		avatar = new CharEntity(new EntityType())
 		{
 
 			@Override
@@ -124,9 +121,12 @@ public class TestRunner
 			{
 				return 1;
 			}
-			
+
 			@Override
-			public Object accept(EntityEffect e) { return null; }
+			public Object accept(EntityEffect e)
+			{
+				return null;
+			}
 
 		};
 
@@ -164,8 +164,8 @@ public class TestRunner
 				}
 
 			frame++;
-//			System.out.println(frame + "\t"
-//					+ (1000 / (System.currentTimeMillis() - time)));
+			// System.out.println(frame + "\t"
+			// + (1000 / (System.currentTimeMillis() - time)));
 		}
 	}
 

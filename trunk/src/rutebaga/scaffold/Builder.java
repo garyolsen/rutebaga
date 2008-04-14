@@ -22,7 +22,8 @@ package rutebaga.scaffold;
  * @author Gary
  * @see MasterScaffold
  */
-public interface Builder {
+public interface Builder
+{
 	Object create(String id);
 
 	/**

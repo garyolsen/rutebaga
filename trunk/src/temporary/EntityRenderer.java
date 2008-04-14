@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.util.Set;
@@ -13,7 +12,6 @@ import java.util.Set;
 import rutebaga.commons.Vector;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.Memory;
-import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.map.Tile;
 
@@ -48,7 +46,10 @@ public class EntityRenderer
 		Shape oldClip = g.getClip();
 		Vector screenOffset = entity.getCoordinate().minus(offset);
 		double radius = 9;
-		g.setClip(new Ellipse2D.Double(screenOffset.get(0)*TILE_SIZE-(radius)*TILE_SIZE, screenOffset.get(1)*TILE_SIZE-(radius)*TILE_SIZE, radius*2*TILE_SIZE, radius*2*TILE_SIZE));
+		g.setClip(new Ellipse2D.Double(screenOffset.get(0) * TILE_SIZE
+				- (radius) * TILE_SIZE, screenOffset.get(1) * TILE_SIZE
+				- (radius) * TILE_SIZE, radius * 2 * TILE_SIZE, radius * 2
+				* TILE_SIZE));
 		for (Instance instance : entity.getVision().getActiveSet())
 		{
 			if (clazz.isAssignableFrom(instance.getClass()))

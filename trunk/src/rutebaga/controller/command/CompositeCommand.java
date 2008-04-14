@@ -1,35 +1,40 @@
 package rutebaga.controller.command;
 
-import rutebaga.commons.Rule;
 import java.util.HashSet;
-import java.util.Stack;
 import java.util.Iterator;
+
+import rutebaga.commons.Rule;
 
 /**
  * 
- * CompositeCommand is an implementation of {@link Command} that contains a collection
- * of Commands which may all be executed â€œsimultaneouslyâ€?. Specifically, when
- * CompositeCommand's {@link #execute()} operation is invoked, it invokes execute on all
- * Commands that have been added to it (in no guaranteed order).
+ * CompositeCommand is an implementation of {@link Command} that contains a
+ * collection of Commands which may all be executed â€œsimultaneouslyâ€?.
+ * Specifically, when CompositeCommand's {@link #execute()} operation is
+ * invoked, it invokes execute on all Commands that have been added to it (in no
+ * guaranteed order).
  * 
- * Clients may also specify a {@link rutebaga.commons.Rule}, parameterized by Iterator&lt;Command&gt;, to
- * specify how the CompositeCommand should respond to {@link #isFeasible()} queries. The
- * default feasibility Rule returns true if and only if the set of Commands is
- * non-empty and all composited Commands' isFeasible operations return true.
+ * Clients may also specify a {@link rutebaga.commons.Rule}, parameterized by
+ * Iterator&lt;Command&gt;, to specify how the CompositeCommand should respond
+ * to {@link #isFeasible()} queries. The default feasibility Rule returns true
+ * if and only if the set of Commands is non-empty and all composited Commands'
+ * isFeasible operations return true.
  * 
  * CompositeCommand has "set-semantics"--you may add a unique Command to it only
  * once and there can be no duplicates. If you want a CompositeCommand that
  * executes a given Command more than once, implement it yourself.
+ * 
  * @author may
  * @see rutebaga.commons.Rule
  * @see Command
  */
-public class CompositeCommand implements Command {
+public class CompositeCommand implements Command
+{
 
 	/**
 	 * A private shared copy of the default feasibility Rule, which only returns
-	 * true for {@link #isFeasible()} if this CompositeCommand's set of {@link Command}s is
-	 * non-empty and all its Commands return true for {@link #isFeasible()}.
+	 * true for {@link #isFeasible()} if this CompositeCommand's set of
+	 * {@link Command}s is non-empty and all its Commands return true for
+	 * {@link #isFeasible()}.
 	 */
 	private static final Rule<Iterator<Command>> defaultFeasibilityRule = new DefaultFeasibilityRule();
 
@@ -44,18 +49,24 @@ public class CompositeCommand implements Command {
 	private final HashSet<Command> commands;
 
 	/**
-	 * Create an empty CompositeCommand with the default feasibility {@link rutebaga.commons.Rule}.
+	 * Create an empty CompositeCommand with the default feasibility
+	 * {@link rutebaga.commons.Rule}.
+	 * 
 	 * @see rutebaga.commons.Rule
 	 */
-	public CompositeCommand() {
+	public CompositeCommand()
+	{
 		this(null);
 	}
 
 	/**
-	 * Create an empty CompositeCommand with the specified feasibility {@link rutebaga.commons.Rule}.
+	 * Create an empty CompositeCommand with the specified feasibility
+	 * {@link rutebaga.commons.Rule}.
+	 * 
 	 * @see rutebaga.commons.Rule
 	 */
-	public CompositeCommand(Rule<Iterator<Command>> rule) {
+	public CompositeCommand(Rule<Iterator<Command>> rule)
+	{
 		setFeasibilityRule(rule);
 		commands = new HashSet<Command>();
 	}
@@ -68,7 +79,8 @@ public class CompositeCommand implements Command {
 	 * @param command
 	 *            the Command to add
 	 */
-	public void add(Command command) {
+	public void add(Command command)
+	{
 		commands.add(command);
 	}
 
@@ -80,7 +92,8 @@ public class CompositeCommand implements Command {
 	 * @param command
 	 *            the Command to remove
 	 */
-	public void remove(Command command) {
+	public void remove(Command command)
+	{
 		commands.remove(command);
 	}
 
@@ -90,7 +103,8 @@ public class CompositeCommand implements Command {
 	 * 
 	 * @param rule
 	 */
-	public void setFeasibilityRule(Rule<Iterator<Command>> rule) {
+	public void setFeasibilityRule(Rule<Iterator<Command>> rule)
+	{
 		this.rule = rule == null ? defaultFeasibilityRule : rule;
 	}
 
@@ -100,7 +114,8 @@ public class CompositeCommand implements Command {
 	 * 
 	 * @see CompositeCommand#setFeasibilityRule(Rule)
 	 */
-	public boolean isFeasible() {
+	public boolean isFeasible()
+	{
 		return rule.determine(commands.iterator());
 	}
 
@@ -120,7 +135,8 @@ public class CompositeCommand implements Command {
 	 * before the first execution of this CompositeCommand's execute() completes
 	 * will not execute the removed Command.)
 	 */
-	public void execute() {
+	public void execute()
+	{
 		// Iterate over an array so it's OK to add/remove commands while
 		// executing
 		for (Command command : commands.toArray(new Command[commands.size()]))
@@ -129,7 +145,8 @@ public class CompositeCommand implements Command {
 	}
 
 	private static class DefaultFeasibilityRule implements
-			Rule<Iterator<Command>> {
+			Rule<Iterator<Command>>
+	{
 		/**
 		 * The default feasibility Rule returns true if and only if the set of
 		 * Commands is non-empty and all composited Commands' isFeasible
@@ -138,9 +155,11 @@ public class CompositeCommand implements Command {
 		 * @param commands
 		 * @return true if there are Commands and all are feasible
 		 */
-		public boolean determine(Iterator<Command> commands) {
+		public boolean determine(Iterator<Command> commands)
+		{
 			boolean isFeasible = commands.hasNext();
-			while (isFeasible) {
+			while (isFeasible)
+			{
 				Command command = commands.next();
 				isFeasible = isFeasible && command.isFeasible();
 			}

@@ -32,9 +32,9 @@ public interface TileConvertor
 	 * @return the set of adjacent tile-space coordinates
 	 */
 	Set<Vector> adjacentTo(Vector tile);
-	
+
 	/**
-	 * @return	the dimension of this space definition
+	 * @return the dimension of this space definition
 	 */
 	int getDimension();
 }

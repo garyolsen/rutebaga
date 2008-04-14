@@ -9,10 +9,11 @@ import rutebaga.model.environment.Instance;
 public class Bumper extends Instance
 {
 	private BoundsTracker tracker;
-	
+
 	public Bumper()
 	{
-		tracker = new BoundsTracker(new EllipseBounds(new Vector(0, 0), new Vector(2, 2)), this);
+		tracker = new BoundsTracker(new EllipseBounds(new Vector(0, 0),
+				new Vector(2, 2)), this);
 	}
 
 	@Override
@@ -36,11 +37,12 @@ public class Bumper extends Instance
 	@Override
 	public void tick()
 	{
-		for(Instance instance : tracker.getInstances())
+		for (Instance instance : tracker.getInstances())
 		{
-			if(instance instanceof Entity)
+			if (instance instanceof Entity)
 			{
-				Vector distanceTo = instance.getCoordinate().minus(this.getCoordinate());
+				Vector distanceTo = instance.getCoordinate().minus(
+						this.getCoordinate());
 				instance.applyMomentum(distanceTo);
 			}
 		}

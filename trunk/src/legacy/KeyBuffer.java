@@ -1,89 +1,106 @@
 package legacy;
 
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class KeyBuffer implements KeyListener {
+public class KeyBuffer implements KeyListener
+{
 	private KeyState[] keyStates;
 	private boolean[] keyEvents;
 	private Integer lastKey;
-	
-	public KeyBuffer(){
+
+	public KeyBuffer()
+	{
 		keyStates = new KeyState[256];
 		keyEvents = new boolean[256];
 	}
-	
-	public KeyBuffer(int size){
+
+	public KeyBuffer(int size)
+	{
 		keyStates = new KeyState[size];
 		keyEvents = new boolean[size];
 	}
-	
+
 	private boolean verifyCodeRange(int keyCode)
 	{
 		return (keyCode >= 0 && keyCode < keyStates.length);
 	}
-	
-	public void keyPressed(KeyEvent event){
+
+	public void keyPressed(KeyEvent event)
+	{
 		int code = event.getKeyCode();
-		if(verifyCodeRange(code))		
+		if (verifyCodeRange(code))
 			keyEvents[code] = true;
-		
+
 		lastKey = new Integer(code);
 	}
-	
-	public void keyReleased(KeyEvent event){
+
+	public void keyReleased(KeyEvent event)
+	{
 		int code = event.getKeyCode();
-		if(verifyCodeRange(code))
+		if (verifyCodeRange(code))
 			keyEvents[code] = false;
 	}
-	
-	public void keyTyped(KeyEvent event){
+
+	public void keyTyped(KeyEvent event)
+	{
 		// Do nothing
 	}
-	
+
 	public void poll()
 	{
-		for(int i = 0; i < keyStates.length; i++){
-			if(keyEvents[i]){
-				if(keyStates[i] == KeyState.Released)
+		for (int i = 0; i < keyStates.length; i++)
+		{
+			if (keyEvents[i])
+			{
+				if (keyStates[i] == KeyState.Released)
 					keyStates[i] = KeyState.PressedOnce;
 				else
 					keyStates[i] = KeyState.Pressed;
-			}else
+			}
+			else
 				keyStates[i] = KeyState.Released;
 		}
-		
+
 	}
 
-	public boolean checkState(int keyCode, KeyState state){
-		switch (state){
-		case	Pressed:
+	public boolean checkState(int keyCode, KeyState state)
+	{
+		switch (state)
+		{
+		case Pressed:
 			return (keyStates[keyCode] == KeyState.Pressed || keyStates[keyCode] == KeyState.PressedOnce);
-		case	PressedOnce:
+		case PressedOnce:
 			return (keyStates[keyCode] == KeyState.PressedOnce);
-		case	Released:
+		case Released:
 			return (keyStates[keyCode] == KeyState.Released);
 		default:
 			return false;
 		}
 	}
-	
-	public boolean isPressed(int keyCode){
+
+	public boolean isPressed(int keyCode)
+	{
 		return (keyStates[keyCode] == KeyState.Pressed || keyStates[keyCode] == KeyState.PressedOnce);
 	}
-	
-	public boolean isPressedOnce(int keyCode){
+
+	public boolean isPressedOnce(int keyCode)
+	{
 		return (keyStates[keyCode] == KeyState.PressedOnce);
 	}
-	
-	public boolean isReleased(int keyCode){
-		return (keyStates[keyCode] == KeyState.Released);		
+
+	public boolean isReleased(int keyCode)
+	{
+		return (keyStates[keyCode] == KeyState.Released);
 	}
-	
-	public Integer getLastKey(){
+
+	public Integer getLastKey()
+	{
 		return lastKey;
 	}
-	
-	public void clearLastKey(){
+
+	public void clearLastKey()
+	{
 		lastKey = null;
 	}
 }

@@ -10,9 +10,9 @@ public class NumberUtils
 {
 	/**
 	 * Returns true if the value given falls between the maximum and minimum
-	 * values provided.  The test is lower-bound inclusive, and upper-bound exclusive:
-	 * 
-	 * [ min, max )
+	 * values provided. The test is lower-bound inclusive, and upper-bound
+	 * exclusive:
+	 *  [ min, max )
 	 * 
 	 * @param value
 	 *            The number to test.

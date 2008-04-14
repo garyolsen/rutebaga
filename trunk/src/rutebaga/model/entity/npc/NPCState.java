@@ -13,7 +13,8 @@ import rutebaga.model.entity.npc.state.Wander;
  * @author Nicholas Stamas
  * @see NPCEntity
  */
-public abstract class NPCState {
+public abstract class NPCState
+{
 	static NPCState initialState;
 
 	protected static final NPCState wander = new Wander();
@@ -28,7 +29,8 @@ public abstract class NPCState {
 
 	protected static final NPCState attack = new Attack();
 
-	protected NPCState() {
+	protected NPCState()
+	{
 		if (initialState == null)
 			initialState = this;
 	}

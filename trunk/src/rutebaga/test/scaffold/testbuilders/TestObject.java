@@ -55,6 +55,7 @@ public class TestObject
 		this.name = name;
 	}
 
+	@Override
 	public String toString()
 	{
 		return "TestObject named " + name + " that is " + age

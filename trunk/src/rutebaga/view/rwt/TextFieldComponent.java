@@ -22,10 +22,12 @@ import rutebaga.view.drawer.Drawer;
  * @author Ryan
  * 
  */
-public class TextFieldComponent extends ViewComponent {
+public class TextFieldComponent extends ViewComponent
+{
 
 	@Override
-	public void draw(Drawer draw) {
+	public void draw(Drawer draw)
+	{
 		// TODO Auto-generated method stub
 
 	}

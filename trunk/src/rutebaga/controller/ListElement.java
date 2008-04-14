@@ -7,10 +7,12 @@ import rutebaga.controller.command.Command;
  * ListElements are discrete elements in an itemized list. Each ListElement
  * offers a label describing itself and may further provide an associated
  * {@link Command}.
+ * 
  * @see Command
  * @author may
  */
-public interface ListElement {
+public interface ListElement
+{
 	/**
 	 * Gets the label for this ListElement.
 	 * 

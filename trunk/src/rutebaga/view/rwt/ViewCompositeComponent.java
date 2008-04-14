@@ -26,14 +26,16 @@ import rutebaga.view.drawer.Drawer;
  * 
  * @author Ryan
  */
-public class ViewCompositeComponent extends ViewComponent {
+public class ViewCompositeComponent extends ViewComponent
+{
 
 	private Set<ViewComponent> components;
 
 	/**
 	 * Constructs a new empty ViewCompositeComponent.
 	 */
-	public ViewCompositeComponent() {
+	public ViewCompositeComponent()
+	{
 		components = new HashSet<ViewComponent>();
 	}
 
@@ -43,7 +45,8 @@ public class ViewCompositeComponent extends ViewComponent {
 	 * @param component
 	 *            The ViewComponent to be added.
 	 */
-	public void addChild(ViewComponent component) {
+	public void addChild(ViewComponent component)
+	{
 		components.add(component);
 	}
 
@@ -54,23 +57,30 @@ public class ViewCompositeComponent extends ViewComponent {
 	 *            The ViewComponent to be removed.
 	 * @return The removed ViewComponent.
 	 */
-	public ViewComponent removeChild(ViewComponent component) {
+	public ViewComponent removeChild(ViewComponent component)
+	{
 		return components.remove(component) ? component : null;
 	}
 
 	/**
-	 * Returns all of the ViewComponents that currently make up this ViewCompositeComponent.
+	 * Returns all of the ViewComponents that currently make up this
+	 * ViewCompositeComponent.
+	 * 
 	 * @return A set of ViewComponents
 	 */
-	public Set<ViewComponent> getChildren() {
+	public Set<ViewComponent> getChildren()
+	{
 		return Collections.unmodifiableSet(components);
 	}
 
 	/**
 	 * Forewards the draw call to each of its children.
+	 * 
 	 * @see rutebaga.view.rwt.ViewComponent#draw(rutebaga.view.drawer.Drawer)
 	 */
-	public void draw(Drawer draw) {
+	@Override
+	public void draw(Drawer draw)
+	{
 		for (ViewComponent component : components)
 			component.draw(draw);
 	}

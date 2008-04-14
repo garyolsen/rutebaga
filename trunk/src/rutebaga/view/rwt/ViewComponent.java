@@ -32,20 +32,22 @@ import rutebaga.view.drawer.Drawer;
  * @author Ryan
  * 
  */
-public abstract class ViewComponent {
+public abstract class ViewComponent
+{
 
 	private ViewComponent parent;
-	@SuppressWarnings("unused") // TODO
+	@SuppressWarnings("unused")
+	// TODO
 	private boolean isVisible, hasFocus, dirtyBounds;
-	private Point screenPosition = new Point(0,0);
-	
+	private Point screenPosition = new Point(0, 0);
+
 	/**
 	 * Renders this ViewComponent.
 	 * 
 	 * @param draw
 	 *            The {@link Drawer} to use for rendering.
 	 */
-	public abstract void draw( Drawer draw );
+	public abstract void draw(Drawer draw);
 
 	/**
 	 * Returns the parent ViewComponent of this ViewComponent, if it exists.
@@ -53,20 +55,22 @@ public abstract class ViewComponent {
 	 * @return Parent ViewComponent of this ViewComponent if it exists,
 	 *         otherwise returns null.
 	 */
-	public ViewComponent getParent() {
+	public ViewComponent getParent()
+	{
 		return parent;
 	}
-	
+
 	/**
 	 * Returns the Point describing where this ViewComponent is located.
 	 * 
 	 * @return The Point representing the upper-left corner of this
 	 *         ViewComponent.
 	 */
-	public Point getLocation() {
+	public Point getLocation()
+	{
 		return (Point) screenPosition.clone();
 	}
-	
+
 	/**
 	 * Returns the horizontal position of this ViewComponent. The same as
 	 * {@link #getLocation()}.x.
@@ -74,10 +78,11 @@ public abstract class ViewComponent {
 	 * @return displacement of the left edge of this ViewComponent from the left
 	 *         edge of the View.
 	 */
-	public int getX() {
+	public int getX()
+	{
 		return screenPosition.x;
 	}
-	
+
 	/**
 	 * Returns the vertical position of this ViewComponent. The same as
 	 * {@link #getLocation()}.y.
@@ -85,20 +90,22 @@ public abstract class ViewComponent {
 	 * @return displacement of the top edge of this ViewComponent from the top
 	 *         edge of the View.
 	 */
-	public int getY( ) {
+	public int getY()
+	{
 		return screenPosition.y;
 	}
-	
+
 	/**
 	 * Moves this ViewComponent to the specified Point.
 	 * 
 	 * @param p
 	 *            The new upper-left corner of this ViewComponent.
 	 */
-	public void setLocation( Point p ) {
+	public void setLocation(Point p)
+	{
 		this.screenPosition = p;
 	}
-	
+
 	/**
 	 * Moves this ViewComponent to the specified Point. The same as
 	 * setLocation(new Point(x,y)).
@@ -110,68 +117,96 @@ public abstract class ViewComponent {
 	 *            The new displacement of the top edge of this ViewComponent
 	 *            from the top edge of the View.
 	 */
-	public void setLocation( int x, int y ) {
+	public void setLocation(int x, int y)
+	{
 		screenPosition.setLocation(x, y);
 	}
 
 	/**
 	 * Sets the provided ViewComponent as the parent of this ViewComponent.
-	 * @param parent ViewComponent that will be set as this ViewComponent's parent.
+	 * 
+	 * @param parent
+	 *            ViewComponent that will be set as this ViewComponent's parent.
 	 */
-	public void setParent(ViewComponent parent) {
+	public void setParent(ViewComponent parent)
+	{
 		this.parent = parent;
 	}
 
 	/**
 	 * Returns the current visibility of this ViewComponent.
+	 * 
 	 * @return True if this ViewComponent is currently visible.
 	 */
-	public boolean isVisible() {
+	public boolean isVisible()
+	{
 		return isVisible;
 	}
 
 	/**
 	 * Sets the visiblity of this ViewComponent.
-	 * @param visibility 
+	 * 
+	 * @param visibility
 	 */
-	public void setVisible(boolean visibility) {
+	public void setVisible(boolean visibility)
+	{
 		this.isVisible = visibility;
 	}
 
 	/**
 	 * Determines if this ViewComponent is in focus and able to receive events.
+	 * 
 	 * @return True if this ViewComponent has focus.
 	 */
-	public boolean hasFocus() {
+	public boolean hasFocus()
+	{
 		return hasFocus;
 	}
 
 	/**
 	 * Sets the focus of this ViewComponent to the specified boolean.
-	 * @param hasFocus The desired focus.
+	 * 
+	 * @param hasFocus
+	 *            The desired focus.
 	 */
-	public void setHasFocus(boolean hasFocus) {
+	public void setHasFocus(boolean hasFocus)
+	{
 		this.hasFocus = hasFocus;
 	}
-	
+
 	/**
 	 * Returns the Bounds of this ViewComponent.
+	 * 
 	 * @return The Bounds of this ViewComponent.
 	 */
-	public Bounds getBounds() {
+	public Bounds getBounds()
+	{
 		// TODO
 		return null;
 	}
-	
-	protected void dirtyBounds() {
+
+	protected void dirtyBounds()
+	{
 		dirtyBounds = true;
 	}
-	
-	protected void processKeyEvent( KeyEvent event ) { eventReceived(event);}
-	protected void processMouseEvent( MouseEvent event ) {eventReceived(event);}
-	protected void processMouseMotionEvent( MouseEvent event ) {eventReceived(event);}
-	
-	private void eventReceived( AWTEvent e ) {
+
+	protected void processKeyEvent(KeyEvent event)
+	{
+		eventReceived(event);
+	}
+
+	protected void processMouseEvent(MouseEvent event)
+	{
+		eventReceived(event);
+	}
+
+	protected void processMouseMotionEvent(MouseEvent event)
+	{
+		eventReceived(event);
+	}
+
+	private void eventReceived(AWTEvent e)
+	{
 		System.out.println("ViewComponent: " + this + " received " + e);
 	}
 }

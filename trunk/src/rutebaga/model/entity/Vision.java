@@ -5,66 +5,72 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import rutebaga.commons.Bounds;
 import rutebaga.commons.Vector;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.Appearance;
 
-public class Vision {
-	
-	//TODO make a movement listener of the entity
+public class Vision
+{
+
+	// TODO make a movement listener of the entity
 
 	private Set<Instance> previousActiveSet = new HashSet<Instance>();
 	private Map<Vector, Set<Memory>> memorySet = new HashMap<Vector, Set<Memory>>();
 	private BoundsTracker boundsTracker;
 	private Entity entity;
-	
-	public Vision( Entity entity ) {
+
+	public Vision(Entity entity)
+	{
 		this.entity = entity;
-		boundsTracker = new BoundsTracker( entity.getVisionBounds(), entity );
+		boundsTracker = new BoundsTracker(entity.getVisionBounds(), entity);
 	}
-	
-	public Set<Instance> getActiveSet() {
+
+	public Set<Instance> getActiveSet()
+	{
 		return boundsTracker.getInstances();
 	}
-	
-	public Map<Vector, Set<Memory>> getMemory() {
+
+	public Map<Vector, Set<Memory>> getMemory()
+	{
 		return memorySet;
 	}
-	
-	public final void tick() {
-		
-		if(!entity.existsInUniverse())
+
+	public final void tick()
+	{
+
+		if (!entity.existsInUniverse())
 		{
 			memorySet.clear();
 			previousActiveSet.clear();
 			return;
 		}
-		
+
 		// insert what we last saw into memory
-		
+
 		Map<Vector, Set<Memory>> lastSaw = new HashMap<Vector, Set<Memory>>();
-		
-		for ( Instance instance : previousActiveSet ) {
+
+		for (Instance instance : previousActiveSet)
+		{
 			Vector tile = instance.getTile();
 			Set<Memory> tileMemory = lastSaw.get(instance.getTile());
-			if(tileMemory == null)
+			if (tileMemory == null)
 			{
 				tileMemory = new HashSet<Memory>();
 				lastSaw.put(tile, tileMemory);
 			}
-			tileMemory.add( new Memory(instance.getAppearance(), instance.getCoordinate()) );
+			tileMemory.add(new Memory(instance.getAppearance(), instance
+					.getCoordinate()));
 		}
-		
+
 		memorySet.putAll(lastSaw);
-		
-//		Set<Vector> tilesInMemory = memorySet.keySet();
-//		Set<Vector> memoryInSight = entity.getVisionBounds().filter(tilesInMemory, entity.getTile());
-//		tilesInMemory.removeAll(memoryInSight);
-		
+
+		// Set<Vector> tilesInMemory = memorySet.keySet();
+		// Set<Vector> memoryInSight =
+		// entity.getVisionBounds().filter(tilesInMemory, entity.getTile());
+		// tilesInMemory.removeAll(memoryInSight);
+
 		// update what we will have seen with the current set
-		
+
 		previousActiveSet = getActiveSet();
 	}
 }

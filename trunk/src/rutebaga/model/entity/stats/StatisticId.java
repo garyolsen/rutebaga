@@ -4,7 +4,7 @@ package rutebaga.model.entity.stats;
  * Token class to identify a statistic.
  * 
  * @author Gary LosHuertos
- *
+ * 
  */
 public class StatisticId
 {

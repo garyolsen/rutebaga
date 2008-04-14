@@ -1,18 +1,20 @@
 package rutebaga.controller;
 
-import java.awt.event.KeyListener;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+
 import rutebaga.view.ViewFacade;
 
 /**
  * 
  * UserActionInterpreters are the core of the Controller subsystem. Interpreters
- * receive user input from the View, and feed {@link rutebaga.controller.command.Command Commands} to the
- * View to be displayed to the user. Interpreters are components of the
- * {@link GameDaemon}. When the daemon activates a UserActionInterpreter, it
- * calls {@link #installActionInterpreter(GameDaemon, ViewFacade)}on the
- * interpreter. The {@link #uninstallActionInterpreter()} operation is invoked
- * when an interpreter is deactivated.
+ * receive user input from the View, and feed
+ * {@link rutebaga.controller.command.Command Commands} to the View to be
+ * displayed to the user. Interpreters are components of the {@link GameDaemon}.
+ * When the daemon activates a UserActionInterpreter, it calls
+ * {@link #installActionInterpreter(GameDaemon, ViewFacade)}on the interpreter.
+ * The {@link #uninstallActionInterpreter()} operation is invoked when an
+ * interpreter is deactivated.
  * 
  * UserActionInterpreters must offer a {@link #tick()} method, which will be
  * invoked by the GameDaemon whenever the interpreter is active. The
@@ -40,7 +42,8 @@ import rutebaga.view.ViewFacade;
  * @see java.awt.event.KeyEvent
  * @author may
  */
-public interface UserActionInterpreter extends KeyListener, ActionListener {
+public interface UserActionInterpreter extends KeyListener, ActionListener
+{
 
 	/**
 	 * Signifies whether events should "fall through" this UserActionInterpreter

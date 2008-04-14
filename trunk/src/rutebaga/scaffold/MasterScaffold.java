@@ -20,12 +20,14 @@ import java.util.Map;
  * <li>Call {@link #build()} to initialize all Objects.
  * <li>Use {@link #get(String)} as needed.
  * </ol>
+ * 
  * @author Gary
  * @see Builder
  * @see #registerBuilder(Builder)
  * @see #get(String)
  */
-public class MasterScaffold {
+public class MasterScaffold
+{
 	private Map<String, Object> scaffold = new HashMap<String, Object>();
 	private Map<String, Builder> builders = new HashMap<String, Builder>();
 
@@ -39,8 +41,10 @@ public class MasterScaffold {
 	 *            MasterScaffold.
 	 * @return The Object associated with the id String.
 	 */
-	public Object get(String id) {
-		if (scaffold.get(id) == null) {
+	public Object get(String id)
+	{
+		if (scaffold.get(id) == null)
+		{
 			Builder builder = builders.get(id);
 			Object object = builder.create(id);
 			scaffold.put(id, object);
@@ -67,7 +71,8 @@ public class MasterScaffold {
 	 * @see #get(String)
 	 * @see #registerBuilder(Builder)
 	 */
-	public void setBuilder(String id, Builder builder) {
+	public void setBuilder(String id, Builder builder)
+	{
 		this.builders.put(id, builder);
 	}
 
@@ -83,8 +88,10 @@ public class MasterScaffold {
 	 * @see #get(String)
 	 * @see Builder
 	 */
-	public void build() {
-		for (String id : builders.keySet()) {
+	public void build()
+	{
+		for (String id : builders.keySet())
+		{
 			get(id);
 		}
 	}
@@ -105,8 +112,10 @@ public class MasterScaffold {
 	 * @see #setBuilder(String, Builder)
 	 * @see #get(String)
 	 */
-	public void registerBuilder(Builder builder) {
-		for (String id : builder.availableIds()) {
+	public void registerBuilder(Builder builder)
+	{
+		for (String id : builder.availableIds())
+		{
 			builders.put(id, builder);
 		}
 	}
