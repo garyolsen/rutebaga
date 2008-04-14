@@ -1,12 +1,11 @@
 package rutebaga.model.entity.npc;
 
 /**
- * NPCBrain specifies the interface that a {@link ConcreteNPCBrain} must
+ * NPCBrain specifies the interface that a ConcreteNPCBrain must
  * support, allowing seamless swapping of different ConcreteNPCBrains. The
  * operations it supports are abstractions of inputs to an NPC brain.
  * 
  * @author Nicholas Stamas
- * @see ConcreteNPCBrain
  */
 public interface NPCBrain {
 
