@@ -3,11 +3,19 @@ package rutebaga.view.game;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.TextLabelComponent;
 
+/**
+ * Provides the current frame rate by counting the number of times it gets called each second.
+ * @author Ryan
+ *
+ */
 public class FPSTextComponent extends TextLabelComponent {
 
 	private long lastTime;
 	private int frames = 0;
 	
+	/**
+	 * Constructs a new FPSTextComponent, intially showing 0 FPS.
+	 */
 	public FPSTextComponent() {
 		super("0");
 		
