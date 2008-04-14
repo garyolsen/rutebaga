@@ -28,7 +28,7 @@ public abstract class Entity extends Instance
 {
 	private EntityType type;
 	
-	private Map<Object, EntityEffect> eventsQueue = new HashMap<Object, EntityEffect>();
+	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 	
 	private EllipseBounds visionBounds;
 	private Vision vision;
@@ -37,6 +37,8 @@ public abstract class Entity extends Instance
 	{
 		this.type = type;
 		visionBounds = new EllipseBounds( new Vector( 10, 10 ) );
+		// XXX: connascence of timing 
+		vision = new Vision(this);
 	}
 	
 	/**
@@ -49,13 +51,13 @@ public abstract class Entity extends Instance
 	public Object accept(EntityEffect effect)
 	{
 		Object uid = UIDProvider.getUID();
-		eventsQueue.put(uid, effect);
+		effectQueue.put(uid, effect);
 		return uid;
 	}
 	
-	protected Map<Object, EntityEffect> getEventsQueue()
+	protected Map<Object, EntityEffect> getEffectQueue()
 	{
-		return eventsQueue;
+		return effectQueue;
 	}
 
 	public abstract Inventory getInventory();
@@ -86,5 +88,4 @@ public abstract class Entity extends Instance
 	{
 		if(this.type != null) type.tick(this);
 	}
-
 }
