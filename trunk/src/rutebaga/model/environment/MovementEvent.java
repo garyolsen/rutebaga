@@ -1,5 +1,7 @@
 package rutebaga.model.environment;
 
+import java.util.Set;
+
 import rutebaga.commons.Vector;
 
 public class MovementEvent
@@ -38,5 +40,10 @@ public class MovementEvent
 	public Vector getOldTile()
 	{
 		return oldTile;
+	}
+	
+	public Set<MovementListener> getInstanceListeners()
+	{
+		return instance.getMovementListeners();
 	}
 }

@@ -83,6 +83,8 @@ public class Environment
 			// returns an instance of this type
 			instance.getEnvironment().remove(instance);
 		}
+		
+		MovementEvent event = new MovementEvent(instance, null, null);
 
 		// add to this environment
 		Location location = new Location(instance);
@@ -98,6 +100,8 @@ public class Environment
 
 		// update tile cache
 		updateTileOf(instance);
+		
+		notifyListeners(event);
 
 		return true;
 	}
@@ -120,10 +124,12 @@ public class Environment
 	 */
 	public void remove(Instance instance)
 	{
+		MovementEvent event = new MovementEvent(instance, instance.getCoordinate(), instance.getTile());
 		instances.remove(instance);
 		Vector tile = reverseTileCache.remove(instance);
 		instancesAt(tile).remove(instance);
 		instance.setLocation(null);
+		notifyListeners(event);
 	}
 
 	/**
@@ -199,14 +205,12 @@ public class Environment
 			Vector newTile = tileConvertor.tileOf(newCoordinate);
 			if (blocked(instance, newTile))
 			{
-				System.out.println("blocked");
 				PhysicsContainer physics = instance.getPhysicsContainer();
 				physics.setMomentum(physics.getMomentum().times(0.0));
 				physics.setVelocity(physics.getVelocity().times(0.0));
 			}
 			else
 			{
-				System.out.println("moving to " + newCoordinate);
 				Location location = instance.getLocation();
 				MovementEvent event = new MovementEvent(instance, instance
 						.getCoordinate(), instance.getTile());
@@ -223,7 +227,6 @@ public class Environment
 	 */
 	protected void updatePhysics()
 	{
-		System.out.println("mark");
 		for (Vector tile : tileCache.keySet())
 		{
 			double friction = frictionAt(tile);
@@ -317,6 +320,12 @@ public class Environment
 	{
 		for (MovementListener listener : listeners)
 			listener.onMovement(event);
+		for(MovementListener listener : event.getInstanceListeners())
+		{
+			// only notify listeners once
+			if(!listeners.contains(listener))
+				listener.onMovement(event);
+		}
 	}
 	
 	/**
