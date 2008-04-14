@@ -1,13 +1,9 @@
 package rutebaga.model.entity;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import rutebaga.commons.Vector;
-import rutebaga.commons.Bounds;
 import rutebaga.commons.EllipseBounds;
 import rutebaga.commons.UIDProvider;
 import rutebaga.model.entity.inventory.Inventory;

@@ -9,7 +9,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import rutebaga.commons.Bounds;
 import rutebaga.commons.Vector;
-import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 
