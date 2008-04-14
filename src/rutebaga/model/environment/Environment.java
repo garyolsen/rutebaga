@@ -73,7 +73,7 @@ public class Environment
 		}
 
 		Vector tile = tileConvertor.tileOf(coordinate);
-		if (blocked(instance, tile))
+		if (blocked(instance, tile, false))
 			return false;
 
 		// everything is okay -- first remove from old environment
@@ -152,11 +152,11 @@ public class Environment
 	 *            the tile access is being requested to
 	 * @return whether or not access is blocked
 	 */
-	protected boolean blocked(Instance instance, Vector tile)
+	protected boolean blocked(Instance instance, Vector tile, boolean emptyBlocks)
 	{
 		InstanceSet instances = tileCache.get(tile);
-		if (instances == null)
-			return false;
+		if (instances == null || instances.size() == 0)
+			return emptyBlocks;
 		for (Instance other : instances)
 		{
 			if (other != instance
@@ -203,10 +203,11 @@ public class Environment
 				continue;
 			Vector newCoordinate = instance.getCoordinate().plus(velocity);
 			Vector newTile = tileConvertor.tileOf(newCoordinate);
-			if (blocked(instance, newTile))
+			if (blocked(instance, newTile, true))
 			{
 				PhysicsContainer physics = instance.getPhysicsContainer();
 				physics.setMomentum(physics.getMomentum().times(0.0));
+				physics.setAppliedImpulse(physics.getAppliedImpulse().times(0.0));
 				physics.setVelocity(physics.getVelocity().times(0.0));
 			}
 			else
