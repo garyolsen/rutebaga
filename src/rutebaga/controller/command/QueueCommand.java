@@ -13,7 +13,7 @@ package rutebaga.controller.command;
  * time, but QueueCommand does not guarantee that its component Command's
  * execute operation will ever be invoked.)
  * 
- * @author may
+ * @author Matthew Chuah
  * @see Command
  */
 public class QueueCommand implements Command

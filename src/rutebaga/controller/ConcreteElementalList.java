@@ -24,11 +24,10 @@ import rutebaga.controller.command.Command;
  * allowed, so clients of ConcreteElementalList must take care to avoid
  * duplicates if they desire Set semantics.
  * 
- * @author may
+ * @author Matthew Chuah
  */
 public class ConcreteElementalList implements ElementalList
 {
-
 	/**
 	 * The label of this ConcreteElementalList.
 	 */
@@ -129,8 +128,7 @@ public class ConcreteElementalList implements ElementalList
 	private class ConcreteElementalListIterator implements
 			Iterator<ListElement>
 	{
-		private Iterator<ElementalList> lists = ConcreteElementalList.this.list
-				.iterator();
+		private Iterator<ElementalList> lists = ConcreteElementalList.this.list.iterator();
 
 		private Iterator<ListElement> currentList;
 

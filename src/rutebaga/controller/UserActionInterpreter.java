@@ -40,7 +40,7 @@ import rutebaga.view.ViewFacade;
  * @see rutebaga.controller.command.Command
  * @see GameDaemon
  * @see java.awt.event.KeyEvent
- * @author may
+ * @author Matthew Chuah
  */
 public interface UserActionInterpreter extends KeyListener, ActionListener
 {

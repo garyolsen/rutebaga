@@ -11,7 +11,7 @@ import rutebaga.controller.ListElement;
  * Clients of Commands should be aware that Commands may have state and change
  * their feasibility arbitrarily without notification.
  * 
- * @author may
+ * @author Matthew Chuah
  * @see ActionDeterminer
  * @see ListElement
  */

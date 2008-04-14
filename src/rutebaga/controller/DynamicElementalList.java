@@ -20,7 +20,7 @@ import java.util.Iterator;
  * @see ListElement
  * @see ListElementSource
  * @see ListElementFactory
- * @author may
+ * @author Matthew Chuah
  * @param <ElementType>
  *            the type of thing to be represented in the list.
  */

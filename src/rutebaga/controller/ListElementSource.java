@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @see DynamicElementalList
  * @param <ElementType>
  *            The type of the elements to be generated.
- * @author may
+ * @author Matthew Chuah
  */
 public interface ListElementSource<ElementType>
 {

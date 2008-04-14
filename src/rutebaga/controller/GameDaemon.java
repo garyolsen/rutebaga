@@ -34,19 +34,33 @@ import rutebaga.view.ViewFacade;
  * 
  * @see Command
  * @see rutebaga.view.ViewFacade
- * @author may
+ * @author Matthew Chuah
  * @see UserActionInterpreter
  */
 public class GameDaemon extends KeyAdapter implements CommandQueue,
 		InterpreterManager
 {
 
+	/**
+	 * The GameDaemon retains a reference to the ViewFacade to pass it on to
+	 * UserActionInterpreters.
+	 */
 	private ViewFacade facade;
 
+	/**
+	 * An implementation of a stack specifically for interpreters.
+	 */
 	private InterpreterStack interpreterStack;
 
+	/**
+	 * The command queue.
+	 */
 	private Queue<Command> commandQueue;
 
+	/**
+	 * Determine whether all broadcasted events should automatically go to the
+	 * queue or be executed immediately.
+	 */
 	private boolean eventsAreQueued;
 
 	/**
@@ -62,13 +76,26 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		eventsAreQueued = queued;
 	}
 
+	/**
+	 * Prepares and returns a reference to a new GameDaemon that does not queue
+	 * events.
+	 * 
+	 * @return a GameDaemon
+	 */
 	public static GameDaemon initialize()
 	{
 		return initialize(false);
 	}
 
-	public static GameDaemon initialize(boolean queueEvents)
-	{
+	/**
+	 * Prepares and returns a reference to a new GameDaemon with the specified
+	 * handling of events.
+	 * 
+	 * @param queueEvents
+	 *            whether or not to queue events
+	 * @return a GameDaemon
+	 */
+	public static GameDaemon initialize(boolean queueEvents) {
 		ViewFacade facade = new ViewFacade();
 		return new GameDaemon(facade, queueEvents);
 	}
@@ -86,6 +113,10 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		commandQueue.offer(command);
 	}
 
+	/**
+	 * Iterates through the command queue, removing all commands and executing
+	 * them.
+	 */
 	protected void processCommandQueue()
 	{
 		while (!commandQueue.isEmpty())
@@ -95,12 +126,26 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		}
 	}
 
+	/**
+	 * Activates the specified UserActionInterpreter, pushing it on to the top
+	 * of this GameDaemon's interpreter stack.
+	 * 
+	 * @see rutebaga.controller.InterpreterManager#activate(rutebaga.controller.UserActionInterpreter)
+	 */
 	public void activate(UserActionInterpreter uai)
 	{
 		uai.installActionInterpreter(this, facade);
 		interpreterStack.push(uai);
 	}
 
+	/**
+	 * Deactivates the specified UserActionInterpreter, removing it, as well as
+	 * all Interpreters activated after this one, from the GameDaemon's
+	 * interpreter stack. If the specified UserActionInterpreter is not in this
+	 * GameDaemon's interpreter stack, no interpreters will be removed.
+	 * 
+	 * @see rutebaga.controller.InterpreterManager#deactivate(rutebaga.controller.UserActionInterpreter)
+	 */
 	public void deactivate(UserActionInterpreter uai)
 	{
 		// Remove uai from the stack along with all interpreters above it
@@ -113,6 +158,11 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.awt.event.KeyAdapter#keyPressed(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyPressed(final KeyEvent e)
 	{
@@ -126,6 +176,11 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(final ActionEvent e)
 	{
 		processEvent(new EventCommand()
@@ -138,6 +193,15 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		});
 	}
 
+	/**
+	 * Broadcast a tick to the UserActionInterpreters that this GameDaemon is
+	 * aware of. The UserActionInterpreter on the top of the stack receives the
+	 * tick first. For each UserActionInterpreter ticked, if it asserts
+	 * eventsFallThrough, the tick will continue to the next
+	 * UserActionInterpreter. Otherwise, if a UserActionInterpreter does not
+	 * assert eventsFallThrough, it will be the last interpreter in the stack to
+	 * receive the tick.
+	 */
 	public void tick()
 	{
 		processEvent(new EventCommand()
@@ -150,6 +214,13 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		});
 	}
 
+	/**
+	 * A private operation which either queues a command or immediately
+	 * processes it depending on this GameDaemon's eventsAreQueued member.
+	 * 
+	 * @param command
+	 *            the command to process
+	 */
 	private void processEvent(Command command)
 	{
 		if (eventsAreQueued)
@@ -158,13 +229,35 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 			command.execute();
 	}
 
-	private abstract class EventCommand implements Command
-	{
+	/**
+	 * EventCommand is a private convenience class. When executed, they iterate
+	 * over this GameDaemon's interpreter stack, performing the act operation on
+	 * each UserActionInterpreter. The EventCommand class is meant to allow
+	 * GameDaemon operations to distribute an event to the
+	 * UserActionInterpreters in the stack, until an interpreter with
+	 * eventsFallThrough false is reached. EventCommands are always feasible.
+	 * 
+	 * @author Matty
+	 */
+	private abstract class EventCommand implements Command {
+
+		/**
+		 * Specifies whether is is feasible to execute this Command.
+		 * EventCommands are always feasible.
+		 * 
+		 * @see rutebaga.controller.command.Command#isFeasible()
+		 */
 		public boolean isFeasible()
 		{
 			return true;
 		}
 
+		/**
+		 * Distribute an event to the UserActionInterpreters in the enclosing
+		 * GameDaemon's interpreter stack.
+		 * 
+		 * @see rutebaga.controller.command.Command#execute()
+		 */
 		public void execute()
 		{
 			for (UserActionInterpreter uai : interpreterStack)
@@ -175,9 +268,23 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 			}
 		}
 
+		/**
+		 * Performs some operation on the specified UserActionInterpreter.
+		 * Called by the execute operation on each UserActionInterpreter on the
+		 * enclosing GameDaemon's interpreter stack.
+		 * 
+		 * @param uai a UserActionInterpreter in the GameDaemon's stack
+		 */
 		public abstract void act(UserActionInterpreter uai);
 	}
 
+	/**
+	 * A private implementation of a stack designed for use with UserActionInterpreters.
+	 * The stack-ness is weakly enforced, as the stack provides both a contains operation
+	 * and an iterator.
+	 * 
+	 * @author Matty
+	 */
 	private class InterpreterStack implements Iterable<UserActionInterpreter>
 	{
 		private Vector<UserActionInterpreter> stack = new Vector<UserActionInterpreter>();
@@ -202,6 +309,10 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		public boolean isEmpty()
 		{
 			return stack.isEmpty();
+		}
+
+		public boolean contains(UserActionInterpreter uai) {
+			return stack.contains(uai);
 		}
 
 		public Iterator<UserActionInterpreter> iterator()

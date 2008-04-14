@@ -7,7 +7,7 @@ package rutebaga.controller.command;
  * they can be executed in sequential order at an appropriate time, in order to
  * avoid race conditions.
  * 
- * @author may
+ * @author Matthew Chuah
  * @see QueueCommand
  * @see Command
  */

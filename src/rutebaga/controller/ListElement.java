@@ -9,7 +9,7 @@ import rutebaga.controller.command.Command;
  * {@link Command}.
  * 
  * @see Command
- * @author may
+ * @author Matthew Chuah
  */
 public interface ListElement
 {

@@ -13,7 +13,7 @@ import rutebaga.controller.command.Command;
  * implementations of ElementalList may return a different label and collection
  * of ListElements each time the list is queried.
  * 
- * @author may
+ * @author Matthew Chuah
  * @see Command
  * @see ListElement
  */

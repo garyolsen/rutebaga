@@ -4,13 +4,17 @@ import rutebaga.controller.ElementalList;
 import rutebaga.view.ViewFacade;
 
 /**
- * @author may
- * 
  * OpenContextMenuCommand is a high-level convenience class for opening a
  * context menu with a set of Commands in the form of an ElementalList. When
  * executed, an OpenContextMenuCommand simply asks the View to open a new
- * sub-context menu with the specified list of Commands (in the form of an
+ * context menu with the specified list of Commands (in the form of an
  * ElementalList).
+ * 
+ * There are two non-abstract subclasses of CreateContextMenuCommand in this
+ * package: {@link CreateRootContextMenuCommand} and
+ * {@link CreateSubContextMenuCommand}.
+ * 
+ * @author Matthew Chuah
  */
 public abstract class CreateContextMenuCommand implements Command
 {
