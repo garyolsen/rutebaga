@@ -59,9 +59,9 @@ public class Vision {
 		
 		memorySet.putAll(lastSaw);
 		
-		Set<Vector> tilesInMemory = memorySet.keySet();
-		Set<Vector> memoryInSight = entity.getVisionBounds().filter(tilesInMemory, entity.getTile());
-		tilesInMemory.removeAll(memoryInSight);
+//		Set<Vector> tilesInMemory = memorySet.keySet();
+//		Set<Vector> memoryInSight = entity.getVisionBounds().filter(tilesInMemory, entity.getTile());
+//		tilesInMemory.removeAll(memoryInSight);
 		
 		// update what we will have seen with the current set
 		
