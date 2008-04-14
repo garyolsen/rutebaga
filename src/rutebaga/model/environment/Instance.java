@@ -22,7 +22,9 @@ public abstract class Instance {
 	private Location location;
 	private PhysicsContainer physicsContainer;
 	private MovementAttributes movementAttributes = new MovementAttributes();
-	private Appearance appearance;
+	private Appearance appearance = new Appearance(this);
+	
+	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
 
 	/**
 	 * Checks to see whether an instance is allowed to be over a terrain type.
@@ -175,4 +177,26 @@ public abstract class Instance {
 	}
 
 	public abstract void tick();
+	
+	public void registerMovementListener(MovementListener listener)
+	{
+		this.movementListeners.add(listener);
+	}
+	
+	public void unregisterMovementListener(MovementListener listener)
+	{
+		this.movementListeners.remove(listener);
+	}
+	
+	protected Set<MovementListener> getMovementListeners()
+	{
+		return movementListeners;
+	}
+	
+	public boolean existsInUniverse()
+	{
+		return this.getLocation() != null && this.getLocation().getEnvironment() != null;
+	}
+	
+	
 }
