@@ -17,18 +17,18 @@ public class EntityType {
 		flushEffectQueue(entity);
 		
 		//XXX: Again with the LoD violations?
+		//XXX: perhaps make a singular method in entity to tick its children? (glosh)
 		entity.getVision().tick();
-		entity.getAppearance().tick();
 	}
 	
 	private void flushEffectQueue(Entity entity)
 	{
-		for(Object id : entity.getEventsQueue().keySet())
+		for(Object id : entity.getEffectQueue().keySet())
 		{
 			//XXX LOD violation
-			entity.getEventsQueue().get(id).affect(entity, id);
+			entity.getEffectQueue().get(id).affect(entity, id);
 		}
-		entity.getEventsQueue().clear();
+		entity.getEffectQueue().clear();
 	}
 	
 	//public void move( Entity entity, Direction direction, double p ) {
