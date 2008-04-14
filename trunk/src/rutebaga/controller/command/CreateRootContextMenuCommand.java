@@ -2,9 +2,11 @@ package rutebaga.controller.command;
 
 import rutebaga.commons.Vector;
 
+/**
+ * @author Matthew Chuah
+ */
 public class CreateRootContextMenuCommand extends CreateContextMenuCommand
 {
-
 	/**
 	 * The map location at which to open this root context menu.
 	 */
@@ -15,8 +17,7 @@ public class CreateRootContextMenuCommand extends CreateContextMenuCommand
 	 * 
 	 * @param loc
 	 */
-	public void setLocation(Vector loc)
-	{
+	public void setLocation(Vector loc) {
 		location = loc;
 	}
 
@@ -27,8 +28,7 @@ public class CreateRootContextMenuCommand extends CreateContextMenuCommand
 	 * @see rutebaga.controller.command.Command#execute()
 	 */
 	@Override
-	public void execute()
-	{
+	public void execute() {
 		getViewFacade().createRootContextMenu(getElements(), location);
 	}
 }

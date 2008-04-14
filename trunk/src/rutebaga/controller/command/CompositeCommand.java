@@ -6,9 +6,8 @@ import java.util.Iterator;
 import rutebaga.commons.Rule;
 
 /**
- * 
  * CompositeCommand is an implementation of {@link Command} that contains a
- * collection of Commands which may all be executed â€œsimultaneouslyâ€?.
+ * collection of Commands which may all be executed <i>simultaneously</i>.
  * Specifically, when CompositeCommand's {@link #execute()} operation is
  * invoked, it invokes execute on all Commands that have been added to it (in no
  * guaranteed order).
@@ -23,7 +22,7 @@ import rutebaga.commons.Rule;
  * once and there can be no duplicates. If you want a CompositeCommand that
  * executes a given Command more than once, implement it yourself.
  * 
- * @author may
+ * @author Matthew Chuah
  * @see rutebaga.commons.Rule
  * @see Command
  */
