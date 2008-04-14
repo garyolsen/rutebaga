@@ -30,6 +30,18 @@ public class EllipseBounds extends Bounds
 		this.center = center;
 		this.radii = size;
 	}
+	
+	public EllipseBounds(Vector radii) {
+		
+		double arr[] = new double[radii.getDimension()];
+		for ( int i = 0; i < arr.length; i++ ) {
+			arr[i] = 0;
+		}
+		
+		center = new Vector(arr);
+		this.radii = radii;
+		
+	}
 
 	/**
 	 * Returns true if this {@link Vector} falls into these ElipeBounds.
