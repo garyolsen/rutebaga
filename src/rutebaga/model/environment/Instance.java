@@ -22,6 +22,7 @@ public abstract class Instance {
 	private Location location;
 	private PhysicsContainer physicsContainer;
 	private MovementAttributes movementAttributes = new MovementAttributes();
+	private Appearance appearance;
 
 	/**
 	 * Checks to see whether an instance is allowed to be over a terrain type.
@@ -63,6 +64,10 @@ public abstract class Instance {
 	 * @return whether or not access is blocked
 	 */
 	public abstract boolean blocks(Instance other);
+
+	public Appearance getAppearance() {
+		return appearance;
+	}
 
 	/**
 	 * @return the set of the instances that share this instance's tile
@@ -137,6 +142,10 @@ public abstract class Instance {
 	 */
 	public Vector getVelocity() {
 		return this.physicsContainer.getVelocity();
+	}
+
+	public void setAppearance(Appearance appearance) {
+		this.appearance = appearance;
 	}
 
 	/**

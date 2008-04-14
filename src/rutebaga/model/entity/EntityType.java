@@ -15,6 +15,10 @@ public class EntityType {
 
 	public void tick(Entity entity) {
 		flushEffectQueue(entity);
+		
+		//XXX: Again with the LoD violations?
+		entity.getVision().tick();
+		entity.getAppearance().tick();
 	}
 	
 	private void flushEffectQueue(Entity entity)

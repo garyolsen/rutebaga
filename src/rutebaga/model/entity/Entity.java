@@ -66,13 +66,12 @@ public abstract class Entity extends Instance
 
 	public abstract Stats getStats();
 	
-	public Set<Instance> getVisibleInstances() {
-		visionBounds.setCenter( getCoordinate() );
-		return getEnvironment().getInstances( visionBounds, getCoordinate() );
-	}
-	
 	public EllipseBounds getVisionBounds() {
 		return visionBounds;
+	}
+	
+	public Vision getVision() {
+		return vision;
 	}
 
 	public Vector getVisionRadius() {
@@ -90,7 +89,6 @@ public abstract class Entity extends Instance
 	public final void tick()
 	{
 		if(this.type != null) type.tick(this);
-		vision.tick();
 	}
 
 }
