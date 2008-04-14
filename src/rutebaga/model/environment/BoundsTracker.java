@@ -4,7 +4,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.sun.corba.se.impl.orbutil.ObjectUtility;
+
 import rutebaga.commons.Bounds;
+import rutebaga.commons.ObjectUtils;
 import rutebaga.commons.Vector;
 
 /**
@@ -23,10 +26,10 @@ public class BoundsTracker implements MovementListener
 {
 	private Environment monitoredEnvironment;
 	private Bounds bounds;
-	
+
 	private Instance monitoredInstance;
 	private Set<Vector> tilesWithinBounds;
-	
+
 	private boolean init = false;
 
 	private Set<Instance> insideInstances = new HashSet<Instance>();
@@ -43,11 +46,18 @@ public class BoundsTracker implements MovementListener
 	{
 		this.bounds = bounds;
 		this.monitoredInstance = instance;
+		instance.registerMovementListener(this);
 	}
-	
+
 	private void init()
 	{
+		if (this.monitoredEnvironment != null)
+		{
+			monitoredEnvironment.unregisterMovementListener(this);
+		}
 		this.monitoredEnvironment = monitoredInstance.getEnvironment();
+		if (monitoredEnvironment == null)
+			return;
 		this.monitoredEnvironment.registerMovementListener(this);
 		tilesWithinBounds = bounds.locationSet(1.0);
 		recheck();
@@ -61,7 +71,8 @@ public class BoundsTracker implements MovementListener
 	 */
 	public void onMovement(MovementEvent event)
 	{
-		if(!init) init();
+		if (!init)
+			init();
 		// FIXME not stable when the centered instance leaves the environment
 		Instance movedInstance = event.getInstance();
 		// first determine if the instance moved
@@ -84,6 +95,12 @@ public class BoundsTracker implements MovementListener
 		}
 		else
 		{
+			if (!ObjectUtils.equals(monitoredEnvironment, movedInstance
+					.getEnvironment()))
+			{
+				// the monitored instance has changed environments
+				init();
+			}
 			// re-evaluate the instances with the bounds
 			recheck();
 		}
@@ -122,7 +139,8 @@ public class BoundsTracker implements MovementListener
 	 */
 	public Set<Instance> getInstances()
 	{
-		if(!init) init();
+		if (!init)
+			init();
 		return Collections.unmodifiableSet(insideInstances);
 	}
 }
