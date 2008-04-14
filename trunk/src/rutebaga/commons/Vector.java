@@ -5,30 +5,28 @@ import java.util.Arrays;
 /**
  * A vector in space.
  * 
- * Vectors are Comparable.  The comparison algorithm returns the comparison of the first
- * non-equal components of the two vectors, starting with the leftmost component:
- * 
- * < 0, 0, 0 > lt < 0, 0, 1 >
- * < 0, 1, 0 > gt < 0, 0, 1 >
- * < 0, 1, 1 > gt < 0, 1, 0 >
+ * Vectors are Comparable. The comparison algorithm returns the comparison of
+ * the first non-equal components of the two vectors, starting with the leftmost
+ * component:
+ *  < 0, 0, 0 > lt < 0, 0, 1 > < 0, 1, 0 > gt < 0, 0, 1 > < 0, 1, 1 > gt < 0, 1,
+ * 0 >
  * 
  * @author Gary LosHuertos
  * 
  */
-public class Vector implements Comparable<Vector>
-{
+public class Vector implements Comparable<Vector> {
 
 	private final double[] components;
+
 	private Double magnitude;
+
 	private final int dimension;
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("< ");
-		for (double component : components)
-		{
+		for (double component : components) {
 			sb.append(component);
 			sb.append(" ");
 		}
@@ -42,12 +40,10 @@ public class Vector implements Comparable<Vector>
 	 * @param components
 	 *            The components to insert into the new Vector.
 	 */
-	public Vector(double... components)
-	{
+	public Vector(double... components) {
 		dimension = components.length;
 		this.components = new double[dimension];
-		for (int idx = 0; idx < components.length; idx++)
-		{
+		for (int idx = 0; idx < components.length; idx++) {
 			this.components[idx] = components[idx];
 		}
 	}
@@ -60,8 +56,7 @@ public class Vector implements Comparable<Vector>
 	 * @param start
 	 * @param end
 	 */
-	public Vector(double[] components, int start, int end)
-	{
+	public Vector(double[] components, int start, int end) {
 		this.dimension = end - start;
 		this.components = new double[dimension];
 		for (int idx = start; idx < end; idx++)
@@ -74,8 +69,7 @@ public class Vector implements Comparable<Vector>
 	 * @param int
 	 *            Dimension of the new Vector.
 	 */
-	private Vector(int dimension)
-	{
+	private Vector(int dimension) {
 		this.dimension = dimension;
 		this.components = new double[dimension];
 	}
@@ -93,20 +87,17 @@ public class Vector implements Comparable<Vector>
 	 *         rhs.
 	 * 
 	 */
-	public double dot(Vector rhs)
-	{
+	public double dot(Vector rhs) {
 		check(rhs);
 		double rval = 0;
-		for (int idx = 0; idx < dimension; idx++)
-		{
+		for (int idx = 0; idx < dimension; idx++) {
 			rval += components[idx] * rhs.components[idx];
 		}
 		return rval;
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -118,12 +109,10 @@ public class Vector implements Comparable<Vector>
 			return false;
 		if (dimension != other.dimension)
 			return false;
-		if (magnitude == null)
-		{
+		if (magnitude == null) {
 			if (other.magnitude != null)
 				return false;
-		}
-		else if (!magnitude.equals(other.magnitude))
+		} else if (!magnitude.equals(other.magnitude))
 			return false;
 		return true;
 	}
@@ -135,8 +124,7 @@ public class Vector implements Comparable<Vector>
 	 *            Index of a component in this Vector.
 	 * @return The Component of this Vector at the location specified by idx.
 	 */
-	public double get(int idx)
-	{
+	public double get(int idx) {
 		return components[idx];
 	}
 
@@ -146,8 +134,7 @@ public class Vector implements Comparable<Vector>
 	 * 
 	 * @return the dimension of this vector
 	 */
-	public int getDimension()
-	{
+	public int getDimension() {
 		return dimension;
 	}
 
@@ -156,8 +143,7 @@ public class Vector implements Comparable<Vector>
 	 * 
 	 * @return the unit vector of this vector
 	 */
-	public Vector getDirection()
-	{
+	public Vector getDirection() {
 		return this.times(1 / this.getMagnitude());
 	}
 
@@ -166,13 +152,10 @@ public class Vector implements Comparable<Vector>
 	 * 
 	 * @return The magnitude, or length, of this Vector.
 	 */
-	public double getMagnitude()
-	{
-		if (magnitude == null)
-		{
+	public double getMagnitude() {
+		if (magnitude == null) {
 			magnitude = 0.0;
-			for (double c : components)
-			{
+			for (double c : components) {
 				magnitude += c * c;
 			}
 			magnitude = Math.sqrt(magnitude);
@@ -181,8 +164,7 @@ public class Vector implements Comparable<Vector>
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(components);
@@ -202,13 +184,11 @@ public class Vector implements Comparable<Vector>
 	 * @return The Vector that is the difference between this vector and the
 	 *         Vector rhs that was passed in. (this Vector minus Vector rhs).
 	 */
-	public Vector minus(Vector rhs)
-	{
+	public Vector minus(Vector rhs) {
 		check(rhs);
 		Vector rval = new Vector(dimension);
 		double components[] = rval.components;
-		for (int idx = 0; idx < dimension; idx++)
-		{
+		for (int idx = 0; idx < dimension; idx++) {
 			components[idx] = this.components[idx] - rhs.components[idx];
 		}
 		return rval;
@@ -220,12 +200,10 @@ public class Vector implements Comparable<Vector>
 	 * 
 	 * @return This Vector negated.
 	 */
-	public Vector negate()
-	{
+	public Vector negate() {
 		Vector rval = new Vector(dimension);
 		double components[] = rval.components;
-		for (int idx = 0; idx < dimension; idx++)
-		{
+		for (int idx = 0; idx < dimension; idx++) {
 			components[idx] = -this.components[idx];
 		}
 		return rval;
@@ -241,31 +219,27 @@ public class Vector implements Comparable<Vector>
 	 * @return The Vector that is the sum of this vector and the Vector rhs that
 	 *         was passed in.
 	 */
-	public Vector plus(Vector rhs)
-	{
+	public Vector plus(Vector rhs) {
 		check(rhs);
 		Vector rval = new Vector(dimension);
 		double components[] = rval.components;
-		for (int idx = 0; idx < dimension; idx++)
-		{
+		for (int idx = 0; idx < dimension; idx++) {
 			components[idx] = this.components[idx] + rhs.components[idx];
 		}
 		return rval;
 	}
 
 	/**
-	 * Returns the product of this Vector a scalar passed in while leaving
-	 * this Vector alone.
+	 * Returns the product of this Vector a scalar passed in while leaving this
+	 * Vector alone.
 	 * 
 	 * @param factor
-	 * @return
+	 * @return The Vector that has been scaled by the specified factor.
 	 */
-	public Vector times(double factor)
-	{
+	public Vector times(double factor) {
 		Vector rval = new Vector(dimension);
 		double components[] = rval.components;
-		for (int idx = 0; idx < dimension; idx++)
-		{
+		for (int idx = 0; idx < dimension; idx++) {
 			components[idx] = this.components[idx] * factor;
 		}
 		return rval;
@@ -279,8 +253,7 @@ public class Vector implements Comparable<Vector>
 	 *            A vector whose dimension is to be compared to the dimension of
 	 *            this Vector.
 	 */
-	private void check(Vector rhs)
-	{
+	private void check(Vector rhs) {
 		if (dimension != rhs.dimension)
 			throw new IncompatibleDimensionException(dimension, rhs.dimension);
 	}
@@ -288,22 +261,21 @@ public class Vector implements Comparable<Vector>
 	/**
 	 * @return an array containing the values of this array
 	 */
-	public double[] asArray()
-	{
+	public double[] asArray() {
 		double[] rval = new double[dimension];
 		for (int idx = 0; idx < rval.length; idx++)
 			rval[idx] = components[idx];
 		return rval;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public int compareTo(Vector other)
-	{
+	public int compareTo(Vector other) {
 		check(other);
-		for (int idx = 0; idx < dimension; idx++)
-		{
+		for (int idx = 0; idx < dimension; idx++) {
 			if (Double.doubleToLongBits(this.components[idx]) != Double
 					.doubleToLongBits(other.components[idx]))
 				return new Double(this.components[idx]).compareTo(new Double(

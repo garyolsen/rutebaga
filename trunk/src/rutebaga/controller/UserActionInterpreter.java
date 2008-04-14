@@ -7,7 +7,7 @@ import rutebaga.view.ViewFacade;
 /**
  * 
  * UserActionInterpreters are the core of the Controller subsystem. Interpreters
- * receive user input from the View, and feed {@link Command Commands} to the
+ * receive user input from the View, and feed {@link rutebaga.controller.command.Command Commands} to the
  * View to be displayed to the user. Interpreters are components of the
  * {@link GameDaemon}. When the daemon activates a UserActionInterpreter, it
  * calls {@link #installActionInterpreter(GameDaemon, ViewFacade)}on the
@@ -35,7 +35,7 @@ import rutebaga.view.ViewFacade;
  * such as click-based actions during game play. ActionEvents "bubble down" in
  * the same manner that KeyEvents do.
  * 
- * @see Command
+ * @see rutebaga.controller.command.Command
  * @see GameDaemon
  * @see java.awt.event.KeyEvent
  * @author may

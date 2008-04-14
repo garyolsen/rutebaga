@@ -6,20 +6,18 @@ import rutebaga.model.entity.npc.state.Evade;
 import rutebaga.model.entity.npc.state.Wander;
 
 /**
- * Encapsulates state-specific behavior of a {@link ConcreteNPCBrain} and
- * defines state transitions. For example, a default state might be wander, but
- * hostile action might facilitate a transition to the chase or the attack
- * state.
+ * Encapsulates state-specific behavior of a and defines state transitions. For
+ * example, a default state might be wander, but hostile action might facilitate
+ * a transition to the chase or the attack state.
  * 
  * @author Nicholas Stamas
- * @see ConcreteNPCBrain
  * @see NPCEntity
  */
 public abstract class NPCState {
 	static NPCState initialState;
 
 	protected static final NPCState wander = new Wander();
-	
+
 	// XXX: because it's
 	// the first state,
 	// the initialState will be wander. Probably not too good.

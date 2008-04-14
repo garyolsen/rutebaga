@@ -70,10 +70,9 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 	}
 
 	/**
-	 * Allows clients to automatically queue a {@link Command}.
-	 * @param command The {@link Command} to queue.
+	 * Allows clients to automatically queue a {@link rutebaga.controller.command.Command}.
+	 * @param command The Command to queue.
 	 * @see rutebaga.controller.CommandQueue#queueCommand(rutebaga.controller.Command)
-	 * @see Command
 	 */
 	public void queueCommand(Command command) {
 		commandQueue.offer(command);

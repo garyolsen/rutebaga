@@ -21,12 +21,10 @@ import rutebaga.view.rwt.View;
  * <li>Render the View for this current frame
  * </ul>
  * 
- * @see Drawer
- * @see ContextMenu
- * @see ViewComponent
- * @see EventDispatcher
- * 
- * 
+ * @see rutebaga.view.drawer.Drawer
+ * @see rutebaga.view.rwt.ContextMenu
+ * @see rutebaga.view.rwt.ViewComponent
+ * @see rutebaga.view.rwt.EventDispatcher
  * 
  */
 public class ViewFacade {
