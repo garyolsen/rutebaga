@@ -48,7 +48,7 @@ public class EntityRenderer
 		Shape oldClip = g.getClip();
 		Vector screenOffset = entity.getCoordinate().minus(offset);
 		double radius = 9;
-		g.setClip(new Ellipse2D.Double(screenOffset.get(0)*TILE_SIZE-(radius-0.5)*TILE_SIZE, screenOffset.get(1)*TILE_SIZE-(radius-0.5)*TILE_SIZE, radius*2*TILE_SIZE, radius*2*TILE_SIZE));
+		g.setClip(new Ellipse2D.Double(screenOffset.get(0)*TILE_SIZE-(radius)*TILE_SIZE, screenOffset.get(1)*TILE_SIZE-(radius)*TILE_SIZE, radius*2*TILE_SIZE, radius*2*TILE_SIZE));
 		for (Instance instance : entity.getVision().getActiveSet())
 		{
 			if (clazz.isAssignableFrom(instance.getClass()))
