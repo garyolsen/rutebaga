@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import rutebaga.commons.Vector;
+import rutebaga.commons.Bounds;
+import rutebaga.commons.EllipseBounds;
 import rutebaga.commons.UIDProvider;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
@@ -31,15 +34,15 @@ public abstract class Entity extends Instance
 	
 	private Map<Object, EntityEffect> eventsQueue = new HashMap<Object, EntityEffect>();
 	
+	private EllipseBounds visionBounds;
+	private Vision vision;
+	
 	public Entity(EntityType type)
 	{
 		this.type = type;
+		visionBounds = new EllipseBounds( getCoordinate(), new Vector( 10, 10, 0 ) );
 	}
 	
-	public abstract Stats getStats();
-	
-	public abstract Inventory getInventory();
-
 	/**
 	 * Queues an effect to be applied to this entity.
 	 * 
@@ -53,17 +56,41 @@ public abstract class Entity extends Instance
 		eventsQueue.put(uid, effect);
 		return uid;
 	}
-
+	
 	protected Map<Object, EntityEffect> getEventsQueue()
 	{
 		return eventsQueue;
 	}
+
+	public abstract Inventory getInventory();
+
+	public abstract Stats getStats();
 	
+	public Set<Instance> getVisibleInstances() {
+		visionBounds.setCenter( getCoordinate() );
+		return getEnvironment().getInstances( visionBounds, getCoordinate() );
+	}
+	
+	public EllipseBounds getVisionBounds() {
+		return visionBounds;
+	}
+
+	public Vector getVisionRadius() {
+		return visionBounds.getRadii();
+	}
+
+	public void setVisionBounds(EllipseBounds visionBounds) {
+		this.visionBounds = visionBounds;
+	}
+
+	public void setVisionRadius(Vector visionRadius) {
+		visionBounds.setRadii( visionRadius );
+	}
+
 	public final void tick()
 	{
 		if(this.type != null) type.tick(this);
+		vision.tick();
 	}
-	
-	
 
 }
