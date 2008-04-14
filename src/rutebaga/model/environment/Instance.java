@@ -45,7 +45,7 @@ public abstract class Instance {
 	}
 
 	/**
-	 * Applies an impulse to this instance's (persistent) momentum.
+	 * Applies an impulse to this Instance's (persistent) momentum.
 	 * 
 	 * @param momentum
 	 *            the impulse to be added to the momentum
@@ -55,9 +55,9 @@ public abstract class Instance {
 	}
 
 	/**
-	 * Determines whether or not this instance is capable of blocking an
-	 * instance (regardless of its location) were it to attempt to move onto
-	 * this instance's tile.
+	 * Determines whether or not this Instance is capable of blocking an
+	 * Instance (regardless of its location) were it to attempt to move onto
+	 * this Instance's tile.
 	 * 
 	 * @param other
 	 *            the instance requesting access
@@ -65,11 +65,16 @@ public abstract class Instance {
 	 */
 	public abstract boolean blocks(Instance other);
 
+	/**
+	 * Returns the Appearance of this Instance.
+	 * @return The Appearance that describes this Instance.
+	 */
 	public Appearance getAppearance() {
 		return appearance;
 	}
 
 	/**
+	 * Returns other Instances on the same game tile.
 	 * @return the set of the instances that share this instance's tile
 	 */
 	public Set<Instance> getCoexistantInstances() {
@@ -80,6 +85,7 @@ public abstract class Instance {
 	}
 
 	/**
+	 * 
 	 * @return the coordinate of this instance in space
 	 */
 	public Vector getCoordinate() {
