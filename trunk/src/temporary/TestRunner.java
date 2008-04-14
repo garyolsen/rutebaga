@@ -5,8 +5,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import rutebaga.commons.Vector;
+import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
+import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Environment;
@@ -102,7 +104,7 @@ public class TestRunner
 			}
 		}
 
-		avatar = new Entity(null)
+		avatar = new CharEntity( new EntityType() )
 		{
 
 			@Override
