@@ -28,21 +28,26 @@ import rutebaga.model.environment.Instance;
  * @author Nick
  * @see EntityType
  */
-public abstract class Entity extends Instance
-{
+public abstract class Entity extends Instance {
 	private EntityType type;
-	
+
 	private Map<Object, EntityEffect> eventsQueue = new HashMap<Object, EntityEffect>();
-	
+
 	private EllipseBounds visionBounds;
+
 	private Vision vision;
-	
-	public Entity(EntityType type)
-	{
+
+	/**
+	 * Constructs a new Entity based on the specified EntityType.
+	 * 
+	 * @param type
+	 *            The EntityType defining this new Entity.
+	 */
+	public Entity(EntityType type) {
 		this.type = type;
-		visionBounds = new EllipseBounds( getCoordinate(), new Vector( 10, 10, 0 ) );
+		visionBounds = new EllipseBounds(getCoordinate(), new Vector(10, 10, 0));
 	}
-	
+
 	/**
 	 * Queues an effect to be applied to this entity.
 	 * 
@@ -50,45 +55,78 @@ public abstract class Entity extends Instance
 	 *            the effect to apply
 	 * @return the token identifying the effect's application
 	 */
-	public Object accept(EntityEffect effect)
-	{
+	public Object accept(EntityEffect effect) {
 		Object uid = UIDProvider.getUID();
 		eventsQueue.put(uid, effect);
 		return uid;
 	}
-	
-	protected Map<Object, EntityEffect> getEventsQueue()
-	{
+
+	protected Map<Object, EntityEffect> getEventsQueue() {
 		return eventsQueue;
 	}
 
+	/**
+	 * Returns this Entity's Inventory.
+	 * 
+	 * @return The Inventory held by this Entity.
+	 */
 	public abstract Inventory getInventory();
 
+	/**
+	 * Returns this Entity's Stats.
+	 * 
+	 * @return The Stats of this Entity.
+	 */
 	public abstract Stats getStats();
-	
+
+	/**
+	 * Returns the {@link rutebaga.commons.Bounds Bounds} respresenting what
+	 * this Entity can see.
+	 * 
+	 * @return The Bounds of this Entity's vision.
+	 */
 	public EllipseBounds getVisionBounds() {
 		return visionBounds;
 	}
-	
+
+	/**
+	 * Returns what is currently visible to this Entity.
+	 * 
+	 * @return This Entity's Vision.
+	 */
 	public Vision getVision() {
 		return vision;
 	}
 
+	/**
+	 * Returns the distance this Entity can see.
+	 * 
+	 * @return The radius of the {@link rutebaga.commons.Bounds Bounds} of this
+	 *         Entity's Vision.
+	 */
 	public Vector getVisionRadius() {
 		return visionBounds.getRadii();
 	}
 
+	/**
+	 * Sets the {@link rutebaga.commons.Bounds Bounds} of this Entity's Vision.
+	 * @param visionBounds This Entity's new Vision Bounds.
+	 */
 	public void setVisionBounds(EllipseBounds visionBounds) {
 		this.visionBounds = visionBounds;
 	}
 
+	/**
+	 * Changes this Entity's Vision based on a new radius of Vision.
+	 * @param visionRadius The distance this Entity will be able to see.
+	 */
 	public void setVisionRadius(Vector visionRadius) {
-		visionBounds.setRadii( visionRadius );
+		visionBounds.setRadii(visionRadius);
 	}
 
-	public final void tick()
-	{
-		if(this.type != null) type.tick(this);
+	public final void tick() {
+		if (this.type != null)
+			type.tick(this);
 	}
 
 }

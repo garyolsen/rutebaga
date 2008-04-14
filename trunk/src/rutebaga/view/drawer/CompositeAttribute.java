@@ -6,8 +6,11 @@ import java.util.Set;
 
 public class CompositeAttribute implements Attribute{
 
-	public Set<Attribute> attributes;
+	private Set<Attribute> attributes;
 	
+	/**
+	 * Constructs a new empty CompositeAttribute.
+	 */
 	public CompositeAttribute() {
 		attributes = new HashSet<Attribute>();
 	}
@@ -18,14 +21,26 @@ public class CompositeAttribute implements Attribute{
 			attr.apply( drawer );
 	}
 	
+	/**
+	 * Adds an Attribute to this CompositeAttribute.
+	 * @param attr The Attribute to add to this CompositeAttribute.
+	 */
 	public void addAttribute( Attribute attr ) {
 		attributes.add(attr);
 	}
 	
+	/**
+	 * Removes an Attribute from this CompositeAttribute.
+	 * @param attr The Attribute to remove from this CompositeAttribute.
+	 */
 	public void removeAttribute( Attribute attr ) {
 		attributes.remove(attr);
 	}
 	
+	/**
+	 * Returns all the Attributes stored in this CompositeAttribute.
+	 * @return A set of Attributes.
+	 */
 	public Set<Attribute> getAttributes() {
 		return Collections.unmodifiableSet( attributes );
 	}

@@ -9,7 +9,7 @@ import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 import rutebaga.model.map.TerrainType;
 
 /**
- * An physical instance within a tile-space.
+ * A physical instance within a tile-space.
  * 
  * When the instance is not within an environment, it is an orphan. Spatial and
  * Newtonian operations are not guaranteed to be stable when invoked upon an
@@ -27,8 +27,8 @@ public abstract class Instance {
 	/**
 	 * Checks to see whether an instance is allowed to be over a terrain type.
 	 * 
-	 * @param terrain
-	 * @return Boolean
+	 * @param terrain The TerrainType in question.
+	 * @return Boolean True if this Instance can cross over the specified TerrainType.
 	 */
 	public Boolean able(TerrainType terrain) {
 		return movementAttributes.able(terrain);
