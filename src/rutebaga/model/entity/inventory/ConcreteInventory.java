@@ -9,16 +9,16 @@ import java.util.Set;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
-import rutebaga.model.item.EquippableItem;
+import rutebaga.model.item.Item;
 
 public class ConcreteInventory implements Inventory
 {
 	// FIXME implement slot types
 	private Entity parent;
-	private Set<EquippableItem> equipped = new HashSet<EquippableItem>();
-	private Set<EquippableItem> unequipped = new HashSet<EquippableItem>();
+	private Set<Item> equipped = new HashSet<Item>();
+	private Set<Item> unequipped = new HashSet<Item>();
 
-	private Map<EquippableItem, Set<EntityEffect>> onUnequipEffects = new HashMap<EquippableItem, Set<EntityEffect>>();
+	private Map<Item, Set<EntityEffect>> onUnequipEffects = new HashMap<Item, Set<EntityEffect>>();
 
 	public ConcreteInventory(Entity parent)
 	{
@@ -26,13 +26,13 @@ public class ConcreteInventory implements Inventory
 		this.parent = parent;
 	}
 
-	public boolean canEquip(EquippableItem item)
+	public boolean canEquip(Item item)
 	{
 		// FIXME implement
 		return true;
 	}
 
-	public void equip(EquippableItem item)
+	public void equip(Item item)
 	{
 		if (!equipped.contains(item))
 		{
@@ -54,7 +54,7 @@ public class ConcreteInventory implements Inventory
 		}
 	}
 	
-	public void unequip(EquippableItem item)
+	public void unequip(Item item)
 	{
 		for(EntityEffect reverse : onUnequipEffects.remove(item))
 		{
@@ -62,12 +62,12 @@ public class ConcreteInventory implements Inventory
 		}
 	}
 
-	public Set<EquippableItem> getEquipped()
+	public Set<Item> getEquipped()
 	{
 		return Collections.unmodifiableSet(equipped);
 	}
 
-	public Set<EquippableItem> getUnequipped()
+	public Set<Item> getUnequipped()
 	{
 		return Collections.unmodifiableSet(unequipped);
 	}
