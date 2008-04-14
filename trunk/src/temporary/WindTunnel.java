@@ -10,9 +10,12 @@ public class WindTunnel extends Instance
 {
 	private BoundsTracker tracker;
 	
+	private int direction = 0;
+	private int wait = 0;
+	
 	public WindTunnel()
 	{
-		tracker = new BoundsTracker(new EllipseBounds(new Vector(0, 0), new Vector(5, 5)), this);
+		tracker = new BoundsTracker(new EllipseBounds(new Vector(0, 0), new Vector(2, 2)), this);
 	}
 
 	@Override
@@ -43,6 +46,18 @@ public class WindTunnel extends Instance
 				instance.applyMomentum(new Vector(0.3, 0));
 			}
 		}
+		
+		double dx = direction % 2;
+		double dy = direction % 2 + 1;
+		boolean negative = (direction / 2) % 2 == 0;
+		Vector impulse = new Vector(dx*0.05, dy*0.05);
+		if(negative) impulse = impulse.negate();
+		
+		this.applyImpulse(impulse);
+		
+		wait++;
+		if(wait % 10 == 0)
+			direction++;
 	}
 
 }

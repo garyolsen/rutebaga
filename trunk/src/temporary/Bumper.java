@@ -12,7 +12,7 @@ public class Bumper extends Instance
 	
 	public Bumper()
 	{
-		tracker = new BoundsTracker(new EllipseBounds(new Vector(0, 0), new Vector(5, 5)), this);
+		tracker = new BoundsTracker(new EllipseBounds(new Vector(0, 0), new Vector(2, 2)), this);
 	}
 
 	@Override
