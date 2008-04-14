@@ -31,6 +31,11 @@ public class EllipseBounds extends Bounds
 		this.radii = size;
 	}
 	
+	/**
+	 * Constructs an ellipsoid bounds centered at the origin.
+	 * 
+	 * @param radii	the radii of the ellipsoid
+	 */
 	public EllipseBounds(Vector radii) {
 		
 		double arr[] = new double[radii.getDimension()];
@@ -44,7 +49,7 @@ public class EllipseBounds extends Bounds
 	}
 
 	/**
-	 * Returns true if this {@link Vector} falls into these ElipeBounds.
+	 * Returns true if this {@link Vector} falls into these EllipseBounds.
 	 * 
 	 * @return The boolean corresponding to whether this {@link Vector} is
 	 *         within the ElipseBounds.
@@ -73,9 +78,9 @@ public class EllipseBounds extends Bounds
 	}
 
 	/**
-	 * Returns the center of this ElipseBounds.
+	 * Returns the center of this EllipseBounds.
 	 * 
-	 * @return A {@link Vector} representing the center of this ElipseBounds.
+	 * @return A {@link Vector} representing the center of this EllipseBounds.
 	 * @see Vector
 	 */
 	public Vector getCenter()
@@ -97,7 +102,7 @@ public class EllipseBounds extends Bounds
 	}
 
 	/**
-	 * Sets the center of this ElipseBounds to the specified {@link Vector}.
+	 * Sets the center of this EllipseBounds to the specified {@link Vector}.
 	 * 
 	 * @param center
 	 *            The {@link Vector} representing the new center of the
@@ -110,13 +115,13 @@ public class EllipseBounds extends Bounds
 	}
 
 	/**
-	 * Sets the radii of this ElipseBounds to the radii corresponding to the
+	 * Sets the radii of this EllipseBounds to the radii corresponding to the
 	 * components of the specified {@link Vector}.
 	 * 
 	 * @see Vector
 	 * @param size
 	 *            The {@link Vector} with components corresponding to the
-	 *            ElipseBound's new radii.
+	 *            EllipseBound's new radii.
 	 */
 	public void setRadii(Vector size)
 	{
