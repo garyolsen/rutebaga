@@ -66,7 +66,7 @@ public class EllipseBounds extends Bounds
 		{
 			double numerator = (v.get(idx) - center.get(idx));
 			numerator *= numerator;
-			value += numerator / radii.get(idx);
+			value += numerator / (radii.get(idx)*radii.get(idx));
 		}
 		return value <= 1;
 	}
