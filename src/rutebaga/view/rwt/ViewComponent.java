@@ -138,14 +138,26 @@ public abstract class ViewComponent {
 		this.isVisible = visibility;
 	}
 
+	/**
+	 * Determines if this ViewComponent is in focus and able to receive events.
+	 * @return True if this ViewComponent has focus.
+	 */
 	public boolean hasFocus() {
 		return hasFocus;
 	}
 
+	/**
+	 * Sets the focus of this ViewComponent to the specified boolean.
+	 * @param hasFocus The desired focus.
+	 */
 	public void setHasFocus(boolean hasFocus) {
 		this.hasFocus = hasFocus;
 	}
 	
+	/**
+	 * Returns the Bounds of this ViewComponent.
+	 * @return The Bounds of this ViewComponent.
+	 */
 	public Bounds getBounds() {
 		// TODO
 		return null;

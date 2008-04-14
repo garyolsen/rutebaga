@@ -21,6 +21,11 @@ public class View {
 	
 	private Set<ViewComponent> components = new HashSet<ViewComponent>();
 	
+	/**
+	 * Constructs a view with the provided dimensions.
+	 * @param width Horizontal size of the View.
+	 * @param height Vertical size of the View.
+	 */
 	public View( int width, int height) {
 		setupWindow( width, height );
 		setupDispatcher();
@@ -42,6 +47,9 @@ public class View {
 		window.createBufferStrategy(2);
 	}
 	
+	/**
+	 * Instructs the View to enter fullscreen mode.
+	 */
 	public void setFullscreen() {
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		
@@ -62,6 +70,9 @@ public class View {
 		drawer = new Graphics2DDrawer((Graphics2D) strategy.getDrawGraphics());
 	}
 	
+	/**
+	 * Refreshes the contents of the View.
+	 */
 	public void renderFrame() {
 		if(!strategy.contentsLost()) {
 			Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();
@@ -80,6 +91,10 @@ public class View {
 		}
 	}
 	
+	/**
+	 * Add a {@link ViewComponent} to this View.
+	 * @param vc ViewComponent to add to this View.
+	 */
 	public void addViewComponent(ViewComponent vc ) {
 		components.add(vc);
 	}
