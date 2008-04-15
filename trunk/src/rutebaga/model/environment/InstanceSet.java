@@ -15,83 +15,80 @@ public class InstanceSet implements Set<Instance>
 {
 	private static final long serialVersionUID = 358791980720848943L;
 	
-	
+	private Set<Instance> backingSet = new HashSet<Instance>();
 
 	public boolean add(Instance arg0)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return backingSet.add(arg0);
 	}
 
 	public boolean addAll(Collection<? extends Instance> arg0)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return backingSet.addAll(arg0);
 	}
 
 	public void clear()
 	{
-		// TODO Auto-generated method stub
-		
+		backingSet.clear();
 	}
 
 	public boolean contains(Object arg0)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return backingSet.contains(arg0);
 	}
 
 	public boolean containsAll(Collection<?> arg0)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return backingSet.containsAll(arg0);
+	}
+
+	public boolean equals(Object arg0)
+	{
+		return backingSet.equals(arg0);
+	}
+
+	public int hashCode()
+	{
+		return backingSet.hashCode();
 	}
 
 	public boolean isEmpty()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return backingSet.isEmpty();
 	}
 
 	public Iterator<Instance> iterator()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return backingSet.iterator();
 	}
 
 	public boolean remove(Object arg0)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return backingSet.remove(arg0);
 	}
 
 	public boolean removeAll(Collection<?> arg0)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return backingSet.removeAll(arg0);
 	}
 
 	public boolean retainAll(Collection<?> arg0)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return backingSet.retainAll(arg0);
 	}
 
 	public int size()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return backingSet.size();
 	}
 
 	public Object[] toArray()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return backingSet.toArray();
 	}
 
 	public <T> T[] toArray(T[] arg0)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return backingSet.toArray(arg0);
 	}
 }
