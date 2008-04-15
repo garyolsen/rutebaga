@@ -27,7 +27,13 @@ public class GraphicsManager
 	public Image createImage(int width, int height)
 	{
 		return this.getGraphicsConfiguration().createCompatibleImage(width,
-				height, Transparency.BITMASK);
+				height, Transparency.TRANSLUCENT);
+	}
+
+	public Image createVolatileImage(int width, int height)
+	{
+		return this.getGraphicsConfiguration().createCompatibleImage(width,
+				height, Transparency.TRANSLUCENT);
 	}
 
 	/**
@@ -88,6 +94,10 @@ public class GraphicsManager
 		this.width = width;
 		this.height = height;
 
+		System.setProperty("sun.java2d.translaccel", "true");
+		System.setProperty("sun.java2d.opengl", "true");
+		System.setProperty("sun.java2d.accthreshold", "0");
+
 		frame = new java.awt.Frame();
 		frame.setUndecorated(true);
 		frame.setIgnoreRepaint(true);
@@ -101,7 +111,7 @@ public class GraphicsManager
 
 		try
 		{
-			// device.setDisplayMode(new DisplayMode(width, height, 32, 60));
+			device.setDisplayMode(new DisplayMode(width, height, 32, 60));
 		}
 		catch (Exception t)
 		{

@@ -38,5 +38,11 @@ public interface TileConvertor
 	 */
 	int getDimension();
 	
+	/**
+	 * Converts the given coordinate into a coordinate within rectangular space.
+	 * 
+	 * @param coordinate	the coordinate to convert
+	 * @return	the coordinate's rectangular location
+	 */
 	Vector toRect(Vector coordinate);
 }

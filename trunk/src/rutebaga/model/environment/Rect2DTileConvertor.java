@@ -58,4 +58,9 @@ public class Rect2DTileConvertor implements TileConvertor
 	{
 		return 2;
 	}
+
+	public Vector toRect(Vector coordinate)
+	{
+		return coordinate;
+	}
 }
