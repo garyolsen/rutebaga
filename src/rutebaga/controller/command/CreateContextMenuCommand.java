@@ -23,6 +23,13 @@ public abstract class CreateContextMenuCommand implements Command
 
 	private ViewFacade facade;
 
+	public CreateContextMenuCommand() {
+	}
+	
+	public CreateContextMenuCommand(ElementalList list) {
+		setElements(list);
+	}
+	
 	/**
 	 * Set the list of elements to put in the context menu.
 	 * 
@@ -69,7 +76,7 @@ public abstract class CreateContextMenuCommand implements Command
 	 * 
 	 * @return
 	 */
-	protected ViewFacade getViewFacade()
+	protected final ViewFacade getViewFacade()
 	{
 		return facade;
 	}
@@ -80,7 +87,7 @@ public abstract class CreateContextMenuCommand implements Command
 	 * 
 	 * @return this CreateContextMenuCommand's ElementalList
 	 */
-	protected ElementalList getElements()
+	protected final ElementalList getElements()
 	{
 		return elements;
 	}
