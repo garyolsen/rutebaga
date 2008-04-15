@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +16,7 @@ import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.LayerInstanceComparator;
+import rutebaga.model.environment.LayerComparator;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ViewComponent;
@@ -28,6 +29,8 @@ public class MapComponent extends ViewComponent
 {
 
 	private static final int TILE_SIZE = 32;
+	
+	private static LayerComparator layerComparator = new LayerComparator();
 	
 	private CharEntity avatar;
 	
@@ -47,7 +50,7 @@ public class MapComponent extends ViewComponent
 		ArrayList<Instance> sortedList = new ArrayList<Instance>(avatarVision.getActiveSet());
 		
 		
-		Collections.sort(sortedList, new LayerInstanceComparator());
+		Collections.sort(sortedList, layerComparator);
 		
 		for(Instance instance : sortedList) {
 			
@@ -63,12 +66,19 @@ public class MapComponent extends ViewComponent
 	private void drawMemorySet(Drawer draw, Vision avatarVision) {
 		Map<Vector, Set<Memory>> memory = avatarVision.getMemory();
 		
+		ArrayList<Memory> sortedMemory = new ArrayList<Memory>();
+		
 		for(Vector v : memory.keySet()) {
-			
-			Point p = centerPointOnAvatar(avatar.getCoordinate(), v);
 			for(Memory mem : memory.get(v)) {
-				draw.drawImage(p, mem.getAppearance().getImage());
+				sortedMemory.add(mem);
 			}
+		}
+		
+		Collections.sort(sortedMemory, layerComparator);
+		
+		for(Memory mem : sortedMemory) {
+			Point p = centerPointOnAvatar(avatar.getCoordinate(), mem.getCoordinate());
+			draw.drawImage(p, mem.getAppearance().getImage());
 		}
 		
 		

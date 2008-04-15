@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.HashSet;
 import java.util.Set;
@@ -121,6 +122,12 @@ public class View
 	{
 		for (ViewComponent vc : components)
 			vc.draw(drawer);
+	}
+	
+	
+	//TODO REMOVE THIS ONCE WE HAVE CONTROLLER SETUP!
+	public void addKeyListener(KeyListener kl ) {
+		window.addKeyListener(kl);
 	}
 
 }
