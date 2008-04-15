@@ -368,4 +368,14 @@ public class Environment
 	{
 		return tileConvertor.getDimension();
 	}
+	
+	public boolean exists(Vector tile)
+	{
+		if(!tileCache.containsKey(tile))
+			return false;
+		Set<Instance> set = getInstanceSetAt(tile);
+		if(set == null || set.size() == 0)
+			return false;
+		return true;
+	}
 }
