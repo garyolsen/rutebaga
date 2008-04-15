@@ -20,15 +20,8 @@ public class InventoryTest
 
 	public static void main(String... args)
 	{
-		Entity entity = new CharEntity(new EntityType());
-		Item sword = new Item(new ItemType()
-		{
-			@Override
-			public Item makeItem()
-			{
-				return null;
-			}
-		})
+		Entity entity = new CharEntity();
+		Item sword = new Item(null)
 		{
 
 			@Override
@@ -68,6 +61,13 @@ public class InventoryTest
 			public void tick()
 			{
 
+			}
+
+			@Override
+			public double getLayer()
+			{
+				// TODO Auto-generated method stub
+				return 0;
 			}
 
 		};

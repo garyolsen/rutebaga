@@ -15,7 +15,7 @@ public class StatEffectTest
 	 */
 	public static void main(String[] args)
 	{
-		Entity entity = new CharEntity(new EntityType());
+		Entity entity = new CharEntity();
 		StatisticId stat = new StatisticId("some stat");
 
 		System.out.println("before: " + entity.getStats().getValue(stat));

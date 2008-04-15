@@ -1,5 +1,6 @@
 package rutebaga.test.model.environment;
 
+import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.Instance;
 
 public class TestInstance extends Instance
@@ -46,5 +47,11 @@ public class TestInstance extends Instance
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public double getLayer()
+	{
+		return DefaultLayers.GROUND.getLayer();
 	}
 }
