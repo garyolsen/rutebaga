@@ -34,6 +34,10 @@ public class Vision
 	{
 		return memorySet;
 	}
+	
+	public boolean inActiveSet(Instance i) {
+		return boundsTracker.getInstances().contains(i);
+	}
 
 	public final void tick()
 	{
