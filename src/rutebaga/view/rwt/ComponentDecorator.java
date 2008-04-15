@@ -9,7 +9,7 @@ import rutebaga.view.drawer.Drawer;
  * The ComponentDecorator is different from that of
  * {@link ViewCompositeComponent} in primarily three ways:
  * <p>
- * <ul>
+ * <ula>
  * <li> The ComponentDecorator does not have a parent type relationship with the
  * object that it is decorating.
  * <li>The ComponentDecorator does not redefine the coordinate system for the

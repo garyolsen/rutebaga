@@ -1,5 +1,7 @@
 package rutebaga.view.rwt;
 
+import java.awt.Shape;
+import java.awt.geom.Area;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -85,4 +87,20 @@ public class ViewCompositeComponent extends ViewComponent
 			component.draw(draw);
 	}
 
+	public Shape getBounds() {
+		if(!isDirty())
+			return super.getBounds();
+		
+		
+		Area bounds = new Area();
+		
+		for(ViewComponent vc : components)
+			bounds.add(new Area(vc.getBounds()));
+		
+		super.setBounds(bounds);
+		
+		return super.getBounds();
+	}
+	
+	
 }

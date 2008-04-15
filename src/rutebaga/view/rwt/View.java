@@ -92,7 +92,7 @@ public class View
 			g2d.fillRect(0, 0, window.getBounds().width,
 					window.getBounds().height);
 
-			drawer.setGraphcis2D(g2d);
+			drawer.setGraphics2D(g2d);
 
 			drawViewComponents();
 
@@ -114,6 +114,7 @@ public class View
 	public void addViewComponent(ViewComponent vc)
 	{
 		components.add(vc);
+		dispatcher.registerComponent(vc);
 	}
 
 	private void drawViewComponents()

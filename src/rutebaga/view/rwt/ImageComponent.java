@@ -24,12 +24,18 @@ public class ImageComponent extends ViewComponent
 	public ImageComponent(Image image)
 	{
 		this.image = image;
+		
+		image.setAccelerationPriority(1.0f);
+		
+		this.setBounds(0, 0, image.getWidth(null), image.getHeight(null));
+		
 	}
 
 	@Override
 	public void draw(Drawer draw)
 	{
-		draw.drawImage(this.getLocation(), image);
+		draw.drawImage(getLocation(), image);
+		//draw.drawRectangle(getLocation(), getWidth(), getHeight());
 	}
 
 }
