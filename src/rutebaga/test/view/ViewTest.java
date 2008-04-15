@@ -100,7 +100,7 @@ public class ViewTest {
 			}
 		}
 
-		avatar = new CharEntity(new EntityType())
+		avatar = new CharEntity()
 		{
 
 			@Override
