@@ -24,6 +24,8 @@ public abstract class Instance
 	private PhysicsContainer physicsContainer;
 	private MovementAttributes movementAttributes = new MovementAttributes();
 	private Appearance appearance = new Appearance(this);
+	
+	private double layer = 0;
 
 	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
 
@@ -73,6 +75,12 @@ public abstract class Instance
 	 */
 	public abstract boolean blocks(Instance other);
 
+	public boolean existsInUniverse()
+	{
+		return this.getLocation() != null
+				&& this.getLocation().getEnvironment() != null;
+	}
+
 	/**
 	 * Returns the Appearance of this Instance.
 	 * 
@@ -120,12 +128,9 @@ public abstract class Instance
 	 */
 	public abstract double getFriction();
 
-	/**
-	 * @return the location container for this instance
-	 */
-	protected Location getLocation()
+	public double getLayer()
 	{
-		return location;
+		return layer;
 	}
 
 	/**
@@ -147,14 +152,6 @@ public abstract class Instance
 	}
 
 	/**
-	 * @return the physics container for this instance
-	 */
-	protected PhysicsContainer getPhysicsContainer()
-	{
-		return physicsContainer;
-	}
-
-	/**
 	 * @return the coordinate of this instance in tile-space
 	 */
 	public Vector getTile()
@@ -170,9 +167,47 @@ public abstract class Instance
 		return this.physicsContainer.getVelocity();
 	}
 
+	public void registerMovementListener(MovementListener listener)
+	{
+		this.movementListeners.add(listener);
+	}
+
 	public void setAppearance(Appearance appearance)
 	{
 		this.appearance = appearance;
+	}
+
+	public void setLayer(double layer)
+	{
+		this.layer = layer;
+	}
+
+	public abstract void tick();
+
+	public void unregisterMovementListener(MovementListener listener)
+	{
+		this.movementListeners.remove(listener);
+	}
+
+	/**
+	 * @return the location container for this instance
+	 */
+	protected Location getLocation()
+	{
+		return location;
+	}
+
+	protected Set<MovementListener> getMovementListeners()
+	{
+		return movementListeners;
+	}
+
+	/**
+	 * @return the physics container for this instance
+	 */
+	protected PhysicsContainer getPhysicsContainer()
+	{
+		return physicsContainer;
 	}
 
 	/**
@@ -195,29 +230,6 @@ public abstract class Instance
 	protected void setPhysicsContainer(PhysicsContainer physicsContainer)
 	{
 		this.physicsContainer = physicsContainer;
-	}
-
-	public abstract void tick();
-
-	public void registerMovementListener(MovementListener listener)
-	{
-		this.movementListeners.add(listener);
-	}
-
-	public void unregisterMovementListener(MovementListener listener)
-	{
-		this.movementListeners.remove(listener);
-	}
-
-	protected Set<MovementListener> getMovementListeners()
-	{
-		return movementListeners;
-	}
-
-	public boolean existsInUniverse()
-	{
-		return this.getLocation() != null
-				&& this.getLocation().getEnvironment() != null;
 	}
 
 }
