@@ -36,6 +36,11 @@ public class Environment
 	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
 	private TileConvertor tileConvertor;
 
+	protected TileConvertor getTileConvertor()
+	{
+		return tileConvertor;
+	}
+
 	/**
 	 * Constructs a new Environment using the given converter to define the
 	 * tile-space.
