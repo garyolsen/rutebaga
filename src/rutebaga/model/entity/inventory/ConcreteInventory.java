@@ -73,4 +73,10 @@ public class ConcreteInventory implements Inventory
 		return Collections.unmodifiableSet(unequipped);
 	}
 
+	public void drop(Item item)
+	{
+		this.unequipped.remove(item);
+		this.equipped.remove(item);
+	}
+
 }
