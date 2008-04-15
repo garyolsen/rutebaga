@@ -8,12 +8,11 @@ import java.util.Iterator;
  * {@link DynamicElementalList}.
  * 
  * @see DynamicElementalList
- * @param <ElementType>
+ * @param <E>
  *            The type of the elements to be generated.
  * @author Matthew Chuah
  */
-public interface ListElementSource<ElementType>
-{
+public interface ListElementSource<E> {
 	/**
 	 * Gets the current label that should be assigned to the
 	 * {@link DynamicElementalList} as a whole.
@@ -26,7 +25,7 @@ public interface ListElementSource<ElementType>
 	/**
 	 * Return an iterator over the elements produced by this source.
 	 * 
-	 * @return an iterator of ElementTypes
+	 * @return an iterator of Es
 	 */
-	public Iterator<ElementType> iterator();
+	public Iterator<E> iterator();
 }

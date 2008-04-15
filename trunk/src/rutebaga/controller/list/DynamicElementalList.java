@@ -21,23 +21,23 @@ import java.util.Iterator;
  * @see ListElementSource
  * @see ListElementFactory
  * @author Matthew Chuah
- * @param <ElementType>
+ * @param <E>
  *            the type of thing to be represented in the list.
  */
-public class DynamicElementalList<ElementType> implements ElementalList
+public class DynamicElementalList<E> implements ElementalList
 {
 
 	/**
 	 * The source of ElementType objects for ListElements returned by this
 	 * ElementalList's Iterator.
 	 */
-	private final ListElementSource<ElementType> source;
+	private final ListElementSource<E> source;
 
 	/**
 	 * This DynamicElementalList's factory, which creates ListElements from
 	 * ElementType objects produced by the source.
 	 */
-	private final ListElementFactory<ElementType> factory;
+	private final ListElementFactory<E> factory;
 
 	/**
 	 * Create a new DynamicElementalList with the specified Source of the
@@ -53,8 +53,8 @@ public class DynamicElementalList<ElementType> implements ElementalList
 	 * @see ListElementFactory
 	 * @see ListElement
 	 */
-	public DynamicElementalList(ListElementSource<ElementType> source,
-			ListElementFactory<ElementType> factory)
+	public DynamicElementalList(ListElementSource<E> source,
+			ListElementFactory<E> factory)
 	{
 		if (source == null || factory == null)
 			throw new NullPointerException(
@@ -91,8 +91,7 @@ public class DynamicElementalList<ElementType> implements ElementalList
 		 */
 		return new Iterator<ListElement>()
 		{
-			private Iterator<ElementType> source = DynamicElementalList.this.source
-					.iterator();
+			private Iterator<E> source = DynamicElementalList.this.source.iterator();
 
 			public boolean hasNext()
 			{

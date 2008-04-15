@@ -1,12 +1,30 @@
 package rutebaga.controller.command;
 
 import rutebaga.commons.Vector;
+import rutebaga.controller.list.ElementalList;
 
 /**
  * @author Matthew Chuah
  */
-public class CreateRootContextMenuCommand extends CreateContextMenuCommand
-{
+public class CreateRootContextMenuCommand extends CreateContextMenuCommand {
+	/**
+	 * Create a new CreateRootContextMenuCommand with an empty command list.
+	 */
+	public CreateRootContextMenuCommand() {
+		super();
+	}
+
+	/**
+	 * Create a new CreateRootContextMenuCommand with the given command list,
+	 * specified as an ElementalList.
+	 * 
+	 * @param list
+	 *            a list of commands to place in the menu
+	 */
+	public CreateRootContextMenuCommand(ElementalList list) {
+		super(list);
+	}
+
 	/**
 	 * The map location at which to open this root context menu.
 	 */
