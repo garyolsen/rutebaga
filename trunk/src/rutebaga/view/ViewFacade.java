@@ -1,6 +1,6 @@
 package rutebaga.view;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.ElementalList;
 import rutebaga.view.rwt.ContextMenu;
