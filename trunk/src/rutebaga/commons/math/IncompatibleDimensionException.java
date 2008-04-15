@@ -1,4 +1,5 @@
-package rutebaga.commons;
+package rutebaga.commons.math;
+
 
 /**
  * An Exception thrown by {@link Vector#check(Vector)} when a Vector operation

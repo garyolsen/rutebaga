@@ -1,4 +1,5 @@
-package rutebaga.commons;
+package rutebaga.commons.logic;
+
 
 /**
  * Used to represent a rule that should always evaluate the same way.
@@ -43,7 +44,7 @@ public class StaticRule<T> implements Rule<T>
 	 * @param context
 	 *            The context in which this StaticRule will be evaluated.
 	 * @return The evaluation of this StaticRule in the provided context.
-	 * @see rutebaga.commons.Rule#determine(Object)
+	 * @see rutebaga.commons.logic.Rule#determine(Object)
 	 * @see #isValue()
 	 */
 	public boolean determine(T context)

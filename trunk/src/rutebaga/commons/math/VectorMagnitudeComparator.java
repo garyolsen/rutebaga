@@ -1,4 +1,4 @@
-package rutebaga.commons;
+package rutebaga.commons.math;
 
 import java.util.Comparator;
 

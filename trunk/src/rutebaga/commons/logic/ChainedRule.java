@@ -1,7 +1,8 @@
-package rutebaga.commons;
+package rutebaga.commons.logic;
 
 import java.util.HashSet;
 import java.util.Set;
+
 
 /**
  * A rule based on a series of other rules.
@@ -44,7 +45,7 @@ public class ChainedRule<T> implements Rule<T>
 	 *            the context in which the rule runs.
 	 * @return A boolean corresponding to this Rule's agreement with the default
 	 *         value in the given context.
-	 * @see rutebaga.commons.Rule#determine(Object)
+	 * @see rutebaga.commons.logic.Rule#determine(Object)
 	 */
 	public boolean determine(T context)
 	{
