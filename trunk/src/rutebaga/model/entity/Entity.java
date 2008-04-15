@@ -6,6 +6,7 @@ import java.util.Map;
 import rutebaga.commons.EllipseBounds;
 import rutebaga.commons.UIDProvider;
 import rutebaga.commons.Vector;
+import rutebaga.model.DefaultLayers;
 import rutebaga.model.Named;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
@@ -30,10 +31,10 @@ public abstract class Entity extends Instance implements Named
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
 	private EllipseBounds visionBounds;
-	private Vision vision;
-	
-	private String name;
 
+	private Vision vision;
+	private String name;
+	
 	public Entity()
 	{
 		visionBounds = new EllipseBounds(new Vector(10, 10));
@@ -56,6 +57,12 @@ public abstract class Entity extends Instance implements Named
 	}
 
 	public abstract Inventory getInventory();
+
+	@Override
+	public double getLayer()
+	{
+		return DefaultLayers.GROUND.getLayer();
+	}
 
 	public String getName()
 	{
@@ -94,6 +101,13 @@ public abstract class Entity extends Instance implements Named
 		visionBounds.setRadii(visionRadius);
 	}
 	
+	@Override
+	public void tick()
+	{
+		flushEffectQueue();
+		getVision().tick();
+	}
+
 	private void flushEffectQueue()
 	{
 		for (Object id : getEffectQueue().keySet())
@@ -101,13 +115,6 @@ public abstract class Entity extends Instance implements Named
 			getEffectQueue().get(id).affect(this, id);
 		}
 		getEffectQueue().clear();
-	}
-
-	@Override
-	public void tick()
-	{
-		flushEffectQueue();
-		getVision().tick();
 	}
 
 	protected Map<Object, EntityEffect> getEffectQueue()
