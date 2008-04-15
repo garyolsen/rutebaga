@@ -1,4 +1,5 @@
-package rutebaga.commons;
+package rutebaga.commons.math;
+
 
 /**
  * 

@@ -1,4 +1,6 @@
-package rutebaga.commons;
+package rutebaga.commons.math;
+
+import rutebaga.commons.NumberUtils;
 
 /**
  * A rectangular bounds.

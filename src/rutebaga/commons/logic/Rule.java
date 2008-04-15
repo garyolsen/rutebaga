@@ -1,4 +1,4 @@
-package rutebaga.commons;
+package rutebaga.commons.logic;
 
 /**
  * Used to determine a truth value in a given context.

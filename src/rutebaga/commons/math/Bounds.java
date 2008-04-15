@@ -1,7 +1,8 @@
-package rutebaga.commons;
+package rutebaga.commons.math;
 
 import java.util.HashSet;
 import java.util.Set;
+
 
 /**
  * Base class for a discrete bounds within space.

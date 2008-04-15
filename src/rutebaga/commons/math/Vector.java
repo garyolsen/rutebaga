@@ -1,6 +1,7 @@
-package rutebaga.commons;
+package rutebaga.commons.math;
 
 import java.util.Arrays;
+
 
 /**
  * A vector in space.

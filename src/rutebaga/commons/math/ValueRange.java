@@ -1,4 +1,4 @@
-package rutebaga.commons;
+package rutebaga.commons.math;
 
 /**
  * Defines a range of real numbers.
