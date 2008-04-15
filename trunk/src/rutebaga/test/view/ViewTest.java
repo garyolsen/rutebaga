@@ -148,7 +148,7 @@ public class ViewTest {
 		while(true) {
 			view.renderFrame();
 			
-			avatar.applyImpulse(createImpulse());
+			avatar.applyMomentum(createImpulse());
 			environment.tick();
 			
 		}
