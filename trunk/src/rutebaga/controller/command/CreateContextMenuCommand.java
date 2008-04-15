@@ -1,6 +1,6 @@
 package rutebaga.controller.command;
 
-import rutebaga.controller.ElementalList;
+import rutebaga.controller.list.ElementalList;
 import rutebaga.view.ViewFacade;
 
 /**

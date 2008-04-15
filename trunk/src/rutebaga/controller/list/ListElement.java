@@ -1,4 +1,4 @@
-package rutebaga.controller;
+package rutebaga.controller.list;
 
 import rutebaga.controller.command.Command;
 
