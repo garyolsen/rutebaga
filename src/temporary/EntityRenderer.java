@@ -9,7 +9,7 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.util.Set;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.environment.Instance;

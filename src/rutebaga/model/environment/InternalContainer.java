@@ -1,6 +1,6 @@
 package rutebaga.model.environment;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 
 /**
  * This class is used as a workaround to Java's lack of the "internal" keyword.

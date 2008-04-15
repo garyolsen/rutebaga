@@ -1,7 +1,7 @@
 package temporary;
 
-import rutebaga.commons.EllipseBounds;
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.EllipseBounds;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.BoundsTracker;

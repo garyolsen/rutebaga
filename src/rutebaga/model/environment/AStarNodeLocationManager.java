@@ -3,7 +3,7 @@ package rutebaga.model.environment;
 import java.util.HashMap;
 import java.util.Map;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 
 public class AStarNodeLocationManager
 {

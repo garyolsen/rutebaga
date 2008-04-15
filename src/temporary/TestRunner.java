@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 
 import legacy.GraphicsManager;
 import legacy.KeyBuffer;
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;

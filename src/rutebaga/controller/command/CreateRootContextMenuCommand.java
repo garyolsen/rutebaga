@@ -1,6 +1,6 @@
 package rutebaga.controller.command;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 
 /**
  * @author Matthew Chuah

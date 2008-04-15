@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import rutebaga.commons.Bounds;
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Bounds;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 

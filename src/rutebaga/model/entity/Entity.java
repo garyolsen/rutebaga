@@ -3,9 +3,9 @@ package rutebaga.model.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-import rutebaga.commons.EllipseBounds;
 import rutebaga.commons.UIDProvider;
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.EllipseBounds;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.Named;
 import rutebaga.model.entity.inventory.Inventory;

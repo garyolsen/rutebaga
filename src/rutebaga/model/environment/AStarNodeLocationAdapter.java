@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.pathfinding.AStarNode;
 
 public class AStarNodeLocationAdapter extends AStarNode

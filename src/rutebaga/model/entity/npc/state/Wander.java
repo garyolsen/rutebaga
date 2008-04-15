@@ -4,7 +4,7 @@ import java.util.Random;
 
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 
 /**
  * @author nicholasstamas
