@@ -37,4 +37,6 @@ public interface TileConvertor
 	 * @return the dimension of this space definition
 	 */
 	int getDimension();
+	
+	Vector toRect(Vector coordinate);
 }
