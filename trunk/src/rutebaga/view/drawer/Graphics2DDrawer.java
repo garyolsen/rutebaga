@@ -49,7 +49,7 @@ public class Graphics2DDrawer extends Drawer
 	 * @param g2d
 	 *            A Graphics2D to be used by this Graphics2DDrawer.
 	 */
-	public void setGraphcis2D(Graphics2D g2d)
+	public void setGraphics2D(Graphics2D g2d)
 	{
 		this.g2d = g2d;
 	}
@@ -63,8 +63,7 @@ public class Graphics2DDrawer extends Drawer
 	public void drawImage(Point p, Image img)
 	{
 		applyAttribute();
-		g2d.drawImage(img, p.x, p.y, p.x + img.getWidth(null), p.y
-				+ img.getHeight(null), null);
+		g2d.drawImage(img, p.x, p.y, img.getWidth(null), img.getHeight(null), null);
 	}
 
 	@Override

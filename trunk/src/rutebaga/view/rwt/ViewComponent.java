@@ -2,10 +2,11 @@ package rutebaga.view.rwt;
 
 import java.awt.AWTEvent;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import rutebaga.commons.Bounds;
 import rutebaga.view.drawer.Drawer;
 
 /**
@@ -41,13 +42,18 @@ public abstract class ViewComponent
 	private boolean isVisible, hasFocus, dirtyBounds;
 	private Point screenPosition = new Point(0, 0);
 
+	private Shape bounds;
+	
+
 	/**
 	 * Renders this ViewComponent.
 	 * 
 	 * @param draw
 	 *            The {@link Drawer} to use for rendering.
 	 */
+
 	public abstract void draw(Drawer draw);
+
 
 	/**
 	 * Returns the parent ViewComponent of this ViewComponent, if it exists.
@@ -95,6 +101,15 @@ public abstract class ViewComponent
 		return screenPosition.y;
 	}
 
+
+	public int getWidth() {
+		return bounds.getBounds().width;
+	}
+	
+	public int getHeight() {
+		return bounds.getBounds().height;
+	}
+	
 	/**
 	 * Moves this ViewComponent to the specified Point.
 	 * 
@@ -179,31 +194,37 @@ public abstract class ViewComponent
 	 * 
 	 * @return The Bounds of this ViewComponent.
 	 */
-	public Bounds getBounds()
-	{
-		// TODO
-		return null;
+	public Shape getBounds() {
+		return bounds;
 	}
+
+	
+	public void setBounds( Shape bounds ) {
+		dirtyBounds();
+		this.bounds = bounds;
+	}
+	
+	public void setBounds( int x, int y, int width, int height ) {
+		setLocation(x, y);
+		setBounds(new Rectangle(width, height));
+	}
+	
 
 	protected void dirtyBounds()
 	{
 		dirtyBounds = true;
+		if(parent != null) 
+			parent.dirtyBounds();
 	}
+	
+	protected boolean isDirty() {
+		return dirtyBounds;
+	}
+	
+	protected void processKeyEvent( KeyEvent event ) { eventReceived(event);}
+	protected void processMouseEvent( MouseEvent event ) {eventReceived(event);}
+	protected void processMouseMotionEvent( MouseEvent event ) {eventReceived(event);}
 
-	protected void processKeyEvent(KeyEvent event)
-	{
-		eventReceived(event);
-	}
-
-	protected void processMouseEvent(MouseEvent event)
-	{
-		eventReceived(event);
-	}
-
-	protected void processMouseMotionEvent(MouseEvent event)
-	{
-		eventReceived(event);
-	}
 
 	private void eventReceived(AWTEvent e)
 	{
