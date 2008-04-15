@@ -1,7 +1,9 @@
 package rutebaga.model.entity.stats;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import rutebaga.model.entity.Entity;
 
@@ -50,6 +52,11 @@ public class ConcreteStats implements Stats
 		double current = getValue(modification.getStat());
 		double newValue = current - modification.getAmount();
 		getStatObject(modification.getStat()).setValue(newValue);
+	}
+
+	public Set<StatisticId> getStatIds()
+	{
+		return Collections.unmodifiableSet(stats.keySet());
 	}
 
 }
