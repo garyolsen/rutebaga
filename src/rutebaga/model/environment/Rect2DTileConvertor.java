@@ -34,7 +34,7 @@ public class Rect2DTileConvertor implements TileConvertor
 		double newCoords[] = new double[coordinate.getDimension()];
 		for (int idx = 0; idx < newCoords.length; idx++)
 		{
-			newCoords[idx] = Math.floor(coordinate.get(idx));
+			newCoords[idx] = Math.round(coordinate.get(idx));
 		}
 		return new Vector(newCoords);
 	}
