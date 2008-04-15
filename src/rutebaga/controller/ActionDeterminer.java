@@ -1,7 +1,7 @@
 package rutebaga.controller;
 
 import rutebaga.controller.command.Command;
-import rutebaga.controller.list.ElementalList;
+import rutebaga.controller.command.ElementalList;
 import rutebaga.model.environment.InstanceSet;
 
 /**

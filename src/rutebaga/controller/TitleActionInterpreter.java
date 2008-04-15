@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import rutebaga.controller.command.Command;
-import rutebaga.controller.list.ConcreteElementalList;
+import rutebaga.controller.command.ConcreteElementalList;
 import rutebaga.view.ViewFacade;
 
 public class TitleActionInterpreter implements UserActionInterpreter {

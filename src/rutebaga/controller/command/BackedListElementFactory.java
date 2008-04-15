@@ -1,8 +1,5 @@
-package rutebaga.controller.list;
+package rutebaga.controller.command;
 
-import rutebaga.controller.command.Command;
-import rutebaga.controller.command.CreateSubContextMenuCommand;
-import rutebaga.controller.command.CommandFactory;
 import rutebaga.model.Named;
 
 public class BackedListElementFactory<T extends Named> implements ListElementFactory<T> {

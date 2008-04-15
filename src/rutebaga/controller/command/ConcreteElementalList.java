@@ -1,10 +1,9 @@
-package rutebaga.controller.list;
+package rutebaga.controller.command;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-import rutebaga.controller.command.Command;
 
 /**
  * 
