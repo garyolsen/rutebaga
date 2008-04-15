@@ -4,6 +4,7 @@ package rutebaga.view.rwt;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 
 import rutebaga.commons.*;
@@ -25,6 +26,7 @@ public class TextLabelComponent extends ViewComponent {
 		composite.addAttribute( font );
 		composite.addAttribute( color );
 		
+		this.setBounds(new Rectangle());
 	}
 	
 	public void draw( Drawer draw ) {

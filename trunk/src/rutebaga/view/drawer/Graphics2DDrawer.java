@@ -56,7 +56,8 @@ public class Graphics2DDrawer extends Drawer
 
 	private void applyAttribute()
 	{
-		this.getAttribute().apply(this);
+		if(getAttribute() != null)
+			this.getAttribute().apply(this);
 	}
 
 	@Override
@@ -77,14 +78,14 @@ public class Graphics2DDrawer extends Drawer
 	public void drawPoint(Point p)
 	{
 		applyAttribute();
-		g2d.drawRect(p.x, p.y, 1, 1);
+		g2d.fillRect(p.x, p.y, 1, 1);
 	}
 
 	@Override
 	public void drawRectangle(Point p, int width, int height)
 	{
 		applyAttribute();
-		g2d.drawRect(p.x, p.y, width, height);
+		g2d.fillRect(p.x, p.y, width, height);
 	}
 
 	@Override
