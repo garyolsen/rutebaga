@@ -6,6 +6,7 @@ import java.util.Map;
 import rutebaga.commons.EllipseBounds;
 import rutebaga.commons.UIDProvider;
 import rutebaga.commons.Vector;
+import rutebaga.model.Named;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
@@ -24,7 +25,7 @@ import rutebaga.model.environment.Instance;
  * @author Nick
  * @see EntityType
  */
-public abstract class Entity extends Instance
+public abstract class Entity extends Instance implements Named
 {
 	private EntityType type;
 
@@ -32,6 +33,8 @@ public abstract class Entity extends Instance
 
 	private EllipseBounds visionBounds;
 	private Vision vision;
+	
+	private String name;
 
 	public Entity(EntityType type)
 	{
@@ -55,28 +58,33 @@ public abstract class Entity extends Instance
 		return uid;
 	}
 
-	protected Map<Object, EntityEffect> getEffectQueue()
-	{
-		return effectQueue;
-	}
-
 	public abstract Inventory getInventory();
 
-	public abstract Stats getStats();
-
-	public EllipseBounds getVisionBounds()
+	public String getName()
 	{
-		return visionBounds;
+		return name;
 	}
+
+	public abstract Stats getStats();
 
 	public Vision getVision()
 	{
 		return vision;
 	}
 
+	public EllipseBounds getVisionBounds()
+	{
+		return visionBounds;
+	}
+
 	public Vector getVisionRadius()
 	{
 		return visionBounds.getRadii();
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	public void setVisionBounds(EllipseBounds visionBounds)
@@ -94,5 +102,10 @@ public abstract class Entity extends Instance
 	{
 		if (this.type != null)
 			type.tick(this);
+	}
+
+	protected Map<Object, EntityEffect> getEffectQueue()
+	{
+		return effectQueue;
 	}
 }

@@ -2,14 +2,27 @@ package rutebaga.model.item;
 
 import java.util.List;
 
+import rutebaga.model.Named;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
 import rutebaga.model.environment.Instance;
 
-public abstract class Item extends Instance
+public abstract class Item extends Instance implements Named
 {
 	private EquippableAspect equippableAspect;
 	private ItemType itemType;
+	
+	private String name;
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 
 	public Item(ItemType itemType)
 	{
