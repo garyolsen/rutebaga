@@ -11,7 +11,7 @@ public class BackedListElementFactory<T extends Named> implements ListElementFac
 	}
 	
 	public ListElement makeElement(final T element) {
-		// TODO: cache old ListElements here
+		// TODO: cache old ListElements here?  Or maybe in the DynamicElementalList itself...
 		return new ListElement() {
 			public Command getCommand() {
 				return new CreateSubContextMenuCommand(factory.getCommandListFor(element));

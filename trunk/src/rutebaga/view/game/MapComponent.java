@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
