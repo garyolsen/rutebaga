@@ -18,7 +18,7 @@ import rutebaga.model.map.TerrainType;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Instance
+public abstract class Instance implements Layerable
 {
 	private Location location;
 	private PhysicsContainer physicsContainer;

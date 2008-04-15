@@ -2,10 +2,10 @@ package rutebaga.model.environment;
 
 import java.util.Comparator;
 
-public class LayerInstanceComparator  implements Comparator<Instance>
+public class LayerComparator implements Comparator<Layerable>
 {
 
-	public int compare(Instance arg0, Instance arg1)
+	public int compare(Layerable arg0, Layerable arg1)
 	{
 		return Double.compare(arg0.getLayer(), arg1.getLayer());
 	}
