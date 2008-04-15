@@ -3,7 +3,7 @@ package rutebaga.test.view;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 
 public class TemporaryMover implements KeyListener{
