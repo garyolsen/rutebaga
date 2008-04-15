@@ -9,7 +9,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.EntityType;
