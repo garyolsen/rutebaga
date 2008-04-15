@@ -3,8 +3,9 @@ package rutebaga.model.entity;
 import rutebaga.commons.Vector;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.Layerable;
 
-public class Memory
+public class Memory implements Layerable
 {
 	private Appearance appearance;
 	private Vector coordinate;
