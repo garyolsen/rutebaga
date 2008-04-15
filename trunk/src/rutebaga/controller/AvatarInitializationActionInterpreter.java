@@ -31,7 +31,6 @@ public class AvatarInitializationActionInterpreter extends KeyAdapter implements
 		};
 
 		Command cancel = new Command() {
-
 			public void execute() {
 				daemon.deactivate(AvatarInitializationActionInterpreter.this);
 			}
