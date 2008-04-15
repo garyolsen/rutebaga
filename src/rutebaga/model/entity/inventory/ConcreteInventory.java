@@ -34,6 +34,8 @@ public class ConcreteInventory implements Inventory
 
 	public void equip(Item item)
 	{
+		//TODO replace with custom exception
+		if(!item.isEquippable()) throw new RuntimeException("Item is not equippable");
 		if (!equipped.contains(item))
 		{
 			equipped.add(item);
