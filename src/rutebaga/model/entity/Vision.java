@@ -58,8 +58,7 @@ public class Vision
 				tileMemory = new HashSet<Memory>();
 				lastSaw.put(tile, tileMemory);
 			}
-			tileMemory.add(new Memory(instance.getAppearance(), instance
-					.getCoordinate()));
+			tileMemory.add(new Memory(instance));
 		}
 
 		memorySet.putAll(lastSaw);
