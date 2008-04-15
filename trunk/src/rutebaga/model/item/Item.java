@@ -12,7 +12,8 @@ public abstract class Item extends Instance implements Named
 {
 	private EquippableAspect equippableAspect;
 	private ItemType itemType;
-	
+	private Double defaultPrice;
+
 	private String name;
 
 	public String getName()
@@ -52,9 +53,19 @@ public abstract class Item extends Instance implements Named
 	{
 		return equippableAspect != null;
 	}
-	
+
 	public void giveTo(Inventory inventory)
 	{
 		inventory.accept(this);
+	}
+
+	public Double getDefaultPrice()
+	{
+		return defaultPrice;
+	}
+
+	public void setDefaultPrice(Double defaultPrice)
+	{
+		this.defaultPrice = defaultPrice;
 	}
 }
