@@ -11,11 +11,6 @@ public class CharEntity extends Entity
 	private ConcreteStats stats = new ConcreteStats(this);
 	private ConcreteInventory inventory = new ConcreteInventory(this);
 
-	public CharEntity(EntityType type)
-	{
-		super(type);
-	}
-
 	@Override
 	public boolean blocks(Instance other)
 	{

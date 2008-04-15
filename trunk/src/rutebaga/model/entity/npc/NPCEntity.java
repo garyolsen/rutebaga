@@ -1,6 +1,10 @@
 package rutebaga.model.entity.npc;
 
+import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.inventory.Inventory;
+import rutebaga.model.entity.stats.Stats;
+import rutebaga.model.environment.Instance;
 
 /**
  * NPCEntity is a sub-type of {@link Entity} and adds needed functionality to an
@@ -12,17 +16,15 @@ import rutebaga.model.entity.Entity;
  * @author Nicholas Stamas
  * 
  */
-public class NPCEntity
+public class NPCEntity extends CharEntity
 {
-
-	private NPCEntityType type;
 
 	private Entity target;
 	private NPCBrain brain;
 
-	protected NPCEntity(NPCEntityType type)
+	public NPCEntity()
 	{
-		this.type = type;
+		this.brain = new NPCSimpleBrain();
 	}
 
 	/**
@@ -33,7 +35,8 @@ public class NPCEntity
 	 */
 	public void tick()
 	{
-		type.tick(this);
+		super.tick();
+		brain.tick(this);
 	}
 
 	/**
@@ -45,7 +48,7 @@ public class NPCEntity
 	 */
 	public boolean targetInSight()
 	{
-		return type.targetInSight(this);
+		return getVision().inActiveSet(target);
 	}
 
 	/**
@@ -57,7 +60,7 @@ public class NPCEntity
 	 */
 	public boolean targetInRange()
 	{
-		return type.targetInRange(this);
+		return false;
 	}
 
 	/**
@@ -80,7 +83,7 @@ public class NPCEntity
 	 */
 	public void speak()
 	{
-		type.speak(this);
+		brain.speak(this);
 	}
 
 	/**
@@ -96,7 +99,8 @@ public class NPCEntity
 	 */
 	public void takeHostileGesture(Entity entity)
 	{
-		type.takeHostileGesture(this, entity);
+		target = entity;
+		brain.makeHostile(this);
 	}
 
 	/**
@@ -112,7 +116,8 @@ public class NPCEntity
 	 */
 	public void takeFriendlyGesture(Entity entity)
 	{
-		type.takeFriendlyGesture(this, entity);
+		target = entity;
+		brain.makeFriendly(this);
 	}
 
 	/**
@@ -123,7 +128,7 @@ public class NPCEntity
 	 */
 	public void barter()
 	{
-		type.barter(this);
+		brain.barter(this);
 	}
 
 	/**
@@ -159,5 +164,35 @@ public class NPCEntity
 	public NPCBrain getBrain()
 	{
 		return this.brain;
+	}
+
+	@Override
+	public Inventory getInventory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Stats getStats() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean blocks(Instance other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public double getFriction() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getMass() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

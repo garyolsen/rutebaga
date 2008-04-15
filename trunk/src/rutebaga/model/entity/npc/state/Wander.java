@@ -1,7 +1,10 @@
 package rutebaga.model.entity.npc.state;
 
+import java.util.Random;
+
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
+import rutebaga.commons.Vector;
 
 /**
  * @author nicholasstamas
@@ -39,7 +42,8 @@ public class Wander extends NPCState
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-		// npc.randomWalk();
+		Random rand = new Random();
+		npc.applyMomentum(new Vector( rand.nextDouble(), rand.nextDouble() ));
 		return this;
 	}
 

@@ -27,8 +27,6 @@ import rutebaga.model.environment.Instance;
  */
 public abstract class Entity extends Instance implements Named
 {
-	private EntityType type;
-
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
 	private EllipseBounds visionBounds;
@@ -36,9 +34,8 @@ public abstract class Entity extends Instance implements Named
 	
 	private String name;
 
-	public Entity(EntityType type)
+	public Entity()
 	{
-		this.type = type;
 		visionBounds = new EllipseBounds(new Vector(10, 10));
 		// XXX: connascence of timing
 		vision = new Vision(this);
@@ -96,12 +93,21 @@ public abstract class Entity extends Instance implements Named
 	{
 		visionBounds.setRadii(visionRadius);
 	}
+	
+	private void flushEffectQueue()
+	{
+		for (Object id : getEffectQueue().keySet())
+		{
+			getEffectQueue().get(id).affect(this, id);
+		}
+		getEffectQueue().clear();
+	}
 
 	@Override
-	public final void tick()
+	public void tick()
 	{
-		if (this.type != null)
-			type.tick(this);
+		flushEffectQueue();
+		getVision().tick();
 	}
 
 	protected Map<Object, EntityEffect> getEffectQueue()
