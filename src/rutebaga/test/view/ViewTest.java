@@ -32,6 +32,7 @@ public class ViewTest {
 
 	public static void main(String args[]) {
 		View view = new View( SCREENWIDTH, SCREENHEIGHT );
+		view.setFullscreen();
 		
 		
 		CharEntity avatar;
@@ -135,7 +136,7 @@ public class ViewTest {
 
 		environment.add(avatar, new Vector(10, 10));
 		
-		MapComponent map = new MapComponent(avatar, SCREENWIDTH, SCREENHEIGHT);
+		MapComponent map = new MapComponent(avatar, view.getWidth(), view.getHeight());
 		view.addViewComponent(map);
 		
 		FPSTextComponent fps = new FPSTextComponent();
