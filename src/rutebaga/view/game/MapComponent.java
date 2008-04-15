@@ -4,15 +4,18 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import rutebaga.commons.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.TileConvertor;
+import rutebaga.model.environment.LayerInstanceComparator;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ViewComponent;
@@ -41,8 +44,12 @@ public class MapComponent extends ViewComponent
 	}
 	
 	private void drawVisibleSet(Drawer draw, Vision avatarVision) {	
+		ArrayList<Instance> sortedList = new ArrayList<Instance>(avatarVision.getActiveSet());
 		
-		for(Instance instance : avatarVision.getActiveSet()) {
+		
+		Collections.sort(sortedList, new LayerInstanceComparator());
+		
+		for(Instance instance : sortedList) {
 			
 			Point p = centerPointOnAvatar(avatar.getCoordinate(), instance.getCoordinate());
 			
