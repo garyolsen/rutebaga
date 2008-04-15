@@ -28,7 +28,7 @@ public class ConcreteStats implements Stats
 	{
 		if (!stats.containsKey(stat))
 		{
-			stats.put(stat, new StatValue());
+			stats.put(stat, new StatValue(stat));
 		}
 		return stats.get(stat);
 	}
