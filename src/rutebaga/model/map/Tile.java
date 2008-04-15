@@ -1,5 +1,6 @@
 package rutebaga.model.map;
 
+import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.Instance;
 
 /**
@@ -24,6 +25,12 @@ public class Tile extends Instance
 	{
 		// TODO add friction logic (glosh)
 		return 0;
+	}
+
+	@Override
+	public double getLayer()
+	{
+		return DefaultLayers.TERRAIN.getLayer();
 	}
 
 	@Override
