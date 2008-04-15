@@ -6,6 +6,7 @@ public class Appearance
 {
 
 	private Instance instance;
+	private Image image;
 
 	public Appearance(Instance instance)
 	{
@@ -20,8 +21,12 @@ public class Appearance
 
 	public Image getImage()
 	{
-		// FIXME temporary
-		return null;
+		return image;
+	}
+	
+	public void setImage(Image image) 
+	{
+		this.image = image;
 	}
 
 	public Instance getInstance()
