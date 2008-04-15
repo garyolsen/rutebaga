@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import rutebaga.commons.Bounds;
 import rutebaga.commons.ObjectUtils;
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Bounds;
+import rutebaga.commons.math.Vector;
 
 /**
  * Tracks the position of instances within a bounds centered upon an instance.

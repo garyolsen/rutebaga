@@ -1,8 +1,8 @@
 package rutebaga.test.model.environment;
 
-import rutebaga.commons.Bounds;
-import rutebaga.commons.RectBounds;
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Bounds;
+import rutebaga.commons.math.RectBounds;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;

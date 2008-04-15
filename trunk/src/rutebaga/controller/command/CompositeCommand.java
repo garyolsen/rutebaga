@@ -3,7 +3,7 @@ package rutebaga.controller.command;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import rutebaga.commons.Rule;
+import rutebaga.commons.logic.Rule;
 
 /**
  * CompositeCommand is an implementation of {@link Command} that contains a
@@ -12,7 +12,7 @@ import rutebaga.commons.Rule;
  * invoked, it invokes execute on all Commands that have been added to it (in no
  * guaranteed order).
  * 
- * Clients may also specify a {@link rutebaga.commons.Rule}, parameterized by
+ * Clients may also specify a {@link rutebaga.commons.logic.Rule}, parameterized by
  * Iterator&lt;Command&gt;, to specify how the CompositeCommand should respond
  * to {@link #isFeasible()} queries. The default feasibility Rule returns true
  * if and only if the set of Commands is non-empty and all composited Commands'
@@ -23,7 +23,7 @@ import rutebaga.commons.Rule;
  * executes a given Command more than once, implement it yourself.
  * 
  * @author Matthew Chuah
- * @see rutebaga.commons.Rule
+ * @see rutebaga.commons.logic.Rule
  * @see Command
  */
 public class CompositeCommand implements Command
@@ -49,9 +49,9 @@ public class CompositeCommand implements Command
 
 	/**
 	 * Create an empty CompositeCommand with the default feasibility
-	 * {@link rutebaga.commons.Rule}.
+	 * {@link rutebaga.commons.logic.Rule}.
 	 * 
-	 * @see rutebaga.commons.Rule
+	 * @see rutebaga.commons.logic.Rule
 	 */
 	public CompositeCommand()
 	{
@@ -60,9 +60,9 @@ public class CompositeCommand implements Command
 
 	/**
 	 * Create an empty CompositeCommand with the specified feasibility
-	 * {@link rutebaga.commons.Rule}.
+	 * {@link rutebaga.commons.logic.Rule}.
 	 * 
-	 * @see rutebaga.commons.Rule
+	 * @see rutebaga.commons.logic.Rule
 	 */
 	public CompositeCommand(Rule<Iterator<Command>> rule)
 	{

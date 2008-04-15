@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.Set;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;

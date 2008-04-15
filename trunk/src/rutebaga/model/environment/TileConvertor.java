@@ -2,7 +2,7 @@ package rutebaga.model.environment;
 
 import java.util.Set;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 
 /**
  * Provides a mapping between a tile-space and actual space.

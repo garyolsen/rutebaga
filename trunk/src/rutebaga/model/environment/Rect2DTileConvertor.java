@@ -3,7 +3,7 @@ package rutebaga.model.environment;
 import java.util.HashSet;
 import java.util.Set;
 
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.Vector;
 
 /**
  * Convertor for a basic rectangular tile system, within which tile-space is

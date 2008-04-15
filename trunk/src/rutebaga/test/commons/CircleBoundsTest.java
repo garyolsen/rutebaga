@@ -1,8 +1,8 @@
 package rutebaga.test.commons;
 
-import rutebaga.commons.EllipseBounds;
-import rutebaga.commons.Matrix;
-import rutebaga.commons.Vector;
+import rutebaga.commons.math.EllipseBounds;
+import rutebaga.commons.math.Matrix;
+import rutebaga.commons.math.Vector;
 
 public class CircleBoundsTest
 {

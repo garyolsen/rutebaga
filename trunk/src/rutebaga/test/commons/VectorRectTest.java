@@ -1,7 +1,7 @@
 package rutebaga.test.commons;
 
-import rutebaga.commons.Vector;
-import rutebaga.commons.VectorRectangle;
+import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.VectorRectangle;
 
 public class VectorRectTest
 {
