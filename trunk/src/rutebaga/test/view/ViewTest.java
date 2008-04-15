@@ -144,11 +144,13 @@ public class ViewTest {
 		
 		view.addViewComponent(fps);
 		
+		view.addKeyListener(new TemporaryMover(avatar));
+		
 		
 		while(true) {
 			view.renderFrame();
 			
-			avatar.applyMomentum(createImpulse());
+			//avatar.applyMomentum(createImpulse());
 			environment.tick();
 			
 		}
