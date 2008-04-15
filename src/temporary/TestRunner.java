@@ -19,14 +19,17 @@ import rutebaga.model.map.Tile;
 public class TestRunner
 {
 	public static double MOVE_AMT = 0.1;
+	public static int SCREEN_WIDTH = 640;
+	public static int SCREEN_HEIGHT = 480;
+
 	public static Entity avatar;
 
 	public static void main(String... args)
 	{
 		GraphicsManager manager = new GraphicsManager();
 		TestImageConverter.manager = manager;
-		manager.init(1280, 800);
-		Vector screen = new Vector(1280, 800);
+		manager.init(SCREEN_WIDTH, SCREEN_HEIGHT);
+		Vector screen = new Vector(SCREEN_WIDTH, SCREEN_HEIGHT);
 		manager.registerKeyListener(new KeyListener()
 		{
 			public void keyPressed(KeyEvent e)
@@ -164,8 +167,8 @@ public class TestRunner
 				}
 
 			frame++;
-			// System.out.println(frame + "\t"
-			// + (1000 / (System.currentTimeMillis() - time)));
+			System.out.println(frame + "\t"
+					+ (1000 / (System.currentTimeMillis() - time)));
 		}
 	}
 

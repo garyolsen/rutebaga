@@ -5,9 +5,19 @@ import java.util.List;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
 
-public abstract class EquippableAspect
+public class EquippableAspect
 {
-	public abstract List<ReversibleEntityEffect> getReversibleEquipEffects();
+	private List<ReversibleEntityEffect> reversibleEquipEffects;
 
-	public abstract List<EntityEffect> getPermanentEquipEffects();
+	private List<EntityEffect> permanentEquipEffects;
+
+	public List<ReversibleEntityEffect> getReversibleEquipEffects()
+	{
+		return reversibleEquipEffects;
+	}
+
+	public List<EntityEffect> getPermanentEquipEffects()
+	{
+		return permanentEquipEffects;
+	}
 }

@@ -37,7 +37,7 @@ public class TestImageConverter
 			for (Class clazz : images.keySet())
 			{
 				Image buffImg = images.get(clazz);
-				Image volImg = manager.createImage(buffImg.getWidth(null),
+				Image volImg = manager.createVolatileImage(buffImg.getWidth(null),
 						buffImg.getHeight(null));
 				Graphics g = volImg.getGraphics();
 				g.drawImage(buffImg, 0, 0, null);
