@@ -104,7 +104,7 @@ public class TestRunner
 			}
 		}
 
-		avatar = new CharEntity(new EntityType())
+		avatar = new CharEntity()
 		{
 
 			@Override

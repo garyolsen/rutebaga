@@ -2,6 +2,7 @@ package temporary;
 
 import rutebaga.commons.EllipseBounds;
 import rutebaga.commons.Vector;
+import rutebaga.model.DefaultLayers;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
@@ -23,6 +24,12 @@ public class WindTunnel extends Instance
 	public boolean blocks(Instance other)
 	{
 		return false;
+	}
+	
+	@Override
+	public double getLayer()
+	{
+		return DefaultLayers.AIR.getLayer();
 	}
 
 	@Override
