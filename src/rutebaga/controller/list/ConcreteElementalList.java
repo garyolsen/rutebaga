@@ -1,4 +1,4 @@
-package rutebaga.controller;
+package rutebaga.controller.list;
 
 import java.util.Iterator;
 import java.util.LinkedList;

@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import rutebaga.controller.command.Command;
+import rutebaga.controller.list.ConcreteElementalList;
 import rutebaga.view.ViewFacade;
 import rutebaga.view.rwt.TextFieldListener;
 
