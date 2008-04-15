@@ -5,6 +5,7 @@ import java.util.List;
 import rutebaga.model.Named;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
+import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.environment.Instance;
 
 public abstract class Item extends Instance implements Named
@@ -50,5 +51,10 @@ public abstract class Item extends Instance implements Named
 	public boolean isEquippable()
 	{
 		return equippableAspect != null;
+	}
+	
+	public void giveTo(Inventory inventory)
+	{
+		//TODO implement
 	}
 }
