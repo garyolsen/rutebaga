@@ -1,7 +1,5 @@
 package rutebaga.controller.command;
 
-import rutebaga.controller.list.ConcreteElementalList;
-import rutebaga.controller.list.ElementalList;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.item.Item;
 

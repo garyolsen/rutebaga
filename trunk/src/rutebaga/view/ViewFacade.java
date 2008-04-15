@@ -2,7 +2,7 @@ package rutebaga.view;
 
 import rutebaga.commons.Vector;
 import rutebaga.controller.command.Command;
-import rutebaga.controller.list.ElementalList;
+import rutebaga.controller.command.ElementalList;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.View;
