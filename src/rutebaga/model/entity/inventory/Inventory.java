@@ -17,4 +17,6 @@ public interface Inventory
 	void unequip(Item item);
 	
 	void drop(Item item);
+	
+	void accept(Item item);
 }

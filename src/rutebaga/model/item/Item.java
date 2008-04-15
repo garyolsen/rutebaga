@@ -55,6 +55,6 @@ public abstract class Item extends Instance implements Named
 	
 	public void giveTo(Inventory inventory)
 	{
-		//TODO implement
+		inventory.accept(this);
 	}
 }

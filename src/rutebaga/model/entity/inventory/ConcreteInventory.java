@@ -79,4 +79,9 @@ public class ConcreteInventory implements Inventory
 		this.equipped.remove(item);
 	}
 
+	public void accept(Item item)
+	{
+		this.unequipped.add(item);
+	}
+
 }
