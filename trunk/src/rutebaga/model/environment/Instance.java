@@ -24,8 +24,6 @@ public abstract class Instance
 	private PhysicsContainer physicsContainer;
 	private MovementAttributes movementAttributes = new MovementAttributes();
 	private Appearance appearance = new Appearance(this);
-	
-	private double layer = 0;
 
 	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
 
@@ -128,11 +126,6 @@ public abstract class Instance
 	 */
 	public abstract double getFriction();
 
-	public double getLayer()
-	{
-		return layer;
-	}
-
 	/**
 	 * @return the mass of this instance
 	 */
@@ -176,12 +169,7 @@ public abstract class Instance
 	{
 		this.appearance = appearance;
 	}
-
-	public void setLayer(double layer)
-	{
-		this.layer = layer;
-	}
-
+	
 	public abstract void tick();
 
 	public void unregisterMovementListener(MovementListener listener)
@@ -231,5 +219,7 @@ public abstract class Instance
 	{
 		this.physicsContainer = physicsContainer;
 	}
+	
+	public abstract double getLayer();
 
 }
