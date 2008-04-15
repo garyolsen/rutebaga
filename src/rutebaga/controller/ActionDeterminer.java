@@ -1,6 +1,7 @@
 package rutebaga.controller;
 
 import rutebaga.controller.command.Command;
+import rutebaga.model.environment.InstanceSet;
 
 /**
  * TODO: resolve all the references here once the referenced classes actually
@@ -12,11 +13,11 @@ import rutebaga.controller.command.Command;
  * for the targeted Instance.
  * 
  * For instance, if an {@link rutebaga.model.entity.Entity Entity} is present at
- * a {@link Location}, it will be targeted and
- * {@link rutebaga.controller.command.Command}s encapsulating actions
- * appropriate for an Entity, such as attacking or talking, will be generated.
+ * a {@link Location}, it will be targeted and {@link Command}s encapsulating
+ * actions appropriate for an Entity, such as attacking or talking, will be
+ * generated.
  * 
- * @author may
+ * @author Matthew Chuah
  * @see ElementalList
  * @see Filter
  * @see rutebaga.model.environment.Instance
@@ -24,7 +25,12 @@ import rutebaga.controller.command.Command;
  */
 public class ActionDeterminer
 {
-	/*
-	 * TODO: Implement this class.
+	
+	/**
+	 * @param instances
+	 * @return
 	 */
+	public ElementalList determineActions(InstanceSet instances) {
+		return null;
+	}
 }
