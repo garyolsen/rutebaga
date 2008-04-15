@@ -10,7 +10,7 @@ public class StatsListElementFactory implements ListElementFactory<StatValue> {
 				return null;
 			}
 			public String getLabel() {
-				return "" + stat.getValue();
+				return stat.getId().getName() + ": " + stat.getValue();
 			}
 		};
 	}
