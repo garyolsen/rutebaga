@@ -7,6 +7,7 @@ import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceSetIdentifier;
 
 public abstract class Item extends Instance implements Named
 {
@@ -16,25 +17,25 @@ public abstract class Item extends Instance implements Named
 
 	private String name;
 
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
 	public Item(ItemType itemType)
 	{
 		super();
 		this.itemType = itemType;
 	}
 
+	public Double getDefaultPrice()
+	{
+		return defaultPrice;
+	}
+
 	public ItemType getItemType()
 	{
 		return itemType;
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 
 	public List<EntityEffect> getPermanentEquipEffects()
@@ -49,23 +50,29 @@ public abstract class Item extends Instance implements Named
 				.getReversibleEquipEffects();
 	}
 
-	public boolean isEquippable()
-	{
-		return equippableAspect != null;
-	}
-
 	public void giveTo(Inventory inventory)
 	{
 		inventory.accept(this);
 	}
 
-	public Double getDefaultPrice()
+	public boolean isEquippable()
 	{
-		return defaultPrice;
+		return equippableAspect != null;
 	}
 
 	public void setDefaultPrice(Double defaultPrice)
 	{
 		this.defaultPrice = defaultPrice;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	@Override
+	protected InstanceSetIdentifier getSetIdentifier()
+	{
+		return InstanceSetIdentifier.ITEM;
 	}
 }
