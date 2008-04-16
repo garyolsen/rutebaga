@@ -1,5 +1,8 @@
 package rutebaga.view;
 
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+
 import rutebaga.commons.math.Vector;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
@@ -196,5 +199,21 @@ public class ViewFacade
 	
 	private void clearView() {
 		view.removeAllViewComponents(view.getViewComponents());
+	}
+	
+	public void addKeyListener(KeyListener kl ) {
+		view.addKeyListener(kl);
+	}
+	
+	public void removeKeyListener(MouseListener ml) {
+		view.removeMouseListener(ml);
+	}
+	
+	public void addMouseListener(MouseListener ml) {
+		view.addMouseListener(ml);
+	}
+	
+	public void removeMouseListener(MouseListener ml) {
+		view.removeMouseListener(ml);
 	}
 }
