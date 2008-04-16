@@ -52,6 +52,10 @@ public interface UserActionInterpreter extends KeyListener, ActionListener
 	 * press), it should be the last interpreter to be notified of the event
 	 * (i.e., the {@link GameDaemon} should not pass it down the stack).
 	 * 
+	 * If eventsFallThrough is <code>false</code>, this UserActionInterpreter is
+	 * considered to be a <em>root</em> interpreter--i.e., events do not go
+	 * past this interpreter.
+	 * 
 	 * @see GameDaemon
 	 * @return false if this interpreter consumes events
 	 */
@@ -84,4 +88,10 @@ public interface UserActionInterpreter extends KeyListener, ActionListener
 	 */
 	public void uninstallActionInterpreter();
 
+	/**
+	 * Reactivates this UserActionInterpreter if it has been blocked by another
+	 * root interpreter from receiving events, and the root interpreter has been
+	 * deactivated.
+	 */
+	public void reactivateActionInterpreter();
 }

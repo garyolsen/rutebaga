@@ -49,6 +49,10 @@ public class AvatarInitializationActionInterpreter extends KeyAdapter implements
 		facade.createAvatarCreationScreen(this, list, accept, cancel);
 	}
 
+	public void reactivateActionInterpreter() {
+		// Hmm...okay?
+	}
+
 	public void tick() {
 		// AvatarInitializationActionInterpreters do not perform any tick based
 		// actions
