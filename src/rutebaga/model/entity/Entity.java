@@ -11,8 +11,8 @@ import rutebaga.model.Named;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.InstanceSet;
-import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
+import rutebaga.model.environment.ConcreteInstanceSet;
+import rutebaga.model.environment.InstanceSetIdentifier;
 
 /**
  * Entity stores the state related to an Entity in a physical environment.
@@ -125,7 +125,7 @@ public abstract class Entity extends Instance implements Named
 	}
 
 	@Override
-	protected InstanceSet.InstanceSetIdentifier getSetIdentifier()
+	protected InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.ENTITY;
 	}

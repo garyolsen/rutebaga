@@ -30,8 +30,8 @@ import rutebaga.model.environment.InternalContainer.PhysicsContainer;
  */
 public class Environment
 {
-	private Set<Instance> instances = new InstanceSet();
-	private Map<Vector, InstanceSet> tileCache = new HashMap<Vector, InstanceSet>();
+	private Set<Instance> instances = new ConcreteInstanceSet();
+	private Map<Vector, ConcreteInstanceSet> tileCache = new HashMap<Vector, ConcreteInstanceSet>();
 	private Map<Instance, Vector> reverseTileCache = new HashMap<Instance, Vector>();
 	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
 	private TileConvertor tileConvertor;
@@ -162,7 +162,7 @@ public class Environment
 	protected boolean blocked(Instance instance, Vector tile,
 			boolean emptyBlocks)
 	{
-		InstanceSet instances = tileCache.get(tile);
+		ConcreteInstanceSet instances = tileCache.get(tile);
 		if (instances == null || instances.size() == 0)
 			return emptyBlocks;
 		for (Instance other : instances)
@@ -194,7 +194,7 @@ public class Environment
 	/**
 	 * @return the cache of tiles
 	 */
-	protected Map<Vector, InstanceSet> getTileCache()
+	protected Map<Vector, ConcreteInstanceSet> getTileCache()
 	{
 		return tileCache;
 	}
@@ -261,7 +261,7 @@ public class Environment
 		Vector newTile = instance.getTile();
 		if (!newTile.equals(current))
 		{
-			InstanceSet currentInstances = tileCache.get(current);
+			ConcreteInstanceSet currentInstances = tileCache.get(current);
 			if (currentInstances != null)
 			{
 				currentInstances.remove(instance);
@@ -350,10 +350,10 @@ public class Environment
 	 */
 	private Set<Instance> getInstanceSetAt(Vector tile)
 	{
-		InstanceSet set = tileCache.get(tile);
+		ConcreteInstanceSet set = tileCache.get(tile);
 		if (set == null)
 		{
-			set = new InstanceSet();
+			set = new ConcreteInstanceSet();
 			tileCache.put(tile, set);
 		}
 		return set;

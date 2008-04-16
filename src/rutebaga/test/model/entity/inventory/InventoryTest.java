@@ -10,7 +10,7 @@ import rutebaga.model.entity.ReversibleEntityEffect;
 import rutebaga.model.entity.effect.StatEffect;
 import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
+import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.item.Item;
 
 public class InventoryTest

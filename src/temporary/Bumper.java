@@ -6,7 +6,7 @@ import rutebaga.model.DefaultLayers;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
+import rutebaga.model.environment.InstanceSetIdentifier;
 
 public class Bumper extends Instance
 {

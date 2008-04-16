@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import rutebaga.commons.math.Vector;
-import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
+import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 import rutebaga.model.map.TerrainType;

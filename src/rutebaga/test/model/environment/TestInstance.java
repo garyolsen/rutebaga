@@ -2,7 +2,7 @@ package rutebaga.test.model.environment;
 
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
+import rutebaga.model.environment.InstanceSetIdentifier;
 
 public class TestInstance extends Instance
 {

@@ -1,6 +1,7 @@
 package rutebaga.model.environment;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -17,31 +18,11 @@ import rutebaga.model.map.Tile;
  * @author Gary LosHuertos
  * 
  */
-public class InstanceSet implements Set<Instance>
+public class ConcreteInstanceSet implements InstanceSet
 {
-	public static enum InstanceSetIdentifier
-	{
-		ENTITY(new HashSet<Entity>()),
-		ITEM(new HashSet<Item>()),
-		EFFECT(new HashSet<Instance>()),
-		TILE(new HashSet<Tile>());
-
-		private final HashSet<? extends Instance> prototype;
-
-		private InstanceSetIdentifier(HashSet<? extends Instance> prototype)
-		{
-			this.prototype = prototype;
-		}
-
-		HashSet<? extends Instance> getPrototype()
-		{
-			return prototype;
-		}
-	}
-
 	protected class InstanceSetIterator implements Iterator<Instance>
 	{
-		Iterator<InstanceSetIdentifier> typeIterator = sets.keySet().iterator();
+		Iterator<InstanceSetIdentifier> typeIterator = acceptedTypes.iterator();
 		Iterator<? extends Instance> currentIterator;
 
 		public InstanceSetIterator()
@@ -80,30 +61,52 @@ public class InstanceSet implements Set<Instance>
 	}
 
 	private static final long serialVersionUID = 358791980720848943L;
-	
-	private Map<InstanceSetIdentifier, HashSet<? extends Instance>> sets = new HashMap<InstanceSetIdentifier, HashSet<? extends Instance>>();
-	
+
+	private final Map<InstanceSetIdentifier, ? extends Set<? extends Instance>> sets;
+	private Set<InstanceSetIdentifier> acceptedTypes;
+
 	int size = 0;
-	
+
 	@SuppressWarnings("unchecked")
-	public InstanceSet()
+	public ConcreteInstanceSet()
 	{
+		Map<InstanceSetIdentifier, HashSet<? extends Instance>> map = new HashMap<InstanceSetIdentifier, HashSet<? extends Instance>>();
+		acceptedTypes = new HashSet<InstanceSetIdentifier>();
 		for (InstanceSetIdentifier type : InstanceSetIdentifier.values())
 		{
-			sets.put(type, (HashSet<? extends Instance>) type.getPrototype().clone());
+			map.put(type, (HashSet<? extends Instance>) type.getPrototype()
+					.clone());
+			acceptedTypes.add(type);
 		}
+		sets = map;
 	}
-	
-	
 
+	public ConcreteInstanceSet(
+			Map<InstanceSetIdentifier, ? extends Set<? extends Instance>> backingMap, Set<InstanceSetIdentifier> ids)
+	{
+		this.sets = backingMap;
+		this.acceptedTypes = ids;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#add(rutebaga.model.environment.Instance)
+	 */
 	public boolean add(Instance instance)
 	{
+		if(!check(instance)) return false;
 		boolean flag = getSetFor(instance).add(instance);
 		if (flag)
 			size++;
 		return flag;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#addAll(java.util.Collection)
+	 */
 	public boolean addAll(Collection<? extends Instance> instances)
 	{
 		boolean flag = false;
@@ -114,23 +117,34 @@ public class InstanceSet implements Set<Instance>
 		return flag;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#clear()
+	 */
 	public void clear()
 	{
 		for (Set<?> set : sets.values())
 			set.clear();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#contains(java.lang.Object)
+	 */
 	public boolean contains(Object arg0)
 	{
-		// this is OK-- pre-generics signature
-		if (!(arg0 instanceof Instance))
-		{
-			return false;
-		}
+		if(!check(arg0)) return false;
 		Instance instance = (Instance) arg0;
 		return getSetFor(instance).contains(instance);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#containsAll(java.util.Collection)
+	 */
 	public boolean containsAll(Collection<?> objects)
 	{
 		boolean flag = true;
@@ -143,30 +157,55 @@ public class InstanceSet implements Set<Instance>
 		return flag;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#getEffects()
+	 */
 	@SuppressWarnings("unchecked")
 	public Set<Instance> getEffects()
 	{
 		return (Set<Instance>) sets.get(InstanceSetIdentifier.EFFECT);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#getEntities()
+	 */
 	@SuppressWarnings("unchecked")
 	public Set<Entity> getEntities()
 	{
 		return (Set<Entity>) sets.get(InstanceSetIdentifier.ENTITY);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#getItems()
+	 */
 	@SuppressWarnings("unchecked")
 	public Set<Item> getItems()
 	{
 		return (Set<Item>) sets.get(InstanceSetIdentifier.ITEM);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#getTiles()
+	 */
 	@SuppressWarnings("unchecked")
 	public Set<Tile> getTiles()
 	{
 		return (Set<Tile>) sets.get(InstanceSetIdentifier.TILE);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#isEmpty()
+	 */
 	public boolean isEmpty()
 	{
 		boolean flag = true;
@@ -179,22 +218,33 @@ public class InstanceSet implements Set<Instance>
 		return flag;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#iterator()
+	 */
 	public Iterator<Instance> iterator()
 	{
 		return new InstanceSetIterator();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#remove(java.lang.Object)
+	 */
 	public boolean remove(Object arg0)
 	{
-		// OK-- see note above (pre-Java5)
-		if (!(arg0 instanceof Instance))
-		{
-			return false;
-		}
+		if(!check(arg0)) return false;
 		Instance instance = (Instance) arg0;
 		return getSetFor(instance).remove(instance);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#removeAll(java.util.Collection)
+	 */
 	public boolean removeAll(Collection<?> arg0)
 	{
 		boolean flag = false;
@@ -205,6 +255,11 @@ public class InstanceSet implements Set<Instance>
 		return flag;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#retainAll(java.util.Collection)
+	 */
 	public boolean retainAll(Collection<?> collection)
 	{
 		boolean flag = false;
@@ -215,11 +270,21 @@ public class InstanceSet implements Set<Instance>
 		return flag;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#size()
+	 */
 	public int size()
 	{
 		return size;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#toArray()
+	 */
 	public Object[] toArray()
 	{
 		Object rval[] = new Object[size];
@@ -231,6 +296,11 @@ public class InstanceSet implements Set<Instance>
 		return rval;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see rutebaga.model.environment.InstanceSet#toArray(T[])
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T[] toArray(T[] arr)
 	{
@@ -242,7 +312,7 @@ public class InstanceSet implements Set<Instance>
 		return set.toArray(arr);
 	}
 
-	private HashSet<? extends Instance> getSet(InstanceSetIdentifier type)
+	private Set<? extends Instance> getSet(InstanceSetIdentifier type)
 	{
 		return sets.get(type);
 	}
@@ -251,5 +321,18 @@ public class InstanceSet implements Set<Instance>
 	private <T extends Instance> HashSet<? super T> getSetFor(T instance)
 	{
 		return (HashSet<? super T>) getSet(instance.getSetIdentifier());
+	}
+
+	public Map<InstanceSetIdentifier, ? extends Set<? extends Instance>> getSets()
+	{
+		return sets;
+	}
+
+	private boolean check(Object object)
+	{
+		if (!(object instanceof Instance))
+			return false;
+		Instance instance = (Instance) object;
+		return acceptedTypes.contains(instance.getSetIdentifier());
 	}
 }
