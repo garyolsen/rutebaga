@@ -69,7 +69,8 @@ public class QueueCommand implements Command
 	 */
 	public void execute()
 	{
-		queue.queueCommand(command);
+		if (command.isFeasible())
+			queue.queueCommand(command);
 	}
 
 	/**

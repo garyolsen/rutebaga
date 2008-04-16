@@ -21,7 +21,7 @@ public class AvatarInitializationActionInterpreter extends KeyAdapter implements
 		return false;
 	}
 
-	public void installActionInterpreter(final GameDaemon daemon, ViewFacade facade) {
+	public void installActionInterpreter(final GameDaemon daemon, final ViewFacade facade) {
 		Command accept = new Command() {
 			public void execute() {
 				// Start game play
