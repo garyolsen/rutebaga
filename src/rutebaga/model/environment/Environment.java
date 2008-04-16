@@ -378,4 +378,13 @@ public class Environment
 			return false;
 		return true;
 	}
+	
+	public boolean blockedAtTile(Vector v, Instance instance) {
+		Set<Instance> instances = instancesAt(v);
+		for (Instance i : instances) {
+			if (i.blocks(instance))
+				return true;
+		}
+		return false;
+	}
 }

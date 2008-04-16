@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
  * @author Nicholas Stamas
  * 
  */
-public class AStarSearch
+public class AStarSearch<T extends AStarNode<T>>
 {
 
 	/**
@@ -20,9 +20,9 @@ public class AStarSearch
 	 * @param node
 	 * @return List<AStarNode>
 	 */
-	protected List<AStarNode> constructPath(AStarNode node)
+	protected List<T> constructPath(T node)
 	{
-		LinkedList<AStarNode> path = new LinkedList<AStarNode>();
+		LinkedList<T> path = new LinkedList<T>();
 		while (node.getPathParent() != null)
 		{
 			path.addFirst(node);
@@ -39,11 +39,11 @@ public class AStarSearch
 	 * @return List<AStarNode>
 	 */
 
-	public List<AStarNode> findPath(AStarNode startNode, AStarNode goalNode)
+	public List<T> findPath(T startNode, T goalNode)
 	{
 
-		PriorityQueue<AStarNode> openList = new PriorityQueue<AStarNode>();
-		LinkedList<AStarNode> closedList = new LinkedList<AStarNode>();
+		PriorityQueue<T> openList = new PriorityQueue<T>();
+		LinkedList<T> closedList = new LinkedList<T>();
 
 		startNode.setCostFromStart(0);
 		startNode.setEstimatedCostToGoal(startNode.getEstimatedCost(goalNode));
@@ -52,7 +52,7 @@ public class AStarSearch
 
 		while (!openList.isEmpty())
 		{
-			AStarNode node = openList.remove();
+			T node = openList.remove();
 
 			// found a path!
 			// now construct it!
@@ -61,10 +61,10 @@ public class AStarSearch
 				return constructPath(goalNode);
 			}
 
-			List<AStarNode> neighbors = node.getNeighbors();
+			List<T> neighbors = node.getNeighbors();
 			for (int i = 0; i < neighbors.size(); i++)
 			{
-				AStarNode neighborNode = neighbors.get(i);
+				T neighborNode = neighbors.get(i);
 				boolean isOpen = openList.contains(neighborNode);
 				boolean isClosed = closedList.contains(neighborNode);
 				float costFromStart = node.getCostFromStart()

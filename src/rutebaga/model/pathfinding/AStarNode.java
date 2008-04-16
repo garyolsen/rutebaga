@@ -10,14 +10,14 @@ import java.util.List;
  * 
  */
 
-public abstract class AStarNode implements Comparable<AStarNode>
+public abstract class AStarNode<T extends AStarNode> implements Comparable<AStarNode<T>>
 {
 
-	private AStarNode pathParent;
+	private T pathParent;
 	private float costFromStart;
 	private float estimatedCostToGoal;
 
-	public int compareTo(AStarNode other)
+	public int compareTo(AStarNode<T> other)
 	{
 		float myValue = this.getCost();
 		float otherValue = other.getCost();
@@ -42,7 +42,7 @@ public abstract class AStarNode implements Comparable<AStarNode>
 	 * @param node
 	 * @return float
 	 */
-	public abstract float getCost(AStarNode node);
+	public abstract float getCost(T node);
 
 	/**
 	 * Gets estimated cost between this node and passed node. Should never be
@@ -51,21 +51,21 @@ public abstract class AStarNode implements Comparable<AStarNode>
 	 * @param node
 	 * @return float
 	 */
-	public abstract float getEstimatedCost(AStarNode node);
+	public abstract float getEstimatedCost(T node);
 
 	/**
 	 * Return a list of immediate neighbors.
 	 * 
 	 * @return List<AStarNode>
 	 */
-	public abstract List<AStarNode> getNeighbors();
+	public abstract List<T> getNeighbors();
 
-	public AStarNode getPathParent()
+	public T getPathParent()
 	{
 		return pathParent;
 	}
 
-	public void setPathParent(AStarNode pathParent)
+	public void setPathParent(T pathParent)
 	{
 		this.pathParent = pathParent;
 	}
