@@ -12,6 +12,11 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 		return false;
 	}
 
+	public void reactivateActionInterpreter() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void installActionInterpreter(GameDaemon daemon, ViewFacade facade) {
 		// TODO Auto-generated method stub
 		

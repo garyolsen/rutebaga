@@ -9,8 +9,20 @@ import rutebaga.view.ViewFacade;
 
 public class TitleActionInterpreter implements UserActionInterpreter {
 
-	public void installActionInterpreter(final GameDaemon daemon,
-			final ViewFacade facade) {
+	private ViewFacade view;
+	
+	private GameDaemon daemon;
+	
+	public void installActionInterpreter(GameDaemon daemon,
+			ViewFacade facade) {
+		
+		this.view = facade;
+		this.daemon = daemon;
+	
+		prepareTitleScreen();
+	}
+
+	private void prepareTitleScreen() {
 		ConcreteElementalList list = new ConcreteElementalList();
 
 		list.add("Load Game", new Command() {
@@ -44,11 +56,15 @@ public class TitleActionInterpreter implements UserActionInterpreter {
 			}
 		});
 
-		facade.createTitleScreen(list);
+		view.createTitleScreen(list);
 	}
-
+	
 	public void actionPerformed(ActionEvent arg0) {
 		// TitleActionInterpreter doesn't care about your silly actions
+	}
+
+	public void reactivateActionInterpreter() {
+		prepareTitleScreen();
 	}
 
 	public boolean eventsFallThrough() {

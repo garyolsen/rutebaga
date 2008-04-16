@@ -148,11 +148,28 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager {
 	 */
 	public void deactivate(UserActionInterpreter uai) {
 		// Remove uai from the stack along with all interpreters above it
-		while (!interpreterStack.isEmpty()) {
-			UserActionInterpreter i = interpreterStack.pop();
-			i.uninstallActionInterpreter();
-			if (i.equals(uai))
-				break;
+		if (interpreterStack.contains(uai)) {
+			boolean foundRoot = false;
+			while (!interpreterStack.isEmpty()) {
+				UserActionInterpreter i = interpreterStack.pop();
+				i.uninstallActionInterpreter();
+				if (!i.eventsFallThrough())
+					foundRoot = true;
+				if (i.equals(uai))
+					break;
+			}
+			/*
+			 * If uai is a 'root' interpreter, or we popped a root interpreter
+			 * above, we need to reactivate the interpreters that are beneath
+			 * it in the stack.
+			 */
+			if (foundRoot)
+				for (UserActionInterpreter i: interpreterStack) {
+					i.reactivateActionInterpreter();
+					// Stop at the next root interpreter
+					if (!i.eventsFallThrough())
+						break;
+				}
 		}
 	}
 
