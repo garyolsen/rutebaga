@@ -54,7 +54,7 @@ public class Chase extends NPCState
 			
 		} else if (!(npc.getTarget() == null))
 		{
-			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc);
+			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc, npc.getTargetTile());
 			List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
 			
 			Vector moveTo = npc.getTile();

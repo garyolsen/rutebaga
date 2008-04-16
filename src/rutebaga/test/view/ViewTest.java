@@ -14,6 +14,7 @@ import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.npc.NPCEntity;
+import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
@@ -32,21 +33,20 @@ public class ViewTest
 
 	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
 
-	private static boolean DISABLE_TREASURE = true;
-
 	public static void main(String args[])
 	{
 		View view = new View(SCREENWIDTH, SCREENHEIGHT);
 		view.setFullscreen();
 
 		CharEntity avatar;
+		CharEntity npc;
 
 		Environment environment = new Environment(new Rect2DTileConvertor());
 
 		try
 		{
 			VolatileImage tmp;
-
+			
 			Image cheese = ImageIO.read(new File("TestImages/cheese.png"));
 			tmp = view.makeVolatileImage(cheese.getWidth(null), cheese
 					.getHeight(null));
@@ -75,72 +75,67 @@ public class ViewTest
 			treasure = tmp;
 			treasure.setAccelerationPriority(1.0f);
 
-			for (int x = -5; x < 35; x++)
+			Random random = new Random();
+
+			for (int x = -5; x < 15; x++)
 			{
-				for (int y = -5; y < 75; y++)
+				for (int y = -5; y < 15; y++)
 				{
-					Vector location = new Vector(x, y);
-					Tile tile = new Tile()
-					{
-
-						@Override
-						public double getFriction()
-						{
-							return 0.1;
-						}
-
-					};
-					Appearance water = new Appearance(tile);
-					water.setImage(grass);
-					tile.setAppearance(water);
-					environment.add(tile, location);
-				}
-			}
-
-			if (!DISABLE_TREASURE)
-			{
-
-				for (int x = 0; x < 30; x++)
-				{
-					for (int y = 0; y < 30; y++)
+					if (random.nextDouble() < 0.7)
 					{
 						Vector location = new Vector(x, y);
-						if (x % 8 == 0 && y % 8 == 0)
+						Tile tile = new Tile()
 						{
-							WindTunnel tunnel = new WindTunnel();
-							Appearance chest = new Appearance(tunnel);
-							chest.setImage(treasure);
-							tunnel.setAppearance(chest);
-							environment.add(tunnel, location);
-						}
-					}
-				}
 
-				for (int x = 0; x < 30; x++)
-				{
-					for (int y = 40; y < 70; y++)
-					{
-						Vector location = new Vector(x, y);
-						if (x % 8 == 0 && y % 8 == 0)
-						{
-							Instance instance = new Bumper();
-							Appearance chest = new Appearance(instance);
-							chest.setImage(treasure);
-							instance.setAppearance(chest);
-							environment.add(instance, location);
-						}
+							@Override
+							public double getFriction()
+							{
+								return 0.1;
+							}
+
+						};
+						Appearance water = new Appearance(tile);
+						water.setImage(grass);
+						tile.setAppearance(water);
+						environment.add(tile, location);
 					}
 				}
 			}
+
+			// for (int x = 0; x < 30; x++)
+			// {
+			// for (int y = 0; y < 30; y++)
+			// {
+			// Vector location = new Vector(x, y);
+			// if (x % 8 == 0 && y % 8 == 0)
+			// {
+			// WindTunnel tunnel = new WindTunnel();
+			// Appearance chest = new Appearance(tunnel);
+			// chest.setImage(treasure);
+			// tunnel.setAppearance(chest);
+			// environment.add(tunnel, location);
+			// }
+			// }
+			// }
+			//
+			// for (int x = 0; x < 30; x++)
+			// {
+			// for (int y = 40; y < 70; y++)
+			// {
+			// Vector location = new Vector(x, y);
+			// if (x % 8 == 0 && y % 8 == 0)
+			// {
+			// Instance instance = new Bumper();
+			// Appearance chest = new Appearance(instance);
+			// chest.setImage(treasure);
+			// instance.setAppearance(chest);
+			// environment.add(instance, location);
+			// }
+			// }
+			// }
 
 			avatar = new CharEntity()
 			{
-
-				@Override
-				public boolean blocks(Instance other)
-				{
-					return false;
-				}
 
 				@Override
 				public double getFriction()
@@ -162,18 +157,31 @@ public class ViewTest
 
 			};
 
+			// npc = new NPCEntity();
+			// Appearance npcAppearance = new Appearance(npc);
+			// npcAppearance.setImage(treasure);
+			// npc.setAppearance(npcAppearance);
+			//		
+			// environment.add(npc, new Vector(20, 20));
+
 			Appearance appearance = new Appearance(avatar);
 			appearance.setImage(cheese);
 			avatar.setAppearance(appearance);
 
-			environment.add(avatar, new Vector(10, 10));
+			environment.add(avatar, new Vector(0, 0));
 
-			NPCEntity npc = new NPCEntity();
-			Appearance npcAppearance = new Appearance(npc);
-			npcAppearance.setImage(cheese);
-			npc.setAppearance(npcAppearance);
+			for (int i = 0; i < 20; i++)
+			{
+				NPCEntity npc1 = new NPCEntity();
+				Appearance npcAppearance1 = new Appearance(npc1);
+				npcAppearance1.setImage(cheese);
+				npc1.setAppearance(npcAppearance1);
 
-			environment.add(npc, new Vector(15, 15));
+				npc1.setTarget(avatar);
+
+				environment.add(npc1, new Vector(random.nextInt(15), random
+						.nextInt(15)));
+			}
 
 			MapComponent map = new MapComponent(avatar, view.getWidth(), view
 					.getHeight());
@@ -185,13 +193,13 @@ public class ViewTest
 
 			view.addViewComponent(fps);
 
-			view.addKeyListener(new TemporaryMover(avatar));
+			TemporaryMover mover = new TemporaryMover(avatar);
+			view.addKeyListener(mover);
 
 			while (true)
 			{
+				mover.tick();
 				view.renderFrame();
-
-				// avatar.applyMomentum(createImpulse());
 				environment.tick();
 
 			}

@@ -14,6 +14,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import rutebaga.commons.math.Bounds;
 import rutebaga.commons.math.MutableVector;
 import rutebaga.commons.math.Vector;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 
@@ -218,7 +219,7 @@ public class Environment
 			MutableVector velocity = instance.getVelocity();
 			if (velocity.getMagnitude() <= 0.0001)
 				continue;
-			Vector newCoordinate = instance.getCoordinate().plus(velocity);
+			Vector newCoordinate = instance.getCoordinate().plus(velocity.times(0.2));
 			Vector newTile = tileConvertor.tileOf(newCoordinate);
 			if (blocked(instance, newTile, true))
 			{
@@ -389,5 +390,10 @@ public class Environment
 	protected Set<Instance> getDirtyPhysics()
 	{
 		return dirtyPhysics;
+	}
+
+	public boolean blockedAtTile(Vector v, Instance instance)
+	{
+		return this.blocked(instance, v, true);
 	}
 }

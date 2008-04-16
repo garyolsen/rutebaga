@@ -71,7 +71,7 @@ public class WindTunnel extends Instance
 	}
 
 	@Override
-	protected InstanceSetIdentifier getSetIdentifier()
+	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.EFFECT;
 	}

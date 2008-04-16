@@ -12,13 +12,6 @@ public class CharEntity extends Entity
 	private ConcreteInventory inventory = new ConcreteInventory(this);
 
 	@Override
-	public boolean blocks(Instance other)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public double getFriction()
 	{
 		// TODO Auto-generated method stub

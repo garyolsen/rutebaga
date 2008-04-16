@@ -224,6 +224,6 @@ public abstract class Instance implements Layerable
 	
 	public abstract double getLayer();
 	
-	protected abstract InstanceSetIdentifier getSetIdentifier();
+	public abstract InstanceSetIdentifier getSetIdentifier();
 
 }
