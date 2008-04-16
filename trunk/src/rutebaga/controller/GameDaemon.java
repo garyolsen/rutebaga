@@ -19,7 +19,7 @@ import rutebaga.view.ViewFacade;
  * The GameDaemon manages {@link UserActionInterpreter UserActionInterpreters},
  * controlling when they are active. This class also controls when actions
  * occur, including processing {@link Command Commands} and rendering the View.
- * The timing mechanism is delegated to a TimeManager component.
+ * The timing mechanism is delegated to a TimeDaemon component.
  * 
  * The GameDaemon maintains a stack of
  * {@link UserActionInterpreter UserActionInterpreters}, where the top
@@ -64,6 +64,11 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 	private boolean eventsAreQueued;
 
 	/**
+	 * The daemon that sends tick events to this Daemon.
+	 */
+	private TickDaemon ticker;
+	
+	/**
 	 * Constructs a new GameDaemon.
 	 */
 	private GameDaemon(ViewFacade view, boolean queued)
@@ -74,6 +79,14 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		commandQueue = new LinkedList<Command>();
 		interpreterStack = new InterpreterStack();
 		eventsAreQueued = queued;
+		ticker = new DefaultTickDaemon(30);
+		ticker.setListener(new TickListener() {
+			public void tick() {
+				processCommandQueue();
+				tick();
+				facade.renderFrame();
+			}
+		});
 	}
 
 	/**
@@ -285,7 +298,7 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 	 * 
 	 * @author Matty
 	 */
-	private class InterpreterStack implements Iterable<UserActionInterpreter>
+	private static class InterpreterStack implements Iterable<UserActionInterpreter>
 	{
 		private Vector<UserActionInterpreter> stack = new Vector<UserActionInterpreter>();
 
