@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.VolatileImage;
 import java.util.ArrayList;
@@ -147,9 +148,20 @@ public class View
 	}
 	
 	
-	//TODO REMOVE THIS ONCE WE HAVE CONTROLLER SETUP!
 	public void addKeyListener(KeyListener kl ) {
-		window.addKeyListener(kl);
+		dispatcher.addKeyListener(kl);
+	}
+	
+	public void removeKeyListener(KeyListener kl) {
+		dispatcher.removeKeyListener(kl);
+	}
+	
+	public void addMouseListener(MouseListener ml) {
+		dispatcher.addMouseListener(ml);
+	}
+	
+	public void removeMouseListener(MouseListener ml) {
+		dispatcher.addMouseListener(ml);
 	}
 	
 	public int getWidth() {

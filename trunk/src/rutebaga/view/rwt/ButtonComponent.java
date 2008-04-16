@@ -82,7 +82,7 @@ public class ButtonComponent extends ViewComponent {
 		draw.drawString( centeredText , label);
 	}
 	
-	protected void processMouseEvent( MouseEvent event ) {
+	protected boolean processMouseEvent( MouseEvent event ) {
 		if(event.getID() == MouseEvent.MOUSE_PRESSED) {
 			toggle = true;
 		} else if(event.getID() == MouseEvent.MOUSE_RELEASED) {
@@ -91,6 +91,8 @@ public class ButtonComponent extends ViewComponent {
 			if(command != null)
 				command.execute();
 		}
+		
+		return true;
 	}
 	
 	public void setCommand( Command command )  {
