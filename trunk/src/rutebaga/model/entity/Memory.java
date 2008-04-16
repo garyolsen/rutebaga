@@ -23,7 +23,7 @@ public class Memory implements Layerable
 	{
 		this.appearance = entity.getAppearance();
 		this.coordinate = entity.getCoordinate();
-		// this.layer = entity.getLayer();
+		this.layer = entity.getLayer();
 	}
 
 	public Appearance getAppearance()
