@@ -46,6 +46,8 @@ public class InstanceSet implements Set<Instance>
 		private void advanceInstanceIterator()
 		{
 			currentIterator = sets.get(typeIterator.next()).iterator();
+			if(!currentIterator.hasNext() && typeIterator.hasNext())
+				advanceInstanceIterator();
 		}
 		
 	}
