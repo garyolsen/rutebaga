@@ -17,13 +17,13 @@ public abstract class NPCState
 {
 	static NPCState initialState;
 
+	protected static final NPCState chase = new Chase();
+	
 	protected static final NPCState wander = new Wander();
 
 	// XXX: because it's
 	// the first state,
 	// the initialState will be wander. Probably not too good.
-
-	protected static final NPCState chase = new Chase();
 
 	protected static final NPCState evade = new Evade();
 

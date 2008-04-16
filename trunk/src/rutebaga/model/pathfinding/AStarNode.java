@@ -30,6 +30,8 @@ public abstract class AStarNode<T extends AStarNode> implements Comparable<AStar
 		else
 			return 0;
 	}
+	
+	public abstract boolean equals(T other);
 
 	public float getCost()
 	{

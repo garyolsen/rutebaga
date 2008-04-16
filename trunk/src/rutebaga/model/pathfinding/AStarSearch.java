@@ -56,9 +56,9 @@ public class AStarSearch<T extends AStarNode<T>>
 
 			// found a path!
 			// now construct it!
-			if (node == goalNode)
+			if (node.equals(goalNode))
 			{
-				return constructPath(goalNode);
+				return constructPath(node);
 			}
 
 			List<T> neighbors = node.getNeighbors();
