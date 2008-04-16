@@ -54,11 +54,13 @@ public class Graphics2DDrawer extends Drawer
 		this.g2d = g2d;
 	}
 
+	/*
 	private void applyAttribute()
 	{
 		if(getAttribute() != null)
 			this.getAttribute().apply(this);
 	}
+	*/
 
 	@Override
 	public void drawImage(Point p, Image img)

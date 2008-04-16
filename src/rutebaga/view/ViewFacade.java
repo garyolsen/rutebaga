@@ -3,9 +3,12 @@ package rutebaga.view;
 import rutebaga.commons.math.Vector;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.ElementalList;
+import rutebaga.controller.command.ListElement;
+import rutebaga.view.rwt.ButtonComponent;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.View;
+import rutebaga.view.rwt.ViewComponent;
 
 /**
  * Provides a unified interface to manipulate the View Subsystem without
@@ -79,7 +82,21 @@ public class ViewFacade
 	 */
 	public void createTitleScreen(ElementalList list)
 	{
-
+		clearView();
+		
+		int spacing = 50;
+		int xAlign = view.getWidth()/2 - 50;
+		int yAlign = 50;
+		
+		for(ListElement e : list ) {
+			ButtonComponent button = new ButtonComponent(e.getLabel());
+			button.setCommand(e.getCommand());
+			button.setLocation(xAlign, yAlign);
+			
+			view.addViewComponent(button);
+			yAlign += spacing;
+		}
+			
 	}
 
 	/**
@@ -177,5 +194,11 @@ public class ViewFacade
 	public void closeContextMenu(ContextMenu menu)
 	{
 
+	}
+	
+	
+	private void clearView() {
+		for(ViewComponent vc : view.getViewComponents())
+			view.removeViewComponent(vc);
 	}
 }

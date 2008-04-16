@@ -8,6 +8,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import rutebaga.view.drawer.Graphics2DDrawer;
@@ -119,6 +120,15 @@ public class View
 	{
 		components.add(vc);
 		dispatcher.registerComponent(vc);
+	}
+	
+	public List<ViewComponent> getViewComponents() {
+		return Collections.unmodifiableList(components);
+	}
+	
+	public void removeViewComponent(ViewComponent vc) {
+		components.remove(vc);
+		dispatcher.deregisterComponent(vc);
 	}
 
 	private void drawViewComponents()

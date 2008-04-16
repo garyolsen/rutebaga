@@ -3,11 +3,8 @@ package rutebaga.view.rwt;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Point;
 import java.awt.Rectangle;
 
-
-import rutebaga.commons.*;
 import rutebaga.view.drawer.*;
 
 public class TextLabelComponent extends ViewComponent {
