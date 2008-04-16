@@ -21,16 +21,9 @@ public class TitleScreen extends ViewCompositeComponent {
 	public TitleScreen(ElementalList list, int width, int height) {
 		this.setBounds(new Rectangle(width, height));
 		
-		
-		
-		int count = 0;
-		
-		for(ListElement e : list)
-			count++;
-		
 		int spacing = 50;
 		int xAlign = this.getWidth()/2 - 50;
-		int yAlign = (getHeight() - spacing * count - 100) / 2;
+		int yAlign = (getHeight() - spacing * list.contentSize() - 100) / 2;
 		
 		TextLabelComponent label = new TextLabelComponent(list.getLabel());
 		label.setLocation(xAlign, yAlign - 100);

@@ -1,8 +1,13 @@
 package rutebaga.controller;
 
+import java.util.Set;
+
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.InstanceSet;
+import rutebaga.model.item.Item;
+import rutebaga.model.map.Tile;
 
 /**
  * TODO: resolve all the references here once the referenced classes actually
@@ -32,6 +37,28 @@ public class ActionDeterminer
 	 * @return
 	 */
 	public ElementalList determineActions(InstanceSet instances) {
+		Set<Entity> entities = instances.getEntities();
+		if (entities.size() != 0)
+			return actionsForEntity(entities.iterator().next());
+		Set<Item> items = instances.getItems();
+		if (items.size() != 0)
+			return actionsForItem(items.iterator().next());
+		Set<Tile> tiles = instances.getTiles();
+		if (items.size() != 0)
+			return actionsForItem(items.iterator().next());
 		return null;
 	}
+	
+	private ElementalList actionsForEntity(Entity entity) {
+		return null;
+	}
+
+	private ElementalList actionsForItem(Item item) {
+		return null;
+	}
+	
+	private ElementalList actionsForItem(Item item) {
+		return null;
+	}
+	
 }
