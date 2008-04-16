@@ -102,6 +102,10 @@ public abstract class Entity extends Instance implements Named
 	{
 		visionBounds.setRadii(visionRadius);
 	}
+	
+	public boolean canSee(Vector v) {
+		return visionBounds.contains(v);
+	}
 
 	@Override
 	public void tick()

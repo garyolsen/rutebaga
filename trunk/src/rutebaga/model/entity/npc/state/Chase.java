@@ -2,6 +2,8 @@ package rutebaga.model.entity.npc.state;
 
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
+import rutebaga.model.environment.AStarNodeLocationAdapter;
+import rutebaga.model.pathfinding.AStarSearch;
 
 /**
  * @author nicholasstamas
@@ -9,6 +11,8 @@ import rutebaga.model.entity.npc.NPCState;
  */
 public class Chase extends NPCState
 {
+	
+	private AStarSearch<AStarNodeLocationAdapter> aStarSearch;
 
 	@Override
 	public NPCState barter(NPCEntity npc)
@@ -45,7 +49,8 @@ public class Chase extends NPCState
 		}
 		else
 		{
-			// npc.chaseTarget();
+			manager = new AStarNodeLocationManager()
+			aStarSearch.findPath(new AStarNodeLocationAdapter(), goalNode)
 			return this;
 		}
 	}

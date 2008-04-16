@@ -13,6 +13,11 @@ import rutebaga.commons.math.Vector;
 public class Wander extends NPCState
 {
 
+	private Random rand = new Random();
+	
+	private int direction = 0;
+	private int wait = 0;
+	
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
@@ -42,8 +47,19 @@ public class Wander extends NPCState
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-		Random rand = new Random();
-		npc.applyMomentum(new Vector( rand.nextDouble(), rand.nextDouble() ));
+		double dx = direction % 2;
+		double dy = direction % 2 + 1;
+		boolean negative = (direction / 2) % 2 == 0;
+		Vector impulse = new Vector(dx * 0.05, dy * 0.05);
+		if (negative)
+			impulse = impulse.negate();
+
+		npc.applyImpulse(impulse);
+
+		wait++;
+		if (wait % 10 == 0)
+			direction++;
+		
 		return this;
 	}
 

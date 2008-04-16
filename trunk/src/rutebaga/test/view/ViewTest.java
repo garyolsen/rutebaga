@@ -13,6 +13,7 @@ import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.npc.NPCEntity;
+import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
@@ -36,6 +37,7 @@ public class ViewTest {
 		
 		
 		CharEntity avatar;
+		CharEntity npc;
 		
 		Environment environment = new Environment(new Rect2DTileConvertor());
 		
@@ -72,37 +74,37 @@ public class ViewTest {
 		}
 		
 
-		for (int x = 0; x < 30; x++)
-		{
-			for (int y = 0; y < 30; y++)
-			{
-				Vector location = new Vector(x, y);
-				if (x % 8 == 0 && y % 8 == 0)
-				{
-					WindTunnel tunnel = new WindTunnel();
-					Appearance chest = new Appearance(tunnel);
-					chest.setImage(treasure);
-					tunnel.setAppearance(chest);
-					environment.add(tunnel, location);
-				}
-			}
-		}
-
-		for (int x = 0; x < 30; x++)
-		{
-			for (int y = 40; y < 70; y++)
-			{
-				Vector location = new Vector(x, y);
-				if (x % 8 == 0 && y % 8 == 0)
-				{
-					Instance instance = new Bumper();
-					Appearance chest = new Appearance(instance);
-					chest.setImage(treasure);
-					instance.setAppearance(chest);
-					environment.add(instance, location);
-				}
-			}
-		}
+//		for (int x = 0; x < 30; x++)
+//		{
+//			for (int y = 0; y < 30; y++)
+//			{
+//				Vector location = new Vector(x, y);
+//				if (x % 8 == 0 && y % 8 == 0)
+//				{
+//					WindTunnel tunnel = new WindTunnel();
+//					Appearance chest = new Appearance(tunnel);
+//					chest.setImage(treasure);
+//					tunnel.setAppearance(chest);
+//					environment.add(tunnel, location);
+//				}
+//			}
+//		}
+//
+//		for (int x = 0; x < 30; x++)
+//		{
+//			for (int y = 40; y < 70; y++)
+//			{
+//				Vector location = new Vector(x, y);
+//				if (x % 8 == 0 && y % 8 == 0)
+//				{
+//					Instance instance = new Bumper();
+//					Appearance chest = new Appearance(instance);
+//					chest.setImage(treasure);
+//					instance.setAppearance(chest);
+//					environment.add(instance, location);
+//				}
+//			}
+//		}
 
 		avatar = new CharEntity()
 		{
@@ -132,6 +134,13 @@ public class ViewTest {
 			}
 
 		};
+		
+		npc = new NPCEntity();
+		Appearance npcAppearance = new Appearance(npc);
+		npcAppearance.setImage(treasure);
+		npc.setAppearance(npcAppearance);
+		
+		environment.add(npc, new Vector(20, 20));
 
 		Appearance appearance = new Appearance(avatar);
 		appearance.setImage(cheese);
@@ -139,10 +148,10 @@ public class ViewTest {
 
 		environment.add(avatar, new Vector(10, 10));
 		
-		NPCEntity npc = new NPCEntity();
-		Appearance npcAppearance = new Appearance(npc);
+		NPCEntity npc1 = new NPCEntity();
+		Appearance npcAppearance1 = new Appearance(npc1);
 		npcAppearance.setImage(cheese);
-		npc.setAppearance(npcAppearance);
+		npc1.setAppearance(npcAppearance1);
 		
 		environment.add(npc, new Vector(15,15));
 		
@@ -161,7 +170,6 @@ public class ViewTest {
 		while(true) {
 			view.renderFrame();
 			
-			//avatar.applyMomentum(createImpulse());
 			environment.tick();
 			
 		}

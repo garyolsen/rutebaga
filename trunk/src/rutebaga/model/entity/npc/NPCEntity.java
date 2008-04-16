@@ -192,7 +192,6 @@ public class NPCEntity extends CharEntity
 
 	@Override
 	public double getMass() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 }
