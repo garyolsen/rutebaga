@@ -17,6 +17,7 @@ public class AvatarInitializationActionInterpreter extends KeyAdapter implements
 		UserActionInterpreter, TextFieldListener {
 
 	public boolean eventsFallThrough() {
+		// AvatarInitializationActionInterpreter is a 'root' interpreter
 		return false;
 	}
 

@@ -4,7 +4,7 @@ import rutebaga.model.entity.CharEntity;
 import rutebaga.model.item.Item;
 import rutebaga.view.ViewFacade;
 
-public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
+public class AvatarEquipmentCommandFactory implements CommandFactory<Item> {
 	
 	private CharEntity avatar;
 	private ViewFacade facade;
@@ -21,33 +21,14 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 		ConcreteElementalList list = new ConcreteElementalList();
 		if (facade != null)
 			list.add("Stats", new DisplayItemStatsCommand(facade, item));
-		list.add("Drop", new DropCommand(item));
-		if (item.isEquippable())
-			list.add("Equip", new EquipCommand(item));
+		list.add("Equip", new UnequipCommand(item));
 		return list;
 	}
 	
-	private class DropCommand implements Command {
-		private Item item;
+	private class UnequipCommand implements Command {
+		protected Item item;
 		
-		public DropCommand(Item item) {
-			this.item = item;
-		}
-		
-		public boolean isFeasible() {
-			return false;
-		}
-		
-		public void execute() {
-			
-		}
-	}
-	
-	private class EquipCommand implements Command {
-
-		private Item item;
-		
-		public EquipCommand(Item item) {
+		private UnequipCommand(Item item) {
 			this.item = item;
 		}
 		
