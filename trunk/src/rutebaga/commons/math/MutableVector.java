@@ -14,7 +14,7 @@ import java.util.Arrays;
  * @author Gary LosHuertos
  * 
  */
-public class Vector implements GeneralVector
+public class MutableVector implements GeneralVector
 {
 
 	private final double[] components;
@@ -46,7 +46,7 @@ public class Vector implements GeneralVector
 	 * @param components
 	 *            The components to insert into the new Vector.
 	 */
-	public Vector(double... components)
+	public MutableVector(double... components)
 	{
 		dimension = components.length;
 		this.components = new double[dimension];
@@ -64,7 +64,7 @@ public class Vector implements GeneralVector
 	 * @param start
 	 * @param end
 	 */
-	public Vector(double[] components, int start, int end)
+	public MutableVector(double[] components, int start, int end)
 	{
 		this.dimension = end - start;
 		this.components = new double[dimension];
@@ -78,7 +78,7 @@ public class Vector implements GeneralVector
 	 * @param int
 	 *            Dimension of the new Vector.
 	 */
-	private Vector(int dimension)
+	private MutableVector(int dimension)
 	{
 		this.dimension = dimension;
 		this.components = new double[dimension];
@@ -110,7 +110,7 @@ public class Vector implements GeneralVector
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Vector other = (Vector) obj;
+		final MutableVector other = (MutableVector) obj;
 		if (!Arrays.equals(components, other.components))
 			return false;
 		if (dimension != other.dimension)
@@ -144,7 +144,7 @@ public class Vector implements GeneralVector
 	/* (non-Javadoc)
 	 * @see rutebaga.commons.math.GeneralVector#getDirection()
 	 */
-	public Vector getDirection()
+	public MutableVector getDirection()
 	{
 		return this.times(1 / this.getMagnitude());
 	}
@@ -184,59 +184,51 @@ public class Vector implements GeneralVector
 	/* (non-Javadoc)
 	 * @see rutebaga.commons.math.GeneralVector#minus(rutebaga.commons.math.Vector)
 	 */
-	public Vector minus(GeneralVector rhs)
+	public MutableVector minus(GeneralVector rhs)
 	{
 		check(rhs);
-		Vector rval = new Vector(dimension);
-		double components[] = rval.components;
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = this.components[idx] - rhs.get(idx);
 		}
-		return rval;
+		return this;
 	}
 
 	/* (non-Javadoc)
 	 * @see rutebaga.commons.math.GeneralVector#negate()
 	 */
-	public Vector negate()
+	public MutableVector negate()
 	{
-		Vector rval = new Vector(dimension);
-		double components[] = rval.components;
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = -this.components[idx];
 		}
-		return rval;
+		return this;
 	}
 
 	/* (non-Javadoc)
 	 * @see rutebaga.commons.math.GeneralVector#plus(rutebaga.commons.math.Vector)
 	 */
-	public Vector plus(GeneralVector rhs)
+	public MutableVector plus(GeneralVector rhs)
 	{
 		check(rhs);
-		Vector rval = new Vector(dimension);
-		double components[] = rval.components;
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = this.components[idx] + rhs.get(idx);
 		}
-		return rval;
+		return this;
 	}
 
 	/* (non-Javadoc)
 	 * @see rutebaga.commons.math.GeneralVector#times(double)
 	 */
-	public Vector times(double factor)
+	public MutableVector times(double factor)
 	{
-		Vector rval = new Vector(dimension);
-		double components[] = rval.components;
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = this.components[idx] * factor;
 		}
-		return rval;
+		return this;
 	}
 
 	/**
