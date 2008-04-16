@@ -18,7 +18,7 @@ public class TemporaryMover implements KeyListener{
 
 	private CharEntity avatar;
 	
-	private static final double MOVE_SPEED = 0.4;
+	private static final double MOVE_SPEED = 0.2;
 	
 	private static final Vector WEST = new Vector(-MOVE_SPEED, 0.0);
 	private static final Vector SOUTH = new Vector(0.0, MOVE_SPEED);

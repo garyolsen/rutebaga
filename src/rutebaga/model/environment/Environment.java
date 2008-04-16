@@ -37,7 +37,7 @@ import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 public class Environment
 {
 	private Set<Instance> instances = new ConcreteInstanceSet();
-	private Map<Vector, ConcreteInstanceSet> tileCache = new HashMap<Vector, ConcreteInstanceSet>();
+	private Map<Vector, HashSet<Instance>> tileCache = new HashMap<Vector, HashSet<Instance>>();
 	private Map<Instance, Vector> reverseTileCache = new HashMap<Instance, Vector>();
 	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
 	private TileConvertor tileConvertor;
@@ -172,7 +172,7 @@ public class Environment
 	protected boolean blocked(Instance instance, Vector tile,
 			boolean emptyBlocks)
 	{
-		ConcreteInstanceSet instances = tileCache.get(tile);
+		HashSet<Instance> instances = tileCache.get(tile);
 		if (instances == null || instances.size() == 0)
 			return emptyBlocks;
 		for (Instance other : instances)
@@ -204,7 +204,7 @@ public class Environment
 	/**
 	 * @return the cache of tiles
 	 */
-	protected Map<Vector, ConcreteInstanceSet> getTileCache()
+	protected Map<Vector, HashSet<Instance>> getTileCache()
 	{
 		return tileCache;
 	}
@@ -214,6 +214,8 @@ public class Environment
 	 */
 	protected void performMovement()
 	{
+		long time = System.currentTimeMillis();
+		int moveCt = 0;
 		for (Instance instance : instances)
 		{
 			MutableVector velocity = instance.getVelocity();
@@ -249,8 +251,10 @@ public class Environment
 				location.setTile(newTile);
 				updateTileOf(instance);
 				notifyListeners(event);
+				moveCt++;
 			}
 		}
+		System.out.println("movement count: " + moveCt + ": " + (System.currentTimeMillis()-time));
 	}
 
 	/**
@@ -258,14 +262,18 @@ public class Environment
 	 */
 	protected void updatePhysics()
 	{
+		long time = System.currentTimeMillis();
 		for (Vector tile : tileCache.keySet())
 		{
 			double friction = frictionAt(tile);
 			frictionCache.put(tile, friction);
 		}
+		System.out.println("friction update: " + (System.currentTimeMillis() - time));
+		time = System.currentTimeMillis();
 		for (Instance instance : dirtyPhysics)
 			instance.getPhysicsContainer().update(
 					frictionCache.get(instance.getTile()));
+		System.out.println("physics update: " + (System.currentTimeMillis() - time));
 	}
 
 	/**
@@ -282,7 +290,7 @@ public class Environment
 		Vector newTile = instance.getTile();
 		if (!newTile.equals(current))
 		{
-			ConcreteInstanceSet currentInstances = tileCache.get(current);
+			HashSet<Instance> currentInstances = tileCache.get(current);
 			if (currentInstances != null)
 			{
 				currentInstances.remove(instance);
@@ -352,6 +360,7 @@ public class Environment
 	 */
 	private void notifyListeners(MovementEvent event)
 	{
+		long time = System.currentTimeMillis();
 		for (MovementListener listener : listeners)
 			listener.onMovement(event);
 		for (MovementListener listener : event.getInstanceListeners())
@@ -360,6 +369,7 @@ public class Environment
 			if (!listeners.contains(listener))
 				listener.onMovement(event);
 		}
+		System.out.println("notifying listeners: " + (System.currentTimeMillis() - time));
 	}
 
 	/**
@@ -371,10 +381,10 @@ public class Environment
 	 */
 	private Set<Instance> getInstanceSetAt(Vector tile)
 	{
-		ConcreteInstanceSet set = tileCache.get(tile);
+		HashSet<Instance> set = tileCache.get(tile);
 		if (set == null)
 		{
-			set = new ConcreteInstanceSet();
+			set = new HashSet<Instance>();
 			tileCache.put(tile, set);
 		}
 		return set;

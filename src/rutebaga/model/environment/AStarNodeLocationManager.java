@@ -15,7 +15,7 @@ public class AStarNodeLocationManager
 	
 	public AStarNodeLocationManager(Environment environment, Entity entity, Vector target)
 	{
-		System.out.println("Entity is at " + entity.getTile());
+//		System.out.println("Entity is at " + entity.getTile());
 		this.environment = environment;
 		this.entity = entity;
 		this.target = target;
@@ -36,10 +36,10 @@ public class AStarNodeLocationManager
 		if(!nodes.containsKey(v))
 		{
 			if (entity.canSee(v) && environment.exists(v) && (!environment.blockedAtTile(v, entity) || v.equals(target))) {
-				System.out.println("adding node " + v);
+//				System.out.println("adding node " + v);
 				node = new AStarNodeLocationAdapter(this, v);
 			} else {
-				System.out.println("not adding node " + v);
+//				System.out.println("not adding node " + v);
 				node = null;
 			}
 			nodes.put(v, node);
