@@ -32,6 +32,9 @@ public class ViewTest
 	private static Random random = new Random();
 
 	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
+	
+	private static int N_NPCS = 5;
+	private static double TILE_PROB = 0.9;
 
 	public static void main(String args[])
 	{
@@ -53,7 +56,7 @@ public class ViewTest
 			Graphics g = tmp.getGraphics();
 			g.drawImage(cheese, 0, 0, null);
 			g.dispose();
-			cheese = tmp;
+//			cheese = tmp;
 			cheese.setAccelerationPriority(1.0f);
 
 			Image grass = ImageIO.read(new File("TestImages/grass.jpg"));
@@ -62,7 +65,7 @@ public class ViewTest
 			g = tmp.getGraphics();
 			g.drawImage(grass, 0, 0, null);
 			g.dispose();
-			grass = tmp;
+//			grass = tmp;
 			grass.setAccelerationPriority(1.0f);
 
 			Image treasure = ImageIO.read(new File("TestImages/treasure.png"));
@@ -72,7 +75,7 @@ public class ViewTest
 			g = tmp.getGraphics();
 			g.drawImage(treasure, 0, 0, null);
 			g.dispose();
-			treasure = tmp;
+//			treasure = tmp;
 			treasure.setAccelerationPriority(1.0f);
 
 			Random random = new Random();
@@ -81,7 +84,7 @@ public class ViewTest
 			{
 				for (int y = -5; y < 15; y++)
 				{
-					if (random.nextDouble() < 0.7)
+					if (random.nextDouble() < TILE_PROB)
 					{
 						Vector location = new Vector(x, y);
 						Tile tile = new Tile()
@@ -170,7 +173,7 @@ public class ViewTest
 
 			environment.add(avatar, new Vector(0, 0));
 
-			for (int i = 0; i < 20; i++)
+			for (int i = 0; i < N_NPCS; i++)
 			{
 				NPCEntity npc1 = new NPCEntity();
 				Appearance npcAppearance1 = new Appearance(npc1);

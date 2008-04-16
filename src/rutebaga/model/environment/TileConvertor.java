@@ -1,5 +1,6 @@
 package rutebaga.model.environment;
 
+import java.util.Collection;
 import java.util.Set;
 
 import rutebaga.commons.math.Vector;
@@ -45,4 +46,6 @@ public interface TileConvertor
 	 * @return	the coordinate's rectangular location
 	 */
 	Vector toRect(Vector coordinate);
+	
+	public Collection<Vector> between(Vector a, Vector b);
 }

@@ -41,7 +41,7 @@ public class Environment
 	private Map<Instance, Vector> reverseTileCache = new HashMap<Instance, Vector>();
 	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
 	private TileConvertor tileConvertor;
-	
+
 	private Map<Vector, Double> frictionCache = new HashMap<Vector, Double>();
 
 	private Set<Instance> dirtyPhysics = new CopyOnWriteArraySet<Instance>();
@@ -219,9 +219,21 @@ public class Environment
 			MutableVector velocity = instance.getVelocity();
 			if (velocity.getMagnitude() <= 0.0001)
 				continue;
-			Vector newCoordinate = instance.getCoordinate().plus(velocity.times(0.2));
+			Vector newCoordinate = instance.getCoordinate().plus(velocity);
 			Vector newTile = tileConvertor.tileOf(newCoordinate);
-			if (blocked(instance, newTile, true))
+			Collection<Vector> inBetween = tileConvertor.between(instance
+					.getTile(), newTile);
+			boolean blocked = false;
+			for (Vector blockTile : inBetween)
+			{
+				if (blocked(instance, blockTile, true))
+				{
+					blocked = true;
+					break;
+				}
+			}
+			blocked = blocked || blocked(instance, newTile, true);
+			if (blocked)
 			{
 				PhysicsContainer physics = instance.getPhysicsContainer();
 				physics.getMomentum().times(0.0);
@@ -251,8 +263,9 @@ public class Environment
 			double friction = frictionAt(tile);
 			frictionCache.put(tile, friction);
 		}
-		for(Instance instance : dirtyPhysics)
-			instance.getPhysicsContainer().update(frictionCache.get(instance.getTile()));
+		for (Instance instance : dirtyPhysics)
+			instance.getPhysicsContainer().update(
+					frictionCache.get(instance.getTile()));
 	}
 
 	/**
