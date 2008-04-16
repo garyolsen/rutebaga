@@ -35,4 +35,10 @@ public interface ElementalList extends Iterable<ListElement>
 	 * @return an Iterator of ListElements
 	 */
 	public Iterator<ListElement> iterator();
+	
+	/**
+	 * Returns the size of the size of the set of ListElements that this ElementalList's Iterator returns.
+	 * @return
+	 */
+	//public int contentSize();
 }

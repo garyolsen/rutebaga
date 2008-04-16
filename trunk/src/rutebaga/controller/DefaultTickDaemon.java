@@ -9,14 +9,14 @@ public class DefaultTickDaemon implements TickDaemon {
 	private boolean paused;
 	private TickListener listener;
 	
-	public DefaultTickDaemon(int msecFreq) {
+	public DefaultTickDaemon(int msecRate) {
 		timer = new Timer(true);
-		timer.scheduleAtFixedRate(new TimerTask() {
+		timer.schedule(new TimerTask() {
 			public void run() {
 				if (!paused && listener != null)
 					listener.tick();
 			}
-		}, 0, 1 / msecFreq);
+		}, 0, msecRate);
 	}
 	
 	public boolean isPaused() {
@@ -34,5 +34,4 @@ public class DefaultTickDaemon implements TickDaemon {
 	public void unpause() {
 		paused = false;
 	}
-	
 }

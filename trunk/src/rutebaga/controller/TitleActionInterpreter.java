@@ -57,7 +57,7 @@ public class TitleActionInterpreter implements UserActionInterpreter {
 	}
 
 	public void tick() {
-		// TitleActionInterpreter doesn't care about your ticks
+		// TitleActionInterpreter doesn't care about your puny ticks
 	}
 
 	public void uninstallActionInterpreter() {

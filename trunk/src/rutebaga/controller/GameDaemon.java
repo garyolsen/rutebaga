@@ -82,10 +82,11 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		ticker.setListener(new TickListener() {
 			public void tick() {
 				commandQueue.processQueue();
-				tick();
+				GameDaemon.this.tick();
 				facade.renderFrame();
 			}
 		});
+		ticker.unpause();
 	}
 
 	/**
@@ -109,6 +110,7 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	 */
 	public static GameDaemon initialize(boolean queueEvents) {
 		ViewFacade facade = new ViewFacade();
+		facade.constructFullscreenView();
 		return new GameDaemon(facade, queueEvents);
 	}
 
@@ -350,10 +352,10 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		/**
 		 * The command queue.
 		 */
-		private Queue<Command> commandQueue;
+		private Queue<Command> queue;
 
 		public CommandQueueImpl() {
-			commandQueue = new LinkedList<Command>();
+			queue = new LinkedList<Command>();
 		}
 		
 		/**
@@ -366,7 +368,7 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		 */
 		public void queueCommand(Command command)
 		{
-			commandQueue.offer(command);
+			queue.offer(command);
 		}
 
 		/**
@@ -375,9 +377,9 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		 */
 		public void processQueue()
 		{
-			while (!commandQueue.isEmpty())
+			while (!queue.isEmpty())
 			{
-				Command command = commandQueue.poll();
+				Command command = queue.poll();
 				command.execute();
 			}
 		}
