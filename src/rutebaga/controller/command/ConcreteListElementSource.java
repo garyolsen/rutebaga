@@ -21,4 +21,8 @@ public class ConcreteListElementSource<E> implements ListElementSource<E> {
 		return source.iterator();
 	}
 
+	public int contentSize() {
+		return source.size();
+	}
+
 }

@@ -63,8 +63,11 @@ public class DynamicElementalList<E> implements ElementalList
 		this.factory = factory;
 	}
 
+	/* (non-Javadoc)
+	 * @see rutebaga.controller.command.ElementalList#contentSize()
+	 */
 	public int contentSize() {
-		return 0;
+		return source.contentSize();
 	}
 
 	/**

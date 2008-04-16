@@ -19,6 +19,10 @@ public class StatsListElementSource implements ListElementSource<StatValue> {
 		this.stats = stats;
 	}
 	
+	public int contentSize() {
+		return stats.getStatIds().size();
+	}
+
 	public String getLabel() {
 		return label == null ? "Stats" : label.getLabel();
 	}
