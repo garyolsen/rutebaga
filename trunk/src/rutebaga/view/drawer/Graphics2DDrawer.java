@@ -63,35 +63,35 @@ public class Graphics2DDrawer extends Drawer
 	@Override
 	public void drawImage(Point p, Image img)
 	{
-		applyAttribute();
+		//applyAttribute();
 		g2d.drawImage(img, p.x, p.y, img.getWidth(null), img.getHeight(null), null);
 	}
 
 	@Override
 	public void drawLine(Point begin, Point end)
 	{
-		applyAttribute();
+		//applyAttribute();
 		g2d.drawLine(begin.x, begin.y, end.x, end.y);
 	}
 
 	@Override
 	public void drawPoint(Point p)
 	{
-		applyAttribute();
+		//applyAttribute();
 		g2d.fillRect(p.x, p.y, 1, 1);
 	}
 
 	@Override
 	public void drawRectangle(Point p, int width, int height)
 	{
-		applyAttribute();
+		//applyAttribute();
 		g2d.fillRect(p.x, p.y, width, height);
 	}
 
 	@Override
 	public void drawString(Point p, String string)
 	{
-		applyAttribute();
+		//applyAttribute();
 		g2d.drawString(string, p.x, p.y);
 	}
 
