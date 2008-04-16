@@ -6,13 +6,12 @@ import java.util.List;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
-import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.ReversibleEntityEffect;
 import rutebaga.model.entity.effect.StatEffect;
 import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
 import rutebaga.model.item.Item;
-import rutebaga.model.item.ItemType;
 
 public class InventoryTest
 {
@@ -68,6 +67,12 @@ public class InventoryTest
 			{
 				// TODO Auto-generated method stub
 				return 0;
+			}
+
+			@Override
+			protected InstanceSetIdentifier getSetIdentifier()
+			{
+				return InstanceSetIdentifier.ITEM;
 			}
 
 		};

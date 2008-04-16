@@ -11,6 +11,8 @@ import rutebaga.model.Named;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceSet;
+import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
 
 /**
  * Entity stores the state related to an Entity in a physical environment.
@@ -33,15 +35,15 @@ public abstract class Entity extends Instance implements Named
 	private EllipseBounds visionBounds;
 
 	private Vision vision;
+
 	private String name;
-	
 	public Entity()
 	{
 		visionBounds = new EllipseBounds(new Vector(10, 10));
 		// XXX: connascence of timing
 		vision = new Vision(this);
 	}
-
+	
 	/**
 	 * Queues an effect to be applied to this entity.
 	 * 
@@ -100,14 +102,14 @@ public abstract class Entity extends Instance implements Named
 	{
 		visionBounds.setRadii(visionRadius);
 	}
-	
+
 	@Override
 	public void tick()
 	{
 		flushEffectQueue();
 		getVision().tick();
 	}
-
+	
 	private void flushEffectQueue()
 	{
 		for (Object id : getEffectQueue().keySet())
@@ -120,5 +122,11 @@ public abstract class Entity extends Instance implements Named
 	protected Map<Object, EntityEffect> getEffectQueue()
 	{
 		return effectQueue;
+	}
+
+	@Override
+	protected InstanceSet.InstanceSetIdentifier getSetIdentifier()
+	{
+		return InstanceSetIdentifier.ENTITY;
 	}
 }

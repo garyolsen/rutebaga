@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import rutebaga.commons.math.Vector;
+import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 import rutebaga.model.map.TerrainType;
@@ -221,5 +222,7 @@ public abstract class Instance implements Layerable
 	}
 	
 	public abstract double getLayer();
+	
+	protected abstract InstanceSetIdentifier getSetIdentifier();
 
 }

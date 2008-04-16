@@ -6,6 +6,7 @@ import rutebaga.model.DefaultLayers;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
 
 public class Bumper extends Instance
 {
@@ -53,6 +54,12 @@ public class Bumper extends Instance
 	public double getLayer()
 	{
 		return DefaultLayers.AIR.getLayer();
+	}
+
+	@Override
+	protected InstanceSetIdentifier getSetIdentifier()
+	{
+		return InstanceSetIdentifier.EFFECT;
 	}
 
 }
