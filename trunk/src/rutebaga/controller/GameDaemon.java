@@ -37,8 +37,7 @@ import rutebaga.view.ViewFacade;
  * @author Matthew Chuah
  * @see UserActionInterpreter
  */
-public class GameDaemon extends KeyAdapter implements InterpreterManager
-{
+public class GameDaemon extends KeyAdapter implements InterpreterManager {
 
 	/**
 	 * The GameDaemon retains a reference to the ViewFacade to pass it on to
@@ -66,12 +65,11 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	 * The daemon that sends tick events to this Daemon.
 	 */
 	private TickDaemon ticker;
-	
+
 	/**
 	 * Constructs a new GameDaemon.
 	 */
-	private GameDaemon(ViewFacade view, boolean queued)
-	{
+	private GameDaemon(ViewFacade view, boolean queued) {
 		if (view == null)
 			throw new NullPointerException();
 		facade = view;
@@ -82,7 +80,19 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		ticker.setListener(new TickListener() {
 			public void tick() {
 				commandQueue.processQueue();
+
+				/*
+				 * Warning: This is a hack. We never want the GameDaemon's tick
+				 * to be queued as an event when it's activated by the
+				 * TimeDaemon. So, we'll ensure that eventsAreQueued is false
+				 * before calling GameDaemon's tick method, but we'll set
+				 * eventsAreQueued back to whatever it was before afterwards.
+				 */
+				boolean wereEventsQueued = eventsAreQueued;
+				eventsAreQueued = false;
 				GameDaemon.this.tick();
+				eventsAreQueued = wereEventsQueued;
+
 				facade.renderFrame();
 			}
 		});
@@ -95,8 +105,7 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	 * 
 	 * @return a GameDaemon
 	 */
-	public static GameDaemon initialize()
-	{
+	public static GameDaemon initialize() {
 		return initialize(false);
 	}
 
@@ -117,15 +126,14 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	public CommandQueue getCommandQueue() {
 		return commandQueue;
 	}
-	
+
 	/**
 	 * Activates the specified UserActionInterpreter, pushing it on to the top
 	 * of this GameDaemon's interpreter stack.
 	 * 
 	 * @see rutebaga.controller.InterpreterManager#activate(rutebaga.controller.UserActionInterpreter)
 	 */
-	public void activate(UserActionInterpreter uai)
-	{
+	public void activate(UserActionInterpreter uai) {
 		uai.installActionInterpreter(this, facade);
 		interpreterStack.push(uai);
 	}
@@ -138,11 +146,9 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	 * 
 	 * @see rutebaga.controller.InterpreterManager#deactivate(rutebaga.controller.UserActionInterpreter)
 	 */
-	public void deactivate(UserActionInterpreter uai)
-	{
+	public void deactivate(UserActionInterpreter uai) {
 		// Remove uai from the stack along with all interpreters above it
-		while (!interpreterStack.isEmpty())
-		{
+		while (!interpreterStack.isEmpty()) {
 			UserActionInterpreter i = interpreterStack.pop();
 			i.uninstallActionInterpreter();
 			if (i.equals(uai))
@@ -156,13 +162,10 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	 * @see java.awt.event.KeyAdapter#keyPressed(java.awt.event.KeyEvent)
 	 */
 	@Override
-	public void keyPressed(final KeyEvent e)
-	{
-		processEvent(new EventCommand()
-		{
+	public void keyPressed(final KeyEvent e) {
+		processEvent(new EventCommand() {
 			@Override
-			public void act(UserActionInterpreter uai)
-			{
+			public void act(UserActionInterpreter uai) {
 				uai.keyPressed(e);
 			}
 		});
@@ -173,13 +176,10 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
-	public void actionPerformed(final ActionEvent e)
-	{
-		processEvent(new EventCommand()
-		{
+	public void actionPerformed(final ActionEvent e) {
+		processEvent(new EventCommand() {
 			@Override
-			public void act(UserActionInterpreter uai)
-			{
+			public void act(UserActionInterpreter uai) {
 				uai.actionPerformed(e);
 			}
 		});
@@ -194,13 +194,10 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	 * assert eventsFallThrough, it will be the last interpreter in the stack to
 	 * receive the tick.
 	 */
-	public void tick()
-	{
-		processEvent(new EventCommand()
-		{
+	public void tick() {
+		processEvent(new EventCommand() {
 			@Override
-			public void act(UserActionInterpreter uai)
-			{
+			public void act(UserActionInterpreter uai) {
 				uai.tick();
 			}
 		});
@@ -213,8 +210,7 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 	 * @param command
 	 *            the command to process
 	 */
-	private void processEvent(Command command)
-	{
+	private void processEvent(Command command) {
 		if (eventsAreQueued)
 			commandQueue.queueCommand(command);
 		else
@@ -239,8 +235,7 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		 * 
 		 * @see rutebaga.controller.command.Command#isFeasible()
 		 */
-		public boolean isFeasible()
-		{
+		public boolean isFeasible() {
 			return true;
 		}
 
@@ -250,10 +245,8 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		 * 
 		 * @see rutebaga.controller.command.Command#execute()
 		 */
-		public void execute()
-		{
-			for (UserActionInterpreter uai : interpreterStack)
-			{
+		public void execute() {
+			for (UserActionInterpreter uai : interpreterStack) {
 				act(uai);
 				if (!uai.eventsFallThrough())
 					break;
@@ -265,41 +258,38 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		 * Called by the execute operation on each UserActionInterpreter on the
 		 * enclosing GameDaemon's interpreter stack.
 		 * 
-		 * @param uai a UserActionInterpreter in the GameDaemon's stack
+		 * @param uai
+		 *            a UserActionInterpreter in the GameDaemon's stack
 		 */
 		public abstract void act(UserActionInterpreter uai);
 	}
 
 	/**
-	 * A private implementation of a stack designed for use with UserActionInterpreters.
-	 * The stack-ness is weakly enforced, as the stack provides both a contains operation
-	 * and an iterator.
+	 * A private implementation of a stack designed for use with
+	 * UserActionInterpreters. The stack-ness is weakly enforced, as the stack
+	 * provides both a contains operation and an iterator.
 	 * 
 	 * @author Matty
 	 */
-	private static class InterpreterStack implements Iterable<UserActionInterpreter>
-	{
+	private static class InterpreterStack implements
+			Iterable<UserActionInterpreter> {
 		private Vector<UserActionInterpreter> stack = new Vector<UserActionInterpreter>();
 
 		private int modCount = 0;
 
-		public void push(UserActionInterpreter uai)
-		{
+		public void push(UserActionInterpreter uai) {
 			stack.add(uai);
 		}
 
-		public UserActionInterpreter pop()
-		{
+		public UserActionInterpreter pop() {
 			return stack.remove(stack.size() - 1);
 		}
 
-		public UserActionInterpreter peek()
-		{
+		public UserActionInterpreter peek() {
 			return stack.get(stack.size() - 1);
 		}
 
-		public boolean isEmpty()
-		{
+		public boolean isEmpty() {
 			return stack.isEmpty();
 		}
 
@@ -307,47 +297,38 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 			return stack.contains(uai);
 		}
 
-		public Iterator<UserActionInterpreter> iterator()
-		{
-			return new Iterator<UserActionInterpreter>()
-			{
+		public Iterator<UserActionInterpreter> iterator() {
+			return new Iterator<UserActionInterpreter>() {
 				int cursor = stack.size();
 
 				int expectedModCount = modCount;
 
-				public boolean hasNext()
-				{
+				public boolean hasNext() {
 					return cursor != 0;
 				}
 
-				public UserActionInterpreter next()
-				{
-					try
-					{
+				public UserActionInterpreter next() {
+					try {
 						checkForComodification();
 						return stack.get(--cursor);
-					}
-					catch (IndexOutOfBoundsException e)
-					{
+					} catch (IndexOutOfBoundsException e) {
 						checkForComodification();
 						throw new NoSuchElementException();
 					}
 				}
 
-				public void remove() throws UnsupportedOperationException
-				{
+				public void remove() throws UnsupportedOperationException {
 					throw new UnsupportedOperationException();
 				}
 
-				private void checkForComodification()
-				{
+				private void checkForComodification() {
 					if (modCount != expectedModCount)
 						throw new ConcurrentModificationException();
 				}
 			};
 		}
 	}
-	
+
 	private static class CommandQueueImpl implements CommandQueue {
 		/**
 		 * The command queue.
@@ -357,7 +338,7 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		public CommandQueueImpl() {
 			queue = new LinkedList<Command>();
 		}
-		
+
 		/**
 		 * Allows clients to automatically queue a
 		 * {@link rutebaga.controller.command.Command}.
@@ -366,19 +347,16 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager
 		 *            The Command to queue.
 		 * @see rutebaga.controller.CommandQueue#queueCommand(rutebaga.controller.Command)
 		 */
-		public void queueCommand(Command command)
-		{
+		public void queueCommand(Command command) {
 			queue.offer(command);
 		}
 
 		/**
-		 * Iterates through the command queue, removing all commands and executing
-		 * them.
+		 * Iterates through the command queue, removing all commands and
+		 * executing them.
 		 */
-		public void processQueue()
-		{
-			while (!queue.isEmpty())
-			{
+		public void processQueue() {
+			while (!queue.isEmpty()) {
 				Command command = queue.poll();
 				command.execute();
 			}
