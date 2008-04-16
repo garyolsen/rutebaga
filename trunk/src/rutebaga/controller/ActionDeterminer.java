@@ -31,7 +31,6 @@ import rutebaga.model.map.Tile;
  */
 public class ActionDeterminer
 {
-	
 	/**
 	 * @param instances
 	 * @return
@@ -44,8 +43,8 @@ public class ActionDeterminer
 		if (items.size() != 0)
 			return actionsForItem(items.iterator().next());
 		Set<Tile> tiles = instances.getTiles();
-		if (items.size() != 0)
-			return actionsForItem(items.iterator().next());
+		if (tiles.size() != 0)
+			return actionsForTile(tiles.iterator().next());
 		return null;
 	}
 	
@@ -57,7 +56,7 @@ public class ActionDeterminer
 		return null;
 	}
 	
-	private ElementalList actionsForItem(Item item) {
+	private ElementalList actionsForTile(Tile tile) {
 		return null;
 	}
 	

@@ -67,4 +67,8 @@ public class AvatarInitializationActionInterpreter extends KeyAdapter implements
 		// AvatarInitializationActionInterpreters do not recognize any
 		// ActionEvents
 	}
+	
+	public void fieldChanged(String string) {
+		
+	}
 }
