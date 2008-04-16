@@ -3,6 +3,7 @@ package rutebaga.model.environment;
 import java.util.HashSet;
 import java.util.Set;
 
+import rutebaga.commons.math.MutableVector;
 import rutebaga.commons.math.Vector;
 import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InternalContainer.Location;
@@ -132,7 +133,7 @@ public abstract class Instance implements Layerable
 	 */
 	public abstract double getMass();
 
-	public Vector getMomentum()
+	public MutableVector getMomentum()
 	{
 		return physicsContainer.getMomentum();
 	}
@@ -156,7 +157,7 @@ public abstract class Instance implements Layerable
 	/**
 	 * @return the (instantaneous) velocity of this instance
 	 */
-	public Vector getVelocity()
+	public MutableVector getVelocity()
 	{
 		return this.physicsContainer.getVelocity();
 	}

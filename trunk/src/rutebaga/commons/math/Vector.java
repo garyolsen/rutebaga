@@ -279,8 +279,7 @@ public class Vector implements GeneralVector
 		{
 			if (Double.doubleToLongBits(this.components[idx]) != Double
 					.doubleToLongBits(other.get(idx)))
-				return new Double(this.components[idx]).compareTo(new Double(
-						other.get(idx)));
+				return Double.compare(this.components[idx], other.get(idx));
 		}
 		return 0;
 	}

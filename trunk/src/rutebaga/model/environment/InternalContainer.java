@@ -1,5 +1,6 @@
 package rutebaga.model.environment;
 
+import rutebaga.commons.math.MutableVector;
 import rutebaga.commons.math.Vector;
 
 /**
@@ -81,10 +82,11 @@ public final class InternalContainer
 	 */
 	protected static final class PhysicsContainer
 	{
-		private Vector momentum = new Vector(0, 0);
-		private Vector appliedImpulse = new Vector(0, 0);
-		private Vector velocity = new Vector(0, 0);
+		private MutableVector momentum = new MutableVector(0, 0);
+		private MutableVector appliedImpulse = new MutableVector(0, 0);
+		private MutableVector velocity = new MutableVector(0, 0);
 		private final Instance instance;
+		private boolean dirty = false;
 
 		public PhysicsContainer(Instance instance)
 		{
@@ -100,51 +102,67 @@ public final class InternalContainer
 		{
 			double mass = instance.getMass();
 			double frictionCoeff = 0.1;
-			this.momentum = this.momentum.times(1 - frictionCoeff);
-			this.appliedImpulse = this.appliedImpulse.times(1 - frictionCoeff);
-			this.velocity = momentum.plus(appliedImpulse).times(1 / mass);
+			this.momentum.times(1 - frictionCoeff);
+			this.appliedImpulse.times(1 - frictionCoeff);
+			this.velocity.times(0);
+			this.velocity.plus(momentum).plus(appliedImpulse).times(1 / mass);
 			appliedImpulse = appliedImpulse.times(0.7);
+			//XXX MEGA LoD violation
+			if(appliedImpulse.getMagnitude() <= 0.001 && momentum.getMagnitude() <= 0.001)
+			{
+				this.instance.getEnvironment().getDirtyPhysics().remove(this.instance);
+				dirty = false;
+			}
 			// TODO add REAL support for friction
 		}
 
 		public void applyImpulse(Vector impulse)
 		{
+			dirty();
 			this.appliedImpulse = this.appliedImpulse.plus(impulse);
 		}
 
 		public void applyMomentum(Vector momentum)
 		{
+			dirty();
 			this.momentum = this.momentum.plus(momentum);
 		}
 
-		protected Vector getAppliedImpulse()
+		protected MutableVector getAppliedImpulse()
 		{
 			return appliedImpulse;
 		}
 
-		protected Vector getMomentum()
+		protected MutableVector getMomentum()
 		{
 			return momentum;
 		}
 
-		protected Vector getVelocity()
+		protected MutableVector getVelocity()
 		{
 			return velocity;
 		}
 
-		protected void setAppliedImpulse(Vector appliedImpulse)
+		protected void setAppliedImpulse(MutableVector appliedImpulse)
 		{
 			this.appliedImpulse = appliedImpulse;
 		}
 
-		protected void setMomentum(Vector momentum)
+		protected void setMomentum(MutableVector momentum)
 		{
 			this.momentum = momentum;
 		}
 
-		protected void setVelocity(Vector velocity)
+		protected void setVelocity(MutableVector velocity)
 		{
 			this.velocity = velocity;
+		}
+		
+		private void dirty()
+		{
+			if(this.dirty == true) return;
+			this.dirty = true;
+			this.instance.getEnvironment().getDirtyPhysics().add(this.instance);
 		}
 	}
 }

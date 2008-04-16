@@ -1,13 +1,18 @@
 package rutebaga.model.environment;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import rutebaga.commons.math.Bounds;
+import rutebaga.commons.math.MutableVector;
 import rutebaga.commons.math.Vector;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
@@ -35,6 +40,10 @@ public class Environment
 	private Map<Instance, Vector> reverseTileCache = new HashMap<Instance, Vector>();
 	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
 	private TileConvertor tileConvertor;
+	
+	private Map<Vector, Double> frictionCache = new HashMap<Vector, Double>();
+
+	private Set<Instance> dirtyPhysics = new CopyOnWriteArraySet<Instance>();
 
 	protected TileConvertor getTileConvertor()
 	{
@@ -206,7 +215,7 @@ public class Environment
 	{
 		for (Instance instance : instances)
 		{
-			Vector velocity = instance.getVelocity();
+			MutableVector velocity = instance.getVelocity();
 			if (velocity.getMagnitude() <= 0.0001)
 				continue;
 			Vector newCoordinate = instance.getCoordinate().plus(velocity);
@@ -214,10 +223,9 @@ public class Environment
 			if (blocked(instance, newTile, true))
 			{
 				PhysicsContainer physics = instance.getPhysicsContainer();
-				physics.setMomentum(physics.getMomentum().times(0.0));
-				physics.setAppliedImpulse(physics.getAppliedImpulse()
-						.times(0.0));
-				physics.setVelocity(physics.getVelocity().times(0.0));
+				physics.getMomentum().times(0.0);
+				physics.getAppliedImpulse().times(0.0);
+				physics.getVelocity().times(0.0);
 			}
 			else
 			{
@@ -240,11 +248,10 @@ public class Environment
 		for (Vector tile : tileCache.keySet())
 		{
 			double friction = frictionAt(tile);
-			for (Instance instance : instancesAt(tile))
-			{
-				instance.getPhysicsContainer().update(friction);
-			}
+			frictionCache.put(tile, friction);
 		}
+		for(Instance instance : dirtyPhysics)
+			instance.getPhysicsContainer().update(frictionCache.get(instance.getTile()));
 	}
 
 	/**
@@ -283,16 +290,16 @@ public class Environment
 	 *            the center of the bounds
 	 * @return the set of instances within the bounds
 	 */
-	public Set<Instance> getInstances(Bounds bounds, Vector center)
+	public Collection<Instance> getInstances(Bounds bounds, Vector center)
 	{
-		Set<Instance> rval = new HashSet<Instance>();
+		List<Instance> rval = new LinkedList<Instance>();
 		Set<Vector> tiles = tileCache.keySet();
 		tiles = bounds.filter(tiles, center);
 		for (Vector tile : tiles)
 		{
 			rval.addAll(tileCache.get(tile));
 		}
-		return Collections.unmodifiableSet(rval);
+		return Collections.unmodifiableList(rval);
 	}
 
 	/**
@@ -368,23 +375,19 @@ public class Environment
 	{
 		return tileConvertor.getDimension();
 	}
-	
+
 	public boolean exists(Vector tile)
 	{
-		if(!tileCache.containsKey(tile))
+		if (!tileCache.containsKey(tile))
 			return false;
 		Set<Instance> set = getInstanceSetAt(tile);
-		if(set == null || set.size() == 0)
+		if (set == null || set.size() == 0)
 			return false;
 		return true;
 	}
-	
-	public boolean blockedAtTile(Vector v, Instance instance) {
-		Set<Instance> instances = instancesAt(v);
-		for (Instance i : instances) {
-			if (i.blocks(instance))
-				return true;
-		}
-		return false;
+
+	protected Set<Instance> getDirtyPhysics()
+	{
+		return dirtyPhysics;
 	}
 }
