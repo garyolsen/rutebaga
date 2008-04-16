@@ -1,5 +1,8 @@
 package rutebaga.view.rwt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import rutebaga.view.drawer.Drawer;
 
 /**
@@ -25,11 +28,16 @@ import rutebaga.view.drawer.Drawer;
 public class TextFieldComponent extends ViewComponent
 {
 
-	@Override
+	public List<TextFieldListener> listeners = new ArrayList<TextFieldListener>();
+	
 	public void draw(Drawer draw)
 	{
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void addTextFieldListener(TextFieldListener listener) {
+		listeners.add(listener);
 	}
 
 }
