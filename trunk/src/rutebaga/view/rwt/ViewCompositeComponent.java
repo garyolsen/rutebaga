@@ -1,6 +1,10 @@
 package rutebaga.view.rwt;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,6 +36,8 @@ public class ViewCompositeComponent extends ViewComponent
 {
 
 	private Set<ViewComponent> components;
+	
+	private Shape compositeBounds = new Rectangle();
 
 	/**
 	 * Constructs a new empty ViewCompositeComponent.
@@ -41,6 +47,11 @@ public class ViewCompositeComponent extends ViewComponent
 		components = new HashSet<ViewComponent>();
 	}
 
+	
+	public void visit(ViewVisitor visitor) {
+		visitor.visit(this);
+	}
+	
 	/**
 	 * Adds another ViewComponent to this ViewCompositeComponent.
 	 * 
@@ -92,7 +103,7 @@ public class ViewCompositeComponent extends ViewComponent
 			return super.getBounds();
 		
 		
-		Area bounds = new Area();
+		Area bounds = new Area(compositeBounds);
 		
 		for(ViewComponent vc : components)
 			bounds.add(new Area(vc.getBounds()));
@@ -102,5 +113,9 @@ public class ViewCompositeComponent extends ViewComponent
 		return super.getBounds();
 	}
 	
-	
+	public void setBounds(Shape bounds) {
+		super.setBounds(bounds);
+		compositeBounds = bounds;
+	}
+		
 }

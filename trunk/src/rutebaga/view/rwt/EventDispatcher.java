@@ -16,18 +16,26 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	private Set<ViewComponent> registeredComponents;
 	private Set<ViewComponent> containsMouse;
 	
+	private DispatchVisitor dispatchVisitor;
+	
 	public EventDispatcher() {
+		dispatchVisitor = new DispatchVisitor(this);
+		
 		registeredComponents = new HashSet<ViewComponent>();
 		containsMouse = new HashSet<ViewComponent>();
 	}
 	
 	public void registerComponent( ViewComponent vc ) {
-		registeredComponents.add(vc);
+		vc.visit(dispatchVisitor);
 	}
 	
 	public void deregisterComponent( ViewComponent vc ) {
 		registeredComponents.remove(vc);
 		containsMouse.remove(vc);
+	}
+	
+	private void addComponent(ViewComponent vc) {
+		registeredComponents.add(vc);
 	}
 	
 	public void keyPressed(KeyEvent e) {
@@ -148,6 +156,27 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	
 	private void eventReceivedTest(AWTEvent e) {
 		//System.out.println("Received: " + e);
+	}
+	
+	private class DispatchVisitor implements ViewVisitor {
+		
+		private EventDispatcher dispatcher;
+
+		public DispatchVisitor(EventDispatcher dispatcher) {
+			this.dispatcher = dispatcher;
+		}
+		
+		public void visit(ViewComponent vc) {
+			dispatcher.addComponent(vc);
+		}
+
+		public void visit(ViewCompositeComponent vcc) {
+			dispatcher.addComponent(vcc);
+			
+			for(ViewComponent vc : vcc.getChildren())
+				vc.visit(this);
+		}
+		
 	}
 }
 

@@ -94,7 +94,8 @@ public class Graphics2DDrawer extends Drawer
 	public void drawString(Point p, String string)
 	{
 		//applyAttribute();
-		g2d.drawString(string, p.x, p.y);
+		if(string != null)
+			g2d.drawString(string, p.x, p.y);
 	}
 
 	@Override
