@@ -1,5 +1,7 @@
 package rutebaga.model.environment;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +16,8 @@ import rutebaga.commons.math.Vector;
  * 
  * tile{x,y} = { round(actual[x]), round(actual[y]) }
  * 
- * Such that a tile (x, y) is defined as the region in actual-space
- *  { [x-0.5, x+0.5), [y-0.5, y+0.5) }
+ * Such that a tile (x, y) is defined as the region in actual-space { [x-0.5,
+ * x+0.5), [y-0.5, y+0.5) }
  * 
  * On a side-note, these notations are entirely fictional.
  * 
@@ -62,5 +64,35 @@ public class Rect2DTileConvertor implements TileConvertor
 	public Vector toRect(Vector coordinate)
 	{
 		return coordinate;
+	}
+
+	public Collection<Vector> between(Vector a, Vector b)
+	{
+		Collection<Vector> rval = new HashSet<Vector>();
+		Vector slopeV = b.minus(a).getDirection();
+		double slope = slopeV.get(1) / slopeV.get(0);
+		if (slope == Double.POSITIVE_INFINITY
+				|| slope == Double.NEGATIVE_INFINITY)
+		{
+			int x = (int) a.get(0);
+			for (int y = (int) a.get(1); y <= b.get(1); y++)
+			{
+				rval.add(new Vector(x, y));
+			}
+			return rval;
+		}
+		double currentY = a.get(1);
+		for (int x = (int) a.get(0); x < b.get(0); x++)
+		{
+			double nextY = currentY + slope;
+			for (int y = (int) Math.round(currentY - 0.5); y <= Math
+					.round(nextY - 0.5); y++)
+			{
+				rval.add(new Vector(x, y));
+			}
+			currentY = nextY;
+		}
+		rval.add(b);
+		return rval;
 	}
 }

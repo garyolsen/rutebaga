@@ -3,6 +3,7 @@ package rutebaga.model.environment;
 import java.util.HashSet;
 import java.util.Set;
 
+import rutebaga.commons.math.GeneralVector;
 import rutebaga.commons.math.MutableVector;
 import rutebaga.commons.math.Vector;
 import rutebaga.model.environment.InstanceSetIdentifier;
@@ -59,7 +60,7 @@ public abstract class Instance implements Layerable
 	 * @param momentum
 	 *            the impulse to be added to the momentum
 	 */
-	public void applyMomentum(Vector momentum)
+	public void applyMomentum(GeneralVector momentum)
 	{
 		this.physicsContainer.applyMomentum(momentum);
 	}

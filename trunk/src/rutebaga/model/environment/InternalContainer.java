@@ -1,5 +1,6 @@
 package rutebaga.model.environment;
 
+import rutebaga.commons.math.GeneralVector;
 import rutebaga.commons.math.MutableVector;
 import rutebaga.commons.math.Vector;
 
@@ -122,7 +123,7 @@ public final class InternalContainer
 			this.appliedImpulse = this.appliedImpulse.plus(impulse);
 		}
 
-		public void applyMomentum(Vector momentum)
+		public void applyMomentum(GeneralVector momentum)
 		{
 			dirty();
 			this.momentum = this.momentum.plus(momentum);
