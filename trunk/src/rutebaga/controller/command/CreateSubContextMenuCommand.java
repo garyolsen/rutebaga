@@ -1,5 +1,7 @@
 package rutebaga.controller.command;
 
+import rutebaga.controller.command.list.ElementalList;
+
 
 /**
  * This {@link Command} causes the {@link rutebaga.view.ViewFacade ViewFacade}

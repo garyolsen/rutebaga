@@ -1,8 +1,11 @@
-package rutebaga.controller.command;
+package rutebaga.controller.command.list;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+
+import rutebaga.controller.command.Command;
+import rutebaga.controller.command.CommandFactory;
 
 /**
  * 
@@ -52,7 +55,7 @@ public class ConcreteElementalList implements ElementalList,
 	 * Returns the size of this ElementalList. Runs in O(n) time, where n is the
 	 * number of elements in the ElementalList.
 	 * 
-	 * @see rutebaga.controller.command.ElementalList#contentSize()
+	 * @see rutebaga.controller.command.list.ElementalList#contentSize()
 	 */
 	public int contentSize() {
 		int size = 0;

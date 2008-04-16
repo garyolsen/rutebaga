@@ -1,5 +1,7 @@
 package rutebaga.controller.command;
 
+import rutebaga.controller.command.list.ConcreteElementalList;
+import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.item.Item;
 
 public class ShopkeeperInventoryCommandFactory implements CommandFactory<Item> {

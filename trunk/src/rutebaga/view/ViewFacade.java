@@ -2,7 +2,7 @@ package rutebaga.view;
 
 import rutebaga.commons.math.Vector;
 import rutebaga.controller.command.Command;
-import rutebaga.controller.command.ElementalList;
+import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.view.game.*;
 import rutebaga.view.rwt.ContextMenu;
