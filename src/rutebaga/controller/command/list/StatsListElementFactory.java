@@ -1,5 +1,6 @@
-package rutebaga.controller.command;
+package rutebaga.controller.command.list;
 
+import rutebaga.controller.command.Command;
 import rutebaga.model.entity.stats.StatValue;
  
 public class StatsListElementFactory implements ListElementFactory<StatValue> {

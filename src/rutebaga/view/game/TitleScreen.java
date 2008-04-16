@@ -6,8 +6,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 
-import rutebaga.controller.command.ElementalList;
-import rutebaga.controller.command.ListElement;
+import rutebaga.controller.command.list.ElementalList;
+import rutebaga.controller.command.list.ListElement;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ButtonComponent;

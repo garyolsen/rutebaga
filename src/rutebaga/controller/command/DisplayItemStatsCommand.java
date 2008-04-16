@@ -1,5 +1,6 @@
 package rutebaga.controller.command;
 
+import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.model.item.Item;
 import rutebaga.view.ViewFacade;
 

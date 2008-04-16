@@ -1,7 +1,7 @@
 package rutebaga.view.game;
 
 import rutebaga.controller.command.Command;
-import rutebaga.controller.command.ElementalList;
+import rutebaga.controller.command.list.ElementalList;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.ViewComponent;

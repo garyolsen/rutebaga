@@ -1,6 +1,7 @@
 package rutebaga.controller.command;
 
 import rutebaga.commons.math.Vector;
+import rutebaga.controller.command.list.ElementalList;
 
 /**
  * @author Matthew Chuah

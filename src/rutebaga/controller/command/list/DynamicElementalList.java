@@ -1,4 +1,4 @@
-package rutebaga.controller.command;
+package rutebaga.controller.command.list;
 
 import java.util.Iterator;
 
@@ -75,7 +75,7 @@ public class DynamicElementalList<E> implements ElementalList
 	 * collection as a whole.
 	 * 
 	 * @return the label for this DynamicElementalList
-	 * @see rutebaga.controller.command.ElementalList#getLabel()
+	 * @see rutebaga.controller.command.list.ElementalList#getLabel()
 	 */
 	public String getLabel()
 	{

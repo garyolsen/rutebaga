@@ -1,6 +1,8 @@
-package rutebaga.controller.command;
+package rutebaga.controller.command.list;
 
 import java.util.Iterator;
+
+import rutebaga.controller.command.Command;
 
 
 /**
