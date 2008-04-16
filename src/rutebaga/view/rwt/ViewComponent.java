@@ -42,7 +42,7 @@ public abstract class ViewComponent
 	private boolean isVisible, hasFocus, dirtyBounds;
 	private Point screenPosition = new Point(0, 0);
 
-	private Shape bounds;
+	private Shape bounds = new Rectangle();
 	
 
 	/**
