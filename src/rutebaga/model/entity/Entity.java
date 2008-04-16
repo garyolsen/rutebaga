@@ -104,7 +104,7 @@ public abstract class Entity extends Instance implements Named
 	}
 	
 	public boolean canSee(Vector v) {
-		return visionBounds.contains(v);
+		return visionBounds.contains(v.minus(this.getCoordinate()));
 	}
 
 	@Override

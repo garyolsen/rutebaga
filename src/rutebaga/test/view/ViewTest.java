@@ -135,25 +135,27 @@ public class ViewTest {
 
 		};
 		
-		npc = new NPCEntity();
-		Appearance npcAppearance = new Appearance(npc);
-		npcAppearance.setImage(treasure);
-		npc.setAppearance(npcAppearance);
-		
-		environment.add(npc, new Vector(20, 20));
+//		npc = new NPCEntity();
+//		Appearance npcAppearance = new Appearance(npc);
+//		npcAppearance.setImage(treasure);
+//		npc.setAppearance(npcAppearance);
+//		
+//		environment.add(npc, new Vector(20, 20));
 
 		Appearance appearance = new Appearance(avatar);
 		appearance.setImage(cheese);
 		avatar.setAppearance(appearance);
 
-		environment.add(avatar, new Vector(10, 10));
+		environment.add(avatar, new Vector(0, 0));
 		
 		NPCEntity npc1 = new NPCEntity();
 		Appearance npcAppearance1 = new Appearance(npc1);
-		npcAppearance.setImage(cheese);
+		npcAppearance1.setImage(cheese);
 		npc1.setAppearance(npcAppearance1);
 		
-		environment.add(npc, new Vector(15,15));
+		npc1.setTarget(avatar);
+		
+		environment.add(npc1, new Vector(0,2));
 		
 		MapComponent map = new MapComponent(avatar, view.getWidth(), view.getHeight());
 		view.addViewComponent(map);

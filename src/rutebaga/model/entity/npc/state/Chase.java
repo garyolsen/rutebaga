@@ -1,8 +1,12 @@
 package rutebaga.model.entity.npc.state;
 
+import java.util.List;
+
+import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
 import rutebaga.model.environment.AStarNodeLocationAdapter;
+import rutebaga.model.environment.AStarNodeLocationManager;
 import rutebaga.model.pathfinding.AStarSearch;
 
 /**
@@ -12,7 +16,8 @@ import rutebaga.model.pathfinding.AStarSearch;
 public class Chase extends NPCState
 {
 	
-	private AStarSearch<AStarNodeLocationAdapter> aStarSearch;
+	private AStarSearch<AStarNodeLocationAdapter> aStarSearch = new AStarSearch<AStarNodeLocationAdapter>();
+	private AStarNodeLocationManager manager;
 
 	@Override
 	public NPCState barter(NPCEntity npc)
@@ -46,13 +51,22 @@ public class Chase extends NPCState
 		if (npc.targetInSight() && npc.targetInRange())
 		{
 			return NPCState.attack;
-		}
-		else
+			
+		} else if (!(npc.getTarget() == null))
 		{
-			manager = new AStarNodeLocationManager()
-			aStarSearch.findPath(new AStarNodeLocationAdapter(), goalNode)
+			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc);
+			List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
+			
+			Vector moveTo = npc.getTile();
+			
+			if ( !(path == null) && !(path.isEmpty()) )
+				moveTo = path.get(0).getTile();
+			
+			npc.applyImpulse((moveTo.minus(npc.getTile())).times(0.07));
+			
 			return this;
 		}
+		return NPCState.wander;
 	}
 
 }

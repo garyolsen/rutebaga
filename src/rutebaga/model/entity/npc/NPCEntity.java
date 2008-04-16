@@ -1,5 +1,6 @@
 package rutebaga.model.entity.npc;
 
+import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.inventory.Inventory;
@@ -153,6 +154,10 @@ public class NPCEntity extends CharEntity
 	public void setBrain(NPCBrain brain)
 	{
 		this.brain = brain;
+	}
+	
+	public Vector getTargetTile() {
+		return target.getTile();
 	}
 
 	/**

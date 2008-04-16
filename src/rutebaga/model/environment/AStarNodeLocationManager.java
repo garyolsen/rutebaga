@@ -12,7 +12,7 @@ public class AStarNodeLocationManager
 	private Environment environment;
 	private Entity entity;
 	
-	private AStarNodeLocationManager(Environment environment, Entity entity)
+	public AStarNodeLocationManager(Environment environment, Entity entity)
 	{
 		this.environment = environment;
 		this.entity = entity;
@@ -32,7 +32,7 @@ public class AStarNodeLocationManager
 		AStarNodeLocationAdapter node;
 		if(!nodes.containsKey(v))
 		{
-			if (entity.canSee(v) && environment.exists(v) && environment.blockedAtTile(v, entity)) {
+			if (entity.canSee(v) && environment.exists(v) && !environment.blockedAtTile(v, entity)) {
 				node = new AStarNodeLocationAdapter(this, v);
 			} else {
 				node = null;

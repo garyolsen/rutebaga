@@ -17,6 +17,7 @@ public class AStarNodeLocationAdapter extends AStarNode<AStarNodeLocationAdapter
 	{
 		super();
 		this.environment = manager.getEnvironment();
+		this.manager = manager;
 		this.tile = tile;
 	}
 
@@ -49,6 +50,11 @@ public class AStarNodeLocationAdapter extends AStarNode<AStarNodeLocationAdapter
 	
 	public Vector getTile() {
 		return tile;
+	}
+
+	@Override
+	public boolean equals(AStarNodeLocationAdapter other) {
+		return (tile.compareTo(other.getTile()) == 0);
 	}
 
 }
