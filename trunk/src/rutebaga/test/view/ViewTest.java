@@ -14,17 +14,13 @@ import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.npc.NPCEntity;
-import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
-import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
 import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.game.MapComponent;
 import rutebaga.view.rwt.*;
-import temporary.Bumper;
-import temporary.WindTunnel;
 
 public class ViewTest
 {
@@ -32,9 +28,16 @@ public class ViewTest
 	private static Random random = new Random();
 
 	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
-	
-	private static int N_NPCS = 5;
-	private static double TILE_PROB = 0.9;
+
+	private static int N_NPCS = 0;
+	private static double TILE_PROB = 1;
+
+	private static int[] MAP_BOUNDS =
+	{ 0, 30, 0, 30 };
+
+	private static boolean TICK_ENVIRONMENT = true;
+	private static boolean RENDER_MAP = true;
+	private static boolean USE_VOLATILE_IMAGES = false;
 
 	public static void main(String args[])
 	{
@@ -49,14 +52,15 @@ public class ViewTest
 		try
 		{
 			VolatileImage tmp;
-			
+
 			Image cheese = ImageIO.read(new File("TestImages/cheese.png"));
 			tmp = view.makeVolatileImage(cheese.getWidth(null), cheese
 					.getHeight(null));
 			Graphics g = tmp.getGraphics();
 			g.drawImage(cheese, 0, 0, null);
 			g.dispose();
-//			cheese = tmp;
+			if (USE_VOLATILE_IMAGES)
+				cheese = tmp;
 			cheese.setAccelerationPriority(1.0f);
 
 			Image grass = ImageIO.read(new File("TestImages/grass.jpg"));
@@ -65,7 +69,8 @@ public class ViewTest
 			g = tmp.getGraphics();
 			g.drawImage(grass, 0, 0, null);
 			g.dispose();
-//			grass = tmp;
+			if (USE_VOLATILE_IMAGES)
+				grass = tmp;
 			grass.setAccelerationPriority(1.0f);
 
 			Image treasure = ImageIO.read(new File("TestImages/treasure.png"));
@@ -75,14 +80,15 @@ public class ViewTest
 			g = tmp.getGraphics();
 			g.drawImage(treasure, 0, 0, null);
 			g.dispose();
-//			treasure = tmp;
+			if (USE_VOLATILE_IMAGES)
+				treasure = tmp;
 			treasure.setAccelerationPriority(1.0f);
 
 			Random random = new Random();
 
-			for (int x = -5; x < 15; x++)
+			for (int x = MAP_BOUNDS[0]; x < MAP_BOUNDS[1]; x++)
 			{
-				for (int y = -5; y < 15; y++)
+				for (int y = MAP_BOUNDS[2]; y < MAP_BOUNDS[3]; y++)
 				{
 					if (random.nextDouble() < TILE_PROB)
 					{
@@ -173,6 +179,11 @@ public class ViewTest
 
 			environment.add(avatar, new Vector(0, 0));
 
+			int xRng = MAP_BOUNDS[1] - MAP_BOUNDS[0];
+			int yRng = MAP_BOUNDS[3] - MAP_BOUNDS[2];
+			int xMin = MAP_BOUNDS[0];
+			int yMin = MAP_BOUNDS[2];
+
 			for (int i = 0; i < N_NPCS; i++)
 			{
 				NPCEntity npc1 = new NPCEntity();
@@ -182,13 +193,16 @@ public class ViewTest
 
 				npc1.setTarget(avatar);
 
-				environment.add(npc1, new Vector(random.nextInt(15), random
-						.nextInt(15)));
+				environment.add(npc1, new Vector(random.nextInt(xRng) + xMin,
+						random.nextInt(yRng) + yMin));
 			}
 
-			MapComponent map = new MapComponent(avatar, view.getWidth(), view
-					.getHeight());
-			view.addViewComponent(map);
+			if (RENDER_MAP)
+			{
+				MapComponent map = new MapComponent(avatar, view.getWidth(),
+						view.getHeight());
+				view.addViewComponent(map);
+			}
 
 			FPSTextComponent fps = new FPSTextComponent();
 			fps.setLocation(100, 100);
@@ -199,11 +213,21 @@ public class ViewTest
 			TemporaryMover mover = new TemporaryMover(avatar);
 			view.addKeyListener(mover);
 
+			long time;
+			long envStart;
+			
 			while (true)
 			{
+				time = System.currentTimeMillis();
+				System.out.println("\n\n");
 				mover.tick();
 				view.renderFrame();
-				environment.tick();
+				envStart = System.currentTimeMillis();
+				System.out.println("view render total: " + (envStart-time));
+				if (TICK_ENVIRONMENT)
+					environment.tick();
+				System.out.println("environment total: " + (System.currentTimeMillis()-envStart));
+				System.out.println("total: " + (System.currentTimeMillis()-time));
 
 			}
 

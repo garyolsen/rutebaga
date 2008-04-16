@@ -39,7 +39,7 @@ public abstract class Entity extends Instance implements Named
 	private String name;
 	public Entity()
 	{
-		visionBounds = new EllipseBounds(new Vector(10, 10));
+		visionBounds = new EllipseBounds(new Vector(20, 20));
 		// XXX: connascence of timing
 		vision = new Vision(this);
 	}
