@@ -1,7 +1,6 @@
 package rutebaga.model.environment;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -65,8 +64,6 @@ public class ConcreteInstanceSet implements InstanceSet
 	private final Map<InstanceSetIdentifier, ? extends Set<? extends Instance>> sets;
 	private Set<InstanceSetIdentifier> acceptedTypes;
 
-	int size = 0;
-
 	@SuppressWarnings("unchecked")
 	public ConcreteInstanceSet()
 	{
@@ -97,8 +94,6 @@ public class ConcreteInstanceSet implements InstanceSet
 	{
 		if(!check(instance)) return false;
 		boolean flag = getSetFor(instance).add(instance);
-		if (flag)
-			size++;
 		return flag;
 	}
 
@@ -277,6 +272,9 @@ public class ConcreteInstanceSet implements InstanceSet
 	 */
 	public int size()
 	{
+		int size = 0;
+		for(InstanceSetIdentifier id : this.acceptedTypes)
+			size += sets.get(id).size();
 		return size;
 	}
 
@@ -287,7 +285,7 @@ public class ConcreteInstanceSet implements InstanceSet
 	 */
 	public Object[] toArray()
 	{
-		Object rval[] = new Object[size];
+		Object rval[] = new Object[size()];
 		int idx = 0;
 		for (Instance instance : this)
 		{
