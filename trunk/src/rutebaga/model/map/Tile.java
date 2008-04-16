@@ -46,7 +46,7 @@ public class Tile extends Instance
 	}
 
 	@Override
-	protected InstanceSetIdentifier getSetIdentifier()
+	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.TILE;
 	}

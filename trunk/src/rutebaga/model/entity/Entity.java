@@ -129,7 +129,14 @@ public abstract class Entity extends Instance implements Named
 	}
 
 	@Override
-	protected InstanceSetIdentifier getSetIdentifier()
+	public final boolean blocks(Instance other)
+	{
+		return other.getSetIdentifier().equals(InstanceSetIdentifier.ENTITY);
+//		return false;
+	}
+
+	@Override
+	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.ENTITY;
 	}

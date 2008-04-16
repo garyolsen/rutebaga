@@ -108,12 +108,6 @@ public class TestRunner
 		{
 
 			@Override
-			public boolean blocks(Instance other)
-			{
-				return false;
-			}
-
-			@Override
 			public double getFriction()
 			{
 				return 0;

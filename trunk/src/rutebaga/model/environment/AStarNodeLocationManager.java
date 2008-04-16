@@ -11,11 +11,14 @@ public class AStarNodeLocationManager
 	private Map<Vector, AStarNodeLocationAdapter> nodes = new HashMap<Vector, AStarNodeLocationAdapter>();
 	private Environment environment;
 	private Entity entity;
+	private Vector target;
 	
-	public AStarNodeLocationManager(Environment environment, Entity entity)
+	public AStarNodeLocationManager(Environment environment, Entity entity, Vector target)
 	{
+		System.out.println("Entity is at " + entity.getTile());
 		this.environment = environment;
 		this.entity = entity;
+		this.target = target;
 	}
 	
 	/**
@@ -32,9 +35,11 @@ public class AStarNodeLocationManager
 		AStarNodeLocationAdapter node;
 		if(!nodes.containsKey(v))
 		{
-			if (entity.canSee(v) && environment.exists(v) && !environment.blockedAtTile(v, entity)) {
+			if (entity.canSee(v) && environment.exists(v) && (!environment.blockedAtTile(v, entity) || v.equals(target))) {
+				System.out.println("adding node " + v);
 				node = new AStarNodeLocationAdapter(this, v);
 			} else {
+				System.out.println("not adding node " + v);
 				node = null;
 			}
 			nodes.put(v, node);

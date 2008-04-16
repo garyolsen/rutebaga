@@ -71,7 +71,7 @@ public abstract class Item extends Instance implements Named
 	}
 
 	@Override
-	protected InstanceSetIdentifier getSetIdentifier()
+	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.ITEM;
 	}

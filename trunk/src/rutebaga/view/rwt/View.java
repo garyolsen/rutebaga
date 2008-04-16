@@ -1,6 +1,7 @@
 package rutebaga.view.rwt;
 
 import java.awt.Color;
+import java.awt.DisplayMode;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
