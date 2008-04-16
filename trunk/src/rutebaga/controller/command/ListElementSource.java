@@ -28,4 +28,10 @@ public interface ListElementSource<E> {
 	 * @return an iterator of Es
 	 */
 	public Iterator<E> iterator();
+	
+	/**
+	 * Computes the size of this ListElementSource's source set.
+	 * @return number of ListElements returned by this ListElementSource's iterator
+	 */
+	public int contentSize();
 }
