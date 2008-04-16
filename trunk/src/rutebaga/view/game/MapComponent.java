@@ -29,6 +29,7 @@ public class MapComponent extends ViewComponent
 {
 
 	private static final int TILE_SIZE = 32;
+	private static final ColorAttribute FOG = new ColorAttribute(new Color(220, 220, 220, 50));
 	
 	private static LayerComparator layerComparator = new LayerComparator();
 	
@@ -70,7 +71,21 @@ public class MapComponent extends ViewComponent
 		
 		for(Vector v : memory.keySet()) {
 			for(Memory mem : memory.get(v)) {
-				sortedMemory.add(mem);
+				
+				Point p = centerPointOnAvatar( avatar.getCoordinate(), mem.getCoordinate() );
+				
+				if(p.x < 0 ) 
+					p.x += TILE_SIZE;
+				if(p.y < 0)
+					p.y += TILE_SIZE;
+				
+				if(p.x > getWidth())
+					p.x -= TILE_SIZE;
+				if(p.y > getHeight())
+					p.y -= TILE_SIZE;
+				
+				if(this.getBounds().contains(p))
+					sortedMemory.add(mem);
 			}
 		}
 		
@@ -82,8 +97,9 @@ public class MapComponent extends ViewComponent
 		}
 		
 		
-		draw.setAttribute(new ColorAttribute(new Color(220, 220, 220, 50)));
+		draw.setAttribute(FOG);
 		draw.drawRectangle(new Point(getX(),getY()), getWidth(), getHeight());
+		draw.setAttribute(null);
 	}
 	
 	private void drawAvatar(Drawer draw ) {
@@ -96,7 +112,6 @@ public class MapComponent extends ViewComponent
 		
 		centered.x = (int) (((other.get(0) - center.get(0)) * TILE_SIZE) + (getWidth()/2));
 		centered.y = (int) (((other.get(1) - center.get(1)) * TILE_SIZE) + (getHeight()/2));
-		
 		return centered;
 	}
 }
