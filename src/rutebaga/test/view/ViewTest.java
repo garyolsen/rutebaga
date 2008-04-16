@@ -42,8 +42,11 @@ public class ViewTest {
 		
 		try {
 			Image cheese = ImageIO.read(new File("TestImages/cheese.png"));
+			cheese.setAccelerationPriority(1.0f);
 			Image grass = ImageIO.read(new File("TestImages/grass.jpg"));
+			grass.setAccelerationPriority(1.0f);
 			Image treasure = ImageIO.read(new File("TestImages/treasure.png"));
+			treasure.setAccelerationPriority(1.0f);
 
 		
 		for (int x = -5; x < 35; x++)
