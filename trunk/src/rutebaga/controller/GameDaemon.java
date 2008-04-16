@@ -37,8 +37,7 @@ import rutebaga.view.ViewFacade;
  * @author Matthew Chuah
  * @see UserActionInterpreter
  */
-public class GameDaemon extends KeyAdapter implements CommandQueue,
-		InterpreterManager
+public class GameDaemon extends KeyAdapter implements InterpreterManager
 {
 
 	/**
@@ -55,7 +54,7 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 	/**
 	 * The command queue.
 	 */
-	private Queue<Command> commandQueue;
+	private CommandQueueImpl commandQueue;
 
 	/**
 	 * Determine whether all broadcasted events should automatically go to the
@@ -76,13 +75,13 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		if (view == null)
 			throw new NullPointerException();
 		facade = view;
-		commandQueue = new LinkedList<Command>();
+		commandQueue = new CommandQueueImpl();
 		interpreterStack = new InterpreterStack();
 		eventsAreQueued = queued;
 		ticker = new DefaultTickDaemon(30);
 		ticker.setListener(new TickListener() {
 			public void tick() {
-				processCommandQueue();
+				commandQueue.processQueue();
 				tick();
 				facade.renderFrame();
 			}
@@ -113,32 +112,10 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 		return new GameDaemon(facade, queueEvents);
 	}
 
-	/**
-	 * Allows clients to automatically queue a
-	 * {@link rutebaga.controller.command.Command}.
-	 * 
-	 * @param command
-	 *            The Command to queue.
-	 * @see rutebaga.controller.CommandQueue#queueCommand(rutebaga.controller.Command)
-	 */
-	public void queueCommand(Command command)
-	{
-		commandQueue.offer(command);
+	public CommandQueue getCommandQueue() {
+		return commandQueue;
 	}
-
-	/**
-	 * Iterates through the command queue, removing all commands and executing
-	 * them.
-	 */
-	protected void processCommandQueue()
-	{
-		while (!commandQueue.isEmpty())
-		{
-			Command command = commandQueue.poll();
-			command.execute();
-		}
-	}
-
+	
 	/**
 	 * Activates the specified UserActionInterpreter, pushing it on to the top
 	 * of this GameDaemon's interpreter stack.
@@ -237,7 +214,7 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 	private void processEvent(Command command)
 	{
 		if (eventsAreQueued)
-			queueCommand(command);
+			commandQueue.queueCommand(command);
 		else
 			command.execute();
 	}
@@ -366,6 +343,43 @@ public class GameDaemon extends KeyAdapter implements CommandQueue,
 						throw new ConcurrentModificationException();
 				}
 			};
+		}
+	}
+	
+	private static class CommandQueueImpl implements CommandQueue {
+		/**
+		 * The command queue.
+		 */
+		private Queue<Command> commandQueue;
+
+		public CommandQueueImpl() {
+			commandQueue = new LinkedList<Command>();
+		}
+		
+		/**
+		 * Allows clients to automatically queue a
+		 * {@link rutebaga.controller.command.Command}.
+		 * 
+		 * @param command
+		 *            The Command to queue.
+		 * @see rutebaga.controller.CommandQueue#queueCommand(rutebaga.controller.Command)
+		 */
+		public void queueCommand(Command command)
+		{
+			commandQueue.offer(command);
+		}
+
+		/**
+		 * Iterates through the command queue, removing all commands and executing
+		 * them.
+		 */
+		public void processQueue()
+		{
+			while (!commandQueue.isEmpty())
+			{
+				Command command = commandQueue.poll();
+				command.execute();
+			}
 		}
 	}
 }

@@ -21,5 +21,11 @@ public interface CommandQueue
 	 *            the {@link Command} to add to this queue
 	 * @see Command
 	 */
-	public void queueCommand(Command command);
+	void queueCommand(Command command);
+
+	/**
+	 * Iterates through the command queue, removing all commands and executing
+	 * them.
+	 */
+	void processQueue();
 }
