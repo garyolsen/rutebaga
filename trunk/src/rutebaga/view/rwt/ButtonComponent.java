@@ -6,12 +6,15 @@ import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import rutebaga.controller.command.Command;
 import rutebaga.view.drawer.*;
 
 public class ButtonComponent extends ViewComponent {
 	
 	private String label;
 	private boolean toggle = false;
+	
+	private Command command;
 	
 	private CompositeAttribute untoggled, toggled, text;
 	private FontAttribute font;
@@ -80,8 +83,18 @@ public class ButtonComponent extends ViewComponent {
 	}
 	
 	protected void processMouseEvent( MouseEvent event ) {
-		if(event.getID() == MouseEvent.MOUSE_CLICKED)
-			toggle = !toggle;
+		if(event.getID() == MouseEvent.MOUSE_PRESSED) {
+			toggle = true;
+		} else if(event.getID() == MouseEvent.MOUSE_RELEASED) {
+			toggle = false;
+		} else if(event.getID() == MouseEvent.MOUSE_CLICKED) {
+			if(command != null)
+				command.execute();
+		}
+	}
+	
+	public void setCommand( Command command )  {
+		this.command = command;
 	}
 
 }
