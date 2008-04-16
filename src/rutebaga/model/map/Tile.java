@@ -2,6 +2,7 @@ package rutebaga.model.map;
 
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
 
 /**
  * Stores state information about a hex location. Redirects behavior to its
@@ -42,6 +43,12 @@ public class Tile extends Instance
 	@Override
 	public void tick()
 	{
+	}
+
+	@Override
+	protected InstanceSetIdentifier getSetIdentifier()
+	{
+		return InstanceSetIdentifier.TILE;
 	}
 
 }

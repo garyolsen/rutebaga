@@ -2,6 +2,7 @@ package rutebaga.test.model.environment;
 
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceSet.InstanceSetIdentifier;
 
 public class TestInstance extends Instance
 {
@@ -53,5 +54,11 @@ public class TestInstance extends Instance
 	public double getLayer()
 	{
 		return DefaultLayers.GROUND.getLayer();
+	}
+
+	@Override
+	protected InstanceSetIdentifier getSetIdentifier()
+	{
+		return InstanceSetIdentifier.ENTITY;
 	}
 }
