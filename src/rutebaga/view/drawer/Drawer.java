@@ -98,6 +98,8 @@ public abstract class Drawer
 	public void setAttribute(Attribute attr)
 	{
 		this.attribute = attr;
+		if(attr != null)
+			attr.apply(this);
 	}
 
 	/**
