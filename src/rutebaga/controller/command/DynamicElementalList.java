@@ -63,6 +63,10 @@ public class DynamicElementalList<E> implements ElementalList
 		this.factory = factory;
 	}
 
+	public int contentSize() {
+		return 0;
+	}
+
 	/**
 	 * Gets the current label for this DynamicElementalList describing the
 	 * collection as a whole.
@@ -109,5 +113,4 @@ public class DynamicElementalList<E> implements ElementalList
 			}
 		};
 	}
-
 }

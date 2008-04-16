@@ -49,6 +49,19 @@ public class ConcreteElementalList implements ElementalList,
 	}
 
 	/**
+	 * Returns the size of this ElementalList. Runs in O(n) time, where n is the
+	 * number of elements in the ElementalList.
+	 * 
+	 * @see rutebaga.controller.command.ElementalList#contentSize()
+	 */
+	public int contentSize() {
+		int size = 0;
+		for (ElementalList element: list)
+			size += element.contentSize();
+		return size;
+	}
+
+	/**
 	 * Add a String to this ConcreteElementalList without a Command.
 	 * 
 	 * @param label
@@ -201,12 +214,16 @@ public class ConcreteElementalList implements ElementalList,
 		 *            SingleCommandElementalList
 		 */
 		public SingleCommandElementalList(String label, Command command) {
-			this.label = (label == null ? label : "");
+			this.label = (label == null ? "" : label);
 			this.command = command;
 		}
 
 		public String getLabel() {
 			return label;
+		}
+
+		public int contentSize() {
+			return 1;
 		}
 
 		/**
