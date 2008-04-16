@@ -3,12 +3,11 @@ package rutebaga.view;
 import rutebaga.commons.math.Vector;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.ElementalList;
-import rutebaga.controller.command.ListElement;
-import rutebaga.view.rwt.ButtonComponent;
+import rutebaga.model.entity.CharEntity;
+import rutebaga.view.game.*;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.View;
-import rutebaga.view.rwt.ViewComponent;
 
 /**
  * Provides a unified interface to manipulate the View Subsystem without
@@ -84,18 +83,7 @@ public class ViewFacade
 	{
 		clearView();
 		
-		int spacing = 50;
-		int xAlign = view.getWidth()/2 - 50;
-		int yAlign = 50;
-		
-		for(ListElement e : list ) {
-			ButtonComponent button = new ButtonComponent(e.getLabel());
-			button.setCommand(e.getCommand());
-			button.setLocation(xAlign, yAlign);
-			
-			view.addViewComponent(button);
-			yAlign += spacing;
-		}
+		view.addViewComponent(new TitleScreen(list, view.getWidth(), view.getHeight()));
 			
 	}
 
@@ -114,7 +102,16 @@ public class ViewFacade
 	public void createAvatarCreationScreen(TextFieldListener listener,
 			ElementalList list, Command accept, Command cancel)
 	{
-
+		clearView();
+		
+		view.addViewComponent(new AvatarCreationScreen(listener, list, accept, cancel) );
+	}
+	
+	
+	public void createGamePlayScreen(CharEntity avatar) {
+		clearView();
+		
+		view.addViewComponent(new MapComponent(avatar, view.getWidth(), view.getHeight()));
 	}
 
 	/**
@@ -198,7 +195,6 @@ public class ViewFacade
 	
 	
 	private void clearView() {
-		for(ViewComponent vc : view.getViewComponents())
-			view.removeViewComponent(vc);
+		view.removeAllViewComponents(view.getViewComponents());
 	}
 }

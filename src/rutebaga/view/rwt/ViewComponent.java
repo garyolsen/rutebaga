@@ -55,6 +55,10 @@ public abstract class ViewComponent
 	public abstract void draw(Drawer draw);
 
 
+	public void visit(ViewVisitor visitor) {
+		visitor.visit(this);
+	}
+	
 	/**
 	 * Returns the parent ViewComponent of this ViewComponent, if it exists.
 	 * 

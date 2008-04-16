@@ -130,6 +130,13 @@ public class View
 		components.remove(vc);
 		dispatcher.deregisterComponent(vc);
 	}
+	
+	public void removeAllViewComponents(List<ViewComponent> vcs) {
+		components.removeAll(vcs);
+		
+		for(ViewComponent vc : vcs)
+			dispatcher.deregisterComponent(vc);
+	}
 
 	private void drawViewComponents()
 	{
@@ -150,5 +157,6 @@ public class View
 	public int getHeight() {
 		return window.getHeight();
 	}
+
 
 }

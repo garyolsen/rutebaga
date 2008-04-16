@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.EntityEffect;
-import rutebaga.model.entity.EntityType;
+import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
@@ -138,6 +138,13 @@ public class ViewTest {
 		avatar.setAppearance(appearance);
 
 		environment.add(avatar, new Vector(10, 10));
+		
+		NPCEntity npc = new NPCEntity();
+		Appearance npcAppearance = new Appearance(npc);
+		npcAppearance.setImage(cheese);
+		npc.setAppearance(npcAppearance);
+		
+		environment.add(npc, new Vector(15,15));
 		
 		MapComponent map = new MapComponent(avatar, view.getWidth(), view.getHeight());
 		view.addViewComponent(map);
