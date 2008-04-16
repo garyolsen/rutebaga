@@ -1,7 +1,6 @@
 package rutebaga.test.model.environment;
 
 import rutebaga.model.entity.CharEntity;
-import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.ConcreteInstanceSet;
 import rutebaga.model.environment.InstanceFilter;
