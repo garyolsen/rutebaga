@@ -15,8 +15,10 @@ import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
+import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.LayerComparator;
+import rutebaga.model.map.Tile;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ViewComponent;
@@ -59,6 +61,7 @@ public class MapComponent extends ViewComponent
 			
 			Image image = instance.getAppearance().getImage();
 			
+
 			draw.drawImage(p , image);
 		}
 	

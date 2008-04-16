@@ -104,7 +104,7 @@ public class ViewFacade
 	{
 		clearView();
 		
-		view.addViewComponent(new AvatarCreationScreen(listener, list, accept, cancel) );
+		view.addViewComponent(new AvatarCreationScreen(view.getWidth(), view.getHeight(), listener, list, accept, cancel) );
 	}
 	
 	
