@@ -90,6 +90,7 @@ public class MutableVector implements GeneralVector
 	public double dot(GeneralVector rhs)
 	{
 		check(rhs);
+		invalidate();
 		double rval = 0;
 		for (int idx = 0; idx < dimension; idx++)
 		{
@@ -146,7 +147,7 @@ public class MutableVector implements GeneralVector
 	 */
 	public MutableVector getDirection()
 	{
-		return this.times(1 / this.getMagnitude());
+		return new MutableVector(this).times(1 / this.getMagnitude());
 	}
 
 	/* (non-Javadoc)
@@ -187,6 +188,7 @@ public class MutableVector implements GeneralVector
 	public MutableVector minus(GeneralVector rhs)
 	{
 		check(rhs);
+		invalidate();
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = this.components[idx] - rhs.get(idx);
@@ -199,6 +201,7 @@ public class MutableVector implements GeneralVector
 	 */
 	public MutableVector negate()
 	{
+		invalidate();
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = -this.components[idx];
@@ -212,6 +215,7 @@ public class MutableVector implements GeneralVector
 	public MutableVector plus(GeneralVector rhs)
 	{
 		check(rhs);
+		invalidate();
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = this.components[idx] + rhs.get(idx);
@@ -224,6 +228,7 @@ public class MutableVector implements GeneralVector
 	 */
 	public MutableVector times(double factor)
 	{
+		invalidate();
 		for (int idx = 0; idx < dimension; idx++)
 		{
 			components[idx] = this.components[idx] * factor;
@@ -275,5 +280,15 @@ public class MutableVector implements GeneralVector
 						other.get(idx)));
 		}
 		return 0;
+	}
+	
+	private void invalidate()
+	{
+		this.magnitude = null;
+	}
+	
+	public MutableVector(GeneralVector vector)
+	{
+		this(vector.asArray());
 	}
 }

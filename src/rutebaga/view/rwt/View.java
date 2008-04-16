@@ -7,6 +7,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -158,5 +159,8 @@ public class View
 		return window.getHeight();
 	}
 
-
+	public VolatileImage makeVolatileImage(int w, int h)
+	{
+		return window.createVolatileImage(w, h);
+	}
 }
