@@ -7,8 +7,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import rutebaga.view.drawer.Graphics2DDrawer;
 
@@ -21,7 +21,7 @@ public class View
 
 	private BufferStrategy strategy;
 
-	private Set<ViewComponent> components = new HashSet<ViewComponent>();
+	private List<ViewComponent> components = new ArrayList<ViewComponent>();
 
 	/**
 	 * Constructs a view with the provided dimensions.
@@ -62,7 +62,10 @@ public class View
 				.getLocalGraphicsEnvironment();
 
 		GraphicsDevice device = env.getDefaultScreenDevice();
+		
 		device.setFullScreenWindow(window);
+		
+		
 	}
 
 	private void setupDispatcher()
@@ -128,6 +131,14 @@ public class View
 	//TODO REMOVE THIS ONCE WE HAVE CONTROLLER SETUP!
 	public void addKeyListener(KeyListener kl ) {
 		window.addKeyListener(kl);
+	}
+	
+	public int getWidth() {
+		return window.getWidth();
+	}
+	
+	public int getHeight() {
+		return window.getHeight();
 	}
 
 }

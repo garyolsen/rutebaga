@@ -228,6 +228,6 @@ public abstract class ViewComponent
 
 	private void eventReceived(AWTEvent e)
 	{
-		System.out.println("ViewComponent: " + this + " received " + e);
+		//System.out.println("ViewComponent: " + this + " received " + e);
 	}
 }
