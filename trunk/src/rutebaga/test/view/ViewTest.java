@@ -212,6 +212,17 @@ public class ViewTest
 
 			TemporaryMover mover = new TemporaryMover(avatar);
 			view.addKeyListener(mover);
+			
+			ViewCompositeComponent vcc = new ViewCompositeComponent();
+			
+			for(int i=0; i<20; i++)
+				vcc.addChild(new ButtonComponent("test" + i));
+			
+			ScrollDecorator scroll = new ScrollDecorator(vcc, 600, 50);
+			scroll.setLocation(300, 850);
+			scroll.setScrollSpeed(10);
+			
+			view.addViewComponent(scroll);
 
 			long time;
 			long envStart;
