@@ -32,18 +32,18 @@ public class ViewTest
 
 	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
 
-	private static int N_NPCS = 0;
+	private static int N_NPCS = 5;
 	private static double TILE_PROB = 1;
 	
 	private static int SQMAP_MIN = 0;
-	private static int SQMAP_MAX = 20;
+	private static int SQMAP_MAX = 9;
 
 	private static int[] MAP_BOUNDS =
 	{ SQMAP_MIN, SQMAP_MAX, SQMAP_MIN, SQMAP_MAX };
 
 	private static boolean TICK_ENVIRONMENT = true;
 	private static boolean RENDER_MAP = true;
-	private static boolean USE_VOLATILE_IMAGES = false;
+	private static boolean USE_VOLATILE_IMAGES = true;
 
 	private static boolean SHOW_TREASURE = true;
 
@@ -60,7 +60,7 @@ public class ViewTest
 		{
 			VolatileImage tmp;
 
-			Image cheese = ImageIO.read(new File("TestImages/point.png"));
+			Image cheese = ImageIO.read(new File("TestImages/cheese.png"));
 			tmp = view.makeVolatileImage(cheese.getWidth(null), cheese
 					.getHeight(null));
 			Graphics g = tmp.getGraphics();
