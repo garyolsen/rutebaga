@@ -12,11 +12,10 @@ import javax.imageio.ImageIO;
 
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
-import rutebaga.model.entity.Entity;
-import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
+import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
@@ -31,13 +30,16 @@ public class ViewTest
 
 	private static Random random = new Random();
 
-	private static int SCREENWIDTH = 640, SCREENHEIGHT = 480;
+	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
 
 	private static int N_NPCS = 0;
 	private static double TILE_PROB = 1;
+	
+	private static int SQMAP_MIN = 0;
+	private static int SQMAP_MAX = 20;
 
 	private static int[] MAP_BOUNDS =
-	{ 0, 50, 0, 50 };
+	{ SQMAP_MIN, SQMAP_MAX, SQMAP_MIN, SQMAP_MAX };
 
 	private static boolean TICK_ENVIRONMENT = true;
 	private static boolean RENDER_MAP = true;
@@ -52,13 +54,13 @@ public class ViewTest
 
 		CharEntity avatar;
 
-		Environment environment = new Environment(new Rect2DTileConvertor());
+		Environment environment = new Environment(new Hex2DTileConvertor());
 
 		try
 		{
 			VolatileImage tmp;
 
-			Image cheese = ImageIO.read(new File("TestImages/cheese.png"));
+			Image cheese = ImageIO.read(new File("TestImages/point.png"));
 			tmp = view.makeVolatileImage(cheese.getWidth(null), cheese
 					.getHeight(null));
 			Graphics g = tmp.getGraphics();
@@ -68,7 +70,7 @@ public class ViewTest
 				cheese = tmp;
 			cheese.setAccelerationPriority(1.0f);
 
-			Image grass = ImageIO.read(new File("TestImages/grass.jpg"));
+			Image grass = ImageIO.read(new File("TestImages/hextile.png"));
 			tmp = view.makeVolatileImage(grass.getWidth(null), grass
 					.getHeight(null));
 			g = tmp.getGraphics();
@@ -98,16 +100,7 @@ public class ViewTest
 					if (random.nextDouble() < TILE_PROB)
 					{
 						Vector2D location = new Vector2D(x, y);
-						Tile tile = new Tile()
-						{
-
-							@Override
-							public double getFriction()
-							{
-								return 0.1;
-							}
-
-						};
+						Tile tile = new Tile();
 						Appearance water = new Appearance(tile);
 						water.setImage(grass);
 						tile.setAppearance(water);
@@ -151,28 +144,7 @@ public class ViewTest
 				}
 			}
 
-			avatar = new CharEntity()
-			{
-
-				@Override
-				public double getFriction()
-				{
-					return 0;
-				}
-
-				@Override
-				public double getMass()
-				{
-					return 1;
-				}
-
-				@Override
-				public Object accept(EntityEffect e)
-				{
-					return null;
-				}
-
-			};
+			avatar = new CharEntity();
 
 			// npc = new NPCEntity();
 			// Appearance npcAppearance = new Appearance(npc);

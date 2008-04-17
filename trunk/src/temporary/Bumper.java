@@ -26,12 +26,6 @@ public class Bumper extends Instance
 	}
 
 	@Override
-	public double getFriction()
-	{
-		return 0;
-	}
-
-	@Override
 	public double getMass()
 	{
 		return 1;

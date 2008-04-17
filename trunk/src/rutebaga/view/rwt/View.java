@@ -55,6 +55,10 @@ public class View
 
 		window.setVisible(true);
 		window.createBufferStrategy(2);
+		
+		setFullscreen();
+		
+		device.setDisplayMode(new DisplayMode(width, height, 32, 60));
 	}
 
 	/**

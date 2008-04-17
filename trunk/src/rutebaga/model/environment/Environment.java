@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-
 import rutebaga.commons.math.Bounds2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
@@ -44,11 +43,8 @@ public class Environment
 	private Map<IntVector2D, Double> frictionCache = new HashMap<IntVector2D, Double>();
 
 	private Set<Instance> dirtyPhysics = new CopyOnWriteArraySet<Instance>();
-
-	protected TileConvertor getTileConvertor()
-	{
-		return tileConvertor;
-	}
+	private Set<IntVector2D> dirtyFriction = new CopyOnWriteArraySet<IntVector2D>();
+	private Set<Instance> tickableInstances = new HashSet<Instance>();
 
 	/**
 	 * Constructs a new Environment using the given converter to define the
@@ -59,14 +55,6 @@ public class Environment
 	public Environment(TileConvertor convertor)
 	{
 		this.tileConvertor = convertor;
-	}
-
-	/**
-	 * @return a read-only set of all instances within this environment
-	 */
-	public Set<Instance> getInstances()
-	{
-		return Collections.unmodifiableSet(instances);
 	}
 
 	/**
@@ -110,7 +98,11 @@ public class Environment
 		instances.add(instance);
 
 		PhysicsContainer physics = new PhysicsContainer(instance);
+		if (!instance.isMobile())
+			physics.setImmobile(true);
 		instance.setPhysicsContainer(physics);
+
+		dirtyFriction.add(instance.getTile());
 
 		// update tile cache
 		updateTileOf(instance);
@@ -118,6 +110,61 @@ public class Environment
 		notifyListeners(event);
 
 		return true;
+	}
+
+	public boolean blockedAtTile(IntVector2D v, Instance instance)
+	{
+		return this.blocked(instance, v, true);
+	}
+
+	public boolean exists(IntVector2D tile)
+	{
+		if (!tileCache.containsKey(tile))
+			return false;
+		Set<Instance> set = getInstanceSetAt(tile);
+		if (set == null || set.size() == 0)
+			return false;
+		return true;
+	}
+
+	public int getDimension()
+	{
+		return tileConvertor.getDimension();
+	}
+
+	/**
+	 * @return a read-only set of all instances within this environment
+	 */
+	public Set<Instance> getInstances()
+	{
+		return Collections.unmodifiableSet(instances);
+	}
+
+	/**
+	 * Gets all instances within a certain bounds, when placed in this
+	 * environment at a particular center.
+	 * 
+	 * @param bounds
+	 *            the bounds to use to filter
+	 * @param center
+	 *            the center of the bounds
+	 * @return the set of instances within the bounds
+	 */
+	public Collection<Instance> getInstances(Bounds2D bounds, Vector2D center)
+	{
+		List<Instance> rval = new LinkedList<Instance>();
+		Collection<IntVector2D> tiles = tileCache.keySet();
+		tiles = bounds.filter(tiles, center);
+		for (IntVector2D tile : tiles)
+		{
+			rval.addAll(tileCache.get(tile));
+		}
+		return Collections.unmodifiableList(rval);
+	}
+
+	public Set<IntVector2D> getSpace()
+	{
+		return Collections.unmodifiableSet(tileCache.keySet());
 	}
 
 	/**
@@ -128,6 +175,19 @@ public class Environment
 	public Set<Instance> instancesAt(IntVector2D tile)
 	{
 		return Collections.unmodifiableSet(getInstanceSetAt(tile));
+	}
+
+	/**
+	 * Registers a movement listener with this environment.
+	 * 
+	 * @param listener
+	 *            the listener to register
+	 * 
+	 * @see MovementListener
+	 */
+	public void registerMovementListener(MovementListener listener)
+	{
+		this.listeners.add(listener);
 	}
 
 	/**
@@ -154,8 +214,64 @@ public class Environment
 	{
 		updatePhysics();
 		performMovement();
-		for (Instance instance : instances)
+		long time = System.currentTimeMillis();
+		for (Instance instance : tickableInstances)
 			instance.tick();
+		System.out.println("ticking environment: " + (System.currentTimeMillis()-time));
+	}
+
+	/**
+	 * Unregisters a movement listener with this environment.
+	 * 
+	 * @param listener
+	 *            the listener to unregister
+	 * 
+	 * @see MovementListener
+	 */
+	public void unregisterMovementListener(MovementListener listener)
+	{
+		this.listeners.remove(listener);
+	}
+
+	/**
+	 * Gets the set of instances at a tile, creating the set if null.
+	 * 
+	 * @param tile
+	 *            the tile to query
+	 * @return the set of instances at the tile
+	 */
+	private Set<Instance> getInstanceSetAt(IntVector2D tile)
+	{
+		HashSet<Instance> set = tileCache.get(tile);
+		if (set == null)
+		{
+			set = new HashSet<Instance>();
+			tileCache.put(tile, set);
+		}
+		return set;
+	}
+
+	/**
+	 * Notifies all listeners of a movement event.
+	 * 
+	 * @param event
+	 *            the movement event
+	 * 
+	 * @see MovementEvent
+	 */
+	private void notifyListeners(MovementEvent event)
+	{
+		long time = System.currentTimeMillis();
+		for (MovementListener listener : listeners)
+			listener.onMovement(event);
+		for (MovementListener listener : event.getInstanceListeners())
+		{
+			// only notify listeners once
+			if (!listeners.contains(listener))
+				listener.onMovement(event);
+		}
+//		System.out.println("notifying listeners: "
+//				+ (System.currentTimeMillis() - time));
 	}
 
 	/**
@@ -200,12 +316,22 @@ public class Environment
 		return rval;
 	}
 
+	protected Set<Instance> getDirtyPhysics()
+	{
+		return dirtyPhysics;
+	}
+
 	/**
 	 * @return the cache of tiles
 	 */
 	protected Map<IntVector2D, HashSet<Instance>> getTileCache()
 	{
 		return tileCache;
+	}
+
+	public TileConvertor getTileConvertor()
+	{
+		return tileConvertor;
 	}
 
 	/**
@@ -238,7 +364,7 @@ public class Environment
 			{
 				PhysicsContainer physics = instance.getPhysicsContainer();
 				physics.getMomentum().multiplyBy(0.0);
-//				physics.getAppliedImpulse().multiplyBy(0.0);
+				// physics.getAppliedImpulse().multiplyBy(0.0);
 				physics.getVelocity().multiplyBy(0.0);
 			}
 			else
@@ -246,6 +372,11 @@ public class Environment
 				Location location = instance.getLocation();
 				MovementEvent event = new MovementEvent(instance, instance
 						.getCoordinate(), instance.getTile());
+				if (instance.getFriction() > 0.001)
+				{
+					dirtyFriction.add(newTile);
+					dirtyFriction.add(instance.getTile());
+				}
 				location.setCoordinate(newCoordinate);
 				location.setTile(newTile);
 				updateTileOf(instance);
@@ -253,7 +384,8 @@ public class Environment
 				moveCt++;
 			}
 		}
-		System.out.println("movement count: " + moveCt + ": " + (System.currentTimeMillis()-time));
+		System.out.println("movement count: " + moveCt + ": "
+				+ (System.currentTimeMillis() - time));
 	}
 
 	/**
@@ -262,17 +394,26 @@ public class Environment
 	protected void updatePhysics()
 	{
 		long time = System.currentTimeMillis();
-		for (IntVector2D tile : tileCache.keySet())
-		{
-			double friction = frictionAt(tile);
-			frictionCache.put(tile, friction);
-		}
-		System.out.println("friction update: " + (System.currentTimeMillis() - time));
-		time = System.currentTimeMillis();
 		for (Instance instance : dirtyPhysics)
+		{
+			IntVector2D tile = instance.getTile();
+			double friction;
+			if(dirtyFriction.contains(tile))
+			{
+				dirtyFriction.remove(tile);
+				friction = frictionAt(tile);
+				frictionCache.put(tile, friction);
+			}
+			else
+			{
+				friction = frictionCache.get(tile);
+			}
 			instance.getPhysicsContainer().update(
 					frictionCache.get(instance.getTile()));
-		System.out.println("physics update: " + (System.currentTimeMillis() - time));
+
+		}
+		System.out.println("physics update: "
+				+ (System.currentTimeMillis() - time));
 	}
 
 	/**
@@ -301,121 +442,8 @@ public class Environment
 		}
 	}
 
-	/**
-	 * Gets all instances within a certain bounds, when placed in this
-	 * environment at a particular center.
-	 * 
-	 * @param bounds
-	 *            the bounds to use to filter
-	 * @param center
-	 *            the center of the bounds
-	 * @return the set of instances within the bounds
-	 */
-	public Collection<Instance> getInstances(Bounds2D bounds, Vector2D center)
+	Set<Instance> getTickableInstances()
 	{
-		List<Instance> rval = new LinkedList<Instance>();
-		Collection<IntVector2D> tiles = tileCache.keySet();
-		tiles = bounds.filter(tiles, center);
-		for (IntVector2D tile : tiles)
-		{
-			rval.addAll(tileCache.get(tile));
-		}
-		return Collections.unmodifiableList(rval);
-	}
-
-	/**
-	 * Registers a movement listener with this environment.
-	 * 
-	 * @param listener
-	 *            the listener to register
-	 * 
-	 * @see MovementListener
-	 */
-	public void registerMovementListener(MovementListener listener)
-	{
-		this.listeners.add(listener);
-	}
-
-	/**
-	 * Unregisters a movement listener with this environment.
-	 * 
-	 * @param listener
-	 *            the listener to unregister
-	 * 
-	 * @see MovementListener
-	 */
-	public void unregisterMovementListener(MovementListener listener)
-	{
-		this.listeners.remove(listener);
-	}
-
-	/**
-	 * Notifies all listeners of a movement event.
-	 * 
-	 * @param event
-	 *            the movement event
-	 * 
-	 * @see MovementEvent
-	 */
-	private void notifyListeners(MovementEvent event)
-	{
-		long time = System.currentTimeMillis();
-		for (MovementListener listener : listeners)
-			listener.onMovement(event);
-		for (MovementListener listener : event.getInstanceListeners())
-		{
-			// only notify listeners once
-			if (!listeners.contains(listener))
-				listener.onMovement(event);
-		}
-		System.out.println("notifying listeners: " + (System.currentTimeMillis() - time));
-	}
-
-	/**
-	 * Gets the set of instances at a tile, creating the set if null.
-	 * 
-	 * @param tile
-	 *            the tile to query
-	 * @return the set of instances at the tile
-	 */
-	private Set<Instance> getInstanceSetAt(IntVector2D tile)
-	{
-		HashSet<Instance> set = tileCache.get(tile);
-		if (set == null)
-		{
-			set = new HashSet<Instance>();
-			tileCache.put(tile, set);
-		}
-		return set;
-	}
-
-	public Set<IntVector2D> getSpace()
-	{
-		return Collections.unmodifiableSet(tileCache.keySet());
-	}
-
-	public int getDimension()
-	{
-		return tileConvertor.getDimension();
-	}
-
-	public boolean exists(IntVector2D tile)
-	{
-		if (!tileCache.containsKey(tile))
-			return false;
-		Set<Instance> set = getInstanceSetAt(tile);
-		if (set == null || set.size() == 0)
-			return false;
-		return true;
-	}
-
-	protected Set<Instance> getDirtyPhysics()
-	{
-		return dirtyPhysics;
-	}
-
-	public boolean blockedAtTile(IntVector2D v, Instance instance)
-	{
-		return this.blocked(instance, v, true);
+		return tickableInstances;
 	}
 }

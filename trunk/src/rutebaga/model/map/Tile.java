@@ -14,18 +14,17 @@ import rutebaga.model.environment.InstanceSetIdentifier;
 public class Tile extends Instance
 {
 	private TerrainType terrain;
+	
+	public Tile()
+	{
+		super();
+		this.setTickable(false);
+	}
 
 	@Override
 	public boolean blocks(Instance other)
 	{
 		return other.able(this.terrain);
-	}
-
-	@Override
-	public double getFriction()
-	{
-		// TODO add friction logic (glosh)
-		return 0;
 	}
 
 	@Override
@@ -49,6 +48,12 @@ public class Tile extends Instance
 	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.TILE;
+	}
+
+	@Override
+	public boolean isMobile()
+	{
+		return false;
 	}
 
 }

@@ -89,6 +89,25 @@ public final class InternalContainer
 		private MutableVector2D velocity = new MutableVector2D(0, 0);
 		private final Instance instance;
 		private boolean dirty = false;
+		private boolean immobile = false;
+		private double friction = 0;
+
+		protected double getFriction()
+		{
+			return friction;
+		}
+
+		protected void setFriction(double friction)
+		{
+			if(Double.compare(friction, this.friction) == 0)
+				return;
+			this.friction = friction;
+		}
+
+		boolean isImmobile()
+		{
+			return immobile;
+		}
 
 		public PhysicsContainer(Instance instance)
 		{
@@ -102,8 +121,9 @@ public final class InternalContainer
 
 		protected void update(double friction)
 		{
+			if(immobile) return;
 			double mass = instance.getMass();
-			double frictionCoeff = 0.1;
+			double frictionCoeff = 0.4;
 			this.momentum.multiplyBy(1 - frictionCoeff);
 			this.appliedImpulse.multiplyBy(1 - frictionCoeff);
 			this.velocity.multiplyBy(0);
@@ -112,20 +132,27 @@ public final class InternalContainer
 			//XXX MEGA LoD violation
 			if(appliedImpulse.getMagnitude() <= 0.001 && momentum.getMagnitude() <= 0.001)
 			{
+				this.appliedImpulse.multiplyBy(0);
+				this.momentum.multiplyBy(0);
+				this.velocity.multiplyBy(0);
 				this.instance.getEnvironment().getDirtyPhysics().remove(this.instance);
 				dirty = false;
 			}
 			// TODO add REAL support for friction
 		}
 
+		@SuppressWarnings("unchecked")
 		public void applyImpulse(GenericVector2D impulse)
 		{
+			if(immobile) return;
 			dirty();
 			this.appliedImpulse = this.appliedImpulse.accumulate(impulse);
 		}
 
+		@SuppressWarnings("unchecked")
 		public void applyMomentum(GenericVector2D momentum)
 		{
+			if(immobile) return;
 			dirty();
 			this.momentum = this.momentum.accumulate(momentum);
 		}
@@ -165,6 +192,11 @@ public final class InternalContainer
 			if(this.dirty == true) return;
 			this.dirty = true;
 			this.instance.getEnvironment().getDirtyPhysics().add(this.instance);
+		}
+
+		void setImmobile(boolean immobile)
+		{
+			this.immobile = immobile;
 		}
 	}
 }

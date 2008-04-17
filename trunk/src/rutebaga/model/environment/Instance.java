@@ -1,8 +1,10 @@
 package rutebaga.model.environment;
 
+import java.rmi.server.UID;
 import java.util.HashSet;
 import java.util.Set;
 
+import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
@@ -21,12 +23,15 @@ import rutebaga.model.map.TerrainType;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Instance implements Layerable
+public abstract class Instance implements Layerable, Locatable
 {
+	private long id = UIDProvider.getLongUID();
 	private Location location;
 	private PhysicsContainer physicsContainer;
 	private MovementAttributes movementAttributes = new MovementAttributes();
 	private Appearance appearance = new Appearance(this);
+	private double friction = 0;
+	private boolean tickable = true;
 
 	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
 
@@ -127,7 +132,10 @@ public abstract class Instance implements Layerable
 	 * 
 	 * @return friction coefficient donation
 	 */
-	public abstract double getFriction();
+	public final double getFriction()
+	{
+		return this.getPhysicsContainer().getFriction();
+	}
 
 	/**
 	 * @return the mass of this instance
@@ -172,7 +180,7 @@ public abstract class Instance implements Layerable
 	{
 		this.appearance = appearance;
 	}
-	
+
 	public abstract void tick();
 
 	public void unregisterMovementListener(MovementListener listener)
@@ -210,6 +218,15 @@ public abstract class Instance implements Layerable
 	protected void setLocation(Location location)
 	{
 		this.location = location;
+		if(location == null) return;
+		if(tickable)
+		{
+			getEnvironment().getTickableInstances().add(this);
+		}
+		else
+		{
+			getEnvironment().getTickableInstances().remove(this);
+		}
 	}
 
 	/**
@@ -221,10 +238,68 @@ public abstract class Instance implements Layerable
 	protected void setPhysicsContainer(PhysicsContainer physicsContainer)
 	{
 		this.physicsContainer = physicsContainer;
+		physicsContainer.setFriction(friction);
+	}
+
+	public abstract double getLayer();
+
+	public abstract InstanceSetIdentifier getSetIdentifier();
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Instance other = (Instance) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	public boolean isMobile()
+	{
+		return true;
+	}
+
+	protected final void setFriction(double friction)
+	{
+		this.friction = friction;
+		if (this.physicsContainer != null)
+			physicsContainer.setFriction(friction);
 	}
 	
-	public abstract double getLayer();
+	protected final void setTickable(boolean tickable)
+	{
+		this.tickable = tickable;
+		if(getEnvironment() != null)
+		{
+			updateTickability();
+		}
+	}
 	
-	public abstract InstanceSetIdentifier getSetIdentifier();
+	private void updateTickability()
+	{
+		if(tickable)
+		{
+			getEnvironment().getTickableInstances().add(this);
+		}
+		else
+		{
+			getEnvironment().getTickableInstances().remove(this);
+		}
+	}
 
 }

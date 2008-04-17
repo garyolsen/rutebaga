@@ -40,7 +40,8 @@ public class IntVector2D implements GenericVector2D<Integer, IntVector2D>
 	
 	private int comp[] = new int[2];
 	
-	private Double magnitude = null;
+	private double magnitude;
+	private boolean mag_dirty = true;
 
 	IntVector2D()
 	{
@@ -73,7 +74,7 @@ public class IntVector2D implements GenericVector2D<Integer, IntVector2D>
 	
 	void dirty()
 	{
-		magnitude = null;
+		mag_dirty = true;
 	}
 	
 	IntVector2D divideBy(double div)
@@ -118,9 +119,10 @@ public class IntVector2D implements GenericVector2D<Integer, IntVector2D>
 	
 	public double getMagnitude()
 	{
-		if(magnitude == null)
+		if(mag_dirty)
 		{
 			magnitude = Math.sqrt(comp[0]*comp[0] + comp[1]*comp[1]);
+			mag_dirty = false;
 		}
 		return magnitude;
 	}

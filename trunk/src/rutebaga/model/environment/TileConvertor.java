@@ -2,6 +2,7 @@ package rutebaga.model.environment;
 
 import java.util.Collection;
 
+import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
 
@@ -45,7 +46,7 @@ public interface TileConvertor
 	 * @param coordinate	the coordinate to convert
 	 * @return	the coordinate's rectangular location
 	 */
-	Vector2D toRect(Vector2D coordinate);
+	Vector2D toRect(GenericVector2D coordinate);
 	
 	public Collection<IntVector2D> between(IntVector2D a, IntVector2D b);
 }

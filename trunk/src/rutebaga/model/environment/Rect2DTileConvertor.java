@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
 
 /**
@@ -26,6 +27,8 @@ import rutebaga.commons.math.Vector2D;
  */
 public class Rect2DTileConvertor implements TileConvertor
 {
+	final static double xratio = Math.sqrt(3)/2.0;
+	final static double yratio = 1.0/2.0;
 	/*
 	 * (non-Javadoc)
 	 * 

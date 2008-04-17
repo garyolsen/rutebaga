@@ -183,12 +183,6 @@ public class NPCEntity extends CharEntity
 	}
 
 	@Override
-	public double getFriction() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public double getMass() {
 		return 1;
 	}
