@@ -37,13 +37,13 @@ import rutebaga.view.ViewFacade;
  * @author Matthew Chuah
  * @see UserActionInterpreter
  */
-public class GameDaemon extends KeyAdapter implements InterpreterManager {
+public class GameDaemon implements InterpreterManager {
 
 	/**
 	 * The GameDaemon retains a reference to the ViewFacade to pass it on to
 	 * UserActionInterpreters.
 	 */
-	private ViewFacade facade;
+	private ViewFacade view;
 
 	/**
 	 * An implementation of a stack specifically for interpreters.
@@ -67,36 +67,52 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager {
 	private TickDaemon ticker;
 
 	/**
+	 * 
+	 */
+	private KeyBuffer keyBuffer;
+
+	/**
+	 * 
+	 */
+	private Game game;
+
+	/**
 	 * Constructs a new GameDaemon.
 	 */
-	private GameDaemon(ViewFacade view, boolean queued) {
+	private GameDaemon(ViewFacade view, Game game, boolean queued) {
 		if (view == null)
 			throw new NullPointerException();
-		facade = view;
-		commandQueue = new CommandQueueImpl();
-		interpreterStack = new InterpreterStack();
-		eventsAreQueued = queued;
-		ticker = new DefaultTickDaemon(30);
-		ticker.setListener(new TickListener() {
+		this.view = view;
+		this.game = game;
+		this.commandQueue = new CommandQueueImpl();
+		this.interpreterStack = new InterpreterStack();
+		this.eventsAreQueued = queued;
+		this.ticker = new DefaultTickDaemon(30);
+		final KeyAdapter keyProcessor = new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				processEvent(new EventCommand() {
+					@Override
+					public void act(UserActionInterpreter uai) {
+						uai.keyPressed(e);
+					}
+				}, false);
+			}
+		};
+		this.ticker.setListener(new TickListener() {
 			public void tick() {
-				commandQueue.processQueue();
+				GameDaemon.this.keyBuffer.poll(keyProcessor);
 
-				/*
-				 * Warning: This is a hack. We never want the GameDaemon's tick
-				 * to be queued as an event when it's activated by the
-				 * TimeDaemon. So, we'll ensure that eventsAreQueued is false
-				 * before calling GameDaemon's tick method, but we'll set
-				 * eventsAreQueued back to whatever it was before afterwards.
-				 */
-				boolean wereEventsQueued = eventsAreQueued;
-				eventsAreQueued = false;
+				GameDaemon.this.commandQueue.processQueue();
+
 				GameDaemon.this.tick();
-				eventsAreQueued = wereEventsQueued;
 
-				facade.renderFrame();
+				GameDaemon.this.view.renderFrame();
 			}
 		});
-		ticker.unpause();
+		this.ticker.unpause();
+		this.keyBuffer = new KeyBuffer();
+		view.addKeyListener(this.keyBuffer);
 	}
 
 	/**
@@ -105,8 +121,8 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager {
 	 * 
 	 * @return a GameDaemon
 	 */
-	public static GameDaemon initialize() {
-		return initialize(false);
+	public static GameDaemon initialize(Game game) {
+		return initialize(game, false);
 	}
 
 	/**
@@ -117,12 +133,17 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager {
 	 *            whether or not to queue events
 	 * @return a GameDaemon
 	 */
-	public static GameDaemon initialize(boolean queueEvents) {
+	public static GameDaemon initialize(Game game, boolean queueEvents) {
 		ViewFacade facade = new ViewFacade();
 		facade.constructFullscreenView();
-		return new GameDaemon(facade, queueEvents);
+		return new GameDaemon(facade, game, queueEvents);
 	}
 
+	/**
+	 * Gets the CommandQueue this GameDaemon is using.
+	 * 
+	 * @return this GameDaemon's command queue
+	 */
 	public CommandQueue getCommandQueue() {
 		return commandQueue;
 	}
@@ -134,7 +155,7 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager {
 	 * @see rutebaga.controller.InterpreterManager#activate(rutebaga.controller.UserActionInterpreter)
 	 */
 	public void activate(UserActionInterpreter uai) {
-		uai.installActionInterpreter(this, facade);
+		uai.installActionInterpreter(this, game, view);
 		interpreterStack.push(uai);
 	}
 
@@ -160,32 +181,17 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager {
 			}
 			/*
 			 * If uai is a 'root' interpreter, or we popped a root interpreter
-			 * above, we need to reactivate the interpreters that are beneath
-			 * it in the stack.
+			 * above, we need to reactivate the interpreters that are beneath it
+			 * in the stack.
 			 */
 			if (foundRoot)
-				for (UserActionInterpreter i: interpreterStack) {
+				for (UserActionInterpreter i : interpreterStack) {
 					i.reactivateActionInterpreter();
 					// Stop at the next root interpreter
 					if (!i.eventsFallThrough())
 						break;
 				}
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.KeyAdapter#keyPressed(java.awt.event.KeyEvent)
-	 */
-	@Override
-	public void keyPressed(final KeyEvent e) {
-		processEvent(new EventCommand() {
-			@Override
-			public void act(UserActionInterpreter uai) {
-				uai.keyPressed(e);
-			}
-		});
 	}
 
 	/*
@@ -222,16 +228,24 @@ public class GameDaemon extends KeyAdapter implements InterpreterManager {
 
 	/**
 	 * A private operation which either queues a command or immediately
-	 * processes it depending on this GameDaemon's eventsAreQueued member.
+	 * processes it.
 	 * 
 	 * @param command
 	 *            the command to process
 	 */
-	private void processEvent(Command command) {
+	private void processEvent(Command command, boolean eventsAreQueued) {
 		if (eventsAreQueued)
 			commandQueue.queueCommand(command);
 		else
 			command.execute();
+	}
+
+	/**
+	 * A private operation which either queues a command or immediately
+	 * processes it, depending on this GameDaemon's eventsAreQueued member.
+	 */
+	private void processEvent(Command command) {
+		processEvent(command, eventsAreQueued);
 	}
 
 	/**

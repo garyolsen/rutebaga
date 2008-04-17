@@ -13,7 +13,7 @@ public class TitleActionInterpreter implements UserActionInterpreter {
 	
 	private GameDaemon daemon;
 	
-	public void installActionInterpreter(GameDaemon daemon,
+	public void installActionInterpreter(GameDaemon daemon, Game game,
 			ViewFacade facade) {
 		
 		this.view = facade;

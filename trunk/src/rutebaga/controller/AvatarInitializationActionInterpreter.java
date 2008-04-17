@@ -21,10 +21,13 @@ public class AvatarInitializationActionInterpreter extends KeyAdapter implements
 		return false;
 	}
 
-	public void installActionInterpreter(final GameDaemon daemon, final ViewFacade facade) {
+	public void installActionInterpreter(final GameDaemon daemon, final Game game, final ViewFacade facade) {
 		Command accept = new Command() {
 			public void execute() {
-				// Start game play
+				GameInitializer gi = game.getGameInitializer();
+				gi.build();
+				UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), gi.getAvatar());
+				daemon.activate(gpai);
 			}
 
 			public boolean isFeasible() {

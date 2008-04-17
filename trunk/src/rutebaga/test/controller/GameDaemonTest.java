@@ -3,6 +3,7 @@ package rutebaga.test.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
+import rutebaga.controller.Game;
 import rutebaga.controller.GameDaemon;
 import rutebaga.controller.UserActionInterpreter;
 import rutebaga.view.ViewFacade;
@@ -11,7 +12,7 @@ public class GameDaemonTest
 {
 	public static void main(String[] args)
 	{
-		GameDaemon daemon = GameDaemon.initialize();
+		GameDaemon daemon = GameDaemon.initialize(null);
 
 		TestInterpreter i1 = new TestInterpreter("Interpreter 1");
 		TestInterpreter i2 = new TestInterpreter("Interpreter 2");
@@ -35,6 +36,10 @@ public class GameDaemonTest
 
 		private String name;
 
+		public void reactivateActionInterpreter() {
+			System.out.println(name + " received a reactivation request");
+		}
+
 		public TestInterpreter(String name)
 		{
 			this.name = name;
@@ -45,7 +50,7 @@ public class GameDaemonTest
 			return true;
 		}
 
-		public void installActionInterpreter(GameDaemon daemon,
+		public void installActionInterpreter(GameDaemon daemon, Game game,
 				ViewFacade facade)
 		{
 			System.out.println(name + " received an install request");

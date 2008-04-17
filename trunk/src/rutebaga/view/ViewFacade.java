@@ -205,8 +205,8 @@ public class ViewFacade
 		view.addKeyListener(kl);
 	}
 	
-	public void removeKeyListener(MouseListener ml) {
-		view.removeMouseListener(ml);
+	public void removeKeyListener(KeyListener kl) {
+		view.removeKeyListener(kl);
 	}
 	
 	public void addMouseListener(MouseListener ml) {
