@@ -19,7 +19,6 @@ public class ButtonComponent extends ViewComponent {
 	
 	private CompositeAttribute untoggled, toggled, text;
 	private FontAttribute font;
-	private Shape buttonShape;
 
 	public ButtonComponent() {
 		this("");
@@ -102,7 +101,6 @@ public class ButtonComponent extends ViewComponent {
 	}
 	
 	public void setButtonShape( Shape shape ) {
-		this.buttonShape = shape;
 		this.setBounds(shape);
 	}
 
