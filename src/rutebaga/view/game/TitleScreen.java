@@ -3,6 +3,7 @@ package rutebaga.view.game;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 
 
@@ -33,6 +34,9 @@ public class TitleScreen extends ViewCompositeComponent {
 			ButtonComponent button = new ButtonComponent(e.getLabel());
 			button.setCommand(e.getCommand());
 			button.setLocation(xAlign, yAlign);
+			int[] xPoints = {20,40,0};
+			int[] yPoints = {0,20,20};
+			button.setButtonShape( new Polygon(xPoints, yPoints, 3));
 			
 			this.addChild(button);
 			yAlign += spacing;

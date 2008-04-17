@@ -1,5 +1,8 @@
 package rutebaga.view.rwt;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
 import rutebaga.view.drawer.Drawer;
 
 /**
@@ -36,6 +39,7 @@ public abstract class ComponentDecorator extends ViewComponent
 	public ComponentDecorator(ViewComponent decorated)
 	{
 		this.decorated = decorated;
+		decorated.setParent(this);
 	}
 
 	@Override
@@ -43,5 +47,20 @@ public abstract class ComponentDecorator extends ViewComponent
 	{
 		decorated.draw(draw);
 	}
+	
+	public ViewComponent getDecoratedComponent() {
+		return decorated;
+	}
+	
+	protected boolean processKeyEvent( KeyEvent event ) { 
+		return decorated.processKeyEvent(event);
+	}
+	protected boolean processMouseEvent( MouseEvent event ) {
+		return decorated.processMouseEvent(event);
+	}
+	protected boolean processMouseMotionEvent( MouseEvent event ) {
+		return decorated.processMouseMotionEvent(event);
+	}
+
 
 }
