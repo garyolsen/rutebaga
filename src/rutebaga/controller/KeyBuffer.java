@@ -5,63 +5,68 @@ import java.awt.event.KeyListener;
 
 public class KeyBuffer implements KeyListener {
 
-	private static final int SUPPORTED_KEYS = 256;
-	
-	private static final boolean PRESSED = true;
-	private static final boolean RELEASED = false;
-	
-	private final boolean[] keyStates;
-	private final int[] keyPresses;
+	private static final int NUM_SUPPORTED_KEY_CODES = 256;
+
+	private static final boolean KEY_UP = false;
+	private static final boolean KEY_DOWN = true;
+
+	private final boolean[] states;
 	private final KeyEvent[] events;
-	private int keysQueued;
-	private int keysPressed;
-	
+
 	public KeyBuffer() {
-		keyPresses = new int[SUPPORTED_KEYS];
-		keyStates = new boolean[SUPPORTED_KEYS];
-		events = new KeyEvent[SUPPORTED_KEYS];
+		// The size of states and events must be the same or puppies will die.
+		states = new boolean[NUM_SUPPORTED_KEY_CODES];
+		events = new KeyEvent[states.length];
 	}
-	
-	private boolean validKey(int keyCode) {
-		return (keyCode >= 0 && keyCode < keyPresses.length);
+
+	/**
+	 * Determines whether the given keyCode is valid (i.e., whether it is within
+	 * the bounds of the states/events arrays or not). Because this method if
+	 * private/final and has no local variables, the compiler is able to inline
+	 * it, requiring no actual method invocation in users of this method.
+	 * 
+	 * @param keyCode
+	 * @return
+	 */
+	private final boolean validKey(int keyCode) {
+		return (keyCode >= 0 && keyCode < states.length);
 	}
-	
+
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		if (validKey(code)) {
-			++keyPresses[code];
-			if (keyStates[code] == RELEASED)
-				++keysPressed;
-			keyStates[code] = PRESSED;
 			events[code] = e;
-			++keysQueued;
+			states[code] = KEY_DOWN;
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (validKey(code)) {
-			keyStates[code] = RELEASED;
-			--keysPressed;
-		}
+		if (validKey(code))
+			states[code] = KEY_UP;
 	}
 
 	public void keyTyped(KeyEvent e) {
-		
+		/*
+		 * We don't care about typed events--this is high level information that
+		 * isn't useful to us.
+		 */
 	}
 
 	public void poll(KeyListener k) {
-		if (keysQueued > 0 || keysPressed > 0)
-			for (int i = 0; i < keyPresses.length; ++i) {
-				if (keyPresses[i] > 0) {
-					--keyPresses[i];
-					k.keyPressed(events[i]);
-					if (keyPresses[i] == 0 && keyStates[i] == RELEASED)
-						events[i] = null;
-					--keysQueued;
-				}
-				else if (keyStates[i] == PRESSED)
-					k.keyPressed(events[i]);
+		for (int code = 0; code < states.length; ++code) {
+			/*
+			 * If there is a cached key event OR the key is still pressed down,
+			 * then send the key event to the listener.
+			 */
+			if (events[code] != null || states[code] == KEY_DOWN) {
+				k.keyPressed(events[code]);
+				/*
+				 * If the key is no longer held down, clear the cached event.
+				 */
+				if (states[code] == KEY_UP)
+					events[code] = null;
 			}
+		}
 	}
 }
