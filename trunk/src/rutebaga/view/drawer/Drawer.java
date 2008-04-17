@@ -32,6 +32,8 @@ public abstract class Drawer
 	 */
 	public abstract void drawImage(Point p, Image img);
 
+	public abstract void drawShape(Point p, Shape s );
+	
 	/**
 	 * Draws a rectangle based on the current {@link Attribute Attriubtes}.
 	 * 
@@ -78,6 +80,8 @@ public abstract class Drawer
 	protected abstract void setFont(Font font);
 
 	protected abstract void setClipping(Shape clipping);
+	
+	protected abstract void setTranslation( Point p );
 
 	/**
 	 * Returns a FontMetrics based on the current {@link Attribute Attriubtes}.

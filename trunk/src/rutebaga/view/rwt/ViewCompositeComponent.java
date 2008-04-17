@@ -6,9 +6,9 @@ import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import rutebaga.view.drawer.Drawer;
 
@@ -35,7 +35,7 @@ import rutebaga.view.drawer.Drawer;
 public class ViewCompositeComponent extends ViewComponent
 {
 
-	private Set<ViewComponent> components;
+	private List<ViewComponent> components;
 	
 	private Shape compositeBounds = new Rectangle();
 
@@ -44,7 +44,7 @@ public class ViewCompositeComponent extends ViewComponent
 	 */
 	public ViewCompositeComponent()
 	{
-		components = new HashSet<ViewComponent>();
+		components = new ArrayList<ViewComponent>();
 	}
 
 	
@@ -61,6 +61,7 @@ public class ViewCompositeComponent extends ViewComponent
 	public void addChild(ViewComponent component)
 	{
 		components.add(component);
+		this.dirtyBounds();
 	}
 
 	/**
@@ -81,9 +82,9 @@ public class ViewCompositeComponent extends ViewComponent
 	 * 
 	 * @return A set of ViewComponents
 	 */
-	public Set<ViewComponent> getChildren()
+	public List<ViewComponent> getChildren()
 	{
-		return Collections.unmodifiableSet(components);
+		return Collections.unmodifiableList(components);
 	}
 
 	/**
@@ -99,23 +100,64 @@ public class ViewCompositeComponent extends ViewComponent
 	}
 
 	public Shape getBounds() {
-		if(!isDirty())
-			return super.getBounds();
+		if(isDirty())
+			recomputeBounds();
+	
+		return super.getBounds();
+	}
+	
+	public int getWidth() {
+		if(isDirty())
+			recomputeBounds();
 		
+		return super.getWidth();
+	}
+	
+	public int getHeight() {
+		if(isDirty())
+			recomputeBounds();
 		
+		return super.getHeight();
+	}
+	
+	private void recomputeBounds() {
 		Area bounds = new Area(compositeBounds);
 		
 		for(ViewComponent vc : components)
 			bounds.add(new Area(vc.getBounds()));
 		
 		super.setBounds(bounds);
-		
-		return super.getBounds();
 	}
 	
 	public void setBounds(Shape bounds) {
 		super.setBounds(bounds);
 		compositeBounds = bounds;
 	}
+	
+
+	protected boolean processKeyEvent( KeyEvent event ) { 
+		for(ViewComponent vc : components)
+			if(vc.hasFocus())
+				return vc.processKeyEvent(event);
+		
+		return false;
+	}
+	
+	protected boolean processMouseEvent( MouseEvent event ) {
+		for(ViewComponent vc : components)
+			if(vc.getBounds().contains(new Point(event.getX() - vc.getX(), event.getY() - vc.getY())))
+				return vc.processMouseEvent(event);
+		
+		return false;
+	}
+	
+	protected boolean processMouseMotionEvent( MouseEvent event ) {
+		for(ViewComponent vc : components)
+			if(vc.getBounds().contains(new Point(event.getX() - vc.getX(), event.getY() - vc.getY())))
+				return vc.processMouseEvent(event);
+		
+		return false;
+	}
+
 		
 }

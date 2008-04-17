@@ -1,12 +1,7 @@
 package rutebaga.view.drawer;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Shape;
+import java.awt.*;
+import java.awt.geom.Area;
 
 /**
  * 
@@ -89,6 +84,13 @@ public class Graphics2DDrawer extends Drawer
 		//applyAttribute();
 		g2d.fillRect(p.x, p.y, width, height);
 	}
+	
+	@Override
+	public void drawShape(Point p, Shape s) {
+		g2d.translate(p.x, p.y);
+		g2d.fill(s);
+		g2d.translate(-p.x, -p.y);
+	}
 
 	@Override
 	public void drawString(Point p, String string)
@@ -114,6 +116,10 @@ public class Graphics2DDrawer extends Drawer
 	protected void setFont(Font font)
 	{
 		g2d.setFont(font);
+	}
+	
+	protected void setTranslation( Point p ) {
+		g2d.translate(p.x, p.y);
 	}
 
 	@Override

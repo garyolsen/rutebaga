@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Point;
+import java.awt.Shape;
 import java.awt.event.MouseEvent;
 
 import rutebaga.controller.command.Command;
@@ -18,6 +19,7 @@ public class ButtonComponent extends ViewComponent {
 	
 	private CompositeAttribute untoggled, toggled, text;
 	private FontAttribute font;
+	private Shape buttonShape;
 
 	public ButtonComponent() {
 		this("");
@@ -58,7 +60,7 @@ public class ButtonComponent extends ViewComponent {
 		FontMetrics fm = draw.getFontMetrics();
 		
 		draw.setAttribute( untoggled );
-		draw.drawRectangle(getLocation(), getWidth(), getHeight());
+		draw.drawShape(getLocation(), getBounds());
 	
 		centeredText.x = this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
 		centeredText.y = this.getLocation().y + (getHeight() / 2) + ( font.getFont().getSize() / 2 );
@@ -70,7 +72,7 @@ public class ButtonComponent extends ViewComponent {
 	
 	private void drawToggled( Drawer draw ) {
 		draw.setAttribute( toggled );
-		draw.drawRectangle(getLocation(), getWidth(), getHeight());
+		draw.drawShape(getLocation(), getBounds());
 		
 		Point centeredText = new Point();
 		FontMetrics fm = draw.getFontMetrics();
@@ -88,7 +90,7 @@ public class ButtonComponent extends ViewComponent {
 		} else if(event.getID() == MouseEvent.MOUSE_RELEASED) {
 			toggle = false;
 		} else if(event.getID() == MouseEvent.MOUSE_CLICKED) {
-			if(command != null)
+			if(command != null && command.isFeasible())
 				command.execute();
 		}
 		
@@ -97,6 +99,11 @@ public class ButtonComponent extends ViewComponent {
 	
 	public void setCommand( Command command )  {
 		this.command = command;
+	}
+	
+	public void setButtonShape( Shape shape ) {
+		this.buttonShape = shape;
+		this.setBounds(shape);
 	}
 
 }
