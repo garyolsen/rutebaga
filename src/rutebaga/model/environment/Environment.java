@@ -237,9 +237,9 @@ public class Environment
 			if (blocked)
 			{
 				PhysicsContainer physics = instance.getPhysicsContainer();
-				physics.getMomentum().times(0.0);
-				physics.getAppliedImpulse().times(0.0);
-				physics.getVelocity().times(0.0);
+				physics.getMomentum().multiplyBy(0.0);
+//				physics.getAppliedImpulse().multiplyBy(0.0);
+				physics.getVelocity().multiplyBy(0.0);
 			}
 			else
 			{

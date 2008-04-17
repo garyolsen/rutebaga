@@ -40,7 +40,7 @@ public class EllipseBounds2D extends Bounds2D
 	 */
 	public EllipseBounds2D(Vector2D radii)
 	{
-		center = new Vector2D(radii.getX(), radii.getY());
+		center = new Vector2D(0, 0);
 		this.radii = radii;
 
 	}
@@ -48,6 +48,7 @@ public class EllipseBounds2D extends Bounds2D
 	@Override
 	public Vector2DRectangle getBoundingBox()
 	{
+		//TODO cache this operation
 		return new Vector2DRectangle(center.minus(radii), radii.times(2));
 	}
 
@@ -119,8 +120,8 @@ public class EllipseBounds2D extends Bounds2D
 	{
 		if (v == null)
 			return false;
-		double x = v.getX().doubleValue()-offset.getX().doubleValue();
-		double y = v.getY().doubleValue()-offset.getY().doubleValue();
+		double x = v.getX().doubleValue()+offset.getX().doubleValue();
+		double y = v.getY().doubleValue()+offset.getY().doubleValue();
 		double t1 = (x-center.getX())/radii.getX();
 		double t2 = (y-center.getY())/radii.getY();
 		return (t1*t1 + t2*t2) <= 1;

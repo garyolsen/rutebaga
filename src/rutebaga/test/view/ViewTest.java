@@ -12,15 +12,19 @@ import javax.imageio.ImageIO;
 
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
+import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
 import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.game.MapComponent;
 import rutebaga.view.rwt.*;
+import temporary.Bumper;
+import temporary.WindTunnel;
 
 public class ViewTest
 {
@@ -33,11 +37,13 @@ public class ViewTest
 	private static double TILE_PROB = 1;
 
 	private static int[] MAP_BOUNDS =
-	{ 0, 20, 0, 20 };
+	{ 0, 50, 0, 50 };
 
 	private static boolean TICK_ENVIRONMENT = true;
 	private static boolean RENDER_MAP = true;
 	private static boolean USE_VOLATILE_IMAGES = false;
+
+	private static boolean SHOW_TREASURE = true;
 
 	public static void main(String args[])
 	{
@@ -110,37 +116,40 @@ public class ViewTest
 				}
 			}
 
-			// for (int x = 0; x < 30; x++)
-			// {
-			// for (int y = 0; y < 30; y++)
-			// {
-			// Vector2D location = new Vector2D(x, y);
-			// if (x % 8 == 0 && y % 8 == 0)
-			// {
-			// WindTunnel tunnel = new WindTunnel();
-			// Appearance chest = new Appearance(tunnel);
-			// chest.setImage(treasure);
-			// tunnel.setAppearance(chest);
-			// environment.add(tunnel, location);
-			// }
-			// }
-			// }
-			//
-			// for (int x = 0; x < 30; x++)
-			// {
-			// for (int y = 40; y < 70; y++)
-			// {
-			// Vector2D location = new Vector2D(x, y);
-			// if (x % 8 == 0 && y % 8 == 0)
-			// {
-			// Instance instance = new Bumper();
-			// Appearance chest = new Appearance(instance);
-			// chest.setImage(treasure);
-			// instance.setAppearance(chest);
-			// environment.add(instance, location);
-			// }
-			// }
-			// }
+			if (SHOW_TREASURE)
+			{
+				for (int x = MAP_BOUNDS[0] + 4; x < MAP_BOUNDS[1] - 4; x++)
+				{
+					for (int y = MAP_BOUNDS[2] + 4; y < MAP_BOUNDS[3] / 2 - 4; y++)
+					{
+						Vector2D location = new Vector2D(x, y);
+						if (x % 8 == 0 && y % 8 == 0)
+						{
+							WindTunnel tunnel = new WindTunnel();
+							Appearance chest = new Appearance(tunnel);
+							chest.setImage(treasure);
+							tunnel.setAppearance(chest);
+							environment.add(tunnel, location);
+						}
+					}
+				}
+
+				for (int x = MAP_BOUNDS[0] + 4; x < MAP_BOUNDS[1] - 4; x++)
+				{
+					for (int y = MAP_BOUNDS[3] / 2 + 4; y < MAP_BOUNDS[3] - 4; y++)
+					{
+						Vector2D location = new Vector2D(x, y);
+						if (x % 8 == 0 && y % 8 == 0)
+						{
+							Instance instance = new Bumper();
+							Appearance chest = new Appearance(instance);
+							chest.setImage(treasure);
+							instance.setAppearance(chest);
+							environment.add(instance, location);
+						}
+					}
+				}
+			}
 
 			avatar = new CharEntity()
 			{
@@ -211,21 +220,21 @@ public class ViewTest
 
 			TemporaryMover mover = new TemporaryMover(avatar);
 			view.addKeyListener(mover);
-			
+
 			ViewCompositeComponent vcc = new ViewCompositeComponent();
-			
-			for(int i=0; i<20; i++)
+
+			for (int i = 0; i < 20; i++)
 				vcc.addChild(new ButtonComponent("test" + i));
-			
+
 			ScrollDecorator scroll = new ScrollDecorator(vcc, 600, 50);
 			scroll.setLocation(300, 850);
 			scroll.setScrollSpeed(10);
-			
+
 			view.addViewComponent(scroll);
 
 			long time;
 			long envStart;
-			
+
 			while (true)
 			{
 				time = System.currentTimeMillis();
@@ -233,11 +242,13 @@ public class ViewTest
 				mover.tick();
 				view.renderFrame();
 				envStart = System.currentTimeMillis();
-				System.out.println("view render total: " + (envStart-time));
+				System.out.println("view render total: " + (envStart - time));
 				if (TICK_ENVIRONMENT)
 					environment.tick();
-				System.out.println("environment total: " + (System.currentTimeMillis()-envStart));
-				System.out.println("total: " + (System.currentTimeMillis()-time));
+				System.out.println("environment total: "
+						+ (System.currentTimeMillis() - envStart));
+				System.out.println("total: "
+						+ (System.currentTimeMillis() - time));
 
 			}
 

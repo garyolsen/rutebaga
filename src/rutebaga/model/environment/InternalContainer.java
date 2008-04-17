@@ -106,8 +106,8 @@ public final class InternalContainer
 			double frictionCoeff = 0.1;
 			this.momentum.multiplyBy(1 - frictionCoeff);
 			this.appliedImpulse.multiplyBy(1 - frictionCoeff);
-			this.velocity.times(0);
-			this.velocity.accumulate(momentum).accumulate(appliedImpulse).times(1 / mass);
+			this.velocity.multiplyBy(0);
+			this.velocity.accumulate(momentum).accumulate(appliedImpulse).multiplyBy(1 / mass);
 			appliedImpulse.multiplyBy(0.7);
 			//XXX MEGA LoD violation
 			if(appliedImpulse.getMagnitude() <= 0.001 && momentum.getMagnitude() <= 0.001)

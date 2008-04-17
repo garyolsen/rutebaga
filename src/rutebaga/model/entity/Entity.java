@@ -30,6 +30,8 @@ import rutebaga.model.environment.InstanceSetIdentifier;
  */
 public abstract class Entity extends Instance implements Named
 {
+	public static int SIGHT_RANGE = 15;
+	
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
 	private EllipseBounds2D visionBounds;
@@ -39,7 +41,7 @@ public abstract class Entity extends Instance implements Named
 	private String name;
 	public Entity()
 	{
-		visionBounds = new EllipseBounds2D(new Vector2D(20, 20));
+		visionBounds = new EllipseBounds2D(new Vector2D(SIGHT_RANGE, SIGHT_RANGE));
 		// XXX: connascence of timing
 		vision = new Vision(this);
 	}

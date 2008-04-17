@@ -89,7 +89,7 @@ public abstract class Bounds2D
 	 * @return The Vector set within this Bounds.
 	 */
 	public <T extends Number, U extends GenericVector2D<T, U>> Collection<U> filter(
-			Collection<U> vectors, GenericVector2D offset)
+			Collection<U> vectors, GenericVector2D<?, ?> offset)
 	{
 		ArrayList<U> rval = new ArrayList<U>();
 		for (U vector : vectors)

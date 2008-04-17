@@ -2,6 +2,7 @@ package temporary;
 
 import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.BoundsTracker;
@@ -14,8 +15,8 @@ public class Bumper extends Instance
 
 	public Bumper()
 	{
-		tracker = new BoundsTracker(new EllipseBounds2D(new Vector(0, 0),
-				new Vector(2, 2)), this);
+		tracker = new BoundsTracker(new EllipseBounds2D(new Vector2D(0, 0),
+				new Vector2D(2, 2)), this);
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public class Bumper extends Instance
 		{
 			if (instance instanceof Entity)
 			{
-				Vector distanceTo = instance.getCoordinate().minus(
+				Vector2D distanceTo = instance.getCoordinate().minus(
 						this.getCoordinate());
 				instance.applyMomentum(distanceTo);
 			}
