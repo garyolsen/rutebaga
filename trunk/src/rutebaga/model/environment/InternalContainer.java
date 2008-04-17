@@ -1,8 +1,9 @@
 package rutebaga.model.environment;
 
-import rutebaga.commons.math.GeneralVector;
-import rutebaga.commons.math.MutableVector;
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.GenericVector2D;
+import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.MutableVector2D;
+import rutebaga.commons.math.Vector2D;
 
 /**
  * This class is used as a workaround to Java's lack of the "internal" keyword.
@@ -28,8 +29,8 @@ public final class InternalContainer
 	 */
 	protected static final class Location
 	{
-		private Vector coordinate;
-		private Vector tile;
+		private Vector2D coordinate;
+		private IntVector2D tile;
 		private Environment environment;
 		private final Instance instance;
 
@@ -43,7 +44,7 @@ public final class InternalContainer
 			return instance;
 		}
 
-		protected Vector getCoordinate()
+		protected Vector2D getCoordinate()
 		{
 			return coordinate;
 		}
@@ -53,12 +54,12 @@ public final class InternalContainer
 			return environment;
 		}
 
-		protected Vector getTile()
+		protected IntVector2D getTile()
 		{
 			return tile;
 		}
 
-		protected void setCoordinate(Vector coordinate)
+		protected void setCoordinate(Vector2D coordinate)
 		{
 			this.coordinate = coordinate;
 		}
@@ -68,7 +69,7 @@ public final class InternalContainer
 			this.environment = environment;
 		}
 
-		protected void setTile(Vector tile)
+		protected void setTile(IntVector2D tile)
 		{
 			this.tile = tile;
 		}
@@ -83,9 +84,9 @@ public final class InternalContainer
 	 */
 	protected static final class PhysicsContainer
 	{
-		private MutableVector momentum = new MutableVector(0, 0);
-		private MutableVector appliedImpulse = new MutableVector(0, 0);
-		private MutableVector velocity = new MutableVector(0, 0);
+		private MutableVector2D momentum = new MutableVector2D(0, 0);
+		private MutableVector2D appliedImpulse = new MutableVector2D(0, 0);
+		private MutableVector2D velocity = new MutableVector2D(0, 0);
 		private final Instance instance;
 		private boolean dirty = false;
 
@@ -103,11 +104,11 @@ public final class InternalContainer
 		{
 			double mass = instance.getMass();
 			double frictionCoeff = 0.1;
-			this.momentum.times(1 - frictionCoeff);
-			this.appliedImpulse.times(1 - frictionCoeff);
+			this.momentum.multiplyBy(1 - frictionCoeff);
+			this.appliedImpulse.multiplyBy(1 - frictionCoeff);
 			this.velocity.times(0);
-			this.velocity.plus(momentum).plus(appliedImpulse).times(1 / mass);
-			appliedImpulse = appliedImpulse.times(0.7);
+			this.velocity.accumulate(momentum).accumulate(appliedImpulse).times(1 / mass);
+			appliedImpulse.multiplyBy(0.7);
 			//XXX MEGA LoD violation
 			if(appliedImpulse.getMagnitude() <= 0.001 && momentum.getMagnitude() <= 0.001)
 			{
@@ -117,44 +118,44 @@ public final class InternalContainer
 			// TODO add REAL support for friction
 		}
 
-		public void applyImpulse(Vector impulse)
+		public void applyImpulse(GenericVector2D impulse)
 		{
 			dirty();
-			this.appliedImpulse = this.appliedImpulse.plus(impulse);
+			this.appliedImpulse = this.appliedImpulse.accumulate(impulse);
 		}
 
-		public void applyMomentum(GeneralVector momentum)
+		public void applyMomentum(GenericVector2D momentum)
 		{
 			dirty();
-			this.momentum = this.momentum.plus(momentum);
+			this.momentum = this.momentum.accumulate(momentum);
 		}
 
-		protected MutableVector getAppliedImpulse()
+		protected MutableVector2D getAppliedImpulse()
 		{
 			return appliedImpulse;
 		}
 
-		protected MutableVector getMomentum()
+		protected MutableVector2D getMomentum()
 		{
 			return momentum;
 		}
 
-		protected MutableVector getVelocity()
+		protected MutableVector2D getVelocity()
 		{
 			return velocity;
 		}
 
-		protected void setAppliedImpulse(MutableVector appliedImpulse)
+		protected void setAppliedImpulse(MutableVector2D appliedImpulse)
 		{
 			this.appliedImpulse = appliedImpulse;
 		}
 
-		protected void setMomentum(MutableVector momentum)
+		protected void setMomentum(MutableVector2D momentum)
 		{
 			this.momentum = momentum;
 		}
 
-		protected void setVelocity(MutableVector velocity)
+		protected void setVelocity(MutableVector2D velocity)
 		{
 			this.velocity = velocity;
 		}

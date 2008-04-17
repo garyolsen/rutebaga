@@ -6,9 +6,9 @@ import java.util.Set;
 
 import legacy.KeyBuffer;
 
-import rutebaga.commons.math.EllipseBounds;
-import rutebaga.commons.math.MutableVector;
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.EllipseBounds2D;
+import rutebaga.commons.math.MutableVector2D;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
@@ -20,10 +20,10 @@ public class TemporaryMover implements KeyListener{
 	
 	private static final double MOVE_SPEED = 0.2;
 	
-	private static final Vector WEST = new Vector(-MOVE_SPEED, 0.0);
-	private static final Vector SOUTH = new Vector(0.0, MOVE_SPEED);
-	private static final Vector NORTH = new Vector(0.0, -MOVE_SPEED);
-	private static final Vector EAST = new Vector(MOVE_SPEED, 0.0);
+	private static final Vector2D WEST = new Vector2D(-MOVE_SPEED, 0.0);
+	private static final Vector2D SOUTH = new Vector2D(0.0, MOVE_SPEED);
+	private static final Vector2D NORTH = new Vector2D(0.0, -MOVE_SPEED);
+	private static final Vector2D EAST = new Vector2D(MOVE_SPEED, 0.0);
 	
 	private BoundsTracker tracker;
 	
@@ -31,7 +31,7 @@ public class TemporaryMover implements KeyListener{
 	
 	public TemporaryMover(CharEntity avatar ) {
 		this.avatar = avatar;
-		tracker = new BoundsTracker(new EllipseBounds(new Vector(3, 3)), avatar);
+		tracker = new BoundsTracker(new EllipseBounds2D(new Vector2D(3, 3)), avatar);
 	}
 	
 	public void keyPressed(KeyEvent e) {
@@ -68,7 +68,8 @@ public class TemporaryMover implements KeyListener{
 		{
 			if(instance.getSetIdentifier().equals(InstanceSetIdentifier.ENTITY))
 			{
-				MutableVector direction = new MutableVector(instance.getCoordinate());
+				Vector2D coord = instance.getCoordinate(); 
+				MutableVector2D direction = new MutableVector2D(coord.getX(), coord.getY());
 				direction.minus(avatar.getCoordinate());
 				direction.times((3-direction.getMagnitude())/3);
 				instance.applyMomentum(direction);

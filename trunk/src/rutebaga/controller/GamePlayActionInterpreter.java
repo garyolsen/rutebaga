@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Set;
 
-import rutebaga.commons.math.EllipseBounds;
+import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.MutableVector;
 import rutebaga.commons.math.Vector;
 import rutebaga.model.entity.CharEntity;
@@ -24,7 +24,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 		this.world = world;
 		this.avatar = avatar;
 		//TODO: get rid of this
-		tracker = new BoundsTracker(new EllipseBounds(new Vector(3, 3)), avatar);
+		tracker = new BoundsTracker(new EllipseBounds2D(new Vector(3, 3)), avatar);
 	}
 	
 	public boolean eventsFallThrough() {

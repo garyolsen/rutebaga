@@ -2,16 +2,16 @@ package rutebaga.commons.math;
 
 
 /**
- * A ellipsoid bounds.
+ * A ellipse bounds.
  * 
  * @author Gary LosHuertos
  * 
  */
-public class EllipseBounds extends Bounds
+public class EllipseBounds2D extends Bounds2D
 {
-	private Vector center;
+	private Vector2D center;
 
-	private Vector radii;
+	private Vector2D radii;
 
 	/**
 	 * Constructs a new ElipseBounds using the specified center and radius.
@@ -26,7 +26,7 @@ public class EllipseBounds extends Bounds
 	 *            {@link Vector}.
 	 * @see Vector
 	 */
-	public EllipseBounds(Vector center, Vector size)
+	public EllipseBounds2D(Vector2D center, Vector2D size)
 	{
 		this.center = center;
 		this.radii = size;
@@ -38,48 +38,17 @@ public class EllipseBounds extends Bounds
 	 * @param radii
 	 *            the radii of the ellipsoid
 	 */
-	public EllipseBounds(Vector radii)
+	public EllipseBounds2D(Vector2D radii)
 	{
-
-		double arr[] = new double[radii.getDimension()];
-		for (int i = 0; i < arr.length; i++)
-		{
-			arr[i] = 0;
-		}
-
-		center = new Vector(arr);
+		center = new Vector2D(radii.getX(), radii.getY());
 		this.radii = radii;
 
 	}
 
-	/**
-	 * Returns true if this {@link Vector} falls into these EllipseBounds.
-	 * 
-	 * @return The boolean corresponding to whether this {@link Vector} is
-	 *         within the ElipseBounds.
-	 * @param v
-	 *            Whether or not this {@link Vector} is contained in the
-	 *            ElipseBounds
-	 */
 	@Override
-	public boolean contains(Vector v)
+	public Vector2DRectangle getBoundingBox()
 	{
-		if (v == null)
-			return false;
-		double value = 0;
-		for (int idx = 0; value <= 1 && idx < v.getDimension(); idx++)
-		{
-			double numerator = (v.get(idx) - center.get(idx));
-			numerator *= numerator;
-			value += numerator / (radii.get(idx) * radii.get(idx));
-		}
-		return value <= 1;
-	}
-
-	@Override
-	public VectorRectangle getBoundingBox()
-	{
-		return new VectorRectangle(center.minus(radii), radii.times(2));
+		return new Vector2DRectangle(center.minus(radii), radii.times(2));
 	}
 
 	/**
@@ -88,7 +57,7 @@ public class EllipseBounds extends Bounds
 	 * @return A {@link Vector} representing the center of this EllipseBounds.
 	 * @see Vector
 	 */
-	public Vector getCenter()
+	public Vector2D getCenter()
 	{
 		return center;
 	}
@@ -101,7 +70,7 @@ public class EllipseBounds extends Bounds
 	 *         radius in the corresponding direction.
 	 * @see Vector
 	 */
-	public Vector getRadii()
+	public Vector2D getRadii()
 	{
 		return radii;
 	}
@@ -114,7 +83,7 @@ public class EllipseBounds extends Bounds
 	 *            ElipseBounds.
 	 * @see Vector
 	 */
-	public void setCenter(Vector center)
+	public void setCenter(Vector2D center)
 	{
 		this.center = center;
 	}
@@ -128,8 +97,32 @@ public class EllipseBounds extends Bounds
 	 *            The {@link Vector} with components corresponding to the
 	 *            EllipseBound's new radii.
 	 */
-	public void setRadii(Vector size)
+	public void setRadii(Vector2D size)
 	{
 		this.radii = size;
+	}
+
+	@Override
+	public <T extends Number, U extends GenericVector2D<T, U>> boolean contains(U v)
+	{
+		if (v == null)
+			return false;
+		double x = v.getX().doubleValue();
+		double y = v.getY().doubleValue();
+		double t1 = (x-center.getX())/radii.getX();
+		double t2 = (y-center.getY())/radii.getY();
+		return (t1*t1 + t2*t2) <= 1;
+	}
+
+	@Override
+	public <T extends Number, U extends GenericVector2D<T, U>> boolean contains(U v, GenericVector2D offset)
+	{
+		if (v == null)
+			return false;
+		double x = v.getX().doubleValue()-offset.getX().doubleValue();
+		double y = v.getY().doubleValue()-offset.getY().doubleValue();
+		double t1 = (x-center.getX())/radii.getX();
+		double t2 = (y-center.getY())/radii.getY();
+		return (t1*t1 + t2*t2) <= 1;
 	}
 }

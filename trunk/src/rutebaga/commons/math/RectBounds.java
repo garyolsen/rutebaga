@@ -1,18 +1,16 @@
 package rutebaga.commons.math;
 
-import rutebaga.commons.NumberUtils;
-
 /**
  * A rectangular bounds.
  * 
  * @author Gary LosHuertos
  * 
  */
-public class RectBounds extends Bounds
+public class RectBounds extends Bounds2D
 {
-	private Vector size;
+	private Vector2D size;
 
-	private Vector lower;// lower left corner
+	private Vector2D lower;// lower left corner
 
 	/**
 	 * Constructs a RectBounds based on the specified lower-left corner and
@@ -27,41 +25,12 @@ public class RectBounds extends Bounds
 	 *            RectBounds.
 	 * @see Vector
 	 */
-	public RectBounds(Vector lower, Vector size)
+	public RectBounds(Vector2D lower, Vector2D size)
 	{
 		this.size = size;
 		this.lower = lower;
 	}
 
-	/**
-	 * Returns true if this RectBounds contains the specified {@link Vector}.
-	 * 
-	 * @param v
-	 *            {@link Vector} to be checked.
-	 * @return A boolean representing {@link Vector} v's containment in this
-	 *         RectBounds.
-	 * @see Vector
-	 */
-	@Override
-	public boolean contains(Vector v)
-	{
-		if (v == null)
-			return false;
-		boolean contains = true;
-		// each element v[idx] must be
-		// between lower[idx] and lower[idx]+size[idx]
-		for (int idx = 0; contains && idx < v.getDimension(); idx++)
-		{
-			double value = v.get(idx);
-			double lower = this.lower.get(idx);
-			double upper = lower + size.get(idx);
-			contains = contains && NumberUtils.between(value, lower, upper);
-			contains = contains
-					|| Double.doubleToLongBits(value) == Double
-							.doubleToLongBits(upper);
-		}
-		return contains;
-	}
 
 	/**
 	 * Returns the {@link Vector} representing this RectBounds' lower-left
@@ -71,7 +40,7 @@ public class RectBounds extends Bounds
 	 *         corner.
 	 * @see Vector
 	 */
-	public Vector getLower()
+	public Vector2D getLower()
 	{
 		return lower;
 	}
@@ -84,7 +53,7 @@ public class RectBounds extends Bounds
 	 *         corner.
 	 * @see Vector
 	 */
-	public Vector getSize()
+	public Vector2D getSize()
 	{
 		return size;
 	}
@@ -98,7 +67,7 @@ public class RectBounds extends Bounds
 	 *            corner.
 	 * @see Vector
 	 */
-	public void setLower(Vector lower)
+	public void setLower(Vector2D lower)
 	{
 		this.lower = lower;
 	}
@@ -112,15 +81,37 @@ public class RectBounds extends Bounds
 	 *            upper-right corner.
 	 * @see Vector
 	 */
-	public void setSize(Vector size)
+	public void setSize(Vector2D size)
 	{
 		this.size = size;
 	}
 
 	@Override
-	public VectorRectangle getBoundingBox()
+	public Vector2DRectangle getBoundingBox()
 	{
-		return new VectorRectangle(lower, size);
+		return new Vector2DRectangle(lower, size);
+	}
+
+	@Override
+	public <T extends Number, U extends GenericVector2D<T, U>> boolean contains(U v)
+	{
+		double x = v.getX().doubleValue();
+		double y = v.getY().doubleValue();
+		//TODO cache these for performance
+		double xMax = lower.getX() + size.getX();
+		double yMax = lower.getY() + size.getY();
+		return x >= lower.getX() && x <= xMax && y >= lower.getY() && y <= yMax; 
+	}
+
+	@Override
+	public <T extends Number, U extends GenericVector2D<T, U>> boolean contains(U v, GenericVector2D offset)
+	{
+		double x = v.getX().doubleValue() - offset.getX().doubleValue();
+		double y = v.getY().doubleValue() - offset.getY().doubleValue();
+		//TODO cache these for performance
+		double xMax = lower.getX() + size.getX();
+		double yMax = lower.getY() + size.getY();
+		return x >= lower.getX() && x <= xMax && y >= lower.getY() && y <= yMax;
 	}
 
 }

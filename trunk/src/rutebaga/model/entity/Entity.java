@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import rutebaga.commons.UIDProvider;
-import rutebaga.commons.math.EllipseBounds;
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.EllipseBounds2D;
+import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.Named;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.ConcreteInstanceSet;
 import rutebaga.model.environment.InstanceSetIdentifier;
 
 /**
@@ -32,14 +32,14 @@ public abstract class Entity extends Instance implements Named
 {
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
-	private EllipseBounds visionBounds;
+	private EllipseBounds2D visionBounds;
 
 	private Vision vision;
 
 	private String name;
 	public Entity()
 	{
-		visionBounds = new EllipseBounds(new Vector(20, 20));
+		visionBounds = new EllipseBounds2D(new Vector2D(20, 20));
 		// XXX: connascence of timing
 		vision = new Vision(this);
 	}
@@ -78,12 +78,12 @@ public abstract class Entity extends Instance implements Named
 		return vision;
 	}
 
-	public EllipseBounds getVisionBounds()
+	public EllipseBounds2D getVisionBounds()
 	{
 		return visionBounds;
 	}
 
-	public Vector getVisionRadius()
+	public Vector2D getVisionRadius()
 	{
 		return visionBounds.getRadii();
 	}
@@ -93,18 +93,19 @@ public abstract class Entity extends Instance implements Named
 		this.name = name;
 	}
 
-	public void setVisionBounds(EllipseBounds visionBounds)
+	public void setVisionBounds(EllipseBounds2D visionBounds)
 	{
 		this.visionBounds = visionBounds;
 	}
 
-	public void setVisionRadius(Vector visionRadius)
+	public void setVisionRadius(Vector2D visionRadius)
 	{
 		visionBounds.setRadii(visionRadius);
 	}
 	
-	public boolean canSee(Vector v) {
-		return visionBounds.contains(v.minus(this.getCoordinate()));
+	public boolean canSee(IntVector2D v) {
+		Vector2D dV = new Vector2D(v.getX(), v.getY());
+		return visionBounds.contains(dV.minus(this.getCoordinate()));
 	}
 
 	@Override

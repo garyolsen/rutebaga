@@ -1,7 +1,7 @@
 package rutebaga.test.commons;
 
 import rutebaga.commons.math.Vector;
-import rutebaga.commons.math.VectorRectangle;
+import rutebaga.commons.math.Vector2DRectangle;
 
 public class VectorRectTest
 {
@@ -11,7 +11,7 @@ public class VectorRectTest
 	 */
 	public static void main(String[] args)
 	{
-		VectorRectangle boundingBox = new VectorRectangle(new Vector(0, 0, 0),
+		Vector2DRectangle boundingBox = new Vector2DRectangle(new Vector(0, 0, 0),
 				new Vector(2, 2, 2));
 		for (Vector v : boundingBox.locationSet(1))
 		{

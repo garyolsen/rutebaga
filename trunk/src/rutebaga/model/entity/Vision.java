@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
 
@@ -15,7 +15,7 @@ public class Vision
 	// TODO make a movement listener of the entity
 
 	private Set<Instance> previousActiveSet = new HashSet<Instance>();
-	private Map<Vector, Set<Memory>> memorySet = new HashMap<Vector, Set<Memory>>();
+	private Map<IntVector2D, Set<Memory>> memorySet = new HashMap<IntVector2D, Set<Memory>>();
 	private BoundsTracker boundsTracker;
 	private Entity entity;
 
@@ -30,7 +30,7 @@ public class Vision
 		return boundsTracker.getInstances();
 	}
 
-	public Map<Vector, Set<Memory>> getMemory()
+	public Map<IntVector2D, Set<Memory>> getMemory()
 	{
 		return memorySet;
 	}
@@ -51,11 +51,11 @@ public class Vision
 
 		// insert what we last saw into memory
 
-		Map<Vector, Set<Memory>> lastSaw = new HashMap<Vector, Set<Memory>>();
+		Map<IntVector2D, Set<Memory>> lastSaw = new HashMap<IntVector2D, Set<Memory>>();
 
 		for (Instance instance : previousActiveSet)
 		{
-			Vector tile = instance.getTile();
+			IntVector2D tile = instance.getTile();
 			Set<Memory> tileMemory = lastSaw.get(instance.getTile());
 			if (tileMemory == null)
 			{

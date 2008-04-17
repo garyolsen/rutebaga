@@ -27,7 +27,7 @@ import rutebaga.view.drawer.Drawer;
  * <li>Forward draw calls to its children.
  * <li>Redefine the screen coordinate origin for the children.
  * <li>Toggle visibility of the entire set of ViewComponents.
- * <li>Ensure the {@link rutebaga.commons.math.Bounds} for the
+ * <li>Ensure the {@link rutebaga.commons.math.Bounds2D} for the
  * ViewCompositeComponent encompasses all of its children via dirtyBounds().
  * 
  * @author Ryan

@@ -1,19 +1,19 @@
 package rutebaga.model.environment;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
 import rutebaga.model.pathfinding.AStarNode;
 
 public class AStarNodeLocationAdapter extends AStarNode<AStarNodeLocationAdapter>
 {
 	private Environment environment;
 	private AStarNodeLocationManager manager;
-	private Vector tile;
+	private IntVector2D tile;
 
-	public AStarNodeLocationAdapter(AStarNodeLocationManager manager, Vector tile)
+	public AStarNodeLocationAdapter(AStarNodeLocationManager manager, IntVector2D tile)
 	{
 		super();
 		this.environment = manager.getEnvironment();
@@ -36,10 +36,10 @@ public class AStarNodeLocationAdapter extends AStarNode<AStarNodeLocationAdapter
 	@Override
 	public List<AStarNodeLocationAdapter> getNeighbors()
 	{
-		Set<Vector> neighbors = environment.getTileConvertor().adjacentTo(this.tile);
+		Collection<IntVector2D> neighbors = environment.getTileConvertor().adjacentTo(this.tile);
 		List<AStarNodeLocationAdapter> nodeNeighbors = new ArrayList<AStarNodeLocationAdapter>(neighbors.size());
 		AStarNodeLocationAdapter node;
-		for(Vector neighbor : neighbors)
+		for(IntVector2D neighbor : neighbors)
 		{
 			node = manager.getNode(neighbor);
 			if (!(node == null))
@@ -48,13 +48,13 @@ public class AStarNodeLocationAdapter extends AStarNode<AStarNodeLocationAdapter
 		return nodeNeighbors;
 	}
 	
-	public Vector getTile() {
+	public IntVector2D getTile() {
 		return tile;
 	}
 
 	@Override
 	public boolean equals(AStarNodeLocationAdapter other) {
-		return (tile.compareTo(other.getTile()) == 0);
+		return tile.equals(other.getTile());
 	}
 
 }

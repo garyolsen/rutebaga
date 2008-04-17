@@ -1,9 +1,9 @@
 package rutebaga.model.environment;
 
 import java.util.Collection;
-import java.util.Set;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.Vector2D;
 
 /**
  * Provides a mapping between a tile-space and actual space.
@@ -22,7 +22,7 @@ public interface TileConvertor
 	 *            the coordinate in actual space
 	 * @return the tile-space coordinate
 	 */
-	Vector tileOf(Vector coordinate);
+	IntVector2D tileOf(Vector2D coordinate);
 
 	/**
 	 * Calculates the set of adjacent tiles to this tile based on the given
@@ -32,7 +32,7 @@ public interface TileConvertor
 	 *            the tile-space coordinate upon which the calculation is based
 	 * @return the set of adjacent tile-space coordinates
 	 */
-	Set<Vector> adjacentTo(Vector tile);
+	Collection<IntVector2D> adjacentTo(IntVector2D tile);
 
 	/**
 	 * @return the dimension of this space definition
@@ -45,7 +45,7 @@ public interface TileConvertor
 	 * @param coordinate	the coordinate to convert
 	 * @return	the coordinate's rectangular location
 	 */
-	Vector toRect(Vector coordinate);
+	Vector2D toRect(Vector2D coordinate);
 	
-	public Collection<Vector> between(Vector a, Vector b);
+	public Collection<IntVector2D> between(IntVector2D a, IntVector2D b);
 }

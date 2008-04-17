@@ -2,15 +2,16 @@ package rutebaga.model.environment;
 
 import java.util.Set;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.Vector2D;
 
 public class MovementEvent
 {
 	private final Instance instance;
-	private final Vector oldCoordinate;
-	private final Vector oldTile;
+	private final Vector2D oldCoordinate;
+	private final IntVector2D oldTile;
 
-	public MovementEvent(Instance instance, Vector oldCoordinate, Vector oldTile)
+	public MovementEvent(Instance instance, Vector2D oldCoordinate, IntVector2D oldTile)
 	{
 		this.instance = instance;
 		this.oldCoordinate = oldCoordinate;
@@ -22,22 +23,22 @@ public class MovementEvent
 		return instance;
 	}
 
-	public Vector getNewCoordinate()
+	public Vector2D getNewCoordinate()
 	{
 		return instance.getCoordinate();
 	}
 
-	public Vector getNewTile()
+	public IntVector2D getNewTile()
 	{
 		return instance.getTile();
 	}
 
-	public Vector getOldCoordinate()
+	public Vector2D getOldCoordinate()
 	{
 		return oldCoordinate;
 	}
 
-	public Vector getOldTile()
+	public IntVector2D getOldTile()
 	{
 		return oldTile;
 	}

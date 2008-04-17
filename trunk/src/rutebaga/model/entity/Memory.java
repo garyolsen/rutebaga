@@ -1,6 +1,6 @@
 package rutebaga.model.entity;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Layerable;
@@ -8,10 +8,10 @@ import rutebaga.model.environment.Layerable;
 public class Memory implements Layerable
 {
 	private Appearance appearance;
-	private Vector coordinate;
+	private Vector2D coordinate;
 	private double layer;
 
-	public Memory(Appearance appearance, Vector coordinate, double layer)
+	public Memory(Appearance appearance, Vector2D coordinate, double layer)
 	{
 		super();
 		this.appearance = appearance;
@@ -31,7 +31,7 @@ public class Memory implements Layerable
 		return appearance;
 	}
 
-	public Vector getCoordinate()
+	public Vector2D getCoordinate()
 	{
 		return coordinate;
 	}
@@ -46,7 +46,7 @@ public class Memory implements Layerable
 		this.appearance = appearance;
 	}
 
-	public void setCoordinate(Vector coordinate)
+	public void setCoordinate(Vector2D coordinate)
 	{
 		this.coordinate = coordinate;
 	}

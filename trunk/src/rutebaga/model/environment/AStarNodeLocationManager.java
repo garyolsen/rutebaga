@@ -3,17 +3,17 @@ package rutebaga.model.environment;
 import java.util.HashMap;
 import java.util.Map;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
 import rutebaga.model.entity.Entity;
 
 public class AStarNodeLocationManager
 {
-	private Map<Vector, AStarNodeLocationAdapter> nodes = new HashMap<Vector, AStarNodeLocationAdapter>();
+	private Map<IntVector2D, AStarNodeLocationAdapter> nodes = new HashMap<IntVector2D, AStarNodeLocationAdapter>();
 	private Environment environment;
 	private Entity entity;
-	private Vector target;
+	private IntVector2D target;
 	
-	public AStarNodeLocationManager(Environment environment, Entity entity, Vector target)
+	public AStarNodeLocationManager(Environment environment, Entity entity, IntVector2D target)
 	{
 //		System.out.println("Entity is at " + entity.getTile());
 		this.environment = environment;
@@ -30,7 +30,7 @@ public class AStarNodeLocationManager
 	 * @param v
 	 * @return The node at the given vector
 	 */
-	public AStarNodeLocationAdapter getNode(Vector v)
+	public AStarNodeLocationAdapter getNode(IntVector2D v)
 	{
 		AStarNodeLocationAdapter node;
 		if(!nodes.containsKey(v))

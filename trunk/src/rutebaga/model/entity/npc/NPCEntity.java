@@ -1,11 +1,10 @@
 package rutebaga.model.entity.npc;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
-import rutebaga.model.environment.Instance;
 
 /**
  * NPCEntity is a sub-type of {@link Entity} and adds needed functionality to an
@@ -156,7 +155,7 @@ public class NPCEntity extends CharEntity
 		this.brain = brain;
 	}
 	
-	public Vector getTargetTile() {
+	public IntVector2D getTargetTile() {
 		return target.getTile();
 	}
 
