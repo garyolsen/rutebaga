@@ -2,6 +2,12 @@ package rutebaga.commons.math;
 
 public class IntVector2D implements GenericVector2D<Integer, IntVector2D>
 {
+	@Override
+	public String toString()
+	{
+		return "<" + this.getX() + ", " + this.getY() + ">";
+	}
+
 	private static void minus(int[] a, GenericVector2D b, int[] dest)
 	{
 		dest[0] = a[0] - b.getX().intValue();
