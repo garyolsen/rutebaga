@@ -1,10 +1,8 @@
 package rutebaga.model.entity.npc.state;
 
-import java.util.Random;
-
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.MutableVector2D;
 
 /**
  * @author nicholasstamas
@@ -12,8 +10,6 @@ import rutebaga.commons.math.Vector;
  */
 public class Wander extends NPCState
 {
-
-	private Random rand = new Random();
 	
 	private int direction = 0;
 	private int wait = 0;
@@ -50,7 +46,7 @@ public class Wander extends NPCState
 		double dx = direction % 2;
 		double dy = direction % 2 + 1;
 		boolean negative = (direction / 2) % 2 == 0;
-		Vector impulse = new Vector(dx * 0.05, dy * 0.05);
+		MutableVector2D impulse = new MutableVector2D(dx * 0.05, dy * 0.05);
 		if (negative)
 			impulse = impulse.negate();
 

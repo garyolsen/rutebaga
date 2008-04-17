@@ -3,9 +3,9 @@ package rutebaga.model.environment;
 import java.util.HashSet;
 import java.util.Set;
 
-import rutebaga.commons.math.GeneralVector;
-import rutebaga.commons.math.MutableVector;
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.GenericVector2D;
+import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
@@ -49,7 +49,7 @@ public abstract class Instance implements Layerable
 	 * @param impulse
 	 *            the impulse to be applied
 	 */
-	public void applyImpulse(Vector impulse)
+	public void applyImpulse(GenericVector2D impulse)
 	{
 		this.physicsContainer.applyImpulse(impulse);
 	}
@@ -60,7 +60,7 @@ public abstract class Instance implements Layerable
 	 * @param momentum
 	 *            the impulse to be added to the momentum
 	 */
-	public void applyMomentum(GeneralVector momentum)
+	public void applyMomentum(GenericVector2D momentum)
 	{
 		this.physicsContainer.applyMomentum(momentum);
 	}
@@ -109,7 +109,7 @@ public abstract class Instance implements Layerable
 	 * 
 	 * @return the coordinate of this instance in space
 	 */
-	public Vector getCoordinate()
+	public Vector2D getCoordinate()
 	{
 		return location.getCoordinate();
 	}
@@ -134,7 +134,7 @@ public abstract class Instance implements Layerable
 	 */
 	public abstract double getMass();
 
-	public MutableVector getMomentum()
+	public Vector2D getMomentum()
 	{
 		return physicsContainer.getMomentum();
 	}
@@ -150,7 +150,7 @@ public abstract class Instance implements Layerable
 	/**
 	 * @return the coordinate of this instance in tile-space
 	 */
-	public Vector getTile()
+	public IntVector2D getTile()
 	{
 		return location.getTile();
 	}
@@ -158,7 +158,7 @@ public abstract class Instance implements Layerable
 	/**
 	 * @return the (instantaneous) velocity of this instance
 	 */
-	public MutableVector getVelocity()
+	public Vector2D getVelocity()
 	{
 		return this.physicsContainer.getVelocity();
 	}

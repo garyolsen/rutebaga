@@ -5,20 +5,17 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
-import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.LayerComparator;
-import rutebaga.model.map.Tile;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ViewComponent;
@@ -68,11 +65,11 @@ public class MapComponent extends ViewComponent
 	}
 	
 	private void drawMemorySet(Drawer draw, Vision avatarVision) {
-		Map<Vector, Set<Memory>> memory = avatarVision.getMemory();
+		Map<IntVector2D, Set<Memory>> memory = avatarVision.getMemory();
 		
 		ArrayList<Memory> sortedMemory = new ArrayList<Memory>();
 		
-		for(Vector v : memory.keySet()) {
+		for(IntVector2D v : memory.keySet()) {
 			for(Memory mem : memory.get(v)) {
 				
 				Point p = centerPointOnAvatar( avatar.getCoordinate(), mem.getCoordinate() );
@@ -110,7 +107,7 @@ public class MapComponent extends ViewComponent
 		draw.drawImage(p, avatar.getAppearance().getImage());
 	}
 	
-	private Point centerPointOnAvatar(Vector center, Vector other) {
+	private Point centerPointOnAvatar(Vector2D center, Vector2D other) {
 		Point centered = new Point();
 		
 		centered.x = (int) (((other.get(0) - center.get(0)) * TILE_SIZE) + (getWidth()/2));

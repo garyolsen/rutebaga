@@ -3,9 +3,9 @@ package rutebaga.model.environment;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.Vector2D;
 
 /**
  * Convertor for a basic rectangular tile system, within which tile-space is
@@ -31,14 +31,10 @@ public class Rect2DTileConvertor implements TileConvertor
 	 * 
 	 * @see rutebaga.model.environment.TileConvertor#tileOf(rutebaga.commons.Vector)
 	 */
-	public Vector tileOf(Vector coordinate)
+	public IntVector2D tileOf(Vector2D coordinate)
 	{
-		double newCoords[] = new double[coordinate.getDimension()];
-		for (int idx = 0; idx < newCoords.length; idx++)
-		{
-			newCoords[idx] = Math.round(coordinate.get(idx));
-		}
-		return new Vector(newCoords);
+		return new IntVector2D((int) Math.round(coordinate.getX()), (int) Math
+				.round(coordinate.getY()));
 	}
 
 	/*
@@ -46,13 +42,13 @@ public class Rect2DTileConvertor implements TileConvertor
 	 * 
 	 * @see rutebaga.model.environment.TileConvertor#adjacentTo(rutebaga.commons.Vector)
 	 */
-	public Set<Vector> adjacentTo(Vector tile)
+	public Collection<IntVector2D> adjacentTo(IntVector2D tile)
 	{
-		Set<Vector> rval = new HashSet<Vector>();
-		rval.add(tile.plus(new Vector(0, 1)));
-		rval.add(tile.plus(new Vector(0, -1)));
-		rval.add(tile.plus(new Vector(1, 0)));
-		rval.add(tile.plus(new Vector(-1, 0)));
+		ArrayList<IntVector2D> rval = new ArrayList<IntVector2D>();
+		rval.add(tile.plus(new IntVector2D(0, 1)));
+		rval.add(tile.plus(new IntVector2D(0, -1)));
+		rval.add(tile.plus(new IntVector2D(1, 0)));
+		rval.add(tile.plus(new IntVector2D(-1, 0)));
 		return rval;
 	}
 
@@ -61,15 +57,15 @@ public class Rect2DTileConvertor implements TileConvertor
 		return 2;
 	}
 
-	public Vector toRect(Vector coordinate)
+	public Vector2D toRect(Vector2D coordinate)
 	{
 		return coordinate;
 	}
 
-	public Collection<Vector> between(Vector a, Vector b)
+	public Collection<IntVector2D> between(IntVector2D a, IntVector2D b)
 	{
-		Collection<Vector> rval = new HashSet<Vector>();
-		Vector slopeV = b.minus(a).getDirection();
+		Collection<IntVector2D> rval = new HashSet<IntVector2D>();
+		Vector2D slopeV = b.minus(a).getDirection();
 		double slope = slopeV.get(1) / slopeV.get(0);
 		if (slope == Double.POSITIVE_INFINITY
 				|| slope == Double.NEGATIVE_INFINITY)
@@ -77,7 +73,7 @@ public class Rect2DTileConvertor implements TileConvertor
 			int x = (int) a.get(0);
 			for (int y = (int) a.get(1); y <= b.get(1); y++)
 			{
-				rval.add(new Vector(x, y));
+				rval.add(new IntVector2D(x, y));
 			}
 			return rval;
 		}
@@ -88,7 +84,7 @@ public class Rect2DTileConvertor implements TileConvertor
 			for (int y = (int) Math.round(currentY - 0.5); y <= Math
 					.round(nextY - 0.5); y++)
 			{
-				rval.add(new Vector(x, y));
+				rval.add(new IntVector2D(x, y));
 			}
 			currentY = nextY;
 		}

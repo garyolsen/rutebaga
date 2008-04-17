@@ -10,7 +10,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.npc.NPCEntity;
@@ -27,13 +27,13 @@ public class ViewTest
 
 	private static Random random = new Random();
 
-	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
+	private static int SCREENWIDTH = 640, SCREENHEIGHT = 480;
 
 	private static int N_NPCS = 0;
 	private static double TILE_PROB = 1;
 
 	private static int[] MAP_BOUNDS =
-	{ 0, 30, 0, 30 };
+	{ 0, 20, 0, 20 };
 
 	private static boolean TICK_ENVIRONMENT = true;
 	private static boolean RENDER_MAP = true;
@@ -45,7 +45,6 @@ public class ViewTest
 		view.setFullscreen();
 
 		CharEntity avatar;
-		CharEntity npc;
 
 		Environment environment = new Environment(new Rect2DTileConvertor());
 
@@ -92,7 +91,7 @@ public class ViewTest
 				{
 					if (random.nextDouble() < TILE_PROB)
 					{
-						Vector location = new Vector(x, y);
+						Vector2D location = new Vector2D(x, y);
 						Tile tile = new Tile()
 						{
 
@@ -115,7 +114,7 @@ public class ViewTest
 			// {
 			// for (int y = 0; y < 30; y++)
 			// {
-			// Vector location = new Vector(x, y);
+			// Vector2D location = new Vector2D(x, y);
 			// if (x % 8 == 0 && y % 8 == 0)
 			// {
 			// WindTunnel tunnel = new WindTunnel();
@@ -131,7 +130,7 @@ public class ViewTest
 			// {
 			// for (int y = 40; y < 70; y++)
 			// {
-			// Vector location = new Vector(x, y);
+			// Vector2D location = new Vector2D(x, y);
 			// if (x % 8 == 0 && y % 8 == 0)
 			// {
 			// Instance instance = new Bumper();
@@ -171,13 +170,13 @@ public class ViewTest
 			// npcAppearance.setImage(treasure);
 			// npc.setAppearance(npcAppearance);
 			//		
-			// environment.add(npc, new Vector(20, 20));
+			// environment.add(npc, new Vector2D(20, 20));
 
 			Appearance appearance = new Appearance(avatar);
 			appearance.setImage(cheese);
 			avatar.setAppearance(appearance);
 
-			environment.add(avatar, new Vector(0, 0));
+			environment.add(avatar, new Vector2D(0, 0));
 
 			int xRng = MAP_BOUNDS[1] - MAP_BOUNDS[0];
 			int yRng = MAP_BOUNDS[3] - MAP_BOUNDS[2];
@@ -193,7 +192,7 @@ public class ViewTest
 
 				npc1.setTarget(avatar);
 
-				environment.add(npc1, new Vector(random.nextInt(xRng) + xMin,
+				environment.add(npc1, new Vector2D(random.nextInt(xRng) + xMin,
 						random.nextInt(yRng) + yMin));
 			}
 
@@ -254,7 +253,8 @@ public class ViewTest
 		}
 	}
 
-	private static Vector createImpulse()
+	@SuppressWarnings("unused")
+	private static Vector2D createImpulse()
 	{
 		double xImpulse = 0.1;
 		if (random.nextBoolean())
@@ -268,6 +268,6 @@ public class ViewTest
 
 		yImpulse *= random.nextInt(7);
 
-		return new Vector(xImpulse, yImpulse);
+		return new Vector2D(xImpulse, yImpulse);
 	}
 }

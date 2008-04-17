@@ -2,6 +2,7 @@ package rutebaga.commons.math;
 
 import java.util.Comparator;
 
+@Deprecated
 public class VectorMagnitudeComparator implements Comparator<Vector>
 {
 

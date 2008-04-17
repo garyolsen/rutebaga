@@ -1,6 +1,6 @@
 package rutebaga.test.model.environment;
 
-import rutebaga.commons.math.Bounds;
+import rutebaga.commons.math.Bounds2D;
 import rutebaga.commons.math.RectBounds;
 import rutebaga.commons.math.Vector;
 import rutebaga.model.environment.BoundsTracker;
@@ -19,7 +19,7 @@ public class MovementTest
 		if (!success)
 			System.out.println("Failed");
 
-		Bounds monitoredBounds = new RectBounds(new Vector(-4, -4), new Vector(
+		Bounds2D monitoredBounds = new RectBounds(new Vector(-4, -4), new Vector(
 				2, 2));
 		BoundsTracker tracker = new BoundsTracker(monitoredBounds, first);
 

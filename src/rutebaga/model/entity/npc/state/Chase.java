@@ -2,7 +2,7 @@ package rutebaga.model.entity.npc.state;
 
 import java.util.List;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.IntVector2D;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
 import rutebaga.model.environment.AStarNodeLocationAdapter;
@@ -57,7 +57,7 @@ public class Chase extends NPCState
 			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc, npc.getTargetTile());
 			List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
 			
-			Vector moveTo = npc.getTile();
+			IntVector2D moveTo = npc.getTile();
 			
 			if ( !(path == null) && !(path.isEmpty()) )
 				moveTo = path.get(0).getTile();

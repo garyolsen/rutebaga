@@ -1,8 +1,7 @@
 package rutebaga.commons.math;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Base class for a discrete bounds within space.
@@ -13,7 +12,7 @@ import java.util.Set;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Bounds
+public abstract class Bounds2D
 {
 	/**
 	 * Tests whether or not the given vector is within the bounds.
@@ -24,7 +23,11 @@ public abstract class Bounds
 	 *            the vector to check
 	 * @return true if v is within these bounds, false otherwise
 	 */
-	public abstract boolean contains(Vector v);
+	public abstract <T extends Number, U extends GenericVector2D<T, U>> boolean contains(
+			U v);
+	
+	public abstract <T extends Number, U extends GenericVector2D<T, U>> boolean contains(
+			U v, GenericVector2D offset);
 
 	/**
 	 * Tests if the {@link Vector Vectors} that are the columns in the provided
@@ -40,17 +43,19 @@ public abstract class Bounds
 	 * @see Matrix
 	 * @see Vector
 	 */
+	@Deprecated
 	public Matrix filter(Matrix m)
 	{
-		Vector[] vectors = m.asVectors();
-
-		for (int idx = 0; idx < vectors.length; idx++)
-		{
-			if (!contains(vectors[idx]))
-				vectors[idx] = null;
-		}
-
-		return new Matrix(vectors);
+//		Vector[] vectors = m.asVectors();
+//
+//		for (int idx = 0; idx < vectors.length; idx++)
+//		{
+//			if (!contains(vectors[idx]))
+//				vectors[idx] = null;
+//		}
+//
+//		return new Matrix(vectors);
+		return null;
 	}
 
 	/**
@@ -61,10 +66,11 @@ public abstract class Bounds
 	 *            The sample Vector set.
 	 * @return the Vector set within this Bounds.
 	 */
-	public Set<Vector> filter(Set<Vector> vectors)
+	public <T extends Number, U extends GenericVector2D<T, U>> Collection<U> filter(
+			Collection<U> vectors)
 	{
-		Set<Vector> rval = new HashSet<Vector>();
-		for (Vector vector : vectors)
+		ArrayList<U> rval = new ArrayList<U>();
+		for (U vector : vectors)
 		{
 			if (this.contains(vector))
 				rval.add(vector);
@@ -82,12 +88,13 @@ public abstract class Bounds
 	 *            The offset to use.
 	 * @return The Vector set within this Bounds.
 	 */
-	public Set<Vector> filter(Set<Vector> vectors, Vector offset)
+	public <T extends Number, U extends GenericVector2D<T, U>> Collection<U> filter(
+			Collection<U> vectors, GenericVector2D offset)
 	{
-		Set<Vector> rval = new HashSet<Vector>();
-		for (Vector vector : vectors)
+		ArrayList<U> rval = new ArrayList<U>();
+		for (U vector : vectors)
 		{
-			if (this.contains(vector.plus(offset)))
+			if (this.contains(vector, offset))
 				rval.add(vector);
 		}
 		return rval;
@@ -102,7 +109,7 @@ public abstract class Bounds
 	 * 
 	 * @return The bounding box of this Bounds.
 	 */
-	public abstract VectorRectangle getBoundingBox();
+	public abstract Vector2DRectangle getBoundingBox();
 
 	/**
 	 * Returns a set of the locations within this Bounds.
@@ -114,9 +121,15 @@ public abstract class Bounds
 	 *            scale.
 	 * @return A set of location Vectors that are within this Bounds.
 	 */
-	public Set<Vector> locationSet(double scale)
+	public Collection<Vector2D> locationSet(double scale)
 	{
-		Set<Vector> rval = getBoundingBox().locationSet(scale);
+		Collection<Vector2D> rval = getBoundingBox().locationSet(scale);
+		return filter(rval);
+	}
+	
+	public Collection<IntVector2D> intLocationSet()
+	{
+		Collection<IntVector2D> rval = getBoundingBox().intLocationSet();
 		return filter(rval);
 	}
 }

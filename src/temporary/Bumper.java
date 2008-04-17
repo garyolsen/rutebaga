@@ -1,6 +1,6 @@
 package temporary;
 
-import rutebaga.commons.math.EllipseBounds;
+import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.Vector;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.entity.Entity;
@@ -14,7 +14,7 @@ public class Bumper extends Instance
 
 	public Bumper()
 	{
-		tracker = new BoundsTracker(new EllipseBounds(new Vector(0, 0),
+		tracker = new BoundsTracker(new EllipseBounds2D(new Vector(0, 0),
 				new Vector(2, 2)), this);
 	}
 

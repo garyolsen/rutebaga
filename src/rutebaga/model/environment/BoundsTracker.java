@@ -1,12 +1,13 @@
 package rutebaga.model.environment;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import rutebaga.commons.ObjectUtils;
-import rutebaga.commons.math.Bounds;
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.Bounds2D;
+import rutebaga.commons.math.IntVector2D;
 
 /**
  * Tracks the position of instances within a bounds centered upon an instance.
@@ -23,10 +24,10 @@ import rutebaga.commons.math.Vector;
 public class BoundsTracker implements MovementListener
 {
 	private Environment monitoredEnvironment;
-	private Bounds bounds;
+	private Bounds2D bounds;
 
 	private Instance monitoredInstance;
-	private Set<Vector> tilesWithinBounds;
+	private Collection<IntVector2D> tilesWithinBounds;
 
 	private boolean init = false;
 
@@ -40,7 +41,7 @@ public class BoundsTracker implements MovementListener
 	 * @param instance
 	 *            the instance to center upon
 	 */
-	public BoundsTracker(Bounds bounds, Instance instance)
+	public BoundsTracker(Bounds2D bounds, Instance instance)
 	{
 		this.bounds = bounds;
 		this.monitoredInstance = instance;
@@ -57,7 +58,7 @@ public class BoundsTracker implements MovementListener
 		if (monitoredEnvironment == null)
 			return;
 		this.monitoredEnvironment.registerMovementListener(this);
-		tilesWithinBounds = bounds.locationSet(1.0);
+		tilesWithinBounds = bounds.intLocationSet();
 		recheck();
 		init = true;
 	}
@@ -110,7 +111,7 @@ public class BoundsTracker implements MovementListener
 	private void recheck()
 	{
 		insideInstances.clear();
-		for (Vector tile : tilesWithinBounds)
+		for (IntVector2D tile : tilesWithinBounds)
 		{
 			insideInstances.addAll(monitoredEnvironment.instancesAt(tile
 					.plus(monitoredInstance.getTile())));
@@ -127,8 +128,8 @@ public class BoundsTracker implements MovementListener
 	 */
 	private boolean checkInstance(Instance instance)
 	{
-		Vector location = instance.getTile();
-		Vector offset = this.monitoredInstance.getTile();
+		IntVector2D location = instance.getTile();
+		IntVector2D offset = this.monitoredInstance.getTile();
 		return tilesWithinBounds.contains(location.minus(offset));
 	}
 

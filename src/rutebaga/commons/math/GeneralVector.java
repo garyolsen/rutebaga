@@ -1,5 +1,6 @@
 package rutebaga.commons.math;
 
+@Deprecated
 public interface GeneralVector extends Comparable<GeneralVector>
 {
 

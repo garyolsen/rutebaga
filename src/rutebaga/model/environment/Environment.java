@@ -8,13 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import rutebaga.commons.math.Bounds;
-import rutebaga.commons.math.MutableVector;
-import rutebaga.commons.math.Vector;
-import rutebaga.model.entity.Entity;
+
+import rutebaga.commons.math.Bounds2D;
+import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 
@@ -36,13 +35,13 @@ import rutebaga.model.environment.InternalContainer.PhysicsContainer;
  */
 public class Environment
 {
-	private Set<Instance> instances = new ConcreteInstanceSet();
-	private Map<Vector, HashSet<Instance>> tileCache = new HashMap<Vector, HashSet<Instance>>();
-	private Map<Instance, Vector> reverseTileCache = new HashMap<Instance, Vector>();
+	private Set<Instance> instances = new HashSet<Instance>();
+	private Map<IntVector2D, HashSet<Instance>> tileCache = new HashMap<IntVector2D, HashSet<Instance>>();
+	private Map<Instance, IntVector2D> reverseTileCache = new HashMap<Instance, IntVector2D>();
 	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
 	private TileConvertor tileConvertor;
 
-	private Map<Vector, Double> frictionCache = new HashMap<Vector, Double>();
+	private Map<IntVector2D, Double> frictionCache = new HashMap<IntVector2D, Double>();
 
 	private Set<Instance> dirtyPhysics = new CopyOnWriteArraySet<Instance>();
 
@@ -79,7 +78,7 @@ public class Environment
 	 *            where the instance should be placed
 	 * @return whether or not the insertion was successful
 	 */
-	public boolean add(Instance instance, Vector coordinate)
+	public boolean add(Instance instance, Vector2D coordinate)
 	{
 		if (instances.contains(instance))
 		{
@@ -87,7 +86,7 @@ public class Environment
 			return false;
 		}
 
-		Vector tile = tileConvertor.tileOf(coordinate);
+		IntVector2D tile = tileConvertor.tileOf(coordinate);
 		if (blocked(instance, tile, false))
 			return false;
 
@@ -126,7 +125,7 @@ public class Environment
 	 *            the tile to query
 	 * @return a read-only set of the instances on the tile
 	 */
-	public Set<Instance> instancesAt(Vector tile)
+	public Set<Instance> instancesAt(IntVector2D tile)
 	{
 		return Collections.unmodifiableSet(getInstanceSetAt(tile));
 	}
@@ -142,7 +141,7 @@ public class Environment
 		MovementEvent event = new MovementEvent(instance, instance
 				.getCoordinate(), instance.getTile());
 		instances.remove(instance);
-		Vector tile = reverseTileCache.remove(instance);
+		IntVector2D tile = reverseTileCache.remove(instance);
 		instancesAt(tile).remove(instance);
 		instance.setLocation(null);
 		notifyListeners(event);
@@ -169,7 +168,7 @@ public class Environment
 	 *            the tile access is being requested to
 	 * @return whether or not access is blocked
 	 */
-	protected boolean blocked(Instance instance, Vector tile,
+	protected boolean blocked(Instance instance, IntVector2D tile,
 			boolean emptyBlocks)
 	{
 		HashSet<Instance> instances = tileCache.get(tile);
@@ -191,7 +190,7 @@ public class Environment
 	 *            the tile to query
 	 * @return the space friction present on the tile
 	 */
-	protected double frictionAt(Vector tile)
+	protected double frictionAt(IntVector2D tile)
 	{
 		double rval = 0;
 		for (Instance instance : instancesAt(tile))
@@ -204,7 +203,7 @@ public class Environment
 	/**
 	 * @return the cache of tiles
 	 */
-	protected Map<Vector, HashSet<Instance>> getTileCache()
+	protected Map<IntVector2D, HashSet<Instance>> getTileCache()
 	{
 		return tileCache;
 	}
@@ -218,15 +217,15 @@ public class Environment
 		int moveCt = 0;
 		for (Instance instance : instances)
 		{
-			MutableVector velocity = instance.getVelocity();
+			Vector2D velocity = instance.getVelocity();
 			if (velocity.getMagnitude() <= 0.0001)
 				continue;
-			Vector newCoordinate = instance.getCoordinate().plus(velocity);
-			Vector newTile = tileConvertor.tileOf(newCoordinate);
-			Collection<Vector> inBetween = tileConvertor.between(instance
+			Vector2D newCoordinate = instance.getCoordinate().plus(velocity);
+			IntVector2D newTile = tileConvertor.tileOf(newCoordinate);
+			Collection<IntVector2D> inBetween = tileConvertor.between(instance
 					.getTile(), newTile);
 			boolean blocked = false;
-			for (Vector blockTile : inBetween)
+			for (IntVector2D blockTile : inBetween)
 			{
 				if (blocked(instance, blockTile, true))
 				{
@@ -263,7 +262,7 @@ public class Environment
 	protected void updatePhysics()
 	{
 		long time = System.currentTimeMillis();
-		for (Vector tile : tileCache.keySet())
+		for (IntVector2D tile : tileCache.keySet())
 		{
 			double friction = frictionAt(tile);
 			frictionCache.put(tile, friction);
@@ -286,8 +285,8 @@ public class Environment
 	 */
 	protected void updateTileOf(Instance instance)
 	{
-		Vector current = reverseTileCache.get(instance);
-		Vector newTile = instance.getTile();
+		IntVector2D current = reverseTileCache.get(instance);
+		IntVector2D newTile = instance.getTile();
 		if (!newTile.equals(current))
 		{
 			HashSet<Instance> currentInstances = tileCache.get(current);
@@ -312,12 +311,12 @@ public class Environment
 	 *            the center of the bounds
 	 * @return the set of instances within the bounds
 	 */
-	public Collection<Instance> getInstances(Bounds bounds, Vector center)
+	public Collection<Instance> getInstances(Bounds2D bounds, Vector2D center)
 	{
 		List<Instance> rval = new LinkedList<Instance>();
-		Set<Vector> tiles = tileCache.keySet();
+		Collection<IntVector2D> tiles = tileCache.keySet();
 		tiles = bounds.filter(tiles, center);
-		for (Vector tile : tiles)
+		for (IntVector2D tile : tiles)
 		{
 			rval.addAll(tileCache.get(tile));
 		}
@@ -379,7 +378,7 @@ public class Environment
 	 *            the tile to query
 	 * @return the set of instances at the tile
 	 */
-	private Set<Instance> getInstanceSetAt(Vector tile)
+	private Set<Instance> getInstanceSetAt(IntVector2D tile)
 	{
 		HashSet<Instance> set = tileCache.get(tile);
 		if (set == null)
@@ -390,7 +389,7 @@ public class Environment
 		return set;
 	}
 
-	public Set<Vector> getSpace()
+	public Set<IntVector2D> getSpace()
 	{
 		return Collections.unmodifiableSet(tileCache.keySet());
 	}
@@ -400,7 +399,7 @@ public class Environment
 		return tileConvertor.getDimension();
 	}
 
-	public boolean exists(Vector tile)
+	public boolean exists(IntVector2D tile)
 	{
 		if (!tileCache.containsKey(tile))
 			return false;
@@ -415,7 +414,7 @@ public class Environment
 		return dirtyPhysics;
 	}
 
-	public boolean blockedAtTile(Vector v, Instance instance)
+	public boolean blockedAtTile(IntVector2D v, Instance instance)
 	{
 		return this.blocked(instance, v, true);
 	}

@@ -14,6 +14,7 @@ import java.util.Arrays;
  * @author Gary LosHuertos
  * 
  */
+@Deprecated
 public class MutableVector implements GeneralVector
 {
 
