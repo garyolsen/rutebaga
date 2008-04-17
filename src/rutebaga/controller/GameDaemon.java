@@ -110,9 +110,13 @@ public class GameDaemon implements InterpreterManager {
 				GameDaemon.this.view.renderFrame();
 			}
 		});
-		this.ticker.unpause();
 		this.keyBuffer = new KeyBuffer();
 		view.addKeyListener(this.keyBuffer);
+		/*
+		 * Connascence of position/timing. The ticker must not be unpaused until
+		 * all the GameDaemon instance fields are initialized.
+		 */
+		this.ticker.unpause();
 	}
 
 	/**

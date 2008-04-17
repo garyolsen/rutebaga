@@ -56,9 +56,14 @@ public class View
 		window.setVisible(true);
 		window.createBufferStrategy(2);
 		
-		setFullscreen();
+		/**
+		 * Calling setDisplayMode on my computer prevents anything from being
+		 * displayed on my computer.  Commenting out for now.  -matt
+		 */
 		
-		device.setDisplayMode(new DisplayMode(width, height, 32, 60));
+		//setFullscreen();
+		
+		//device.setDisplayMode(new DisplayMode(width, height, 32, 60));
 	}
 
 	/**
@@ -95,7 +100,7 @@ public class View
 	 * Refreshes the contents of the View.
 	 */
 	public void renderFrame()
-	{
+	{		
 		if (!strategy.contentsLost())
 		{
 			Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();

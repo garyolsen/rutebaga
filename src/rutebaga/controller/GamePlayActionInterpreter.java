@@ -5,8 +5,8 @@ import java.awt.event.KeyEvent;
 import java.util.Set;
 
 import rutebaga.commons.math.EllipseBounds2D;
-import rutebaga.commons.math.MutableVector;
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.MutableVector2D;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
@@ -24,7 +24,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 		this.world = world;
 		this.avatar = avatar;
 		//TODO: get rid of this
-		tracker = new BoundsTracker(new EllipseBounds2D(new Vector(3, 3)), avatar);
+		tracker = new BoundsTracker(new EllipseBounds2D(new Vector2D(3, 3)), avatar);
 	}
 	
 	public boolean eventsFallThrough() {
@@ -58,24 +58,33 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 	public void keyPressed(KeyEvent e) {
 		
 		final double MOVE_SPEED = 0.2;
-		final Vector WEST = new Vector(-MOVE_SPEED, 0.0);
-		final Vector SOUTH = new Vector(0.0, MOVE_SPEED);
-		final Vector NORTH = new Vector(0.0, -MOVE_SPEED);
-		final Vector EAST = new Vector(MOVE_SPEED, 0.0);
-		
+		final Vector2D SOUTH = new Vector2D(MOVE_SPEED
+				/ Math.sqrt(2), MOVE_SPEED / Math.sqrt(2));
+		final Vector2D NORTH = new Vector2D(-MOVE_SPEED
+				/ Math.sqrt(2), -MOVE_SPEED / Math.sqrt(2));
+		final Vector2D SOUTHEAST = new Vector2D(MOVE_SPEED, 0);
+		final Vector2D NORTHEAST = new Vector2D(0, -MOVE_SPEED);
+		final Vector2D SOUTHWEST = new Vector2D(0, MOVE_SPEED);
+		final Vector2D NORTHWEST = new Vector2D(-MOVE_SPEED, 0);		
 		
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_W:
 			avatar.applyImpulse(NORTH);
 			break;
 		case KeyEvent.VK_A:
-			avatar.applyImpulse(WEST);
+			avatar.applyImpulse(SOUTHWEST);
 			break;
 		case KeyEvent.VK_S:
 			avatar.applyImpulse(SOUTH);
 			break;
 		case KeyEvent.VK_D:
-			avatar.applyImpulse(EAST);
+			avatar.applyImpulse(SOUTHEAST);
+			break;
+		case KeyEvent.VK_Q:
+			avatar.applyImpulse(NORTHWEST);
+			break;
+		case KeyEvent.VK_E:
+			avatar.applyImpulse(NORTHEAST);
 			break;
 		case KeyEvent.VK_SPACE:
 			explode();
@@ -91,7 +100,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 		{
 			if(instance.getSetIdentifier().equals(InstanceSetIdentifier.ENTITY))
 			{
-				MutableVector direction = new MutableVector(instance.getCoordinate());
+				MutableVector2D direction = new MutableVector2D(instance.getCoordinate().getX(), instance.getCoordinate().getY());
 				direction.minus(avatar.getCoordinate());
 				direction.times((3-direction.getMagnitude())/3);
 				instance.applyMomentum(direction);

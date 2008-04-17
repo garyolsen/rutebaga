@@ -80,14 +80,13 @@ public class ViewFacade
 	 * Shows a title screen based on this ElementalList.
 	 * 
 	 * @param list
-	 *            A list of choises for the player.
+	 *            A list of choices for the player.
 	 */
 	public void createTitleScreen(ElementalList list)
 	{
 		clearView();
 		
 		view.addViewComponent(new TitleScreen(list, view.getWidth(), view.getHeight()));
-			
 	}
 
 	/**
@@ -100,7 +99,7 @@ public class ViewFacade
 	 * @param accept
 	 *            The {@link Command} for what to do on confirmation.
 	 * @param cancel
-	 *            The {@link Command} for what to do on cancelation.
+	 *            The {@link Command} for what to do on cancellation.
 	 */
 	public void createAvatarCreationScreen(TextFieldListener listener,
 			ElementalList list, Command accept, Command cancel)
