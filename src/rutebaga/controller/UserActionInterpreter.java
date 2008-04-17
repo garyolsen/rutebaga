@@ -79,7 +79,7 @@ public interface UserActionInterpreter extends KeyListener, ActionListener
 	 * @param facade
 	 *            a reference to the active ViewFacade
 	 */
-	public void installActionInterpreter(GameDaemon daemon, ViewFacade facade);
+	public void installActionInterpreter(GameDaemon daemon, Game game, ViewFacade facade);
 
 	/**
 	 * Deactivates this interpreter. This operation may only be invoked once

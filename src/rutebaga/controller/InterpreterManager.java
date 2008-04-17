@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 /**
  * @author Matthew Chuah
  */
-public interface InterpreterManager extends KeyListener, ActionListener
+public interface InterpreterManager extends ActionListener
 {
 	/**
 	 * @param uai
