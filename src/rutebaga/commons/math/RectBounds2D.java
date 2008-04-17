@@ -6,7 +6,7 @@ package rutebaga.commons.math;
  * @author Gary LosHuertos
  * 
  */
-public class RectBounds extends Bounds2D
+public class RectBounds2D extends Bounds2D
 {
 	private Vector2D size;
 
@@ -25,10 +25,17 @@ public class RectBounds extends Bounds2D
 	 *            RectBounds.
 	 * @see Vector
 	 */
-	public RectBounds(Vector2D lower, Vector2D size)
+	public RectBounds2D(Vector2D lower, Vector2D size)
 	{
 		this.size = size;
 		this.lower = lower;
+	}
+
+
+	public RectBounds2D(Vector2D size)
+	{
+		this.lower = new Vector2D(size.getX()/-2, size.getY()/-2);
+		this.size = new Vector2D(size.getX(), size.getY());
 	}
 
 

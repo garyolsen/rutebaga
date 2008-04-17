@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import rutebaga.commons.UIDProvider;
+import rutebaga.commons.math.Bounds2D;
 import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.RectBounds2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.Named;
@@ -30,18 +32,18 @@ import rutebaga.model.environment.InstanceSetIdentifier;
  */
 public abstract class Entity extends Instance implements Named
 {
-	public static int SIGHT_RANGE = 15;
+	public static int SIGHT_RANGE = 7;
 	
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
-	private EllipseBounds2D visionBounds;
+	private Bounds2D visionBounds;
 
 	private Vision vision;
 
 	private String name;
 	public Entity()
 	{
-		visionBounds = new EllipseBounds2D(new Vector2D(SIGHT_RANGE, SIGHT_RANGE));
+		visionBounds = new RectBounds2D(new Vector2D(SIGHT_RANGE, SIGHT_RANGE));
 		// XXX: connascence of timing
 		vision = new Vision(this);
 	}
@@ -80,14 +82,9 @@ public abstract class Entity extends Instance implements Named
 		return vision;
 	}
 
-	public EllipseBounds2D getVisionBounds()
+	public Bounds2D getVisionBounds()
 	{
 		return visionBounds;
-	}
-
-	public Vector2D getVisionRadius()
-	{
-		return visionBounds.getRadii();
 	}
 
 	public void setName(String name)
@@ -98,11 +95,6 @@ public abstract class Entity extends Instance implements Named
 	public void setVisionBounds(EllipseBounds2D visionBounds)
 	{
 		this.visionBounds = visionBounds;
-	}
-
-	public void setVisionRadius(Vector2D visionRadius)
-	{
-		visionBounds.setRadii(visionRadius);
 	}
 	
 	public boolean canSee(IntVector2D v) {

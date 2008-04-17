@@ -12,13 +12,6 @@ public class CharEntity extends Entity
 	private ConcreteInventory inventory = new ConcreteInventory(this);
 
 	@Override
-	public double getFriction()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public double getMass()
 	{
 		// TODO Auto-generated method stub

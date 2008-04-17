@@ -4,8 +4,9 @@ import rutebaga.commons.math.Vector2D;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Layerable;
+import rutebaga.model.environment.Locatable;
 
-public class Memory implements Layerable
+public class Memory implements Layerable, Locatable
 {
 	private Appearance appearance;
 	private Vector2D coordinate;
