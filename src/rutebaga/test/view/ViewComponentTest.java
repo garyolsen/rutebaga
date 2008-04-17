@@ -29,7 +29,7 @@ public class ViewComponentTest {
 			vcc.addChild(new ButtonComponent("test5"));
 		
 			
-			ScrollDecorator scroll = new ScrollDecorator(vcc, 200, 50);
+			ScrollDecorator scroll = new ScrollDecorator(vcc, 200, 100);
 			scroll.setLocation(200, 200);
 			
 			view.addViewComponent(scroll);
