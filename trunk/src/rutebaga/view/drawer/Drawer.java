@@ -1,9 +1,11 @@
 package rutebaga.view.drawer;
 
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Image;
+import java.awt.Paint;
 import java.awt.Point;
 import java.awt.Shape;
 
@@ -115,4 +117,12 @@ public abstract class Drawer
 	{
 		return attribute;
 	}
+	
+	public abstract void setComposite(Composite c);
+	
+	public abstract void clearComposite();
+	
+	public abstract void setPaint(Paint p);
+	
+	public abstract void clearPaint();
 }

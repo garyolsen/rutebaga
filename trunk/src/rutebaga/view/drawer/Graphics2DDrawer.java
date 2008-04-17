@@ -2,6 +2,7 @@ package rutebaga.view.drawer;
 
 import java.awt.*;
 import java.awt.geom.Area;
+import java.util.Stack;
 
 /**
  * 
@@ -14,6 +15,8 @@ public class Graphics2DDrawer extends Drawer
 {
 
 	private Graphics2D g2d;
+	private Stack<Composite> compositeStack = new Stack<Composite>();
+	private Stack<Paint> paintStack = new Stack<Paint>();
 
 	/**
 	 * Constructs a new Graphics2DDrawer using the specified Graphics2D.
@@ -126,6 +129,28 @@ public class Graphics2DDrawer extends Drawer
 	public FontMetrics getFontMetrics()
 	{
 		return g2d.getFontMetrics();
+	}
+	
+	public void setComposite(Composite c)
+	{
+		compositeStack.push(g2d.getComposite());
+		g2d.setComposite(c);
+	}
+	
+	public void clearComposite()
+	{
+		g2d.setComposite(compositeStack.pop());
+	}
+	
+	public void setPaint(Paint p)
+	{
+		paintStack.push(g2d.getPaint());
+		g2d.setPaint(p);
+	}
+	
+	public void clearPaint()
+	{
+		g2d.setPaint(paintStack.pop());
 	}
 
 }

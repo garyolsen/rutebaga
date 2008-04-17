@@ -37,8 +37,7 @@ public class MapComponent extends ViewComponent
 {
 
 	private static final int TILE_SIZE = 32;
-	private static final ColorAttribute FOG = new ColorAttribute(new Color(220,
-			220, 220, 50));
+	private static final ColorAttribute FOG = new ColorAttribute(Color.BLACK);
 
 	// private static LayerComparator layerComparator = new LayerComparator();
 	private static DrawOrderComparator<Instance> instanceComparator = new DrawOrderComparator();
@@ -55,8 +54,13 @@ public class MapComponent extends ViewComponent
 
 	public void draw(Drawer draw)
 	{
+		long time;
+		time = System.currentTimeMillis();
 		drawMemorySet(draw, avatar.getVision());
+		System.out.println("memory set total: " + (System.currentTimeMillis()-time));
+		time = System.currentTimeMillis();
 		drawVisibleSet(draw, avatar.getVision());
+		System.out.println("visible set total: " + (System.currentTimeMillis()-time));
 		drawAvatar(draw);
 	}
 
@@ -64,9 +68,11 @@ public class MapComponent extends ViewComponent
 	{
 		ArrayList<Instance> sortedList = new ArrayList<Instance>(avatarVision
 				.getActiveSet());
-
+		long time = System.currentTimeMillis();
 		Collections.sort(sortedList, instanceComparator);
+		System.out.println("sorting instances: " + (System.currentTimeMillis()-time));
 
+		time = System.currentTimeMillis();
 		for (Instance instance : sortedList)
 		{
 
@@ -94,14 +100,32 @@ public class MapComponent extends ViewComponent
 			draw.drawImage(p, image);
 
 		}
+		System.out.println("drawing instances: " + (System.currentTimeMillis()-time));
 
 	}
 
 	private void drawMemorySet(Drawer draw, Vision avatarVision)
 	{
+		long time;
+		
+
+		time = System.currentTimeMillis();
+		draw.setAttribute(FOG);
+		draw.drawRectangle(new Point(getX(), getY()), getWidth(), getHeight());
+		draw.setAttribute(null);
+		System.out.println("drawing fog: " + (System.currentTimeMillis()-time));
+		
+		Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.3F);
+
+		draw.setComposite(composite);
+		
+		time = System.currentTimeMillis();
 		Map<IntVector2D, Set<Memory>> memory = avatarVision.getMemory();
+		System.out.println("memory access: " + (System.currentTimeMillis()-time));
 
 		ArrayList<Memory> sortedMemory = new ArrayList<Memory>();
+		
+		time = System.currentTimeMillis();
 
 		for (IntVector2D v : memory.keySet())
 		{
@@ -125,19 +149,25 @@ public class MapComponent extends ViewComponent
 					sortedMemory.add(mem);
 			}
 		}
+		
+		System.out.println("memory point collection: " + (System.currentTimeMillis()-time));
 
+		time = System.currentTimeMillis();
 		Collections.sort(sortedMemory, memoryComparator);
+		System.out.println("sorting memories: " + (System.currentTimeMillis()-time));
 
+		time = System.currentTimeMillis();
+		
 		for (Memory mem : sortedMemory)
 		{
 			Point p = centerPointOnAvatar(avatar.getCoordinate(), mem
 					.getCoordinate());
 			draw.drawImage(p, mem.getAppearance().getImage());
 		}
-
-		draw.setAttribute(FOG);
-		draw.drawRectangle(new Point(getX(), getY()), getWidth(), getHeight());
-		draw.setAttribute(null);
+		
+		System.out.println("drawing memories: " + (System.currentTimeMillis()-time));
+		
+		draw.clearComposite();
 	}
 
 	private void drawAvatar(Drawer draw)

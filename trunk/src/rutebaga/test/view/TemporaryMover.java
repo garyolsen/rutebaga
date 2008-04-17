@@ -78,7 +78,7 @@ public class TemporaryMover implements KeyListener
 		if (magnitude > 0.001)
 		{
 			direction.divideBy(magnitude / MOVE_SPEED);
-			avatar.applyMomentum(direction);
+			avatar.applyImpulse(direction);
 		}
 	}
 

@@ -1,18 +1,24 @@
 package rutebaga.view.rwt;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.DisplayMode;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.ImageCapabilities;
+import java.awt.Transparency;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import rutebaga.view.drawer.Graphics2DDrawer;
 
@@ -26,6 +32,8 @@ public class View
 	private BufferStrategy strategy;
 
 	private List<ViewComponent> components = new ArrayList<ViewComponent>();
+
+	private static ImageCapabilities accel = new ImageCapabilities(true);
 
 	/**
 	 * Constructs a view with the provided dimensions.
@@ -55,15 +63,44 @@ public class View
 
 		window.setVisible(true);
 		window.createBufferStrategy(2);
+
+		setFullscreen();
+
+		DisplayMode old = device.getDisplayMode();
+		DisplayMode[] modes = device.getDisplayModes();
+		List<DisplayMode> rectModes = new LinkedList<DisplayMode>();
+		for (DisplayMode mode : modes)
+		{
+			int w = mode.getWidth();
+			int h = mode.getHeight();
+			if ((3 * w) / h == 4 && mode.getBitDepth() >= 16 )
+			{
+				rectModes.add(mode);
+			}
+		}
+		Collections.sort(rectModes, new Comparator<DisplayMode>() {
+
+			public int compare(DisplayMode o1, DisplayMode o2)
+			{
+				return Math.abs(o1.getWidth()-800);
+			}
 		
-		/**
-		 * Calling setDisplayMode on my computer prevents anything from being
-		 * displayed on my computer.  Commenting out for now.  -matt
-		 */
-		
-		//setFullscreen();
-		
-		//device.setDisplayMode(new DisplayMode(width, height, 32, 60));
+		});
+		boolean ok = false;
+		for(DisplayMode mode : rectModes)
+		{
+			try
+			{
+				device.setDisplayMode(mode);
+				ok = true;
+			}
+			catch( Exception e)
+			{
+				
+			}
+			if(ok) break;
+		}
+		if(!ok) device.setDisplayMode(old);
 	}
 
 	/**
@@ -75,10 +112,9 @@ public class View
 				.getLocalGraphicsEnvironment();
 
 		GraphicsDevice device = env.getDefaultScreenDevice();
-		
+
 		device.setFullScreenWindow(window);
-		
-		
+
 	}
 
 	private void setupDispatcher()
@@ -100,7 +136,7 @@ public class View
 	 * Refreshes the contents of the View.
 	 */
 	public void renderFrame()
-	{		
+	{
 		if (!strategy.contentsLost())
 		{
 			Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();
@@ -133,20 +169,23 @@ public class View
 		components.add(vc);
 		dispatcher.registerComponent(vc);
 	}
-	
-	public List<ViewComponent> getViewComponents() {
+
+	public List<ViewComponent> getViewComponents()
+	{
 		return Collections.unmodifiableList(components);
 	}
-	
-	public void removeViewComponent(ViewComponent vc) {
+
+	public void removeViewComponent(ViewComponent vc)
+	{
 		components.remove(vc);
 		dispatcher.deregisterComponent(vc);
 	}
-	
-	public void removeAllViewComponents(List<ViewComponent> vcs) {
+
+	public void removeAllViewComponents(List<ViewComponent> vcs)
+	{
 		components.removeAll(vcs);
-		
-		for(ViewComponent vc : vcs)
+
+		for (ViewComponent vc : vcs)
 			dispatcher.deregisterComponent(vc);
 	}
 
@@ -155,34 +194,49 @@ public class View
 		for (ViewComponent vc : components)
 			vc.draw(drawer);
 	}
-	
-	
-	public void addKeyListener(KeyListener kl ) {
+
+	public void addKeyListener(KeyListener kl)
+	{
 		dispatcher.addKeyListener(kl);
 	}
-	
-	public void removeKeyListener(KeyListener kl) {
+
+	public void removeKeyListener(KeyListener kl)
+	{
 		dispatcher.removeKeyListener(kl);
 	}
-	
-	public void addMouseListener(MouseListener ml) {
+
+	public void addMouseListener(MouseListener ml)
+	{
 		dispatcher.addMouseListener(ml);
 	}
-	
-	public void removeMouseListener(MouseListener ml) {
+
+	public void removeMouseListener(MouseListener ml)
+	{
 		dispatcher.addMouseListener(ml);
 	}
-	
-	public int getWidth() {
+
+	public int getWidth()
+	{
 		return window.getWidth();
 	}
-	
-	public int getHeight() {
+
+	public int getHeight()
+	{
 		return window.getHeight();
 	}
 
 	public VolatileImage makeVolatileImage(int w, int h)
 	{
-		return window.createVolatileImage(w, h);
+		try
+		{
+			return window.getGraphicsConfiguration()
+					.createCompatibleVolatileImage(w, h, accel,
+							Transparency.BITMASK);
+		}
+		catch (AWTException e)
+		{
+			return window.getGraphicsConfiguration()
+					.createCompatibleVolatileImage(w, h, Transparency.BITMASK);
+		}
 	}
 }
