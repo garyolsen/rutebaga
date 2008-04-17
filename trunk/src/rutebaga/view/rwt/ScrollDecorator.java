@@ -11,7 +11,7 @@ import rutebaga.view.drawer.Drawer;
 public class ScrollDecorator extends ComponentDecorator {
 
 	private final static int SPACING = 5;
-	private final static int SPEED = 5;
+	private int speed = 5;
 
 	private int currentX, scrollHeight, scrollWidth;
 	
@@ -40,7 +40,7 @@ public class ScrollDecorator extends ComponentDecorator {
 		this.getDecoratedComponent().visit(visitor);
 		
 		
-		currentX += SPEED * scroll;
+		currentX += speed * scroll;
 		
 		int offset = this.getX() - currentX;
 		for(ViewComponent vc : visitor.getElements()) {
@@ -56,6 +56,10 @@ public class ScrollDecorator extends ComponentDecorator {
 		
 		draw.setAttribute(new ClippingAttribute(null));
 		
+	}
+	
+	public void setScrollSpeed(int speed) {
+		this.speed = speed;
 	}
 
 	
