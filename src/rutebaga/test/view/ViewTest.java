@@ -17,7 +17,6 @@ import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
 import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.game.MapComponent;
@@ -32,7 +31,7 @@ public class ViewTest
 
 	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
 
-	private static int N_NPCS = 5;
+	private static int N_NPCS = 1;
 	private static double TILE_PROB = 1;
 	
 	private static int SQMAP_MIN = 0;
@@ -173,8 +172,10 @@ public class ViewTest
 
 				npc1.setTarget(avatar);
 
-				environment.add(npc1, new Vector2D(random.nextInt(xRng) + xMin,
-						random.nextInt(yRng) + yMin));
+				Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
+						random.nextInt(yRng) + yMin);
+				System.out.println("placing npc at " + location);
+				environment.add(npc1, location);
 			}
 
 			if (RENDER_MAP)
