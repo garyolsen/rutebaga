@@ -20,6 +20,7 @@ import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
+import rutebaga.model.environment.InstanceType;
 import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 
@@ -37,7 +38,7 @@ import rutebaga.model.environment.appearance.StaticAppearanceManager;
  * @author Nick
  * @see EntityType
  */
-public abstract class Entity extends Instance implements Named
+public abstract class Entity<T extends Entity<T>> extends Instance<T> implements Named
 {
 	public static int SIGHT_RANGE = 7;
 	
@@ -64,8 +65,9 @@ public abstract class Entity extends Instance implements Named
 		abilities.add(ability);
 	}
 
-	public Entity()
+	public Entity(InstanceType<T> type)
 	{
+		super(type);
 		visionBounds = new RectBounds2D(new Vector2D(SIGHT_RANGE, SIGHT_RANGE));
 		// XXX: connascence of timing
 		vision = new Vision(this);
