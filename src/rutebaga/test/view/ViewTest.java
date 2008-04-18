@@ -10,8 +10,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
@@ -35,7 +37,7 @@ public class ViewTest
 	private static double TILE_PROB = 1;
 	
 	private static int SQMAP_MIN = 0;
-	private static int SQMAP_MAX = 9;
+	private static int SQMAP_MAX = 100;
 
 	private static int[] MAP_BOUNDS =
 	{ SQMAP_MIN, SQMAP_MAX, SQMAP_MIN, SQMAP_MAX };
@@ -144,6 +146,7 @@ public class ViewTest
 			}
 
 			avatar = new CharEntity();
+			avatar.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 
 			// npc = new NPCEntity();
 			// Appearance npcAppearance = new Appearance(npc);
@@ -166,6 +169,7 @@ public class ViewTest
 			for (int i = 0; i < N_NPCS; i++)
 			{
 				NPCEntity npc1 = new NPCEntity();
+				npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 				Appearance npcAppearance1 = new Appearance(npc1);
 				npcAppearance1.setImage(cheese);
 				npc1.setAppearance(npcAppearance1);
