@@ -1,5 +1,6 @@
 package rutebaga.commons.math;
 
+@SuppressWarnings("unchecked")
 public class MutableIntVector2D extends IntVector2D implements GenericMutableVector2D<Integer, IntVector2D, MutableIntVector2D>
 {
 

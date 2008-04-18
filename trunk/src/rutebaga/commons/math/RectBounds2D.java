@@ -6,6 +6,7 @@ package rutebaga.commons.math;
  * @author Gary LosHuertos
  * 
  */
+@SuppressWarnings("unchecked")
 public class RectBounds2D extends Bounds2D
 {
 	private Vector2D size;
