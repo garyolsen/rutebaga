@@ -84,7 +84,7 @@ public class MapComponent extends ViewComponent
 			//FIXME encapsulate -- necessary to watch bounds checking
 			if (avatar.getTile().equals(instance.getTile()))
 			{
-				BufferedImage compImg = Frame.getWindows()[0]
+				BufferedImage compImg = Frame.getFrames()[0]
 						.getGraphicsConfiguration().createCompatibleImage(
 								image.getWidth(null), image.getHeight(null), Transparency.TRANSLUCENT);
 				Graphics2D g = (Graphics2D) compImg.getGraphics();
