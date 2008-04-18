@@ -5,9 +5,11 @@ import java.util.Map;
 
 import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.Bounds2D;
+import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.RectBounds2D;
+import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.Named;
@@ -37,10 +39,12 @@ public abstract class Entity extends Instance implements Named
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
 	private Bounds2D visionBounds;
-
 	private Vision vision;
+	
+	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(0.0);
 
 	private String name;
+	
 	public Entity()
 	{
 		visionBounds = new RectBounds2D(new Vector2D(SIGHT_RANGE, SIGHT_RANGE));
@@ -134,5 +138,16 @@ public abstract class Entity extends Instance implements Named
 	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.ENTITY;
+	}
+
+	public void setMovementSpeedStrat(ValueProvider<Entity> movementSpeedStrat)
+	{
+		this.movementSpeedStrat = movementSpeedStrat;
+	}
+	
+	public void walk(Vector2D direction)
+	{
+		double magnitude = direction.getMagnitude();
+		this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)/magnitude));
 	}
 }
