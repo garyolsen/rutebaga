@@ -6,7 +6,7 @@ public class BinaryOperationValueProvider<T> extends ValueProvider<T>
 	private ValueProvider<T> arg1;
 	private ValueProvider<T> arg2;
 
-	private BinaryOperationValueProvider(BinaryOperation operation,
+	public BinaryOperationValueProvider(BinaryOperation operation,
 			ValueProvider<T> arg1, ValueProvider<T> arg2)
 	{
 		super();

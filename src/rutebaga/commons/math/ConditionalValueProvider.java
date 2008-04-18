@@ -6,7 +6,7 @@ public class ConditionalValueProvider<T> extends ValueProvider<T>
 	private ValueProvider<T> trueArg;
 	private ValueProvider<T> falseArg;
 
-	private ConditionalValueProvider(ValueProvider<T> condition,
+	public ConditionalValueProvider(ValueProvider<T> condition,
 			ValueProvider<T> trueArg, ValueProvider<T> falseArg)
 	{
 		super();
