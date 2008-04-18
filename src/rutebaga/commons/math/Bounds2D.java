@@ -12,6 +12,7 @@ import java.util.Collection;
  * @author Gary LosHuertos
  * 
  */
+@SuppressWarnings("unchecked")
 public abstract class Bounds2D
 {
 	/**

@@ -7,6 +7,7 @@ package rutebaga.commons.math;
  * @author Gary LosHuertos
  * 
  */
+@SuppressWarnings("unchecked")
 public class EllipseBounds2D extends Bounds2D
 {
 	private Vector2D center;

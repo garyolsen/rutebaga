@@ -1,5 +1,6 @@
 package rutebaga.commons.math;
 
+@SuppressWarnings("unchecked")
 public interface GenericMutableVector2D<T extends Number, U extends GenericVector2D<T, U>, V extends GenericMutableVector2D<T, U, V>>
 {
 	V accumulate(GenericVector2D other);
