@@ -20,16 +20,16 @@ import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
-import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.TileConvertor;
-import rutebaga.model.environment.Appearance.Orientation;
+import rutebaga.model.environment.appearance.Appearance;
+import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ViewComponent;
 import temporary.LocationLayerComparator;
 
-import static rutebaga.model.environment.Appearance.Orientation.*;
+import static rutebaga.model.environment.appearance.Appearance.Orientation.*;
 
 /**
  * Shows the actual gameplay.
@@ -143,10 +143,10 @@ public class MapComponent extends ViewComponent
 		System.out.println("drawing fog: "
 				+ (System.currentTimeMillis() - time));
 
-		Composite composite = AlphaComposite.getInstance(
-				AlphaComposite.SRC_ATOP, 0.3F);
-
-		draw.setComposite(composite);
+//		Composite composite = AlphaComposite.getInstance(
+//				AlphaComposite.SRC_ATOP, 0.3F);
+//
+//		draw.setComposite(composite);
 
 		time = System.currentTimeMillis();
 		Map<IntVector2D, Set<Memory>> memory = avatarVision.getMemory();
@@ -203,7 +203,7 @@ public class MapComponent extends ViewComponent
 		System.out.println("drawing memories: "
 				+ (System.currentTimeMillis() - time));
 
-		draw.clearComposite();
+//		draw.clearComposite();
 	}
 
 	private void drawAvatar(Drawer draw)

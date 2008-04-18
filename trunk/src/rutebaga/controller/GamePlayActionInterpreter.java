@@ -69,25 +69,28 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 		
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_W:
-			avatar.applyImpulse(NORTH);
+			avatar.walk(NORTH);
 			break;
 		case KeyEvent.VK_A:
-			avatar.applyImpulse(SOUTHWEST);
+			avatar.walk(SOUTHWEST);
 			break;
 		case KeyEvent.VK_S:
-			avatar.applyImpulse(SOUTH);
+			avatar.walk(SOUTH);
 			break;
 		case KeyEvent.VK_D:
-			avatar.applyImpulse(SOUTHEAST);
+			avatar.walk(SOUTHEAST);
 			break;
 		case KeyEvent.VK_Q:
-			avatar.applyImpulse(NORTHWEST);
+			avatar.walk(NORTHWEST);
 			break;
 		case KeyEvent.VK_E:
-			avatar.applyImpulse(NORTHEAST);
+			avatar.walk(NORTHEAST);
 			break;
 		case KeyEvent.VK_SPACE:
 			explode();
+			break;
+		case KeyEvent.VK_ENTER:
+			avatar.getAbilities().get(0).act(avatar);
 			break;
 		}
 	}
@@ -101,8 +104,8 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 			if(instance.getSetIdentifier().equals(InstanceSetIdentifier.ENTITY))
 			{
 				MutableVector2D direction = new MutableVector2D(instance.getCoordinate().getX(), instance.getCoordinate().getY());
-				direction.minus(avatar.getCoordinate());
-				direction.times((3-direction.getMagnitude())/3);
+				direction.detract(avatar.getCoordinate());
+				direction.multiplyBy((3-direction.getMagnitude())/3);
 				instance.applyMomentum(direction);
 			}
 		}

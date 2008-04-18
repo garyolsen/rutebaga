@@ -1,12 +1,12 @@
 package rutebaga.model.entity;
 
 import rutebaga.commons.math.Vector2D;
-import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Layerable;
 import rutebaga.model.environment.Locatable;
 import rutebaga.model.environment.Orientable;
-import rutebaga.model.environment.Appearance.Orientation;
+import rutebaga.model.environment.appearance.Appearance;
+import rutebaga.model.environment.appearance.Appearance.Orientation;
 
 public class Memory implements Layerable, Locatable, Orientable
 {

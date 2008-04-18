@@ -11,10 +11,10 @@ import javax.imageio.ImageIO;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.npc.NPCEntity;
-import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.World;
+import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.map.Tile;
 import rutebaga.scaffold.MasterScaffold;
 

@@ -10,14 +10,18 @@ import rutebaga.controller.GameInitializer;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.npc.NPCEntity;
-import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.Orientable;
 import rutebaga.model.environment.World;
-import rutebaga.model.environment.Appearance.Orientation;
+import rutebaga.model.environment.appearance.AnimatedAppearanceManager;
+import rutebaga.model.environment.appearance.Appearance;
+import rutebaga.model.environment.appearance.StaticAppearanceManager;
+import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.model.map.Tile;
 import rutebaga.scaffold.MasterScaffold;
+import rutebaga.test.model.ability.CheeseArrowAbilityType;
 import temporary.Bumper;
 import temporary.WindTunnel;
 
@@ -53,6 +57,16 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		Image grass = (Image) scaffold.get("imgHextile");
 		Image treasure = (Image) scaffold.get("imgTreasure");
 
+		Image[] tileImages = new Image[6];
+		for(int i=1; i<=6; i++)
+			tileImages[i-1] = (Image) scaffold.get("imgHextile0" + i);
+		Appearance[] tileApps = new Appearance[12];
+		for(int i=0; i<6; i++)
+		{
+			tileApps[i] = tileApps[12-i-1] = new Appearance(tileImages[i]);
+			tileApps[i].setOrientation(Orientation.C);
+		}
+
 		Random random = new Random();
 
 		for (int x = mapBounds[0]; x < mapBounds[1]; x++)
@@ -66,7 +80,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					Appearance water = new Appearance();
 					water.setOrientation(Orientation.C);
 					water.setImage(grass);
-					tile.setAppearance(water);
+					tile
+							.setAppearanceManager(new AnimatedAppearanceManager(
+									tileApps, 2));
 					environment.add(tile, location);
 				}
 			}
@@ -84,7 +100,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 						WindTunnel tunnel = new WindTunnel();
 						Appearance chest = new Appearance();
 						chest.setImage(treasure);
-						tunnel.setAppearance(chest);
+						tunnel
+								.setAppearanceManager(new StaticAppearanceManager(
+										chest));
 						environment.add(tunnel, location);
 					}
 				}
@@ -100,7 +118,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 						Instance instance = new Bumper();
 						Appearance chest = new Appearance();
 						chest.setImage(treasure);
-						instance.setAppearance(chest);
+						instance
+								.setAppearanceManager(new StaticAppearanceManager(
+										chest));
 						environment.add(instance, location);
 					}
 				}
@@ -108,7 +128,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		}
 
 		avatar = new CharEntity();
-		avatar.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
+		avatar.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.04));
 
 		// npc = new NPCEntity();
 		// Appearance npcAppearance = new Appearance(npc);
@@ -119,7 +139,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		Appearance appearance = new Appearance();
 		appearance.setImage(cheese);
-		avatar.setAppearance(appearance);
+		avatar.setAppearanceManager(new StaticAppearanceManager(appearance));
+		
+		avatar.addAbility(new CheeseArrowAbilityType().makeAbility());
 
 		environment.add(avatar, new Vector2D(0, 0));
 
@@ -134,7 +156,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 			Appearance npcAppearance1 = new Appearance();
 			npcAppearance1.setImage(cheese);
-			npc1.setAppearance(npcAppearance1);
+			npc1.setAppearanceManager(new StaticAppearanceManager(
+					npcAppearance1));
 
 			npc1.setTarget(avatar);
 
@@ -143,7 +166,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			System.out.println("placing npc at " + location);
 			environment.add(npc1, location);
 		}
-		
+
 		world = new World();
 		world.add(environment);
 

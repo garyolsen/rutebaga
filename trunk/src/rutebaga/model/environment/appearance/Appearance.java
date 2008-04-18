@@ -1,4 +1,4 @@
-package rutebaga.model.environment;
+package rutebaga.model.environment.appearance;
 
 import java.awt.Image;
 import java.awt.Point;
@@ -47,6 +47,16 @@ public class Appearance
 
 	private Image image;
 	private Orientation orientation = Orientation.S;
+
+	public Appearance(Image image)
+	{
+		this.image = image;
+	}
+
+	public Appearance()
+	{
+		// TODO Auto-generated constructor stub
+	}
 
 	public Image getImage()
 	{

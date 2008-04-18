@@ -217,8 +217,14 @@ public class Environment
 		updatePhysics();
 		performMovement();
 		long time = System.currentTimeMillis();
+		for(Instance instance : instances)
+		{
+			instance.instanceTickOps();
+		}
 		for (Instance instance : tickableInstances)
+		{
 			instance.tick();
+		}
 		System.out.println("ticking environment: " + (System.currentTimeMillis()-time));
 	}
 
