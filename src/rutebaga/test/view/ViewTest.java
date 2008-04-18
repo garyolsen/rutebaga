@@ -19,6 +19,7 @@ import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
 import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.game.MapComponent;
@@ -31,7 +32,7 @@ public class ViewTest
 
 	private static Random random = new Random();
 
-	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
+	private static int SCREENWIDTH = 640, SCREENHEIGHT = 480;
 
 	private static int N_NPCS = 0;
 	private static double TILE_PROB = 1;
@@ -44,7 +45,7 @@ public class ViewTest
 
 	private static boolean TICK_ENVIRONMENT = true;
 	private static boolean RENDER_MAP = true;
-	private static boolean USE_VOLATILE_IMAGES = false;
+	private static boolean USE_VOLATILE_IMAGES = true;
 
 	private static boolean SHOW_TREASURE = false;
 
@@ -59,7 +60,7 @@ public class ViewTest
 
 		try
 		{
-			VolatileImage tmp;
+			Image tmp;
 
 			Image cheese = ImageIO.read(new File("TestImages/cheese.png"));
 			tmp = view.makeVolatileImage(cheese.getWidth(null), cheese

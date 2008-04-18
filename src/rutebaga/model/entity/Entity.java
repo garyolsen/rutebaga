@@ -34,7 +34,7 @@ import rutebaga.model.environment.InstanceSetIdentifier;
  */
 public abstract class Entity extends Instance implements Named
 {
-	public static int SIGHT_RANGE = 7;
+	public static int SIGHT_RANGE = 10;
 	
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 

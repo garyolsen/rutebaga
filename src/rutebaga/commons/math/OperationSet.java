@@ -55,6 +55,33 @@ public class OperationSet
 			return Math.pow(a, b);
 		}
 	}
+	
+	public class MaxOperation extends BinaryOperation
+	{
+		@Override
+		public double calculate(double a, double b)
+		{
+			return Math.max(a, b);
+		}
+	}
+	
+	public class MinOperation extends BinaryOperation
+	{
+		@Override
+		public double calculate(double a, double b)
+		{
+			return Math.min(a, b);
+		}
+	}
+	
+	public class SquareRoot extends UnaryOperation
+	{
+		@Override
+		public double calculate(double a)
+		{
+			return Math.sqrt(a);
+		}
+	}
 
 	public class NegateOperation extends UnaryOperation
 	{

@@ -73,12 +73,19 @@ public class MapComponent extends ViewComponent
 		System.out.println("sorting instances: " + (System.currentTimeMillis()-time));
 
 		time = System.currentTimeMillis();
+		
+		long pointCreationTime = 0;
+		long drawingTime = 0;
+		
 		for (Instance instance : sortedList)
 		{
-
+			time = System.currentTimeMillis();
 			Point p = centerPointOnAvatar(avatar.getCoordinate(), instance
 					.getCoordinate());
-
+			pointCreationTime += System.currentTimeMillis() - time;
+			
+			time = System.currentTimeMillis();
+			
 			Image image = instance.getAppearance().getImage();
 
 			//FIXME encapsulate -- necessary to watch bounds checking
@@ -86,7 +93,7 @@ public class MapComponent extends ViewComponent
 			{
 				BufferedImage compImg = Frame.getFrames()[0]
 						.getGraphicsConfiguration().createCompatibleImage(
-								image.getWidth(null), image.getHeight(null), Transparency.TRANSLUCENT);
+								image.getWidth(null), image.getHeight(null), Transparency.BITMASK);
 				Graphics2D g = (Graphics2D) compImg.getGraphics();
 				g.drawImage(image, 0, 0, null);
 				Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.3F);
@@ -98,9 +105,11 @@ public class MapComponent extends ViewComponent
 			}
 
 			draw.drawImage(p, image);
+			
+			drawingTime += System.currentTimeMillis() - time;
 
 		}
-		System.out.println("drawing instances: " + (System.currentTimeMillis()-time));
+		System.out.println("drawing instances: " + (System.currentTimeMillis()-time) + "[points: " + pointCreationTime + "; drawing: " + drawingTime + "]");
 
 	}
 

@@ -7,6 +7,7 @@ import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.ImageCapabilities;
 import java.awt.Transparency;
 import java.awt.event.KeyListener;
@@ -224,18 +225,10 @@ public class View
 		return window.getHeight();
 	}
 
-	public VolatileImage makeVolatileImage(int w, int h)
+	public Image makeVolatileImage(int w, int h)
 	{
-		try
-		{
-			return window.getGraphicsConfiguration()
-					.createCompatibleVolatileImage(w, h, accel,
-							Transparency.BITMASK);
-		}
-		catch (AWTException e)
-		{
-			return window.getGraphicsConfiguration()
-					.createCompatibleVolatileImage(w, h, Transparency.BITMASK);
-		}
+
+		return window.getGraphicsConfiguration().createCompatibleImage(w, h, Transparency.BITMASK);
+
 	}
 }

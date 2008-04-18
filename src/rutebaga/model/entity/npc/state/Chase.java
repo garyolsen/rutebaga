@@ -1,6 +1,7 @@
 package rutebaga.model.entity.npc.state;
 
 import java.util.List;
+import java.util.Random;
 
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
@@ -19,6 +20,7 @@ public class Chase extends NPCState
 	
 	private AStarSearch<AStarNodeLocationAdapter> aStarSearch = new AStarSearch<AStarNodeLocationAdapter>();
 	private AStarNodeLocationManager manager;
+	private Random rand = new Random();
 
 	@Override
 	public NPCState barter(NPCEntity npc)
@@ -58,21 +60,19 @@ public class Chase extends NPCState
 			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc, npc.getTargetTile());
 			List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
 			
-//			System.out.println(path);
-			
 			IntVector2D moveTo = npc.getTile();
 			
 			if ( !(path == null) && !(path.isEmpty()) )
 				moveTo = path.get(0).getTile();
 			
-//			System.out.println(npc.getTile() + " to " + moveTo);
-			
 			MutableVector2D direction = new MutableVector2D(moveTo.getX(), moveTo.getY());
 			direction.detract(npc.getTile());
-			//direction.divideBy(direction.getMagnitude());
 			direction.multiplyBy(0.03);
 			
-			npc.applyImpulse(direction);
+			if (rand.nextFloat() < 0.98)
+				npc.applyImpulse(direction);
+			else
+				npc.applyImpulse( new MutableVector2D(rand.nextFloat()-0.5, rand.nextFloat()-0.5).times(rand.nextFloat()) );
 			
 			return this;
 		}
