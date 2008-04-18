@@ -3,6 +3,7 @@ package rutebaga.model.entity.npc;
 import rutebaga.model.entity.npc.state.Attack;
 import rutebaga.model.entity.npc.state.Chase;
 import rutebaga.model.entity.npc.state.Evade;
+import rutebaga.model.entity.npc.state.HostileWander;
 import rutebaga.model.entity.npc.state.Wander;
 
 /**
@@ -20,6 +21,8 @@ public abstract class NPCState
 	protected static final NPCState chase = new Chase();
 	
 	protected static final NPCState wander = new Wander();
+	
+	protected static final NPCState hostileWander = new HostileWander();
 
 	// XXX: because it's
 	// the first state,
@@ -32,7 +35,7 @@ public abstract class NPCState
 	protected NPCState()
 	{
 		if (initialState == null)
-			initialState = this;
+			initialState = NPCState.chase;
 	}
 
 	/**

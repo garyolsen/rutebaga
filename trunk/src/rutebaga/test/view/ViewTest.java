@@ -11,6 +11,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import rutebaga.commons.math.ConstantValueProvider;
+import rutebaga.commons.math.RectBounds2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
@@ -21,6 +22,7 @@ import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
+import rutebaga.test.model.ability.CheeseArrowAbilityType;
 import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.game.MapComponent;
 import rutebaga.view.rwt.*;
@@ -34,11 +36,11 @@ public class ViewTest
 
 	private static int SCREENWIDTH = 640, SCREENHEIGHT = 480;
 
-	private static int N_NPCS = 0;
+	private static int N_NPCS = 30;
 	private static double TILE_PROB = 1;
 	
 	private static int SQMAP_MIN = 0;
-	private static int SQMAP_MAX = 100;
+	private static int SQMAP_MAX = 50;
 
 	private static int[] MAP_BOUNDS =
 	{ SQMAP_MIN, SQMAP_MAX, SQMAP_MIN, SQMAP_MAX };
@@ -148,6 +150,7 @@ public class ViewTest
 
 			avatar = new CharEntity();
 			avatar.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
+			//avatar.setVisionBounds(new RectBounds2D(new Vector2D(30, 30)));
 
 			// npc = new NPCEntity();
 			// Appearance npcAppearance = new Appearance(npc);
@@ -161,6 +164,8 @@ public class ViewTest
 			avatar.setAppearance(appearance);
 
 			environment.add(avatar, new Vector2D(0, 0));
+			
+			avatar.addAbility(new CheeseArrowAbilityType().makeAbility());
 
 			int xRng = MAP_BOUNDS[1] - MAP_BOUNDS[0];
 			int yRng = MAP_BOUNDS[3] - MAP_BOUNDS[2];

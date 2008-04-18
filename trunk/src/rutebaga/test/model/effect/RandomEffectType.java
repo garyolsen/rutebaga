@@ -17,7 +17,7 @@ public class RandomEffectType implements InstanceType<RandomEffect>
 	static {
 		try
 		{
-			appearance = ImageIO.read(new File("TestImages/cheese.png"));
+			appearance = ImageIO.read(new File("TestImages/treasure.png"));
 		}
 		catch (IOException e)
 		{
@@ -27,10 +27,10 @@ public class RandomEffectType implements InstanceType<RandomEffect>
 
 	public RandomEffect makeInstance()
 	{
-		RandomEffect rval = new RandomEffect(new ConstantValueProvider(0.05));
+		RandomEffect rval = new RandomEffect(new ConstantValueProvider(0.005));
 		rval.setAppearance(new Appearance(rval));
 		rval.getAppearance().setImage(appearance);
-		rval.setLifetime(100);
+		rval.setLifetime(10000);
 		return rval;
 	}
 }

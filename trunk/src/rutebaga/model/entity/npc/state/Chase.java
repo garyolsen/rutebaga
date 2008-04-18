@@ -5,6 +5,7 @@ import java.util.Random;
 
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
 import rutebaga.model.environment.AStarNodeLocationAdapter;
@@ -20,7 +21,10 @@ public class Chase extends NPCState
 	
 	private AStarSearch<AStarNodeLocationAdapter> aStarSearch = new AStarSearch<AStarNodeLocationAdapter>();
 	private AStarNodeLocationManager manager;
-	private Random rand = new Random();
+	
+	private int lifetime = 0;
+	private Vector2D lastDirection = null;
+	private List<AStarNodeLocationAdapter> lastPath;
 
 	@Override
 	public NPCState barter(NPCEntity npc)
@@ -55,7 +59,7 @@ public class Chase extends NPCState
 		{
 			return NPCState.attack;
 			
-		} else if (!(npc.getTarget() == null))
+		} else if (!(npc.getTarget() == null) && (npc.targetInSight()))
 		{
 			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc, npc.getTargetTile());
 			List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
@@ -63,20 +67,47 @@ public class Chase extends NPCState
 			IntVector2D moveTo = npc.getTile();
 			
 			if ( !(path == null) && !(path.isEmpty()) )
+				{
 				moveTo = path.get(0).getTile();
+				path.remove(0);
+				}
 			
-			MutableVector2D direction = new MutableVector2D(moveTo.getX(), moveTo.getY());
-			direction.detract(npc.getTile());
-			direction.multiplyBy(0.03);
+			MutableVector2D moveVector = new MutableVector2D(moveTo);
+			moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
+			moveVector.becomeUnitVector().multiplyBy(0.03);
 			
-			if (rand.nextFloat() < 0.98)
-				npc.applyImpulse(direction);
-			else
-				npc.applyImpulse( new MutableVector2D(rand.nextFloat()-0.5, rand.nextFloat()-0.5).times(rand.nextFloat()) );
+			npc.applyImpulse(moveVector);
+			
+			lifetime = 300;
+			
+			lastDirection = moveVector;
+			lastPath = path;
 			
 			return this;
 		}
-		return NPCState.wander;
+		if(this.lifetime > 0)
+		{
+			this.lifetime--;
+			MutableVector2D moveVector;
+			if ( !(lastPath == null) && !(lastPath.isEmpty()) )
+			{
+			IntVector2D moveTo = lastPath.get(0).getTile();
+			lastPath.remove(0);
+			moveVector = new MutableVector2D(moveTo);
+			moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
+			moveVector.becomeUnitVector().multiplyBy(0.03);
+			}
+			else
+			{
+				moveVector = new MutableVector2D(lastDirection).becomeUnitVector().multiplyBy(0.03);
+			}
+		
+		
+		
+		npc.applyImpulse(moveVector);
+			return this;
+		}
+		return NPCState.hostileWander;
 	}
 
 }

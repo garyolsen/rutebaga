@@ -1,6 +1,5 @@
 package rutebaga.test.model.ability;
 
-import javax.media.Effect;
 
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.ability.SpawnAction;

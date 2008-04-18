@@ -113,9 +113,10 @@ public abstract class Entity extends Instance implements Named
 		this.name = name;
 	}
 
-	public void setVisionBounds(EllipseBounds2D visionBounds)
+	public void setVisionBounds(Bounds2D visionBounds)
 	{
 		this.visionBounds = visionBounds;
+		this.vision = new Vision(this);
 	}
 	
 	public boolean canSee(IntVector2D v) {
