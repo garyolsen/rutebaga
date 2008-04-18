@@ -43,7 +43,7 @@ public class ViewTest
 
 	private static boolean TICK_ENVIRONMENT = true;
 	private static boolean RENDER_MAP = true;
-	private static boolean USE_VOLATILE_IMAGES = true;
+	private static boolean USE_VOLATILE_IMAGES = false;
 
 	private static boolean SHOW_TREASURE = true;
 
