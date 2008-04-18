@@ -33,7 +33,7 @@ public class ViewTest
 
 	private static int SCREENWIDTH = 800, SCREENHEIGHT = 600;
 
-	private static int N_NPCS = 1;
+	private static int N_NPCS = 0;
 	private static double TILE_PROB = 1;
 	
 	private static int SQMAP_MIN = 0;
@@ -46,7 +46,7 @@ public class ViewTest
 	private static boolean RENDER_MAP = true;
 	private static boolean USE_VOLATILE_IMAGES = false;
 
-	private static boolean SHOW_TREASURE = true;
+	private static boolean SHOW_TREASURE = false;
 
 	public static void main(String args[])
 	{
