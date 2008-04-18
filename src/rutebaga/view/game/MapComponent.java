@@ -36,7 +36,7 @@ import temporary.DrawOrderComparator;
 public class MapComponent extends ViewComponent
 {
 
-	private static final int TILE_SIZE = 32;
+	private static final int TILE_SIZE = 64;
 	private static final ColorAttribute FOG = new ColorAttribute(Color.BLACK);
 
 	// private static LayerComparator layerComparator = new LayerComparator();
@@ -61,7 +61,7 @@ public class MapComponent extends ViewComponent
 		time = System.currentTimeMillis();
 		drawVisibleSet(draw, avatar.getVision());
 		System.out.println("visible set total: " + (System.currentTimeMillis()-time));
-		drawAvatar(draw);
+//		drawAvatar(draw);
 	}
 
 	private void drawVisibleSet(Drawer draw, Vision avatarVision)
@@ -69,6 +69,8 @@ public class MapComponent extends ViewComponent
 		ArrayList<Instance> sortedList = new ArrayList<Instance>(avatarVision
 				.getActiveSet());
 		long time = System.currentTimeMillis();
+
+		sortedList.add(avatar);
 		Collections.sort(sortedList, instanceComparator);
 		System.out.println("sorting instances: " + (System.currentTimeMillis()-time));
 
