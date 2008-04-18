@@ -6,7 +6,6 @@ import java.util.HashSet;
 
 import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
-import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
 
 /**
@@ -61,6 +60,7 @@ public class Rect2DTileConvertor implements TileConvertor
 		return 2;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Vector2D toRect(GenericVector2D coordinate)
 	{
 		return new Vector2D(coordinate.getX().doubleValue(), coordinate.getY().doubleValue());
