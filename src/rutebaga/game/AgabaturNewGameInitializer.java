@@ -1,15 +1,8 @@
 package rutebaga.game;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
@@ -22,14 +15,9 @@ import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.World;
+import rutebaga.model.environment.Appearance.Orientation;
 import rutebaga.model.map.Tile;
 import rutebaga.scaffold.MasterScaffold;
-import rutebaga.test.view.TemporaryMover;
-import rutebaga.view.game.FPSTextComponent;
-import rutebaga.view.game.MapComponent;
-import rutebaga.view.rwt.ButtonComponent;
-import rutebaga.view.rwt.ScrollDecorator;
-import rutebaga.view.rwt.ViewCompositeComponent;
 import temporary.Bumper;
 import temporary.WindTunnel;
 
@@ -75,7 +63,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				{
 					Vector2D location = new Vector2D(x, y);
 					Tile tile = new Tile();
-					Appearance water = new Appearance(tile);
+					Appearance water = new Appearance();
+					water.setOrientation(Orientation.C);
 					water.setImage(grass);
 					tile.setAppearance(water);
 					environment.add(tile, location);
@@ -93,7 +82,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					if (x % 8 == 0 && y % 8 == 0)
 					{
 						WindTunnel tunnel = new WindTunnel();
-						Appearance chest = new Appearance(tunnel);
+						Appearance chest = new Appearance();
 						chest.setImage(treasure);
 						tunnel.setAppearance(chest);
 						environment.add(tunnel, location);
@@ -109,7 +98,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					if (x % 8 == 0 && y % 8 == 0)
 					{
 						Instance instance = new Bumper();
-						Appearance chest = new Appearance(instance);
+						Appearance chest = new Appearance();
 						chest.setImage(treasure);
 						instance.setAppearance(chest);
 						environment.add(instance, location);
@@ -128,7 +117,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		//		
 		// environment.add(npc, new Vector2D(20, 20));
 
-		Appearance appearance = new Appearance(avatar);
+		Appearance appearance = new Appearance();
 		appearance.setImage(cheese);
 		avatar.setAppearance(appearance);
 
@@ -143,7 +132,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		{
 			NPCEntity npc1 = new NPCEntity();
 			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
-			Appearance npcAppearance1 = new Appearance(npc1);
+			Appearance npcAppearance1 = new Appearance();
 			npcAppearance1.setImage(cheese);
 			npc1.setAppearance(npcAppearance1);
 

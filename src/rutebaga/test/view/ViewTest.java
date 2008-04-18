@@ -105,7 +105,7 @@ public class ViewTest
 					{
 						Vector2D location = new Vector2D(x, y);
 						Tile tile = new Tile();
-						Appearance water = new Appearance(tile);
+						Appearance water = new Appearance();
 						water.setImage(grass);
 						tile.setAppearance(water);
 						environment.add(tile, location);
@@ -123,7 +123,7 @@ public class ViewTest
 						if (x % 8 == 0 && y % 8 == 0)
 						{
 							WindTunnel tunnel = new WindTunnel();
-							Appearance chest = new Appearance(tunnel);
+							Appearance chest = new Appearance();
 							chest.setImage(treasure);
 							tunnel.setAppearance(chest);
 							environment.add(tunnel, location);
@@ -139,7 +139,7 @@ public class ViewTest
 						if (x % 8 == 0 && y % 8 == 0)
 						{
 							Instance instance = new Bumper();
-							Appearance chest = new Appearance(instance);
+							Appearance chest = new Appearance();
 							chest.setImage(treasure);
 							instance.setAppearance(chest);
 							environment.add(instance, location);
@@ -159,7 +159,7 @@ public class ViewTest
 			//		
 			// environment.add(npc, new Vector2D(20, 20));
 
-			Appearance appearance = new Appearance(avatar);
+			Appearance appearance = new Appearance();
 			appearance.setImage(cheese);
 			avatar.setAppearance(appearance);
 
@@ -176,7 +176,7 @@ public class ViewTest
 			{
 				NPCEntity npc1 = new NPCEntity();
 				npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
-				Appearance npcAppearance1 = new Appearance(npc1);
+				Appearance npcAppearance1 = new Appearance();
 				npcAppearance1.setImage(cheese);
 				npc1.setAppearance(npcAppearance1);
 

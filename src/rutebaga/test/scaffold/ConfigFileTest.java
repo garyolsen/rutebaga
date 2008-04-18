@@ -1,9 +1,9 @@
 package rutebaga.test.scaffold;
 
-import rutebaga.game.builders.ImageBuilder;
 import rutebaga.model.entity.EntityType;
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
+import rutebaga.scaffold.builders.ImageBuilder;
 
 public class ConfigFileTest
 {
@@ -14,8 +14,8 @@ public class ConfigFileTest
 	public static void main(String[] args)
 	{
 		MasterScaffold scaffold = new MasterScaffold();
-		Builder imgBuilder = new ImageBuilder(scaffold);
-		Builder entityTypeBuilder = new EntityTypeBuilder(scaffold);
+		Builder imgBuilder = new ImageBuilder();
+		Builder entityTypeBuilder = new EntityTypeBuilder();
 		scaffold.registerBuilder(imgBuilder);
 		scaffold.registerBuilder(entityTypeBuilder);
 		scaffold.build();

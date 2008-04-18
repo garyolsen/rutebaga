@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import rutebaga.view.drawer.Graphics2DDrawer;
 
@@ -31,7 +32,7 @@ public class View
 
 	private BufferStrategy strategy;
 
-	private List<ViewComponent> components = new ArrayList<ViewComponent>();
+	private List<ViewComponent> components = new CopyOnWriteArrayList<ViewComponent>();
 
 	private static ImageCapabilities accel = new ImageCapabilities(true);
 

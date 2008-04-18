@@ -1,19 +1,11 @@
-package rutebaga.game.builders;
+package rutebaga.scaffold.builders;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import rutebaga.scaffold.MasterScaffold;
 
 public class GameConfigBuilder extends ConfigFileBuilder
 {
-
-	public GameConfigBuilder(MasterScaffold scaffold)
-	{
-		super(scaffold);
-	}
-
 	@Override
 	protected String getDefaultFileName()
 	{

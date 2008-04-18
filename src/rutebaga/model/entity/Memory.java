@@ -5,8 +5,10 @@ import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Layerable;
 import rutebaga.model.environment.Locatable;
+import rutebaga.model.environment.Orientable;
+import rutebaga.model.environment.Appearance.Orientation;
 
-public class Memory implements Layerable, Locatable
+public class Memory implements Layerable, Locatable, Orientable
 {
 	private Appearance appearance;
 	private Vector2D coordinate;
@@ -50,5 +52,10 @@ public class Memory implements Layerable, Locatable
 	public void setCoordinate(Vector2D coordinate)
 	{
 		this.coordinate = coordinate;
+	}
+
+	public Orientation getOrientation()
+	{
+		return appearance.getOrientation();
 	}
 }

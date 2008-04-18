@@ -90,7 +90,7 @@ public class NewGameInitializer implements GameInitializer {
 					{
 						Vector2D location = new Vector2D(x, y);
 						Tile tile = new Tile();
-						Appearance water = new Appearance(tile);
+						Appearance water = new Appearance();
 						water.setImage(grass);
 						tile.setAppearance(water);
 						environment.add(tile, location);
@@ -101,7 +101,7 @@ public class NewGameInitializer implements GameInitializer {
 			avatar = new CharEntity();
 
 			
-			Appearance appearance = new Appearance(avatar);
+			Appearance appearance = new Appearance();
 			appearance.setImage(cheese);
 			avatar.setAppearance(appearance);
 
@@ -115,7 +115,7 @@ public class NewGameInitializer implements GameInitializer {
 			for (int i = 0; i < N_NPCS; i++)
 			{
 				NPCEntity npc1 = new NPCEntity();
-				Appearance npcAppearance1 = new Appearance(npc1);
+				Appearance npcAppearance1 = new Appearance();
 				npcAppearance1.setImage(cheese);
 				npc1.setAppearance(npcAppearance1);
 
