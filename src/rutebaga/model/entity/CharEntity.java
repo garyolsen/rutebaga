@@ -4,12 +4,23 @@ import rutebaga.model.entity.inventory.ConcreteInventory;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.ConcreteStats;
 import rutebaga.model.entity.stats.Stats;
-import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceType;
 
-public class CharEntity extends Entity
+public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 {
 	private ConcreteStats stats = new ConcreteStats(this);
+
 	private ConcreteInventory inventory = new ConcreteInventory(this);
+	public CharEntity(InstanceType<T> type)
+	{
+		super(type);
+	}
+
+	@Override
+	public Inventory getInventory()
+	{
+		return inventory;
+	}
 
 	@Override
 	public double getMass()
@@ -22,12 +33,6 @@ public class CharEntity extends Entity
 	public Stats getStats()
 	{
 		return stats;
-	}
-
-	@Override
-	public Inventory getInventory()
-	{
-		return inventory;
 	}
 
 }
