@@ -4,7 +4,7 @@ public class ConstantValueProvider<T> extends ValueProvider<T>
 {
 	private double value;
 
-	private ConstantValueProvider(double value)
+	public ConstantValueProvider(double value)
 	{
 		super();
 		this.value = value;

@@ -12,7 +12,7 @@ public class UnaryOperationValueProvider<T> extends ValueProvider<T>
 		return operation.calculate(argument.getValue(t));
 	}
 
-	private UnaryOperationValueProvider(UnaryOperation operation,
+	public UnaryOperationValueProvider(UnaryOperation operation,
 			ValueProvider<T> argument)
 	{
 		super();
