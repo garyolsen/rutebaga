@@ -74,6 +74,8 @@ public class TemporaryMover implements KeyListener
 			direction.accumulate(NORTHEAST);
 		if (keyBuffer.isPressed(KeyEvent.VK_SPACE))
 			explode();
+		if (keyBuffer.isPressedOnce(KeyEvent.VK_ENTER))
+			avatar.getAbilities().get(0).act(avatar);
 		double magnitude = direction.getMagnitude();
 		if (magnitude > 0.001)
 		{

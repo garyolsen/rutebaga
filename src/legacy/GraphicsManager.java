@@ -33,7 +33,7 @@ public class GraphicsManager
 	public Image createVolatileImage(int width, int height)
 	{
 		return this.getGraphicsConfiguration().createCompatibleImage(width,
-				height, Transparency.TRANSLUCENT);
+				height);
 	}
 
 	/**

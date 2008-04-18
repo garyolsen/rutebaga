@@ -129,6 +129,7 @@ public class BoundsTracker implements MovementListener
 	private boolean checkInstance(Instance instance)
 	{
 		IntVector2D location = instance.getTile();
+		if(location == null) return false;
 		IntVector2D offset = this.monitoredInstance.getTile();
 		return tilesWithinBounds.contains(location.minus(offset));
 	}
