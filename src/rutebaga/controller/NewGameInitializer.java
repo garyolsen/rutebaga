@@ -29,7 +29,7 @@ public class NewGameInitializer implements GameInitializer {
 	private static boolean USE_VOLATILE_IMAGES = false;
 
 	
-	private CharEntity avatar;
+	private CharEntity<?> avatar;
 	private World world;
 	
 	public NewGameInitializer(MasterScaffold scaffold) {
@@ -89,7 +89,7 @@ public class NewGameInitializer implements GameInitializer {
 					if (random.nextDouble() < TILE_PROB)
 					{
 						Vector2D location = new Vector2D(x, y);
-						Tile tile = new Tile();
+						Tile tile = new Tile(null);
 						Appearance water = new Appearance();
 						water.setImage(grass);
 						tile.setAppearance(water);
@@ -98,7 +98,7 @@ public class NewGameInitializer implements GameInitializer {
 				}
 			}
 			
-			avatar = new CharEntity();
+			avatar = new CharEntity(null);
 
 			
 			Appearance appearance = new Appearance();
@@ -114,7 +114,7 @@ public class NewGameInitializer implements GameInitializer {
 
 			for (int i = 0; i < N_NPCS; i++)
 			{
-				NPCEntity npc1 = new NPCEntity();
+				NPCEntity npc1 = new NPCEntity(null);
 				Appearance npcAppearance1 = new Appearance();
 				npcAppearance1.setImage(cheese);
 				npc1.setAppearance(npcAppearance1);

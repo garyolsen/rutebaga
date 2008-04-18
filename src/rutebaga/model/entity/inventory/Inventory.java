@@ -10,13 +10,13 @@ public interface Inventory
 
 	Set<Item> getEquipped();
 
-	boolean canEquip(Item item);
+	boolean canEquip(Item<?> item);
 
-	void equip(Item item);
+	void equip(Item<?> item);
 
-	void unequip(Item item);
+	void unequip(Item<?> item);
 	
-	void drop(Item item);
+	void drop(Item<?> item);
 	
-	void accept(Item item);
+	void accept(Item<?> item);
 }

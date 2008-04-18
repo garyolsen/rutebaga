@@ -26,7 +26,7 @@ public class BoundsTracker implements MovementListener
 	private Environment monitoredEnvironment;
 	private Bounds2D bounds;
 
-	private Instance monitoredInstance;
+	private Instance<?> monitoredInstance;
 	private Collection<IntVector2D> tilesWithinBounds;
 
 	private boolean init = false;
@@ -41,7 +41,7 @@ public class BoundsTracker implements MovementListener
 	 * @param instance
 	 *            the instance to center upon
 	 */
-	public BoundsTracker(Bounds2D bounds, Instance instance)
+	public BoundsTracker(Bounds2D bounds, Instance<?> instance)
 	{
 		this.bounds = bounds;
 		this.monitoredInstance = instance;
@@ -126,7 +126,7 @@ public class BoundsTracker implements MovementListener
 	 *            the instance to check
 	 * @return true if the instance is within the bounds; false otherwise
 	 */
-	private boolean checkInstance(Instance instance)
+	private boolean checkInstance(Instance<?> instance)
 	{
 		IntVector2D location = instance.getTile();
 		if(location == null) return false;

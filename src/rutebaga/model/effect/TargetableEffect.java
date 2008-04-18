@@ -5,9 +5,10 @@ import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.Targetable;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
+import rutebaga.model.environment.InstanceType;
 
 public abstract class TargetableEffect<Self extends TargetableEffect<Self, TargetType>, TargetType extends Instance>
-		extends Instance implements Targetable<TargetType>
+		extends Instance<Self> implements Targetable<TargetType>
 {
 	private ValueProvider<? super Self> impulse;
 	private TargetType target;
@@ -23,10 +24,10 @@ public abstract class TargetableEffect<Self extends TargetableEffect<Self, Targe
 		this.lifetime = lifetime;
 	}
 
-	public TargetableEffect(
+	public TargetableEffect(InstanceType<Self> type,
 			ValueProvider<? super Self> impulse)
 	{
-		super();
+		super(type);
 		this.impulse = impulse;
 	}
 
