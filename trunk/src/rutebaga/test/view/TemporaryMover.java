@@ -77,8 +77,7 @@ public class TemporaryMover implements KeyListener
 		double magnitude = direction.getMagnitude();
 		if (magnitude > 0.001)
 		{
-			direction.divideBy(magnitude / MOVE_SPEED);
-			avatar.applyImpulse(direction);
+			avatar.walk(direction);
 		}
 	}
 
