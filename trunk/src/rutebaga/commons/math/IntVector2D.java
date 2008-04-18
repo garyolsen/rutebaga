@@ -1,5 +1,6 @@
 package rutebaga.commons.math;
 
+@SuppressWarnings("unchecked")
 public class IntVector2D implements GenericVector2D<Integer, IntVector2D>
 {
 	@Override
