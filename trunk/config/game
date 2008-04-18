@@ -1,0 +1,5 @@
+confGame
+npcQty 20
+size 20
+tileProb 1
+showTreasure true

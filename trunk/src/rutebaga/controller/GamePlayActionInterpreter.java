@@ -42,7 +42,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 	}
 
 	public void tick() {
-		world.tick();
+		if(world != null) world.tick();
 	}
 
 	public void uninstallActionInterpreter() {

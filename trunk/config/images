@@ -1,0 +1,10 @@
+imgCheese 
+path TestImages/cheese.png
+imgGrass
+path TestImages/grass.jpg
+imgHextile
+path TestImages/hextile.png
+imgPoint
+path TestImages/point.png
+imgTreasure
+path TestImages/treasure.png
