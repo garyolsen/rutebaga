@@ -43,7 +43,7 @@ public class NewGameInitializer implements GameInitializer {
 	
 		Environment environment = new Environment(new Hex2DTileConvertor());
 		
-		java.awt.GraphicsConfiguration gc = java.awt.Frame.getWindows()[0].getGraphicsConfiguration();
+		java.awt.GraphicsConfiguration gc = java.awt.Frame.getFrames()[0].getGraphicsConfiguration();
 		
 		try
 		{

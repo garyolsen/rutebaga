@@ -62,7 +62,9 @@ public class Vision
 				tileMemory = new HashSet<Memory>();
 				lastSaw.put(tile, tileMemory);
 			}
-			tileMemory.add(new Memory(instance));
+			
+			if(!getActiveSet().contains(instance))
+				tileMemory.add(new Memory(instance));
 		}
 
 		memorySet.putAll(lastSaw);
@@ -74,6 +76,9 @@ public class Vision
 
 		// update what we will have seen with the current set
 
-		previousActiveSet = getActiveSet();
+		previousActiveSet.clear();
+		
+		for(Instance i : getActiveSet())
+			previousActiveSet.add(i);
 	}
 }

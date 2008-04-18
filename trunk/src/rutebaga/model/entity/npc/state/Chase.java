@@ -69,8 +69,8 @@ public class Chase extends NPCState
 			
 			MutableVector2D direction = new MutableVector2D(moveTo.getX(), moveTo.getY());
 			direction.detract(npc.getTile());
-			direction.divideBy(direction.getMagnitude());
-			direction.multiplyBy(0.02);
+			//direction.divideBy(direction.getMagnitude());
+			direction.multiplyBy(0.03);
 			
 			npc.applyImpulse(direction);
 			
