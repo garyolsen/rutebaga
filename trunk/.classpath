@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry excluding="temporary/EntityRenderer.java|temporary/EnvironmentRenderer.java|temporary/TestRunner.java|rutebaga/test/commons/|rutebaga/test/model/entity/inventory/InventoryTest.java|rutebaga/test/model/environment/MovementTest.java|rutebaga/test/model/environment/RectBoundsTest.java|rutebaga/test/model/environment/TestInstance.java|rutebaga/model/environment/Rect2DTileConvertor.java" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>

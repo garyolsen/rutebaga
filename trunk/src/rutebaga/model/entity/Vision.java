@@ -14,7 +14,6 @@ public class Vision
 
 	// TODO make a movement listener of the entity
 
-	private Set<Instance> previousActiveSet = new HashSet<Instance>();
 	private Map<IntVector2D, Set<Memory>> memorySet = new HashMap<IntVector2D, Set<Memory>>();
 	private BoundsTracker boundsTracker;
 	private Entity entity;
@@ -45,7 +44,6 @@ public class Vision
 		if (!entity.existsInUniverse())
 		{
 			memorySet.clear();
-			previousActiveSet.clear();
 			return;
 		}
 
@@ -53,7 +51,7 @@ public class Vision
 
 		Map<IntVector2D, Set<Memory>> lastSaw = new HashMap<IntVector2D, Set<Memory>>();
 
-		for (Instance instance : previousActiveSet)
+		for (Instance instance : getActiveSet())
 		{
 			IntVector2D tile = instance.getTile();
 			Set<Memory> tileMemory = lastSaw.get(instance.getTile());
@@ -62,23 +60,9 @@ public class Vision
 				tileMemory = new HashSet<Memory>();
 				lastSaw.put(tile, tileMemory);
 			}
-			
-			if(!getActiveSet().contains(instance))
-				tileMemory.add(new Memory(instance));
+			tileMemory.add(new Memory(instance));
 		}
 
 		memorySet.putAll(lastSaw);
-
-		// Set<Vector> tilesInMemory = memorySet.keySet();
-		// Set<Vector> memoryInSight =
-		// entity.getVisionBounds().filter(tilesInMemory, entity.getTile());
-		// tilesInMemory.removeAll(memoryInSight);
-
-		// update what we will have seen with the current set
-
-		previousActiveSet.clear();
-		
-		for(Instance i : getActiveSet())
-			previousActiveSet.add(i);
 	}
 }
