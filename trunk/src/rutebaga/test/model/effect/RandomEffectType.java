@@ -28,7 +28,7 @@ public class RandomEffectType implements InstanceType<RandomEffect>
 	public RandomEffect makeInstance()
 	{
 		RandomEffect rval = new RandomEffect(new ConstantValueProvider(0.005));
-		rval.setAppearance(new Appearance(rval));
+		rval.setAppearance(new Appearance());
 		rval.getAppearance().setImage(appearance);
 		rval.setLifetime(10000);
 		return rval;

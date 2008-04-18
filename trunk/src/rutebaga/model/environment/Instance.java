@@ -9,6 +9,7 @@ import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.environment.InstanceSetIdentifier;
+import rutebaga.model.environment.Appearance.Orientation;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 import rutebaga.model.map.TerrainType;
@@ -23,16 +24,16 @@ import rutebaga.model.map.TerrainType;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Instance implements Layerable, Locatable
+public abstract class Instance implements Layerable, Locatable, Orientable
 {
 	private long id = UIDProvider.getLongUID();
+
 	private Location location;
 	private PhysicsContainer physicsContainer;
 	private MovementAttributes movementAttributes = new MovementAttributes();
-	private Appearance appearance = new Appearance(this);
+	private Appearance appearance = new Appearance();
 	private double friction = 0;
 	private boolean tickable = true;
-
 	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
 
 	/**
@@ -80,6 +81,21 @@ public abstract class Instance implements Layerable, Locatable
 	 * @return whether or not access is blocked
 	 */
 	public abstract boolean blocks(Instance other);
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Instance other = (Instance) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 	public boolean existsInUniverse()
 	{
@@ -137,6 +153,8 @@ public abstract class Instance implements Layerable, Locatable
 		return this.getPhysicsContainer().getFriction();
 	}
 
+	public abstract double getLayer();
+
 	/**
 	 * @return the mass of this instance
 	 */
@@ -155,6 +173,13 @@ public abstract class Instance implements Layerable, Locatable
 		return movementAttributes;
 	}
 
+	public Orientation getOrientation()
+	{
+		return getAppearance().getOrientation();
+	}
+
+	public abstract InstanceSetIdentifier getSetIdentifier();
+
 	/**
 	 * @return the coordinate of this instance in tile-space
 	 */
@@ -169,6 +194,20 @@ public abstract class Instance implements Layerable, Locatable
 	public Vector2D getVelocity()
 	{
 		return this.physicsContainer.getVelocity();
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	public boolean isMobile()
+	{
+		return true;
 	}
 
 	public void registerMovementListener(MovementListener listener)
@@ -186,6 +225,18 @@ public abstract class Instance implements Layerable, Locatable
 	public void unregisterMovementListener(MovementListener listener)
 	{
 		this.movementListeners.remove(listener);
+	}
+
+	private void updateTickability()
+	{
+		if(tickable)
+		{
+			getEnvironment().getTickableInstances().add(this);
+		}
+		else
+		{
+			getEnvironment().getTickableInstances().remove(this);
+		}
 	}
 
 	/**
@@ -209,6 +260,13 @@ public abstract class Instance implements Layerable, Locatable
 		return physicsContainer;
 	}
 
+	protected final void setFriction(double friction)
+	{
+		this.friction = friction;
+		if (this.physicsContainer != null)
+			physicsContainer.setFriction(friction);
+	}
+
 	/**
 	 * Sets the location container for this instance.
 	 * 
@@ -228,7 +286,7 @@ public abstract class Instance implements Layerable, Locatable
 			getEnvironment().getTickableInstances().remove(this);
 		}
 	}
-
+	
 	/**
 	 * Sets the physics container for this instance.
 	 * 
@@ -240,46 +298,6 @@ public abstract class Instance implements Layerable, Locatable
 		this.physicsContainer = physicsContainer;
 		physicsContainer.setFriction(friction);
 	}
-
-	public abstract double getLayer();
-
-	public abstract InstanceSetIdentifier getSetIdentifier();
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final Instance other = (Instance) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-
-	public boolean isMobile()
-	{
-		return true;
-	}
-
-	protected final void setFriction(double friction)
-	{
-		this.friction = friction;
-		if (this.physicsContainer != null)
-			physicsContainer.setFriction(friction);
-	}
 	
 	protected final void setTickable(boolean tickable)
 	{
@@ -287,18 +305,6 @@ public abstract class Instance implements Layerable, Locatable
 		if(getEnvironment() != null)
 		{
 			updateTickability();
-		}
-	}
-	
-	private void updateTickability()
-	{
-		if(tickable)
-		{
-			getEnvironment().getTickableInstances().add(this);
-		}
-		else
-		{
-			getEnvironment().getTickableInstances().remove(this);
 		}
 	}
 

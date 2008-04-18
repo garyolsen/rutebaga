@@ -2,17 +2,12 @@ package rutebaga.test.scaffold;
 
 import java.awt.Image;
 
-import rutebaga.game.builders.ConfigFileBuilder;
 import rutebaga.model.entity.EntityType;
 import rutebaga.scaffold.MasterScaffold;
+import rutebaga.scaffold.builders.ConfigFileBuilder;
 
 public class EntityTypeBuilder extends ConfigFileBuilder
 {
-
-	public EntityTypeBuilder(MasterScaffold scaffold)
-	{
-		super(scaffold);
-	}
 
 	@Override
 	protected String getDefaultFileName()
@@ -28,7 +23,7 @@ public class EntityTypeBuilder extends ConfigFileBuilder
 	public void initialize(String id, Object object, MasterScaffold scaffold)
 	{
 		EntityType type = (EntityType) object;
-		type.setImage((Image) getObjectFor(id, "image"));
+		type.setImage((Image) getObjectFor(id, "image", scaffold));
 	}
 
 }

@@ -210,4 +210,9 @@ public class Vector2D implements GenericVector2D<Double, Vector2D>
 		dirty();
 		comp[1] = y;
 	}
+
+	public double[] asArray()
+	{
+		return this.comp.clone();
+	}
 }

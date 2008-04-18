@@ -22,7 +22,7 @@ public class EntityType implements InstanceType<Entity>
 	public Entity makeInstance()
 	{
 		Entity entity = new CharEntity();
-		entity.setAppearance(new Appearance(entity));
+		entity.setAppearance(new Appearance());
 		entity.getAppearance().setImage(image);
 		return entity;
 	}

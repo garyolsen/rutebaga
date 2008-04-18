@@ -1,5 +1,7 @@
-package rutebaga.game.builders;
+package rutebaga.scaffold.builders;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,17 +11,18 @@ import rutebaga.scaffold.MasterScaffold;
 
 public class ImageBuilder extends ConfigFileBuilder
 {
-
-	public ImageBuilder(MasterScaffold scaffold)
-	{
-		super(scaffold);
-	}
-
+	private ImageProvider imageProvider = new BufferedImageProvider();
+	
 	public Object create(String id)
 	{
 		try
 		{
-			return ImageIO.read(new File(getProperty(id, "path")));
+			Image image = ImageIO.read(new File(getProperty(id, "path")));
+			Image transferred = imageProvider.makeImage(image.getWidth(null), image.getHeight(null));
+			Graphics g = transferred.getGraphics();
+			g.drawImage(image, 0, 0, null);
+			g.dispose();
+			return transferred;
 		}
 		catch (IOException e)
 		{

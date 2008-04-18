@@ -8,7 +8,7 @@ import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Layerable;
 import rutebaga.model.environment.Locatable;
 
-public class DrawOrderComparator<T extends Layerable & Locatable> implements
+public class LocationLayerComparator<T extends Layerable & Locatable> implements
 		Comparator<T>
 {
 

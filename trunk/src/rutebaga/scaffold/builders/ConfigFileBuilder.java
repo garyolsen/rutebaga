@@ -1,15 +1,12 @@
-package rutebaga.game.builders;
+package rutebaga.scaffold.builders;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
 
-public abstract class ConfigFileBuilder implements Builder
+public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 {
 	public String[] availableIds()
 	{
@@ -20,27 +17,13 @@ public abstract class ConfigFileBuilder implements Builder
 
 	private Map<String, String> current;
 
-	private MasterScaffold scaffold;
-
-	public ConfigFileBuilder(MasterScaffold scaffold)
+	public ConfigFileBuilder()
 	{
-		this.scaffold = scaffold;
 		String path = getDefaultFileName();
-		try
-		{
-			BufferedReader reader = new BufferedReader(new FileReader(path));
-			String line;
-			while ((line = reader.readLine()) != null)
-				processLine(line);
-			reader.close();
-		}
-		catch (Exception e)
-		{
-			throw new RuntimeException(e);
-		}
+		new FileProcessor().execute(this, path);
 	}
 
-	private void processLine(String readData)
+	public void processLine(String readData)
 	{
 		String[] tokens = readData.split(" ");
 		if (tokens == null)
@@ -63,7 +46,7 @@ public abstract class ConfigFileBuilder implements Builder
 		return properties;
 	}
 
-	protected Object getObjectFor(String id, String property)
+	protected Object getObjectFor(String id, String property, MasterScaffold scaffold)
 	{
 		return scaffold.get(properties.get(id).get(property));
 	}
