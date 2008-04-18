@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
@@ -36,8 +37,8 @@ public class Rect2DTileConvertor implements TileConvertor
 	 */
 	public IntVector2D tileOf(Vector2D coordinate)
 	{
-		return new IntVector2D((int) Math.round(coordinate.getX()), (int) Math
-				.round(coordinate.getY()));
+		return new IntVector2D((int) Math.round(coordinate.getX().doubleValue()), (int) Math
+				.round(coordinate.getY().doubleValue()));
 	}
 
 	/*
@@ -60,9 +61,9 @@ public class Rect2DTileConvertor implements TileConvertor
 		return 2;
 	}
 
-	public Vector2D toRect(Vector2D coordinate)
+	public Vector2D toRect(GenericVector2D coordinate)
 	{
-		return coordinate;
+		return new Vector2D(coordinate.getX().doubleValue(), coordinate.getY().doubleValue());
 	}
 
 	public Collection<IntVector2D> between(IntVector2D a, IntVector2D b)
