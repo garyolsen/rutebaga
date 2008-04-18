@@ -18,9 +18,9 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 
 	private World world;
 	
-	private CharEntity avatar;
+	private CharEntity<?> avatar;
 	
-	public GamePlayActionInterpreter(World world, CharEntity avatar) {
+	public GamePlayActionInterpreter(World world, CharEntity<?> avatar) {
 		this.world = world;
 		this.avatar = avatar;
 		//TODO: get rid of this
@@ -101,7 +101,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 		Set<Instance> set = tracker.getInstances();
 		for(Instance instance : set)
 		{
-			if(instance.getSetIdentifier().equals(InstanceSetIdentifier.ENTITY))
+			if(instance.getSetIdentifier().equals(InstanceSetIdentifier.ENTITY) || instance.getSetIdentifier().equals(InstanceSetIdentifier.EFFECT))
 			{
 				MutableVector2D direction = new MutableVector2D(instance.getCoordinate().getX(), instance.getCoordinate().getY());
 				direction.detract(avatar.getCoordinate());
