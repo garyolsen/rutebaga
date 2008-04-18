@@ -11,7 +11,7 @@ public class RandomEffect extends TargetableEffect<RandomEffect, Instance>
 	public RandomEffect(
 			ValueProvider<? super RandomEffect> impulse)
 	{
-		super(impulse);
+		super(null, impulse);
 	}
 
 	@Override

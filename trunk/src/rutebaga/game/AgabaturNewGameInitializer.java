@@ -13,7 +13,6 @@ import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
-import rutebaga.model.environment.Orientable;
 import rutebaga.model.environment.World;
 import rutebaga.model.environment.appearance.AnimatedAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance;
@@ -27,7 +26,7 @@ import temporary.WindTunnel;
 
 public class AgabaturNewGameInitializer implements GameInitializer
 {
-	private CharEntity avatar;
+	private CharEntity<?> avatar;
 	private World world;
 	private MasterScaffold scaffold;
 
@@ -76,7 +75,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				if (random.nextDouble() < tileProb)
 				{
 					Vector2D location = new Vector2D(x, y);
-					Tile tile = new Tile();
+					Tile tile = new Tile(null);
 					Appearance water = new Appearance();
 					water.setOrientation(Orientation.C);
 					water.setImage(grass);
@@ -127,7 +126,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			}
 		}
 
-		avatar = new CharEntity();
+		avatar = new CharEntity(null);
 		avatar.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.04));
 
 		// npc = new NPCEntity();
@@ -152,7 +151,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		for (int i = 0; i < numNpcs; i++)
 		{
-			NPCEntity npc1 = new NPCEntity();
+			NPCEntity<?> npc1 = new NPCEntity(null);
 			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 			Appearance npcAppearance1 = new Appearance();
 			npcAppearance1.setImage(cheese);

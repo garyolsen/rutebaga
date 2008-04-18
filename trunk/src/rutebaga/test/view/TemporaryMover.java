@@ -17,7 +17,7 @@ import rutebaga.model.environment.InstanceSetIdentifier;
 public class TemporaryMover implements KeyListener
 {
 
-	private CharEntity avatar;
+	private CharEntity<?> avatar;
 
 	private static final double MOVE_SPEED = 0.03;
 

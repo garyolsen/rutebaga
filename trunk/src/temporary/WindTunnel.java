@@ -18,6 +18,7 @@ public class WindTunnel extends Instance
 
 	public WindTunnel()
 	{
+		super(null);
 		tracker = new BoundsTracker(new EllipseBounds2D(new Vector2D(0, 0),
 				new Vector2D(2, 2)), this);
 	}

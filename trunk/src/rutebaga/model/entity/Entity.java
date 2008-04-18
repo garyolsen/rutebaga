@@ -9,7 +9,6 @@ import java.util.Map;
 import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.Bounds2D;
 import rutebaga.commons.math.ConstantValueProvider;
-import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.RectBounds2D;
 import rutebaga.commons.math.ValueProvider;

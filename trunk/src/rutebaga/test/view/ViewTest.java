@@ -104,7 +104,7 @@ public class ViewTest
 					if (random.nextDouble() < TILE_PROB)
 					{
 						Vector2D location = new Vector2D(x, y);
-						Tile tile = new Tile();
+						Tile tile = new Tile(null);
 						Appearance water = new Appearance();
 						water.setImage(grass);
 						tile.setAppearance(water);
@@ -148,7 +148,7 @@ public class ViewTest
 				}
 			}
 
-			avatar = new CharEntity();
+			avatar = new CharEntity(null);
 			avatar.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 			//avatar.setVisionBounds(new RectBounds2D(new Vector2D(30, 30)));
 
@@ -174,7 +174,7 @@ public class ViewTest
 
 			for (int i = 0; i < N_NPCS; i++)
 			{
-				NPCEntity npc1 = new NPCEntity();
+				NPCEntity<?> npc1 = new NPCEntity(null);
 				npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 				Appearance npcAppearance1 = new Appearance();
 				npcAppearance1.setImage(cheese);

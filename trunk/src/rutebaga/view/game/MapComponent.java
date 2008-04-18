@@ -3,13 +3,9 @@ package rutebaga.view.game;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
-import java.awt.Frame;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Transparency;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -143,10 +139,10 @@ public class MapComponent extends ViewComponent
 		System.out.println("drawing fog: "
 				+ (System.currentTimeMillis() - time));
 
-//		Composite composite = AlphaComposite.getInstance(
-//				AlphaComposite.SRC_ATOP, 0.3F);
-//
-//		draw.setComposite(composite);
+		Composite composite = AlphaComposite.getInstance(
+				AlphaComposite.SRC_ATOP, 0.3F);
+
+		draw.setComposite(composite);
 
 		time = System.currentTimeMillis();
 		Map<IntVector2D, Set<Memory>> memory = avatarVision.getMemory();
@@ -203,9 +199,10 @@ public class MapComponent extends ViewComponent
 		System.out.println("drawing memories: "
 				+ (System.currentTimeMillis() - time));
 
-//		draw.clearComposite();
+		draw.clearComposite();
 	}
 
+	@SuppressWarnings("unused")
 	private void drawAvatar(Drawer draw)
 	{
 		Point p = new Point(getWidth() / 2, getHeight() / 2);

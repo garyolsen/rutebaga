@@ -3,6 +3,9 @@ package rutebaga.scaffold;
 import java.util.HashMap;
 import java.util.Map;
 
+import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceType;
+
 /**
  * The MasterScaffold initializes and keeps track of Objects that are "on the
  * scaffold" and used in game initialization.
@@ -118,5 +121,10 @@ public class MasterScaffold
 		{
 			builders.put(id, builder);
 		}
+	}
+	
+	public Instance makeInstance(String type)
+	{
+		return ((InstanceType<?>) get(type)).makeInstance();
 	}
 }

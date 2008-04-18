@@ -1,9 +1,9 @@
 package rutebaga.model.environment;
 
-import java.rmi.server.UID;
 import java.util.HashSet;
 import java.util.Set;
 
+import rutebaga.commons.ObjectUtils;
 import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
@@ -13,6 +13,7 @@ import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.AppearanceManager;
+import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.model.map.TerrainType;
 
@@ -26,9 +27,11 @@ import rutebaga.model.map.TerrainType;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Instance implements Layerable, Locatable, Orientable
+public abstract class Instance<T extends Instance<T>> implements Layerable, Locatable, Orientable
 {
 	private long id = UIDProvider.getLongUID();
+	
+	private InstanceType<T> type;
 
 	private Location location;
 	private PhysicsContainer physicsContainer;
@@ -37,6 +40,11 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 	private double friction = 0;
 	private boolean tickable = true;
 	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
+
+	public Instance(InstanceType<T> type)
+	{
+		this.type = type;
+	}
 
 	/**
 	 * Checks to see whether an instance is allowed to be over a terrain type.
@@ -115,6 +123,11 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 		return appearanceManager.getAppearance();
 	}
 
+	public AppearanceManager getAppearanceManager()
+	{
+		return appearanceManager;
+	}
+
 	/**
 	 * Returns other Instances on the same game tile.
 	 * 
@@ -190,6 +203,11 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 		return location == null ? null : location.getTile();
 	}
 
+	public InstanceType<T> getType()
+	{
+		return type;
+	}
+
 	/**
 	 * @return the (instantaneous) velocity of this instance
 	 */
@@ -207,6 +225,12 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 		return result;
 	}
 
+	public final void instanceTickOps()
+	{
+		if(appearanceManager != null)
+			appearanceManager.tick();
+	}
+
 	public boolean isMobile()
 	{
 		return true;
@@ -215,6 +239,16 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 	public void registerMovementListener(MovementListener listener)
 	{
 		this.movementListeners.add(listener);
+	}
+
+	public void setAppearanceManager(AppearanceManager appearanceManager)
+	{
+		this.appearanceManager = appearanceManager;
+	}
+	
+	public void setAppearance(Appearance appearance)
+	{
+		this.appearanceManager = new StaticAppearanceManager(appearance);
 	}
 
 	public abstract void tick();
@@ -235,7 +269,7 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 			getEnvironment().getTickableInstances().remove(this);
 		}
 	}
-
+	
 	/**
 	 * @return the location container for this instance
 	 */
@@ -243,7 +277,7 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 	{
 		return location;
 	}
-
+	
 	protected Set<MovementListener> getMovementListeners()
 	{
 		return movementListeners;
@@ -263,7 +297,7 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 		if (this.physicsContainer != null)
 			physicsContainer.setFriction(friction);
 	}
-
+	
 	/**
 	 * Sets the location container for this instance.
 	 * 
@@ -283,7 +317,7 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 			getEnvironment().getTickableInstances().remove(this);
 		}
 	}
-	
+
 	/**
 	 * Sets the physics container for this instance.
 	 * 
@@ -295,7 +329,7 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 		this.physicsContainer = physicsContainer;
 		physicsContainer.setFriction(friction);
 	}
-	
+
 	protected final void setTickable(boolean tickable)
 	{
 		this.tickable = tickable;
@@ -304,21 +338,10 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 			updateTickability();
 		}
 	}
-
-	public AppearanceManager getAppearanceManager()
-	{
-		return appearanceManager;
-	}
-
-	public void setAppearanceManager(AppearanceManager appearanceManager)
-	{
-		this.appearanceManager = appearanceManager;
-	}
 	
-	public final void instanceTickOps()
+	public boolean sameTypeAs(Instance other)
 	{
-		if(appearanceManager != null)
-			appearanceManager.tick();
+		return ObjectUtils.equals(this.type, other.type);
 	}
 
 }
