@@ -1,11 +1,23 @@
 package rutebaga.commons.math;
 
-public class MutableVector2D extends Vector2D implements GenericMutableVector2D<Double, Vector2D, MutableVector2D>
+@SuppressWarnings("unchecked")
+public class MutableVector2D extends Vector2D implements
+		GenericMutableVector2D<Double, Vector2D, MutableVector2D>
 {
 
 	public MutableVector2D()
 	{
 		super();
+	}
+
+	public MutableVector2D(double[] comp)
+	{
+		super(comp);
+	}
+
+	public MutableVector2D(GenericVector2D vector)
+	{
+		super(vector);
 	}
 
 	public MutableVector2D(double x, double y)
@@ -52,7 +64,10 @@ public class MutableVector2D extends Vector2D implements GenericMutableVector2D<
 	{
 		super.setY(y);
 	}
+	
+	public MutableVector2D becomeUnitVector()
+	{
+		return divideBy(this.getMagnitude());
+	}
 
-	
-	
 }

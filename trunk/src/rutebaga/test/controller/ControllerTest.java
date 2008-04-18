@@ -7,21 +7,13 @@ import rutebaga.controller.GameDaemon;
 import rutebaga.controller.GameInitializer;
 import rutebaga.controller.NewGameInitializer;
 import rutebaga.controller.TitleActionInterpreter;
+import rutebaga.game.AgabaturGame;
 import rutebaga.scaffold.Builder;
 
 public class ControllerTest {
 	public static void main(String args[]) {
 
-		Game game = new Game() {
-			GameInitializer init = new NewGameInitializer(null/*scaffold goes here*/);
-			public GameInitializer getGameInitializer() {
-				return init;
-			}
-			
-			public Collection<Builder> getBuilders() {
-				return null;
-			}
-		};
+		Game game = new AgabaturGame();
 		
 		GameDaemon daemon = GameDaemon.initialize(game);
 		

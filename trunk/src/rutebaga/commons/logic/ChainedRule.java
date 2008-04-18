@@ -1,8 +1,7 @@
 package rutebaga.commons.logic;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * A rule based on a series of other rules.
@@ -21,7 +20,7 @@ public class ChainedRule<T> implements Rule<T>
 {
 	private final boolean defaultValue;
 
-	private Set<Rule<T>> rules = new HashSet<Rule<T>>();
+	private Collection<Rule<T>> rules = new LinkedList<Rule<T>>();
 
 	/**
 	 * Constructs a new ChainedRule with the specified default value.
@@ -53,6 +52,11 @@ public class ChainedRule<T> implements Rule<T>
 			if (rule.determine(context) != defaultValue)
 				return !defaultValue;
 		return defaultValue;
+	}
+
+	public void add(Rule<T> rule)
+	{
+		this.rules.add(rule);
 	}
 
 }

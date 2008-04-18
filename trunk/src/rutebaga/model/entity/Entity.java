@@ -1,6 +1,9 @@
 package rutebaga.model.entity;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import rutebaga.commons.UIDProvider;
@@ -34,7 +37,7 @@ import rutebaga.model.environment.InstanceSetIdentifier;
  */
 public abstract class Entity extends Instance implements Named
 {
-	public static int SIGHT_RANGE = 10;
+	public static int SIGHT_RANGE = 7;
 	
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
@@ -45,6 +48,20 @@ public abstract class Entity extends Instance implements Named
 
 	private String name;
 	
+	//TODO move into AbilitySet
+	private List<Ability> abilities = new ArrayList<Ability>();
+	
+	public List<Ability> getAbilities()
+	{
+		return Collections.unmodifiableList(abilities);
+	}
+	
+	public void addAbility(Ability ability)
+	{
+		ability.setEntity(this);
+		abilities.add(ability);
+	}
+
 	public Entity()
 	{
 		visionBounds = new RectBounds2D(new Vector2D(SIGHT_RANGE, SIGHT_RANGE));

@@ -3,18 +3,12 @@ package rutebaga.commons.math;
 @SuppressWarnings("unchecked")
 public class Vector2D implements GenericVector2D<Double, Vector2D>
 {
-	@Override
-	public String toString()
-	{
-		return "<" + getX() + ", " + getY() + ">";
-	}
-
 	private static void minus(double[] a, GenericVector2D b, double[] dest)
 	{
 		dest[0] = a[0] - b.getX().doubleValue();
 		dest[1] = a[1] - b.getY().doubleValue();
 	}
-
+	
 	private static void opposite(double[] a, double[] dest)
 	{
 		dest[0] = -a[0];
@@ -32,17 +26,28 @@ public class Vector2D implements GenericVector2D<Double, Vector2D>
 		dest[0] = a[0] + b.getX().doubleValue();
 		dest[1] = a[1] + b.getY().doubleValue();
 	}
-	
+
 	private static void times(double[] a, double f, double[] dest)
 	{
 		dest[0] = a[0] * f;
 		dest[1] = a[1] * f;
 	}
-	
+
 	private double comp[] = new double[2];
 	
 	private double magnitude;
+	
 	private boolean mag_dirty = true;
+	
+	public Vector2D(double x, double y)
+	{
+		comp[0] = x;
+		comp[1] = y;
+	}
+	public Vector2D(GenericVector2D vector)
+	{
+		this(vector.getX().doubleValue(), vector.getY().doubleValue());
+	}
 
 	Vector2D()
 	{
@@ -51,38 +56,6 @@ public class Vector2D implements GenericVector2D<Double, Vector2D>
 	Vector2D(double comp[])
 	{
 		this.comp = comp;
-	}
-	
-	public Vector2D(double x, double y)
-	{
-		comp[0] = x;
-		comp[1] = y;
-	}
-	
-	Vector2D accumulate(GenericVector2D other)
-	{
-		dirty();
-		plus(this.comp, other, this.comp);
-		return this;
-	}
-
-	Vector2D detract(GenericVector2D other)
-	{
-		dirty();
-		minus(this.comp, other, this.comp);
-		return this;
-	}
-	
-	void dirty()
-	{
-		mag_dirty = true;
-	}
-	
-	Vector2D divideBy(double div)
-	{
-		dirty();
-		over(this.comp, div, this.comp);
-		return this;
 	}
 	
 	public double dot(Vector2D other)
@@ -106,7 +79,7 @@ public class Vector2D implements GenericVector2D<Double, Vector2D>
 			return false;
 		return true;
 	}
-	
+
 	public Double get(int idx)
 	{
 		return comp[idx];
@@ -152,20 +125,6 @@ public class Vector2D implements GenericVector2D<Double, Vector2D>
 		return rval;
 	}
 	
-	Vector2D multiplyBy(double f)
-	{
-		dirty();
-		times(this.comp, f, this.comp);
-		return this;
-	}
-	
-	Vector2D negate()
-	{
-		dirty();
-		opposite(this.comp, this.comp);
-		return this;
-	}
-	
 	public Vector2D opposite()
 	{
 		Vector2D rval = new Vector2D();
@@ -187,22 +146,68 @@ public class Vector2D implements GenericVector2D<Double, Vector2D>
 		return rval;
 	}
 	
-	void setX(double x)
-	{
-		dirty();
-		comp[0] = x;
-	}
-	
-	void setY(double y)
-	{
-		dirty();
-		comp[1] = y;
-	}
-
 	public Vector2D times(double f)
 	{
 		Vector2D rval = new Vector2D();
 		times(this.comp, f, rval.comp);
 		return rval;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "<" + getX() + ", " + getY() + ">";
+	}
+	
+	Vector2D accumulate(GenericVector2D other)
+	{
+		dirty();
+		plus(this.comp, other, this.comp);
+		return this;
+	}
+	
+	Vector2D detract(GenericVector2D other)
+	{
+		dirty();
+		minus(this.comp, other, this.comp);
+		return this;
+	}
+	
+	void dirty()
+	{
+		mag_dirty = true;
+	}
+	
+	Vector2D divideBy(double div)
+	{
+		dirty();
+		over(this.comp, div, this.comp);
+		return this;
+	}
+	
+	Vector2D multiplyBy(double f)
+	{
+		dirty();
+		times(this.comp, f, this.comp);
+		return this;
+	}
+	
+	Vector2D negate()
+	{
+		dirty();
+		opposite(this.comp, this.comp);
+		return this;
+	}
+	
+	void setX(double x)
+	{
+		dirty();
+		comp[0] = x;
+	}
+
+	void setY(double y)
+	{
+		dirty();
+		comp[1] = y;
 	}
 }

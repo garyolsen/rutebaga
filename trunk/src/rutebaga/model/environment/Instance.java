@@ -116,7 +116,7 @@ public abstract class Instance implements Layerable, Locatable
 	 */
 	public Vector2D getCoordinate()
 	{
-		return location.getCoordinate();
+		return location == null ? null : location.getCoordinate();
 	}
 
 	/**
@@ -160,7 +160,7 @@ public abstract class Instance implements Layerable, Locatable
 	 */
 	public IntVector2D getTile()
 	{
-		return location.getTile();
+		return location == null ? null : location.getTile();
 	}
 
 	/**

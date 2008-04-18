@@ -44,7 +44,7 @@ public class Environment
 
 	private Set<Instance> dirtyPhysics = new CopyOnWriteArraySet<Instance>();
 	private Set<IntVector2D> dirtyFriction = new CopyOnWriteArraySet<IntVector2D>();
-	private Set<Instance> tickableInstances = new HashSet<Instance>();
+	private Set<Instance> tickableInstances = new CopyOnWriteArraySet<Instance>();
 
 	/**
 	 * Constructs a new Environment using the given converter to define the
@@ -202,8 +202,10 @@ public class Environment
 				.getCoordinate(), instance.getTile());
 		instances.remove(instance);
 		IntVector2D tile = reverseTileCache.remove(instance);
-		instancesAt(tile).remove(instance);
+		getInstanceSetAt(tile).remove(instance);
 		instance.setLocation(null);
+		dirtyPhysics.remove(instance);
+		tickableInstances.remove(instance);
 		notifyListeners(event);
 	}
 
