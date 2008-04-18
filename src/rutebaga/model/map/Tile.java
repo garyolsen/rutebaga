@@ -3,6 +3,7 @@ package rutebaga.model.map;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
+import rutebaga.model.environment.InstanceType;
 
 /**
  * Stores state information about a hex location. Redirects behavior to its
@@ -11,13 +12,13 @@ import rutebaga.model.environment.InstanceSetIdentifier;
  * @author Gary
  * 
  */
-public class Tile extends Instance
+public class Tile<T extends Tile<T>> extends Instance<T>
 {
 	private TerrainType terrain;
-	
-	public Tile()
+
+	public Tile(InstanceType<T> type)
 	{
-		super();
+		super(type);
 		this.setTickable(false);
 	}
 
@@ -40,11 +41,6 @@ public class Tile extends Instance
 	}
 
 	@Override
-	public void tick()
-	{
-	}
-
-	@Override
 	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.TILE;
@@ -54,6 +50,11 @@ public class Tile extends Instance
 	public boolean isMobile()
 	{
 		return false;
+	}
+
+	@Override
+	public void tick()
+	{
 	}
 
 }
