@@ -7,8 +7,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import rutebaga.commons.math.ConstantValueProvider;
-import rutebaga.model.environment.Appearance;
 import rutebaga.model.environment.InstanceType;
+import rutebaga.model.environment.appearance.Appearance;
+import rutebaga.model.environment.appearance.StaticAppearanceManager;
 
 public class RandomEffectType implements InstanceType<RandomEffect>
 {
@@ -28,8 +29,7 @@ public class RandomEffectType implements InstanceType<RandomEffect>
 	public RandomEffect makeInstance()
 	{
 		RandomEffect rval = new RandomEffect(new ConstantValueProvider(0.005));
-		rval.setAppearance(new Appearance());
-		rval.getAppearance().setImage(appearance);
+		rval.setAppearanceManager(new StaticAppearanceManager(new Appearance(appearance)));
 		rval.setLifetime(10000);
 		return rval;
 	}

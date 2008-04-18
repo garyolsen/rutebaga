@@ -20,6 +20,8 @@ import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
+import rutebaga.model.environment.appearance.Appearance;
+import rutebaga.model.environment.appearance.StaticAppearanceManager;
 
 /**
  * Entity stores the state related to an Entity in a physical environment.
@@ -167,5 +169,10 @@ public abstract class Entity extends Instance implements Named
 	{
 		double magnitude = direction.getMagnitude();
 		this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)/magnitude));
+	}
+
+	public void setAppearance(Appearance appearance)
+	{
+		this.setAppearanceManager(new StaticAppearanceManager(appearance));
 	}
 }

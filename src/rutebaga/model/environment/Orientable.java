@@ -1,6 +1,6 @@
 package rutebaga.model.environment;
 
-import rutebaga.model.environment.Appearance.Orientation;
+import rutebaga.model.environment.appearance.Appearance.Orientation;
 
 public interface Orientable
 {

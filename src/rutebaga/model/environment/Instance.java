@@ -9,9 +9,11 @@ import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.environment.InstanceSetIdentifier;
-import rutebaga.model.environment.Appearance.Orientation;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
+import rutebaga.model.environment.appearance.Appearance;
+import rutebaga.model.environment.appearance.AppearanceManager;
+import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.model.map.TerrainType;
 
 /**
@@ -31,7 +33,7 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 	private Location location;
 	private PhysicsContainer physicsContainer;
 	private MovementAttributes movementAttributes = new MovementAttributes();
-	private Appearance appearance = new Appearance();
+	private AppearanceManager appearanceManager;
 	private double friction = 0;
 	private boolean tickable = true;
 	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
@@ -110,7 +112,7 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 	 */
 	public Appearance getAppearance()
 	{
-		return appearance;
+		return appearanceManager.getAppearance();
 	}
 
 	/**
@@ -215,11 +217,6 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 		this.movementListeners.add(listener);
 	}
 
-	public void setAppearance(Appearance appearance)
-	{
-		this.appearance = appearance;
-	}
-
 	public abstract void tick();
 
 	public void unregisterMovementListener(MovementListener listener)
@@ -306,6 +303,22 @@ public abstract class Instance implements Layerable, Locatable, Orientable
 		{
 			updateTickability();
 		}
+	}
+
+	public AppearanceManager getAppearanceManager()
+	{
+		return appearanceManager;
+	}
+
+	public void setAppearanceManager(AppearanceManager appearanceManager)
+	{
+		this.appearanceManager = appearanceManager;
+	}
+	
+	public final void instanceTickOps()
+	{
+		if(appearanceManager != null)
+			appearanceManager.tick();
 	}
 
 }

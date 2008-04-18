@@ -1,0 +1,9 @@
+file TestImages/ff6_tiles.png 32 32
+
+tileGrass		tileBridgeL			tileBrigeC		tileBridgeR			tileCastleTL		tileCastleTR		tileCastleDestTL 	tileCastleDestTR
+tile2House		tile2HouseTree		tileHouseTree	tileOperaHouse		tileCastleBL		tileCastleBR		tileCastleDestBL	tileCastleDestBR
+tileCavern		tileTrail			tileForestTL	tileForestTR		tileEmptForestTL	tileEmptForestTR	tileIslandTL		tileIslandTR
+tileMtnTL		tileMtnTR			tileForestBL	tileForestBR		tileEmptForestBL	tileEmptForestBR	tileIslandBL		tileIslandBR
+tileMtnBL		tileMtnBR			tileTree		tileWater			tileUnkownL			tileUnknownR		tileUnknownB		tileUnknownT
+tileWPatchTL	tileWPatchT			tileWPatchTR	tileDSpeckTL		tileDSpeckTR		tileDesPatchTL		tileDesPatchT		tileDesPatchTR
+tileWPatchL		tileWPatch			tileWPatchR		tileDSpeckBL		
