@@ -1,5 +1,5 @@
 confGame
-npcQty 30
-size 20
-tileProb .9
-showTreasure true
+npcQty 5
+size 100
+tileProb .8
+showTreasure false
