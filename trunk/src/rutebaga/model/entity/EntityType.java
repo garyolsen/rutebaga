@@ -2,6 +2,7 @@ package rutebaga.model.entity;
 
 import java.awt.Image;
 
+import rutebaga.appearance.EntityAppearanceManager;
 import rutebaga.commons.math.RectBounds2D;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.Vector2D;
@@ -11,21 +12,19 @@ import rutebaga.model.environment.appearance.Appearance;
 
 public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 {
-	private Image image;
+	private Appearance[][] walking;
+	private Appearance[][] standing;
 	private ValueProvider<Entity> movementSpeed;
 	private int radius;
 
-	public int getRadius() {
+	public int getRadius()
+	{
 		return radius;
 	}
 
-	public void setRadius(int radius) {
-		this.radius = radius;
-	}
-
-	public Image getImage()
+	public void setRadius(int radius)
 	{
-		return image;
+		this.radius = radius;
 	}
 
 	public ValueProvider<Entity> getMovementSpeed()
@@ -35,19 +34,17 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 
 	public void initialize(T entity)
 	{
-		entity.setAppearance(new Appearance(image));
+		EntityAppearanceManager manager = new EntityAppearanceManager(entity);
+		manager.setStanding(standing);
+		manager.setWalking(walking);
+		entity.setAppearanceManager(manager);
 		entity.setMovementSpeedStrat(movementSpeed);
-		entity.setVisionBounds(new RectBounds2D(new Vector2D(radius,radius)));
+		entity.setVisionBounds(new RectBounds2D(new Vector2D(radius, radius)));
 	}
-	
+
 	public T create()
 	{
 		return (T) new CharEntity(this);
-	}
-
-	public void setImage(Image image)
-	{
-		this.image = image;
 	}
 
 	public void setMovementSpeed(ValueProvider<Entity> movementSpeed)
