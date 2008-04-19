@@ -1,5 +1,6 @@
 package rutebaga.view;
 
+import java.awt.Color;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
@@ -62,7 +63,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	public void constructFullscreenView()
 	{
 		view = new View(800, 600);
-		view.setFullscreen();
+		//view.setFullscreen();
 	}
 
 	/**
@@ -114,6 +115,13 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 		clearView();
 		
 		view.addViewComponent(new MapComponent(avatar, view.getWidth(), view.getHeight()));
+		
+		FPSTextComponent fps = new FPSTextComponent();
+		fps.setFontColor(Color.RED);
+		fps.setLocation(100, 100);
+		
+		view.addViewComponent(fps);
+		
 	}
 
 	/**

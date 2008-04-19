@@ -136,26 +136,26 @@ public class ViewCompositeComponent extends ViewComponent
 	
 
 	protected boolean processKeyEvent( KeyEvent event ) { 
-		for(ViewComponent vc : components)
+		/*for(ViewComponent vc : components)
 			if(vc.hasFocus())
-				return vc.processKeyEvent(event);
+				return vc.processKeyEvent(event);*/
 		
 		return false;
 	}
 	
 	protected boolean processMouseEvent( MouseEvent event ) {
-		for(ViewComponent vc : components)
+		/*for(ViewComponent vc : components)
 			if(vc.getBounds().contains(new Point(event.getX() - vc.getX(), event.getY() - vc.getY())))
 				return vc.processMouseEvent(event);
-		
+		*/
 		return false;
 	}
 	
 	protected boolean processMouseMotionEvent( MouseEvent event ) {
-		for(ViewComponent vc : components)
+	/*	for(ViewComponent vc : components)
 			if(vc.getBounds().contains(new Point(event.getX() - vc.getX(), event.getY() - vc.getY())))
 				return vc.processMouseEvent(event);
-		
+		*/
 		return false;
 	}
 
