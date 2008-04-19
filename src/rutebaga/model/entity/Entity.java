@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import rutebaga.commons.UIDProvider;
+import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.Bounds2D;
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.IntVector2D;
@@ -181,4 +182,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		return this.movementSpeedStrat.getValue(this);
 	}
+	
+	public abstract BidirectionalValueProvider<T> getWallet();
 }

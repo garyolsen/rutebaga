@@ -102,9 +102,8 @@ public class Chase extends NPCState
 				moveVector = new MutableVector2D(lastDirection).becomeUnitVector().multiplyBy(0.03);
 			}
 		
-		
-		
-		npc.applyImpulse(moveVector);
+			npc.applyImpulse(moveVector);
+			
 			return this;
 		}
 		return NPCState.hostileWander;

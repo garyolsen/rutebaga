@@ -23,7 +23,7 @@ public class BufferedImageProvider implements ImageProvider
 	{
 		try
 		{
-			configuration = Frame.getWindows()[0].getGraphicsConfiguration();
+			configuration = Frame.getFrames()[0].getGraphicsConfiguration();
 		}
 		catch (Exception e)
 		{
