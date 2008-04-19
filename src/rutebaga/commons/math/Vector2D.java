@@ -215,4 +215,9 @@ public class Vector2D implements GenericVector2D<Double, Vector2D>
 	{
 		return this.comp.clone();
 	}
+	
+	public double getAngle()
+	{
+		return Math.atan2(getY(), getX());
+	}
 }

@@ -196,4 +196,10 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public double getMoneyAmount() {
 		return money;
 	}
+	
+	public boolean isWalking()
+	{
+		//TODO implement
+		return true;
+	}
 }

@@ -3,6 +3,7 @@ package rutebaga.model.entity.inventory;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,35 +11,55 @@ import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
 import rutebaga.model.item.Item;
+import rutebaga.model.item.SlotAllocation;
+import rutebaga.model.item.SlotType;
 
 public class ConcreteInventory implements Inventory
 {
 	// FIXME implement slot types
 	private Entity parent;
+
 	private Set<Item> equipped = new HashSet<Item>();
+
 	private Set<Item> unequipped = new HashSet<Item>();
-
+	private SlotAllocation slots = new SlotAllocation();
 	private Map<Item, Set<EntityEffect>> onUnequipEffects = new HashMap<Item, Set<EntityEffect>>();
-
 	public ConcreteInventory(Entity parent)
 	{
 		super();
 		this.parent = parent;
 	}
 
+	public void accept(Item item)
+	{
+		this.unequipped.add(item);
+	}
+
+	public void addSlotAllocation(SlotType type, int qty)
+	{
+		this.slots.add(type, qty);
+	}
+
 	public boolean canEquip(Item item)
 	{
-		// FIXME implement
-		return true;
+		return item.isEquippable() && item.getEquippableAspect().canEquip(this);
+	}
+	
+	public void drop(Item item)
+	{
+		this.unequipped.remove(item);
+		this.equipped.remove(item);
 	}
 
 	public void equip(Item<?> item)
 	{
-		//TODO replace with custom exception
-		if(!item.isEquippable()) throw new RuntimeException("Item is not equippable");
-		if (!equipped.contains(item))
+		// TODO replace with custom exception
+		if (!item.isEquippable())
+			throw new RuntimeException("Item is not equippable");
+		if (!equipped.contains(item) && canEquip(item))
 		{
 			equipped.add(item);
+			unequipped.remove(item);
 
 			Set<EntityEffect> unequipEffects = new HashSet<EntityEffect>();
 			for (ReversibleEntityEffect effect : item
@@ -57,12 +78,14 @@ public class ConcreteInventory implements Inventory
 		}
 	}
 
-	public void unequip(Item item)
+	public int getAvailableForSlot(SlotType type)
 	{
-		for (EntityEffect reverse : onUnequipEffects.remove(item))
-		{
-			parent.accept(reverse);
-		}
+		return slots.getAvailable(type);
+	}
+
+	public SlotAllocation getCurrentAllocations()
+	{
+		return slots;
 	}
 
 	public Set<Item> getEquipped()
@@ -70,20 +93,22 @@ public class ConcreteInventory implements Inventory
 		return Collections.unmodifiableSet(equipped);
 	}
 
+	public Entity getOwner()
+	{
+		return parent;
+	}
+
 	public Set<Item> getUnequipped()
 	{
 		return Collections.unmodifiableSet(unequipped);
 	}
 
-	public void drop(Item item)
+	public void unequip(Item item)
 	{
-		this.unequipped.remove(item);
-		this.equipped.remove(item);
-	}
-
-	public void accept(Item item)
-	{
-		this.unequipped.add(item);
+		for (EntityEffect reverse : onUnequipEffects.remove(item))
+		{
+			parent.accept(reverse);
+		}
 	}
 	
 	@Override
@@ -91,10 +116,21 @@ public class ConcreteInventory implements Inventory
 	{
 		StringBuffer sb = new StringBuffer();
 		
+		sb.append("Slots:\n");
+		for(SlotType type : slots.getSlotTypes())
+		{
+			sb.append("\t")
+		}
 		sb.append("Unequipped Items:\n");
 		for (Item item : unequipped )
 		{
-			sb.append("Item: " + item.getName() + "\n");
+			sb.append("\tItem: " + item.getName() + "\n");
+		}
+		
+		sb.append("Equipped Items:\n");
+		for (Item item : equipped )
+		{
+			sb.append("\tItem: " + item.getName() + "\n");
 		}
 		
 		return sb.toString();

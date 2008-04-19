@@ -17,6 +17,26 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private ValueProvider<Entity> movementSpeed;
 	private int radius;
 
+	public Appearance[][] getWalking()
+	{
+		return walking;
+	}
+
+	public void setWalking(Appearance[][] walking)
+	{
+		this.walking = walking;
+	}
+
+	public Appearance[][] getStanding()
+	{
+		return standing;
+	}
+
+	public void setStanding(Appearance[][] standing)
+	{
+		this.standing = standing;
+	}
+
 	public int getRadius()
 	{
 		return radius;

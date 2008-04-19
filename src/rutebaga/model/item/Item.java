@@ -22,9 +22,29 @@ public class Item<T extends Item<T>> extends Instance<T> implements Named
 		super(type);
 	}
 	
+	@Override
+	public boolean blocks(Instance other) {
+		return false;
+	}
+
 	public Double getDefaultPrice()
 	{
 		return defaultPrice;
+	}
+
+	public EquippableAspect getEquippableAspect()
+	{
+		return equippableAspect;
+	}
+
+	@Override
+	public double getLayer() {
+		return 0;
+	}
+
+	@Override
+	public double getMass() {
+		return 1.0;
 	}
 
 	public String getName()
@@ -71,22 +91,12 @@ public class Item<T extends Item<T>> extends Instance<T> implements Named
 	}
 
 	@Override
-	public boolean blocks(Instance other) {
-		return false;
-	}
-
-	@Override
-	public double getLayer() {
-		return 0;
-	}
-
-	@Override
-	public double getMass() {
-		return 1.0;
-	}
-
-	@Override
 	public void tick() {
 		
+	}
+
+	public void setEquippableAspect(EquippableAspect equippableAspect)
+	{
+		this.equippableAspect = equippableAspect;
 	}
 }
