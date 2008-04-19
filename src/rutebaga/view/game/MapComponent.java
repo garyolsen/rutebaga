@@ -18,8 +18,6 @@ import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.TileConvertor;
-import rutebaga.model.environment.appearance.Appearance;
-import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ViewComponent;
