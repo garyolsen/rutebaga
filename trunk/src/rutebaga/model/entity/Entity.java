@@ -176,4 +176,9 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		this.setAppearanceManager(new StaticAppearanceManager(appearance));
 	}
+	
+	public double getMovementSpeed()
+	{
+		return this.movementSpeedStrat.getValue(this);
+	}
 }

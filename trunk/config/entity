@@ -1,2 +1,3 @@
 entityDefault
-image imgCheese
+image 		imgCheese
+moveSpd		$vpEntityMovementSpeed	

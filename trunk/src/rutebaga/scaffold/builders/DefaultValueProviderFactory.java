@@ -1,6 +1,8 @@
 package rutebaga.scaffold.builders;
 
+import rutebaga.scaffold.builders.vpfactories.ConvertorVPFactory;
 import rutebaga.scaffold.builders.vpfactories.StatVPFactory;
+import rutebaga.scaffold.builders.vpfactories.ValueProviderVPFactory;
 
 public class DefaultValueProviderFactory
 {
@@ -10,6 +12,8 @@ public class DefaultValueProviderFactory
 	{
 		instance = new ChainedValueProviderFactory();
 		instance.addFactory(new StatVPFactory());
+		instance.addFactory(new ValueProviderVPFactory());
+		instance.addFactory(new ConvertorVPFactory());
 	}
 
 	public static ChainedValueProviderFactory getInstance()

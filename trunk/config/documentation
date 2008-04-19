@@ -1,0 +1,153 @@
+##############################################################################
+                 DOCUMENTATION OF CONFIGURATION FILES
+##############################################################################
+
+
+
+
+CONTENTS:
+
+	overview
+	entity
+	game
+	images
+	slicedimages
+	stats
+	valueproviders
+	
+	
+	
+	
+	
+	
+
+OVERVIEW
+******************************************************************************
+
+Files are composed of identifiers on a single line, followed by name-value
+pairs.  Identifiers and names may not contain spacers, but values may.
+
+When a ValueProvider is required (VP in this specification), it may be given
+either as an expression using REL (Rut[ae]baga Expression Language) or by a
+pointer to another ValueProvider directly using the $ operator.
+
+When the target of a ValueProvider is something other than what is desired,
+a converter (agent) may be used.  A listing of converters and value providers
+is in vp_list.
+
+
+
+
+
+
+ENTITY
+******************************************************************************
+
+TYPE: EntityType
+DESCRIPTION: Used to declare entity types.
+
+PROPERTY		TYPE		DESCRIPTION
+------------------------------------------------------------------------
+image			Image		The static image to use for the entity.
+moveSpd			VP<Entity>	Determines the Entity's movement speed.
+
+
+
+
+
+
+
+
+GAME
+******************************************************************************
+
+TYPE: Properties
+DESCRIPTION: Used to specify game-specific parameters.
+
+PROPERTY		TYPE		DESCRIPTION
+------------------------------------------------------------------------
+All properties are strings, and interpreted by the GameData classes.
+
+
+
+
+
+
+
+
+IMAGES
+******************************************************************************
+
+TYPE: Image
+DESCRIPTION: Specifies single image files to load.
+
+PROPERTY		TYPE		DESCRIPTION
+------------------------------------------------------------------------
+path			String		Location from which to load
+
+
+
+
+
+
+
+
+SLICEDIMAGES
+******************************************************************************
+
+TYPE: Image
+DESCRIPTION: Slices image files.
+
+This config file has special syntax.
+
+Each section is composed of a file specification, followed by a listing of
+the images in the file.
+
+The specification has the following format:
+
+file [path] [width] [height]
+
+The image listing should correspond to how the images look on the source
+image; that is, each row of the listing corresponds to a row in the source
+image.
+
+
+
+
+
+
+
+
+STATS
+******************************************************************************
+
+TYPE: StatisticId
+DESCRIPTION: Specifies the statistics.
+
+PROPERTY	TYPE			DESCRIPTION
+------------------------------------------------------------------------
+name		String			Display name of the statistic.
+type		"concrete"|"derived"
+							What type of stat this is.
+default		Double			Default value of the statistic.  Only valid
+							if type is "concrete".
+value		VP<Stats>		Value provider to use to determine the value
+							of the statistic.  Only valid if type is
+							"derived".
+							
+
+
+
+
+
+
+
+VALUEPROVIDERS
+******************************************************************************
+
+TYPE: ValueProvider
+DESCRIPTION: Specifies reusable value providers.
+
+PROPERTY		TYPE		DESCRIPTION
+------------------------------------------------------------------------
+value			VP			Value provider.

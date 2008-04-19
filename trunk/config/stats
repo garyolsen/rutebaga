@@ -8,6 +8,11 @@ name	MP
 type	concrete
 default	5
 
+statMovement
+name	Speed
+type	concrete
+default	10
+
 statAgility
 name	Agility
 type	concrete
@@ -15,10 +20,10 @@ default	12
 
 statLevel
 name	Level
-type	concrete
-default	1
+type	concrete  
+default	1	
 
 statDefRating
 name	Defensive Rating
-type	derived
-value	+ * 4 VP_stat_statLevel * 0.5 VP_stat_statAgility
+type	derived  
+value	+ * 4 VP_stat_statLevel * 0.5 VP_stat_statAgility	# this is a comment

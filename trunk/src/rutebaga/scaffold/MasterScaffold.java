@@ -49,7 +49,16 @@ public class MasterScaffold
 		if (scaffold.get(id) == null)
 		{
 			Builder builder = builders.get(id);
-			Object object = builder.create(id);
+			Object object;
+			try
+			{
+				object = builder.create(id);
+			}
+			catch (Exception e)
+			{
+				throw new RuntimeException("Could not get " + id
+						+ " off scaffold", e);
+			}
 			scaffold.put(id, object);
 			builder.initialize(id, object, this);
 		}
@@ -122,7 +131,7 @@ public class MasterScaffold
 			builders.put(id, builder);
 		}
 	}
-	
+
 	public Instance makeInstance(String type)
 	{
 		return ((InstanceType<?>) get(type)).makeInstance();

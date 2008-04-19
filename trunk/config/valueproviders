@@ -1,0 +1,6 @@
+############################################################################
+#          						ENTITIES                                   #
+############################################################################
+
+vpEntityMovementSpeed	# based on the movement stat of the entity
+value	/ VP_@entityStats_VP_stat_statMovement 10
