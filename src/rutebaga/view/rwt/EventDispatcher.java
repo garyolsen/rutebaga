@@ -8,35 +8,41 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 
 public class EventDispatcher implements KeyListener, MouseListener, MouseMotionListener {
 
-	private Set<ViewComponent> registeredComponents;
-	private Set<ViewComponent> containsMouse;
+	private List<ViewComponent> registeredComponents;
+	private List<ViewComponent> containsMouse;
 	
 	private List<KeyListener> keyListeners = new ArrayList<KeyListener>();
 	private List<MouseListener> mouseListeners = new ArrayList<MouseListener>();
 	
-	private DispatchVisitor dispatchVisitor;
+	private AdditiveDispatchVisitor addDispatchVisitor;
+	private SubtractiveDispatchVisitor subDispatchVisitor;
+	
+	private LinkedList<ViewComponent> deregisterQueue;
+	private LinkedList<ViewComponent> registerQueue;
 	
 	public EventDispatcher() {
-		dispatchVisitor = new DispatchVisitor(this);
+		addDispatchVisitor = new AdditiveDispatchVisitor(this);
+		subDispatchVisitor = new SubtractiveDispatchVisitor(this);
 		
-		registeredComponents = new HashSet<ViewComponent>();
-		containsMouse = new HashSet<ViewComponent>();
+		registeredComponents = new ArrayList<ViewComponent>();
+		containsMouse = new ArrayList<ViewComponent>();
+		
+		deregisterQueue = new LinkedList<ViewComponent>();
+		registerQueue = new LinkedList<ViewComponent>();
 	}
 	
 	public void registerComponent( ViewComponent vc ) {
-		vc.visit(dispatchVisitor);
+		vc.visit(addDispatchVisitor);
 	}
 	
 	public void deregisterComponent( ViewComponent vc ) {
-		registeredComponents.remove(vc);
-		containsMouse.remove(vc);
+		vc.visit(subDispatchVisitor);
 	}
 	
 	public void addKeyListener(KeyListener kl ) {
@@ -56,7 +62,39 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	}
 	
 	private void addComponent(ViewComponent vc) {
-		registeredComponents.add(vc);
+		synchronized(registerQueue) {
+			registerQueue.add(vc);
+		}
+	}
+	
+	private void removeComponent(ViewComponent vc) {
+		synchronized(deregisterQueue) {
+			deregisterQueue.add(vc);
+		}
+	}
+	
+	private void flushQueues() {
+		dumpRegisterQueue();
+		dumpDeregisterQueue();
+	}
+	
+	private void dumpRegisterQueue() {
+		if(registerQueue.size() > 0)
+			synchronized(registerQueue) {
+				for(ViewComponent vc : registerQueue)
+					registeredComponents.add(vc);
+			}
+	}
+	
+	private void dumpDeregisterQueue() {
+		if(deregisterQueue.size() > 0)
+			synchronized(deregisterQueue) {
+				for(ViewComponent vc : deregisterQueue) {
+					registeredComponents.remove(vc);
+					containsMouse.remove(vc);
+				}
+					
+			}
 	}
 	
 	public void keyPressed(KeyEvent e) {
@@ -65,28 +103,34 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		
 		boolean consumed = false;
 		
-		for(ViewComponent vc : registeredComponents)
-			if(vc.hasFocus())
-				consumed |= vc.processKeyEvent(e);
+		synchronized(registeredComponents) {
+			for(ViewComponent vc : registeredComponents)
+				if(vc.hasFocus())
+					consumed |= vc.processKeyEvent(e);
+		}
 		
 		if(!consumed)
 			for(KeyListener kl : keyListeners)
 				kl.keyPressed(e);
 		
+		flushQueues();
 		eventReceivedTest(e);
 	}
 
 	public void keyReleased(KeyEvent e) {
 		boolean consumed = false;
 		
-		for(ViewComponent vc : registeredComponents)
-			if(vc.hasFocus())
-				consumed |= vc.processKeyEvent(e);
+		synchronized(registeredComponents) {
+			for(ViewComponent vc : registeredComponents)
+				if(vc.hasFocus())
+					consumed |= vc.processKeyEvent(e);
+		}
 		
 		if(!consumed)
 			for(KeyListener kl : keyListeners)
 				kl.keyReleased(e);
 		
+		flushQueues();
 		eventReceivedTest(e);
 	}
 
@@ -101,6 +145,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			for(KeyListener kl : keyListeners)
 				kl.keyTyped(e);
 		
+		flushQueues();
 		eventReceivedTest(e);
 	}
 
@@ -116,6 +161,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			for(MouseListener ml : mouseListeners)
 				ml.mouseClicked(e);
 		
+		flushQueues();
 		eventReceivedTest(e);
 	}
 	
@@ -129,6 +175,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			for(MouseListener ml : mouseListeners)
 				ml.mousePressed(e);
 		
+		flushQueues();
 		eventReceivedTest(e);
 	}
 
@@ -142,6 +189,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			for(MouseListener ml : mouseListeners)
 				ml.mouseReleased(e);
 		
+		flushQueues();
 		eventReceivedTest(e);
 	}
 
@@ -174,6 +222,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			}
 		}
 		
+		flushQueues();
 		eventReceivedTest(e);
 	}
 
@@ -198,6 +247,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			}
 		}
 		
+		flushQueues();
 		eventReceivedTest(e);
 	}
 	
@@ -217,11 +267,11 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		//System.out.println("Received: " + e);
 	}
 	
-	private class DispatchVisitor implements ViewVisitor {
+	private class AdditiveDispatchVisitor implements ViewVisitor {
 		
 		private EventDispatcher dispatcher;
 
-		public DispatchVisitor(EventDispatcher dispatcher) {
+		public AdditiveDispatchVisitor(EventDispatcher dispatcher) {
 			this.dispatcher = dispatcher;
 		}
 		
@@ -237,6 +287,28 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		}
 		
 	}
+	
+	private class SubtractiveDispatchVisitor implements ViewVisitor {
+		
+		private EventDispatcher dispatcher;
+
+		public SubtractiveDispatchVisitor(EventDispatcher dispatcher) {
+			this.dispatcher = dispatcher;
+		}
+		
+		public void visit(ViewComponent vc) {
+			dispatcher.removeComponent(vc);
+		}
+
+		public void visit(ViewCompositeComponent vcc) {
+			dispatcher.removeComponent(vcc);
+			
+			for(ViewComponent vc : vcc.getChildren())
+				vc.visit(this);
+		}
+		
+	}
+	
 }
 
 

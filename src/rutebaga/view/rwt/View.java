@@ -1,6 +1,5 @@
 package rutebaga.view.rwt;
 
-import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.DisplayMode;
 import java.awt.Frame;
@@ -13,8 +12,6 @@ import java.awt.Transparency;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
-import java.awt.image.VolatileImage;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -182,10 +179,12 @@ public class View
 
 	public void removeAllViewComponents(List<ViewComponent> vcs)
 	{
-		components.removeAll(vcs);
-
-		for (ViewComponent vc : vcs)
+		
+		for (ViewComponent vc : vcs) {
 			dispatcher.deregisterComponent(vc);
+		}
+		
+		components.removeAll(vcs);
 	}
 
 	private void drawViewComponents()
