@@ -1,11 +1,8 @@
 package rutebaga.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ConcreteElementalList;
+import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 import rutebaga.view.rwt.TextFieldListener;
 
@@ -13,15 +10,14 @@ import rutebaga.view.rwt.TextFieldListener;
  * 
  * @author Matthew Chuah
  */
-public class AvatarInitializationActionInterpreter extends KeyAdapter implements
-		UserActionInterpreter, TextFieldListener {
+public class AvatarInitializationActionInterpreter implements UserActionInterpreter, TextFieldListener {
 
 	public boolean eventsFallThrough() {
 		// AvatarInitializationActionInterpreter is a 'root' interpreter
 		return false;
 	}
 
-	public void installActionInterpreter(final GameDaemon daemon, final Game game, final ViewFacade facade) {
+	public void installActionInterpreter(final GameDaemon daemon, final Game game, final UserInterfaceFacade facade) {
 		Command accept = new Command() {
 			public void execute() {
 				GameInitializer gi = game.getGameInitializer();
@@ -50,6 +46,8 @@ public class AvatarInitializationActionInterpreter extends KeyAdapter implements
 		// This is where you populate the list with Occupation buttons
 		
 		facade.createAvatarCreationScreen(this, list, accept, cancel);
+		
+		daemon.registerAsTextFieldListener(this);
 	}
 
 	public void reactivateActionInterpreter() {
@@ -63,16 +61,6 @@ public class AvatarInitializationActionInterpreter extends KeyAdapter implements
 
 	public void uninstallActionInterpreter() {
 		// AvatarInitializationActionInterpreters do not require any cleanup
-	}
-
-	public void keyPressed(KeyEvent arg0) {
-		// AvatarInitializationActionInterpreters do not recognize any
-		// ActionEvents
-	}
-
-	public void actionPerformed(ActionEvent arg0) {
-		// AvatarInitializationActionInterpreters do not recognize any
-		// ActionEvents
 	}
 	
 	public void fieldChanged(String string) {

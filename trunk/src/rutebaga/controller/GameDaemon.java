@@ -1,8 +1,10 @@
 package rutebaga.controller;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -13,6 +15,7 @@ import java.util.Vector;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandQueue;
 import rutebaga.view.ViewFacade;
+import rutebaga.view.rwt.TextFieldListener;
 
 /**
  * 
@@ -90,43 +93,37 @@ public class GameDaemon implements InterpreterManager
 		this.interpreterStack = new InterpreterStack();
 		this.eventsAreQueued = queued;
 		this.ticker = new DefaultTickDaemon(30);
-		final KeyAdapter keyProcessor = new KeyAdapter()
+		final KeyListener keyProcessor = new KeyAdapter()
 		{
 			@Override
 			public void keyPressed(final KeyEvent e)
 			{
-				processEvent(new EventCommand()
+				processEvent(new EventCommand<KeyListener>()
 				{
 					@Override
-					public void act(UserActionInterpreter uai)
+					KeyListener extract(InterpreterStackRecord isr) {
+						return isr.keyListener;
+					}
+					@Override
+					void act(KeyListener kl)
 					{
-						uai.keyPressed(e);
+						kl.keyPressed(e);
 					}
 				}, false);
 			}
 		};
+		this.keyBuffer = new KeyBuffer();
+		view.addKeyListener(this.keyBuffer);
 		this.ticker.setListener(new TickListener()
 		{
 			public void tick()
 			{
-				try
-				{
-					GameDaemon.this.keyBuffer.poll(keyProcessor);
-
-					GameDaemon.this.commandQueue.processQueue();
-				}
-				catch (NullPointerException e)
-				{
-
-				}
-
+				GameDaemon.this.keyBuffer.poll(keyProcessor);
+				GameDaemon.this.commandQueue.processQueue();
 				GameDaemon.this.tick();
-
 				GameDaemon.this.view.renderFrame();
 			}
 		});
-		this.keyBuffer = new KeyBuffer();
-		view.addKeyListener(this.keyBuffer);
 		/*
 		 * Connascence of position/timing. The ticker must not be unpaused until
 		 * all the GameDaemon instance fields are initialized.
@@ -178,8 +175,8 @@ public class GameDaemon implements InterpreterManager
 	 */
 	public void activate(UserActionInterpreter uai)
 	{
+		interpreterStack.push(new InterpreterStackRecord(uai));
 		uai.installActionInterpreter(this, game, view);
-		interpreterStack.push(uai);
 	}
 
 	/**
@@ -198,7 +195,7 @@ public class GameDaemon implements InterpreterManager
 			boolean foundRoot = false;
 			while (!interpreterStack.isEmpty())
 			{
-				UserActionInterpreter i = interpreterStack.pop();
+				UserActionInterpreter i = interpreterStack.pop().interpreter;
 				i.uninstallActionInterpreter();
 				if (!i.eventsFallThrough())
 					foundRoot = true;
@@ -211,12 +208,11 @@ public class GameDaemon implements InterpreterManager
 			 * in the stack.
 			 */
 			if (foundRoot)
-				for (UserActionInterpreter i : interpreterStack)
+				for (InterpreterStackRecord isr: interpreterStack)
 				{
-					i.reactivateActionInterpreter();
-					// Stop at the next root interpreter
-					if (!i.eventsFallThrough())
-						break;
+					isr.interpreter.reactivateActionInterpreter();
+					if (!isr.interpreter.eventsFallThrough())
+						break; // Stop at the next root interpreter
 				}
 		}
 	}
@@ -228,10 +224,14 @@ public class GameDaemon implements InterpreterManager
 	 */
 	public void actionPerformed(final ActionEvent e)
 	{
-		processEvent(new EventCommand()
+		processEvent(new EventCommand<ActionListener>()
 		{
 			@Override
-			public void act(UserActionInterpreter uai)
+			ActionListener extract(InterpreterStackRecord isr) {
+				return null;
+			}
+			@Override
+			void act(ActionListener uai)
 			{
 				uai.actionPerformed(e);
 			}
@@ -249,10 +249,14 @@ public class GameDaemon implements InterpreterManager
 	 */
 	public void tick()
 	{
-		processEvent(new EventCommand()
+		processEvent(new EventCommand<UserActionInterpreter>()
 		{
 			@Override
-			public void act(UserActionInterpreter uai)
+			UserActionInterpreter extract(InterpreterStackRecord isr) {
+				return isr.interpreter;
+			}
+			@Override
+			void act(UserActionInterpreter uai)
 			{
 				uai.tick();
 			}
@@ -293,9 +297,8 @@ public class GameDaemon implements InterpreterManager
 	 * 
 	 * @author Matty
 	 */
-	private abstract class EventCommand implements Command
+	private abstract class EventCommand<E> implements Command
 	{
-
 		/**
 		 * Specifies whether is is feasible to execute this Command.
 		 * EventCommands are always feasible.
@@ -315,10 +318,12 @@ public class GameDaemon implements InterpreterManager
 		 */
 		public void execute()
 		{
-			for (UserActionInterpreter uai : interpreterStack)
+			for (InterpreterStackRecord isr: interpreterStack)
 			{
-				act(uai);
-				if (!uai.eventsFallThrough())
+				E e = extract(isr);
+				if (e != null)
+					act(e);
+				if (!isr.interpreter.eventsFallThrough())
 					break;
 			}
 		}
@@ -331,9 +336,21 @@ public class GameDaemon implements InterpreterManager
 		 * @param uai
 		 *            a UserActionInterpreter in the GameDaemon's stack
 		 */
-		public abstract void act(UserActionInterpreter uai);
+		abstract void act(E uai);
+		
+		abstract E extract(InterpreterStackRecord isr);
 	}
 
+	private static class InterpreterStackRecord {
+		UserActionInterpreter interpreter;
+		KeyListener keyListener;
+		TextFieldListener textFieldListener;
+		
+		InterpreterStackRecord(UserActionInterpreter uai) {
+			interpreter = uai;
+		}
+	}
+	
 	/**
 	 * A private implementation of a stack designed for use with
 	 * UserActionInterpreters. The stack-ness is weakly enforced, as the stack
@@ -342,23 +359,23 @@ public class GameDaemon implements InterpreterManager
 	 * @author Matty
 	 */
 	private static class InterpreterStack implements
-			Iterable<UserActionInterpreter>
+			Iterable<InterpreterStackRecord>
 	{
-		private Vector<UserActionInterpreter> stack = new Vector<UserActionInterpreter>();
+		private Vector<InterpreterStackRecord> stack = new Vector<InterpreterStackRecord>();
 
 		private int modCount = 0;
 
-		public void push(UserActionInterpreter uai)
+		public void push(InterpreterStackRecord uai)
 		{
 			stack.add(uai);
 		}
 
-		public UserActionInterpreter pop()
+		public InterpreterStackRecord pop()
 		{
 			return stack.remove(stack.size() - 1);
 		}
 
-		public UserActionInterpreter peek()
+		public InterpreterStackRecord peek()
 		{
 			return stack.get(stack.size() - 1);
 		}
@@ -368,14 +385,14 @@ public class GameDaemon implements InterpreterManager
 			return stack.isEmpty();
 		}
 
-		public boolean contains(UserActionInterpreter uai)
+		public boolean contains(Object uai)
 		{
 			return stack.contains(uai);
 		}
 
-		public Iterator<UserActionInterpreter> iterator()
+		public Iterator<InterpreterStackRecord> iterator()
 		{
-			return new Iterator<UserActionInterpreter>()
+			return new Iterator<InterpreterStackRecord>()
 			{
 				int cursor = stack.size();
 
@@ -386,7 +403,7 @@ public class GameDaemon implements InterpreterManager
 					return cursor != 0;
 				}
 
-				public UserActionInterpreter next()
+				public InterpreterStackRecord next()
 				{
 					try
 					{
@@ -451,5 +468,24 @@ public class GameDaemon implements InterpreterManager
 				command.execute();
 			}
 		}
+	}
+
+	private InterpreterStackRecord findInterpreterStackRecord(Object obj) {
+		for (InterpreterStackRecord isr: interpreterStack)
+			if (isr.interpreter == obj)
+				return isr;
+		return null;
+	}
+	
+	public void registerAsKeyListener(KeyListener uai) {
+		InterpreterStackRecord isr = findInterpreterStackRecord(uai);
+		if (isr != null)
+			isr.keyListener = uai;
+	}
+
+	public void registerAsTextFieldListener(TextFieldListener tfl) {
+		InterpreterStackRecord isr = findInterpreterStackRecord(tfl);
+		if (isr != null)
+			isr.textFieldListener = tfl;
 	}
 }
