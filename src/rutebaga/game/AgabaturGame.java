@@ -7,20 +7,14 @@ import rutebaga.controller.Game;
 import rutebaga.controller.GameInitializer;
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
-import rutebaga.scaffold.builders.GameConfigBuilder;
-import rutebaga.scaffold.builders.ImageBuilder;
-import rutebaga.scaffold.builders.ImageSliceBuilder;
-import rutebaga.test.scaffold.EntityTypeBuilder;
+import rutebaga.scaffold.builders.DefaultBuilder;
 
 public class AgabaturGame implements Game
 {
 	public Collection<Builder> getBuilders()
 	{
 		Collection<Builder> rval = new ArrayList<Builder>();
-		rval.add(new EntityTypeBuilder());
-		rval.add(new ImageBuilder());
-		rval.add(new GameConfigBuilder());
-		rval.add(new ImageSliceBuilder());
+		rval.add(new DefaultBuilder());
 		return rval;
 	}
 
