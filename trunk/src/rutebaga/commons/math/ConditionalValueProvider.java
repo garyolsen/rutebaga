@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public class ConditionalValueProvider<T> implements ValueProvider<T>
+public class ConditionalValueProvider<T> extends ValueProvider<T>
 {
 	private ValueProvider<T> condition;
 	private ValueProvider<T> trueArg;

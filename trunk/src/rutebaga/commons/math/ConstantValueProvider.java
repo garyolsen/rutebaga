@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public class ConstantValueProvider<T> implements ValueProvider<T>
+public class ConstantValueProvider<T> extends ValueProvider<T>
 {
 	private double value;
 

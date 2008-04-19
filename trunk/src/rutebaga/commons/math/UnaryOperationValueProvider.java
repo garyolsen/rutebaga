@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public class UnaryOperationValueProvider<T> implements ValueProvider<T>
+public class UnaryOperationValueProvider<T> extends ValueProvider<T>
 {
 	private UnaryOperation operation;
 
