@@ -15,7 +15,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 		return properties.keySet().toArray(new String[0]);
 	}
 
-	private static Pattern pattern = Pattern.compile("([^\\s\\t]+)[\\s\\t]*(.*)");
+	private static Pattern pattern = Pattern.compile("([^\\s\\t]+)[\\s\\t]*(.*?)[\\s\\t]*(#.*)?");
 
 	private Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>();
 
