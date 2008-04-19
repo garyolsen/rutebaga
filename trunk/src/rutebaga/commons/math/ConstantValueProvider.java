@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public class ConstantValueProvider<T> extends ValueProvider<T>
+public class ConstantValueProvider<T> implements ValueProvider<T>
 {
 	private double value;
 
@@ -10,7 +10,6 @@ public class ConstantValueProvider<T> extends ValueProvider<T>
 		this.value = value;
 	}
 
-	@Override
 	public double getValue(T t)
 	{
 		return value;

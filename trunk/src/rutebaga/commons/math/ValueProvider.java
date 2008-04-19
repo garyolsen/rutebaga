@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public abstract class ValueProvider<T>
+public interface ValueProvider<T>
 {
-	public abstract double getValue(T t);
+	double getValue(T t);
 }

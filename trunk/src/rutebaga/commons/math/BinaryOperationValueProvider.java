@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public class BinaryOperationValueProvider<T> extends ValueProvider<T>
+public class BinaryOperationValueProvider<T> implements ValueProvider<T>
 {
 	private BinaryOperation operation;
 	private ValueProvider<T> arg1;
@@ -15,7 +15,6 @@ public class BinaryOperationValueProvider<T> extends ValueProvider<T>
 		this.arg2 = arg2;
 	}
 
-	@Override
 	public double getValue(T t)
 	{
 		return operation.calculate(arg1.getValue(t), arg2.getValue(t));
