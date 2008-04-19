@@ -35,7 +35,7 @@ public class MapComponent extends ViewComponent
 {
 
 	private static final int TILE_SIZE = 64;
-	private static final ColorAttribute FOG = new ColorAttribute(Color.BLACK);
+	private static final ColorAttribute FOG = new ColorAttribute(new Color(0,0,0, 150));
 
 	// private static LayerComparator layerComparator = new LayerComparator();
 	private static LocationLayerComparator<AppearanceInstance> appearanceComparator = new LocationLayerComparator<AppearanceInstance>();
@@ -129,16 +129,14 @@ public class MapComponent extends ViewComponent
 		long time;
 
 		time = System.currentTimeMillis();
-		draw.setAttribute(FOG);
-		draw.drawRectangle(new Point(getX(), getY()), getWidth(), getHeight());
-		draw.setAttribute(null);
+		
 		//rutebaga.commons.Log.log("drawing fog: "
 		//		+ (System.currentTimeMillis() - time));
 
 		Composite composite = AlphaComposite.getInstance(
 				AlphaComposite.SRC_ATOP, 0.3F);
 
-		draw.setComposite(composite);
+		//draw.setComposite(composite);
 
 		time = System.currentTimeMillis();
 		Map<IntVector2D, Set<Memory>> memory = avatarVision.getMemory();
@@ -195,6 +193,9 @@ public class MapComponent extends ViewComponent
 		//rutebaga.commons.Log.log("drawing memories: "
 		//		+ (System.currentTimeMillis() - time));
 
+		draw.setAttribute(FOG);
+		draw.drawRectangle(new Point(getX(), getY()), getWidth(), getHeight());
+		draw.setAttribute(null);
 		draw.clearComposite();
 	}
 
