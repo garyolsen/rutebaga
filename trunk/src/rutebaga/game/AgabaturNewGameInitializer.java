@@ -9,6 +9,7 @@ import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.GameInitializer;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
@@ -26,7 +27,7 @@ import temporary.WindTunnel;
 
 public class AgabaturNewGameInitializer implements GameInitializer
 {
-	private CharEntity<?> avatar;
+	private Entity<?> avatar;
 	private World world;
 	private MasterScaffold scaffold;
 
@@ -126,19 +127,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			}
 		}
 
-		avatar = new CharEntity(null);
-		avatar.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.04));
-
-		// npc = new NPCEntity();
-		// Appearance npcAppearance = new Appearance(npc);
-		// npcAppearance.setImage(treasure);
-		// npc.setAppearance(npcAppearance);
-		//		
-		// environment.add(npc, new Vector2D(20, 20));
-
-		Appearance appearance = new Appearance();
-		appearance.setImage(cheese);
-		avatar.setAppearanceManager(new StaticAppearanceManager(appearance));
+		avatar = ((EntityType) scaffold.get("entityDefault")).makeInstance();
 		
 		avatar.addAbility(new CheeseArrowAbilityType().makeAbility());
 
@@ -171,7 +160,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 	}
 
-	public CharEntity getAvatar()
+	public Entity getAvatar()
 	{
 		return avatar;
 	}

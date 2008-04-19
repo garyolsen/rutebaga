@@ -1,3 +1,7 @@
+##########################################################
+# 				    CONCRETE STATS						 #
+##########################################################
+
 statHp
 name	HP
 type	concrete
@@ -8,22 +12,57 @@ name	MP
 type	concrete
 default	5
 
-statMovement
+statMovement		# abstract quantifier; actual speed is specified by vpEntityMovementSpeed
 name	Speed
 type	concrete
-default	10
+default	30
 
 statAgility
 name	Agility
 type	concrete
-default	12
+default	10
+
+statStrength
+name	Strength
+type	concrete
+default	10
+
+statIntellect
+name	Intellect
+type	concrete
+default	10
+
+statHardiness
+name	Hardiness
+type	concrete
+default	10
+
+statExperience
+name	Experience
+default	0
 
 statLevel
 name	Level
 type	concrete  
 default	1	
 
+
+##########################################################
+# 				    DERIVED STATS						 #
+##########################################################
+
 statDefRating
 name	Defensive Rating
 type	derived  
-value	+ * 4 VP_stat_statLevel * 0.5 VP_stat_statAgility	# this is a comment
+value	+ * 4 VP_stat_statLevel * 0.5 VP_stat_statAgility
+
+statOffRating
+name	Offensive Rating
+type	derived
+value	+ * 4 VP_stat_statLevel * 0.5 VP_stat_statStrength
+
+statArmorRating
+name	Armor Rating
+type	derived
+value	/ VP_stat_statHardiness 10
+ 

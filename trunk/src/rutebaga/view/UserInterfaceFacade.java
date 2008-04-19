@@ -4,6 +4,7 @@ import rutebaga.commons.math.Vector;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.Entity;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.TextFieldListener;
 
@@ -26,7 +27,7 @@ public interface UserInterfaceFacade {
 			ElementalList list, Command accept, Command cancel);
 	
 	
-	void createGamePlayScreen(CharEntity avatar);
+	void createGamePlayScreen(Entity avatar);
 
 	/**
 	 * Spawns a ContextMenu at the {@link Vector} location provided.
