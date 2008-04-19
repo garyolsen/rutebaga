@@ -16,12 +16,12 @@ public class TestScaffoldTest
 		scaffold.registerBuilder(new MaleBuilder());
 		scaffold.registerBuilder(new FemaleBuilder());
 		scaffold.build();
-		System.out.println(scaffold.get("bob"));
-		System.out.println(scaffold.get("frank"));
-		System.out.println(scaffold.get("mark"));
-		System.out.println(scaffold.get("carol"));
-		System.out.println(scaffold.get("ruth"));
-		System.out.println(scaffold.get("cindy"));
+		rutebaga.commons.Log.log(scaffold.get("bob"));
+		rutebaga.commons.Log.log(scaffold.get("frank"));
+		rutebaga.commons.Log.log(scaffold.get("mark"));
+		rutebaga.commons.Log.log(scaffold.get("carol"));
+		rutebaga.commons.Log.log(scaffold.get("ruth"));
+		rutebaga.commons.Log.log(scaffold.get("cindy"));
 	}
 
 }

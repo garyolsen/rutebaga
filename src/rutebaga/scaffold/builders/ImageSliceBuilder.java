@@ -39,7 +39,7 @@ public class ImageSliceBuilder implements Builder, ReaderProcessor
 
 		for (String name : this.filenames.keySet())
 		{
-			System.out.println(name + ": " + locations.get(name).getX() + ", "
+			rutebaga.commons.Log.log(name + ": " + locations.get(name).getX() + ", "
 					+ locations.get(name).getY());
 		}
 	}
@@ -74,7 +74,7 @@ public class ImageSliceBuilder implements Builder, ReaderProcessor
 			Image image = imageProvider.makeImage((int) dimensions.getX(),
 					(int) dimensions.getY());
 			Graphics g = image.getGraphics();
-			System.out.println("Pulling " + id + " off the scaffold with " + w + " " + h + " " + sX + " " + sY);
+			rutebaga.commons.Log.log("Pulling " + id + " off the scaffold with " + w + " " + h + " " + sX + " " + sY);
 			g.drawImage(parent, 0, 0, w, h, sX, sY, sX+w, sY+h, null);
 			g.dispose();
 			return image;
@@ -97,9 +97,9 @@ public class ImageSliceBuilder implements Builder, ReaderProcessor
 		String[] parts = line.split("[\\t ]+");
 		for (String part : parts)
 		{
-			System.out.println("ITEM: " + part);
+			rutebaga.commons.Log.log("ITEM: " + part);
 		}
-		System.out.println();
+		rutebaga.commons.Log.log();
 		if (parts.length == 4 && parts[0].equals("file"))
 		{
 			currentFileName = parts[1];

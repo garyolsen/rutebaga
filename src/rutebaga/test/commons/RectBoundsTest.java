@@ -33,11 +33,11 @@ public class RectBoundsTest
 			MatrixTest.print(v);
 		}
 
-		System.out.println();
+		rutebaga.commons.Log.log();
 
 		for (Vector v : bounds.locationSet(2))
 		{
-			System.out.println(v);
+			rutebaga.commons.Log.log(v);
 		}
 
 	}

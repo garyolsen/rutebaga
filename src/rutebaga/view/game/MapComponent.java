@@ -53,10 +53,10 @@ public class MapComponent extends ViewComponent
 		long time;
 		time = System.currentTimeMillis();
 		drawMemorySet(draw, avatar.getVision());
-		//System.out.println("memory set total: " + (System.currentTimeMillis() - time));
+		//rutebaga.commons.Log.log("memory set total: " + (System.currentTimeMillis() - time));
 		time = System.currentTimeMillis();
 		drawVisibleSet(draw, avatar.getVision());
-		//System.out.println("visible set total: " + (System.currentTimeMillis() - time));
+		//rutebaga.commons.Log.log("visible set total: " + (System.currentTimeMillis() - time));
 		// drawAvatar(draw);
 	}
 
@@ -77,7 +77,7 @@ public class MapComponent extends ViewComponent
 		sortedList.add(new AppearanceInstance(avatar.getAppearance(),
 				p, avatar.getLayer()));
 		Collections.sort(sortedList, appearanceComparator);
-		//System.out.println("sorting instances: " + (System.currentTimeMillis() - time));
+		//rutebaga.commons.Log.log("sorting instances: " + (System.currentTimeMillis() - time));
 
 		time = System.currentTimeMillis();
 
@@ -117,7 +117,7 @@ public class MapComponent extends ViewComponent
 			drawingTime += System.currentTimeMillis() - time;
 
 		}
-		//System.out.println("drawing instances: "
+		//rutebaga.commons.Log.log("drawing instances: "
 		//		+ (System.currentTimeMillis() - time) + "[points: "
 		//		+ pointCreationTime + "; drawing: " + drawingTime + "]");
 
@@ -131,7 +131,7 @@ public class MapComponent extends ViewComponent
 		draw.setAttribute(FOG);
 		draw.drawRectangle(new Point(getX(), getY()), getWidth(), getHeight());
 		draw.setAttribute(null);
-		//System.out.println("drawing fog: "
+		//rutebaga.commons.Log.log("drawing fog: "
 		//		+ (System.currentTimeMillis() - time));
 
 		Composite composite = AlphaComposite.getInstance(
@@ -141,7 +141,7 @@ public class MapComponent extends ViewComponent
 
 		time = System.currentTimeMillis();
 		Map<IntVector2D, Set<Memory>> memory = avatarVision.getMemory();
-		//System.out.println("memory access: "
+		//rutebaga.commons.Log.log("memory access: "
 		//		+ (System.currentTimeMillis() - time));
 
 		ArrayList<AppearanceInstance> sortedMemory = new ArrayList<AppearanceInstance>();
@@ -176,12 +176,12 @@ public class MapComponent extends ViewComponent
 			}
 		}
 
-		//System.out.println("memory point collection: "
+		//rutebaga.commons.Log.log("memory point collection: "
 		//		+ (System.currentTimeMillis() - time));
 
 		time = System.currentTimeMillis();
 		Collections.sort(sortedMemory, appearanceComparator);
-		//System.out.println("sorting memories: "
+		//rutebaga.commons.Log.log("sorting memories: "
 		//		+ (System.currentTimeMillis() - time));
 
 		time = System.currentTimeMillis();
@@ -191,7 +191,7 @@ public class MapComponent extends ViewComponent
 			draw.drawImage(mem.getLocation(), mem.getAppearance().getImage());
 		}
 
-		//System.out.println("drawing memories: "
+		//rutebaga.commons.Log.log("drawing memories: "
 		//		+ (System.currentTimeMillis() - time));
 
 		draw.clearComposite();

@@ -37,7 +37,7 @@ public class GameDaemonTest
 		private String name;
 
 		public void reactivateActionInterpreter() {
-			System.out.println(name + " received a reactivation request");
+			rutebaga.commons.Log.log(name + " received a reactivation request");
 		}
 
 		public TestInterpreter(String name)
@@ -53,28 +53,28 @@ public class GameDaemonTest
 		public void installActionInterpreter(GameDaemon daemon, Game game,
 				ViewFacade facade)
 		{
-			System.out.println(name + " received an install request");
+			rutebaga.commons.Log.log(name + " received an install request");
 		}
 
 		public void tick()
 		{
-			System.out.println(name + " received a tick");
+			rutebaga.commons.Log.log(name + " received a tick");
 		}
 
 		public void uninstallActionInterpreter()
 		{
-			System.out.println(name + " received an uninstall request");
+			rutebaga.commons.Log.log(name + " received an uninstall request");
 		}
 
 		public void actionPerformed(ActionEvent arg0)
 		{
-			System.out.println(name
+			rutebaga.commons.Log.log(name
 					+ " received an actionPerformed ActionEvent");
 		}
 
 		public void keyPressed(KeyEvent arg0)
 		{
-			System.out.println(name + " received a keyPressed KeyEvent");
+			rutebaga.commons.Log.log(name + " received a keyPressed KeyEvent");
 		}
 
 		public void keyReleased(KeyEvent arg0)

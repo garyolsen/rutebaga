@@ -39,7 +39,7 @@ public class MatrixTest
 		{
 			print(v);
 		}
-		System.out.println();
+		rutebaga.commons.Log.log();
 		for (Vector v : new Matrix(mA.asVectors()).asVectors())
 		{
 			print(v);
@@ -54,9 +54,9 @@ public class MatrixTest
 			{
 				System.out.print(m.get(x, y) + "\t");
 			}
-			System.out.println();
+			rutebaga.commons.Log.log();
 		}
-		System.out.println();
+		rutebaga.commons.Log.log();
 	}
 
 	public static void print(Vector v)
@@ -65,7 +65,7 @@ public class MatrixTest
 		{
 			System.out.print(v.get(idx) + "\t");
 		}
-		System.out.println();
+		rutebaga.commons.Log.log();
 	}
 
 }

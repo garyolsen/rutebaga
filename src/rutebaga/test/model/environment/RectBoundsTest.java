@@ -10,7 +10,7 @@ public class RectBoundsTest
 		Rect2DTileConvertor conv = new Rect2DTileConvertor();
 		for (Vector v : conv.between(new Vector(0, 0), new Vector(1, 1)))
 		{	
-			System.out.println(v);
+			rutebaga.commons.Log.log(v);
 		}
 	}
 }

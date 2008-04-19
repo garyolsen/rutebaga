@@ -103,31 +103,31 @@ public class InstanceSetTest
 			
 		});
 		
-		System.out.println(instanceSet.size());
+		rutebaga.commons.Log.log(instanceSet.size());
 		
 		for(Instance instance : instanceSet)
 		{
-			System.out.println(instance.getClass());
+			rutebaga.commons.Log.log(instance.getClass());
 		}
 		
-		System.out.println();
+		rutebaga.commons.Log.log();
 		
 		InstanceFilter filter =  new InstanceFilter(InstanceSetIdentifier.ENTITY, InstanceSetIdentifier.TILE);
 		
 		InstanceSet filtered = filter.filter(instanceSet);
 		
-		System.out.println(filtered.size());
+		rutebaga.commons.Log.log(filtered.size());
 		
 		for(Instance instance : filtered)
 		{
-			System.out.println(instance.getClass());
+			rutebaga.commons.Log.log(instance.getClass());
 		}
 		
-		System.out.println();
+		rutebaga.commons.Log.log();
 		
 		for(Instance instance : instanceSet)
 		{
-			System.out.println(instance.getClass());
+			rutebaga.commons.Log.log(instance.getClass());
 		}
 	}
 }

@@ -77,26 +77,26 @@ public class InventoryTest
 
 		};
 
-		System.out.println("before: " + entity.getStats().getValue(strengthId));
+		rutebaga.commons.Log.log("before: " + entity.getStats().getValue(strengthId));
 
 		entity.getInventory().equip(sword);
 
-		System.out.println("after equip, before tick: "
+		rutebaga.commons.Log.log("after equip, before tick: "
 				+ entity.getStats().getValue(strengthId));
 
 		entity.tick();
 
-		System.out.println("after tick: "
+		rutebaga.commons.Log.log("after tick: "
 				+ entity.getStats().getValue(strengthId));
 
 		entity.getInventory().unequip(sword);
 
-		System.out.println("after unequip, before tick: "
+		rutebaga.commons.Log.log("after unequip, before tick: "
 				+ entity.getStats().getValue(strengthId));
 
 		entity.tick();
 
-		System.out.println("after tick: "
+		rutebaga.commons.Log.log("after tick: "
 				+ entity.getStats().getValue(strengthId));
 	}
 }

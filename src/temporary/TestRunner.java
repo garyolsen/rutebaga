@@ -145,8 +145,8 @@ public class TestRunner
 					screen.times(0.5).times(1.0 / 32.0)));
 			g.dispose();
 			manager.draw();
-			// System.out.println();
-			// System.out.println(avatar.getCoordinate() + "; v="
+			// rutebaga.commons.Log.log();
+			// rutebaga.commons.Log.log(avatar.getCoordinate() + "; v="
 			// + avatar.getVelocity() + "; p=" + avatar.getMomentum());
 
 			sleepTime = desiredTime - System.currentTimeMillis() + time;
@@ -161,7 +161,7 @@ public class TestRunner
 				}
 
 			frame++;
-			System.out.println(frame + "\t"
+			rutebaga.commons.Log.log(frame + "\t"
 					+ (1000 / (System.currentTimeMillis() - time)));
 		}
 	}

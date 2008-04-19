@@ -102,10 +102,10 @@ public class CodeGenTest
 				return;
 			if (clazz.isInterface())
 				return;
-			System.out.println();
-			System.out.println();
-			System.out.println("class " + clazz.getSimpleName());
-			System.out.println();
+			rutebaga.commons.Log.log();
+			rutebaga.commons.Log.log();
+			rutebaga.commons.Log.log("class " + clazz.getSimpleName());
+			rutebaga.commons.Log.log();
 			try
 			{
 				Method saveMethod = clazz.getMethod("toMap");
@@ -124,12 +124,12 @@ public class CodeGenTest
 			Field[] fields = clazz.getDeclaredFields();
 			if (fields.length > 0)
 			{
-				System.out.println("\tFields:");
+				rutebaga.commons.Log.log("\tFields:");
 				for (Field field : fields)
 				{
-					System.out.println("\t\t" + field.getName() + " : "
+					rutebaga.commons.Log.log("\t\t" + field.getName() + " : "
 							+ field.getType());
-					System.out.println("\t\t\t" + identify(field));
+					rutebaga.commons.Log.log("\t\t\t" + identify(field));
 				}
 			}
 			boolean superIsSaveable = Mappable.class.isAssignableFrom(clazz

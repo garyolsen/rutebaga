@@ -13,7 +13,7 @@ public class Evade extends NPCState
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
-		System.out.println("I can't barter, I'm running away.");
+		rutebaga.commons.Log.log("I can't barter, I'm running away.");
 		return this;
 	}
 
@@ -32,7 +32,7 @@ public class Evade extends NPCState
 	@Override
 	public NPCState speak(NPCEntity npc)
 	{
-		System.out.println("I'm scared of you! Ahhh!");
+		rutebaga.commons.Log.log("I'm scared of you! Ahhh!");
 		return this;
 	}
 

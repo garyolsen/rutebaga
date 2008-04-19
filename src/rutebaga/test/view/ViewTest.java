@@ -184,7 +184,7 @@ public class ViewTest
 
 				Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
 						random.nextInt(yRng) + yMin);
-				System.out.println("placing npc at " + location);
+				rutebaga.commons.Log.log("placing npc at " + location);
 				environment.add(npc1, location);
 			}
 
@@ -221,16 +221,16 @@ public class ViewTest
 			while (true)
 			{
 				time = System.currentTimeMillis();
-				System.out.println("\n\n");
+				rutebaga.commons.Log.log("\n\n");
 				mover.tick();
 				view.renderFrame();
 				envStart = System.currentTimeMillis();
-				System.out.println("view render total: " + (envStart - time));
+				rutebaga.commons.Log.log("view render total: " + (envStart - time));
 				if (TICK_ENVIRONMENT)
 					environment.tick();
-				System.out.println("environment total: "
+				rutebaga.commons.Log.log("environment total: "
 						+ (System.currentTimeMillis() - envStart));
-				System.out.println("total: "
+				rutebaga.commons.Log.log("total: "
 						+ (System.currentTimeMillis() - time));
 
 			}

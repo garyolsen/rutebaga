@@ -21,8 +21,8 @@ public class ConfigFileTest
 		scaffold.build();
 		
 		EntityType type = (EntityType) scaffold.get("entityDefault");
-		System.out.println(type);
-		System.out.println(type.getImage());
+		rutebaga.commons.Log.log(type);
+		rutebaga.commons.Log.log(type.getImage());
 	}
 
 }

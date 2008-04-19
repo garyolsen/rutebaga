@@ -13,7 +13,7 @@ public class Attack extends NPCState
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
-		System.out.println("I'm super mad. I'm in no mood for bartering!");
+		rutebaga.commons.Log.log("I'm super mad. I'm in no mood for bartering!");
 		return this;
 	}
 
@@ -32,7 +32,7 @@ public class Attack extends NPCState
 	@Override
 	public NPCState speak(NPCEntity npc)
 	{
-		System.out.println("I'm attacking you! Be very afraid!");
+		rutebaga.commons.Log.log("I'm attacking you! Be very afraid!");
 		return this;
 	}
 

@@ -17,7 +17,7 @@ public class MovementTest
 		boolean success = environment.add(first, new Vector(6, 6));
 
 		if (!success)
-			System.out.println("Failed");
+			rutebaga.commons.Log.log("Failed");
 
 		Bounds2D monitoredBounds = new RectBounds(new Vector(-4, -4), new Vector(
 				2, 2));
@@ -27,14 +27,14 @@ public class MovementTest
 		success = environment.add(second, new Vector(0, 0));
 
 		if (!success)
-			System.out.println("Failed");
+			rutebaga.commons.Log.log("Failed");
 
 		printEnvironment(environment);
 		printTracker(tracker);
 		environment.tick();
 		printEnvironment(environment);
 		printTracker(tracker);
-		System.out.println("applying impulse");
+		rutebaga.commons.Log.log("applying impulse");
 		second.applyImpulse(new Vector(1, 1));
 		printEnvironment(environment);
 		printTracker(tracker);
@@ -47,7 +47,7 @@ public class MovementTest
 		environment.tick();
 		printEnvironment(environment);
 		printTracker(tracker);
-		System.out.println("applying momentum");
+		rutebaga.commons.Log.log("applying momentum");
 		second.applyMomentum(new Vector(1.0, 1.0));
 		printEnvironment(environment);
 		printTracker(tracker);
@@ -89,26 +89,26 @@ public class MovementTest
 
 	public static void printEnvironment(Environment environment)
 	{
-		System.out.println("Environment:");
+		rutebaga.commons.Log.log("Environment:");
 		for (Instance instance : environment.getInstances())
 		{
-			System.out.println(">> " + instance + " at "
+			rutebaga.commons.Log.log(">> " + instance + " at "
 					+ instance.getCoordinate());
 		}
-		System.out.println();
+		rutebaga.commons.Log.log();
 	}
 
 	public static void printTracker(BoundsTracker tracker)
 	{
-		System.out.println("Tracker:");
+		rutebaga.commons.Log.log("Tracker:");
 		if (tracker.getInstances().isEmpty())
 		{
-			System.out.println("\tNothing to see here.");
+			rutebaga.commons.Log.log("\tNothing to see here.");
 		}
 		for (Instance instance : tracker.getInstances())
 		{
-			System.out.println(">> " + instance);
+			rutebaga.commons.Log.log(">> " + instance);
 		}
-		System.out.println();
+		rutebaga.commons.Log.log();
 	}
 }

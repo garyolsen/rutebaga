@@ -20,7 +20,7 @@ public class Wander extends NPCState
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
-		System.out.println("I'm willing to barter.");
+		rutebaga.commons.Log.log("I'm willing to barter.");
 		return this;
 	}
 
@@ -39,7 +39,7 @@ public class Wander extends NPCState
 	@Override
 	public NPCState speak(NPCEntity npc)
 	{
-		System.out.println("I'm wandering around...");
+		rutebaga.commons.Log.log("I'm wandering around...");
 		return this;
 	}
 

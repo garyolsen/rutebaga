@@ -25,11 +25,11 @@ public class StatsTest
 		
 		Stats stats = new ConcreteStats(null);
 		
-		System.out.println(stats.getValue(defRating));
+		rutebaga.commons.Log.log(stats.getValue(defRating));
 		
 		stats.modifyStat(agility, 5);
 		
-		System.out.println(stats.getValue(defRating));
+		rutebaga.commons.Log.log(stats.getValue(defRating));
 		
 		StatModification reversible = new StatModification(level, 1.0);
 		
@@ -37,20 +37,20 @@ public class StatsTest
 		id = UIDProvider.getUID();
 		stats.modifyStat(reversible, id);
 		
-		System.out.println(stats.getValue(defRating));
+		rutebaga.commons.Log.log(stats.getValue(defRating));
 		
 		stats.undo(id);
 		
-		System.out.println(stats.getValue(defRating));
+		rutebaga.commons.Log.log(stats.getValue(defRating));
 		
 		id = UIDProvider.getUID();
 		stats.modifyStat(new StatModification(defRating, 5.0), id);
 		
-		System.out.println(stats.getValue(defRating));
+		rutebaga.commons.Log.log(stats.getValue(defRating));
 		
 		stats.undo(id);
 		
-		System.out.println(stats.getValue(defRating));
+		rutebaga.commons.Log.log(stats.getValue(defRating));
 	}
 
 }

@@ -162,7 +162,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 			Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
 					random.nextInt(yRng) + yMin);
-			System.out.println("placing npc at " + location);
+			rutebaga.commons.Log.log("placing npc at " + location);
 			environment.add(npc1, location);
 		}
 
