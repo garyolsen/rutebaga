@@ -50,6 +50,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(0.0);
 
 	private String name;
+	private double money;
 	
 	//TODO move into AbilitySet
 	private List<Ability> abilities = new ArrayList<Ability>();
@@ -183,5 +184,16 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return this.movementSpeedStrat.getValue(this);
 	}
 	
-	public abstract BidirectionalValueProvider<T> getWallet();
+	public BidirectionalValueProvider<Entity> getWallet()
+	{
+		return new Wallet();
+	}
+
+	public void addToMoney(double value) {
+		money = money + value;
+	}
+
+	public double getMoneyAmount() {
+		return money;
+	}
 }

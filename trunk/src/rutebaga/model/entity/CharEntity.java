@@ -1,5 +1,6 @@
 package rutebaga.model.entity;
 
+import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.model.entity.inventory.ConcreteInventory;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.ConcreteStats;
