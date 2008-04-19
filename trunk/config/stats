@@ -1,0 +1,24 @@
+statHp
+name	HP
+type	concrete
+default	100
+
+statMP
+name	MP
+type	concrete
+default	5
+
+statAgility
+name	Agility
+type	concrete
+default	12
+
+statLevel
+name	Level
+type	concrete
+default	1
+
+statDefRating
+name	Defensive Rating
+type	derived
+value	+ * 4 VP_stat_statLevel * 0.5 VP_stat_statAgility
