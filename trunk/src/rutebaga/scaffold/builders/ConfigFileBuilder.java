@@ -20,9 +20,9 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	}
 
 	private static Pattern pattern = Pattern
-			.compile("(#.*)?([^\\s\\t]+)?[\\s\\t]*(.*?)[\\s\\t]*(#.*)?");
-	private static int NAME_GP = 2;
-	private static int VALUE_GP = 3;
+			.compile("(#.*)?([^\\s\\t]+)?[\\s\\t]*(.*?)[\\s\\t]*(#.*)?"); // matches each line, excluding comments
+	private static int NAME_GP = 2; // the group of the name
+	private static int VALUE_GP = 3; // the group of the value
 
 	private Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>();
 

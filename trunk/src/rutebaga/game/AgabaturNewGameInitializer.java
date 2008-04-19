@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.util.Properties;
 import java.util.Random;
 
+import rutebaga.appearance.EntityAppearanceManager;
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.GameInitializer;
@@ -17,6 +18,7 @@ import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.World;
 import rutebaga.model.environment.appearance.AnimatedAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance;
+import rutebaga.model.environment.appearance.AppearanceManager;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.model.map.Tile;
@@ -58,12 +60,12 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		Image treasure = (Image) scaffold.get("imgYoshiEgg01");
 
 		Image[] tileImages = new Image[6];
-		for(int i=1; i<=6; i++)
-			tileImages[i-1] = (Image) scaffold.get("imgHextile0" + i);
+		for (int i = 1; i <= 6; i++)
+			tileImages[i - 1] = (Image) scaffold.get("imgHextile0" + i);
 		Appearance[] tileApps = new Appearance[12];
-		for(int i=0; i<6; i++)
+		for (int i = 0; i < 6; i++)
 		{
-			tileApps[i] = tileApps[12-i-1] = new Appearance(tileImages[i]);
+			tileApps[i] = tileApps[12 - i - 1] = new Appearance(tileImages[i]);
 			tileApps[i].setOrientation(Orientation.C);
 		}
 
@@ -80,9 +82,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					Appearance water = new Appearance();
 					water.setOrientation(Orientation.C);
 					water.setImage(grass);
-					tile
-							.setAppearanceManager(new AnimatedAppearanceManager(
-									tileApps, 2));
+					tile.setAppearanceManager(new AnimatedAppearanceManager(
+							tileApps, 2));
 					environment.add(tile, location);
 				}
 			}
@@ -128,7 +129,11 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		}
 
 		avatar = ((EntityType<?>) scaffold.get("entityDefault")).makeInstance();
-		
+		Object[] arr = ((EntityAppearanceManager) avatar.getAppearanceManager())
+				.getStanding();
+		System.out.println(arr + ":"
+				+ ((arr == null) ? "" : (arr.length + ":" + arr[0])));
+
 		avatar.addAbility(new CheeseArrowAbilityType().makeAbility());
 
 		environment.add(avatar, new Vector2D(0, 0));
@@ -142,10 +147,11 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		{
 			NPCEntity<?> npc1 = new NPCEntity(null);
 			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
-			Appearance npcAppearance1 = new Appearance();
-			npcAppearance1.setImage(cheese);
-			npc1.setAppearanceManager(new StaticAppearanceManager(
-					npcAppearance1));
+			
+			EntityAppearanceManager manager = new EntityAppearanceManager(npc1);
+			manager.setStanding(((EntityType<?>) scaffold.get("entityDefault")).getStanding());
+			manager.setWalking(((EntityType<?>) scaffold.get("entityDefault")).getWalking());
+			npc1.setAppearanceManager(manager);
 
 			npc1.setTarget(avatar);
 

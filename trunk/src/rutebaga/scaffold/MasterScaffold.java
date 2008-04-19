@@ -66,6 +66,11 @@ public class MasterScaffold
 		}
 		return scaffold.get(id);
 	}
+	
+	public boolean contains(String id)
+	{
+		return builders.get(id) != null;
+	}
 
 	/**
 	 * Adds a {@link Builder} to the MasterScaffold. Unlike

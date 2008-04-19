@@ -2,7 +2,10 @@ package rutebaga.model.entity.inventory;
 
 import java.util.Set;
 
+import rutebaga.model.entity.Entity;
 import rutebaga.model.item.Item;
+import rutebaga.model.item.SlotAllocation;
+import rutebaga.model.item.SlotType;
 
 public interface Inventory
 {
@@ -19,4 +22,10 @@ public interface Inventory
 	void drop(Item<?> item);
 	
 	void accept(Item<?> item);
+	
+	SlotAllocation getCurrentAllocations();
+	
+	void addSlotAllocation(SlotType type, int qty);
+
+	Entity getOwner();
 }

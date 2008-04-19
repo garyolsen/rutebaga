@@ -3,6 +3,8 @@ package rutebaga.commons.logic;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import rutebaga.model.entity.Entity;
+
 /**
  * A rule based on a series of other rules.
  * 
@@ -57,6 +59,11 @@ public class ChainedRule<T> implements Rule<T>
 	public void add(Rule<T> rule)
 	{
 		this.rules.add(rule);
+	}
+
+	public void remove(Rule<Entity> rule)
+	{
+		this.rules.remove(rule);
 	}
 
 }

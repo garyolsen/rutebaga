@@ -75,6 +75,8 @@ public class View
 
 		device.setFullScreenWindow(window);
 
+		device.setDisplayMode(new DisplayMode(800, 600, 16, 60));
+		if(true) return;
 		
 		DisplayMode old = device.getDisplayMode();
 		DisplayMode[] modes = device.getDisplayModes();
