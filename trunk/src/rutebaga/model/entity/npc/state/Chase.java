@@ -29,7 +29,7 @@ public class Chase extends NPCState
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
-		System.out.println("I can't barter and chase at the same time");
+		rutebaga.commons.Log.log("I can't barter and chase at the same time");
 		return this;
 	}
 
@@ -48,7 +48,7 @@ public class Chase extends NPCState
 	@Override
 	public NPCState speak(NPCEntity npc)
 	{
-		System.out.println("I'm gonna get you!");
+		rutebaga.commons.Log.log("I'm gonna get you!");
 		return this;
 	}
 

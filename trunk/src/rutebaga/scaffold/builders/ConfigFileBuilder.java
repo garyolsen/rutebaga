@@ -46,8 +46,8 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			tokens[0] = m.group(NAME_GP);
 			tokens[1] = m.group(VALUE_GP);
 		}
-		System.out.println(readData);
-		System.out.println(":" + tokens[0] + ":" + tokens[1] + ":");
+		rutebaga.commons.Log.log(readData);
+		rutebaga.commons.Log.log(":" + tokens[0] + ":" + tokens[1] + ":");
 		if (tokens == null)
 			return;
 		if (tokens.length == 0)
@@ -56,7 +56,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			return;
 		if (tokens[1] == null || tokens[1].isEmpty())
 		{
-			System.out.println();
+			rutebaga.commons.Log.log();
 			current = new HashMap<String, String>();
 			properties.put(tokens[0], current);
 		}

@@ -264,7 +264,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	}
 	
 	private void eventReceivedTest(AWTEvent e) {
-		//System.out.println("Received: " + e);
+		//rutebaga.commons.Log.log("Received: " + e);
 	}
 	
 	private class AdditiveDispatchVisitor implements ViewVisitor {

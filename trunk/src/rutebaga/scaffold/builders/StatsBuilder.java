@@ -46,17 +46,17 @@ public class StatsBuilder extends ConfigFileBuilder
 	public void initialize(String id, Object object, MasterScaffold scaffold)
 	{
 		StatisticId statId = (StatisticId) object;
-		System.out.println(id);
+		rutebaga.commons.Log.log(id);
 		if(isDerived(id))
 		{
-			System.out.println("derived stat");
+			rutebaga.commons.Log.log("derived stat");
 			DerivedStatisticId derId = (DerivedStatisticId) statId;
 			ValueProvider<Stats> vp = getValueProvider(id, "value", scaffold);
 			derId.setBase(vp);
 		}
 		else
 		{
-			System.out.println("concrete stat " + getProperty(id, "default"));
+			rutebaga.commons.Log.log("concrete stat " + getProperty(id, "default"));
 			statId.setInitialValue(getDouble(id, "default"));
 		}
 	}

@@ -20,7 +20,7 @@ public class SpawnAction<T extends Instance, U extends Instance & Targetable<T>>
 
 	public void act(Ability<? extends T> ability, T target)
 	{
-		System.out.println("EXECUTING!!!");
+		rutebaga.commons.Log.log("EXECUTING!!!");
 		U instance = type.makeInstance();
 		instance.setTarget(target);
 		Environment e = ability.getEnvironment();

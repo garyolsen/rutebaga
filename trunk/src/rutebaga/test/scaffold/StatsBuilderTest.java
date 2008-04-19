@@ -30,10 +30,10 @@ public class StatsBuilderTest
 		
 		Stats stats = new ConcreteStats(null);
 		StatisticId defensiveRating = (StatisticId) s.get("statDefRating");
-		System.out.println(stats.getValue(defensiveRating));
+		rutebaga.commons.Log.log(stats.getValue(defensiveRating));
 		
 		Entity entity = ((EntityType) s.get("entityDefault")).makeInstance();
-		System.out.println(entity.getMovementSpeed());
+		rutebaga.commons.Log.log(entity.getMovementSpeed());
 	}
 
 }

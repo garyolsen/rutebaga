@@ -15,7 +15,7 @@ public class VectorRectTest
 				new Vector(2, 2, 2));
 		for (Vector v : boundingBox.locationSet(1))
 		{
-			System.out.println(v);
+			rutebaga.commons.Log.log(v);
 		}
 	}
 

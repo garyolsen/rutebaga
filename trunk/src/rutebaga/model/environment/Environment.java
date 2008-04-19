@@ -225,7 +225,7 @@ public class Environment
 		{
 			instance.tick();
 		}
-		System.out.println("ticking environment: " + (System.currentTimeMillis()-time));
+		rutebaga.commons.Log.log("ticking environment: " + (System.currentTimeMillis()-time));
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class Environment
 			if (!listeners.contains(listener))
 				listener.onMovement(event);
 		}
-//		System.out.println("notifying listeners: "
+//		rutebaga.commons.Log.log("notifying listeners: "
 //				+ (System.currentTimeMillis() - time));
 	}
 
@@ -392,7 +392,7 @@ public class Environment
 				moveCt++;
 			}
 		}
-		System.out.println("movement count: " + moveCt + ": "
+		rutebaga.commons.Log.log("movement count: " + moveCt + ": "
 				+ (System.currentTimeMillis() - time));
 	}
 
@@ -420,7 +420,7 @@ public class Environment
 					frictionCache.get(instance.getTile()));
 
 		}
-		System.out.println("physics update: "
+		rutebaga.commons.Log.log("physics update: "
 				+ (System.currentTimeMillis() - time));
 	}
 

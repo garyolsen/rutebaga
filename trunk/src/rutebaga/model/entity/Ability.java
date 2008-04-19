@@ -26,7 +26,7 @@ public class Ability<T>
 
 	public void act(T target)
 	{
-		System.out.println("ACTING!!!");
+		rutebaga.commons.Log.log("ACTING!!!");
 		if (isFeasible())
 		{
 			for (AbilityAction<T> action : actions)

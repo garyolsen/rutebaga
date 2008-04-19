@@ -67,7 +67,7 @@ public class GraphicsProfiler
 			}
 			g.dispose();
 		}
-		System.out.println("Blitting blocks: " + (System.currentTimeMillis()-time)/TEST_LENGTH);
+		rutebaga.commons.Log.log("Blitting blocks: " + (System.currentTimeMillis()-time)/TEST_LENGTH);
 		
 		time = System.currentTimeMillis();
 		for(int test=0; test< TEST_LENGTH; test++)
@@ -85,7 +85,7 @@ public class GraphicsProfiler
 			}
 			g.dispose();
 		}
-		System.out.println("Blitting images: " + (System.currentTimeMillis()-time)/TEST_LENGTH);
+		rutebaga.commons.Log.log("Blitting images: " + (System.currentTimeMillis()-time)/TEST_LENGTH);
 		
 		System.exit(0);
 	}

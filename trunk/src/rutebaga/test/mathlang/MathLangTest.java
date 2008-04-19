@@ -15,20 +15,20 @@ public class MathLangTest
 	public static void main(String[] args)
 	{
 		OperationTable table = DefaultOperationTable.getInstance();
-		System.out.println("Operation Table:");
+		rutebaga.commons.Log.log("Operation Table:");
 		for(String op : table.getOperations())
 		{
 			Object operation = table.getBinaryOp(op);
 			operation = operation == null ? table.getUnaryOp(op) : operation;
-			System.out.println(op + ": " + operation);
+			rutebaga.commons.Log.log(op + ": " + operation);
 		}
-		System.out.println();
+		rutebaga.commons.Log.log();
 		ParseTreeNode node = new ReversePolishParser(table).parse("+ something + 3 + sin 3 4");
 		
 		StringVisitor v = new StringVisitor();
 		node.accept(v);
 		
-		System.out.println(v.getString());
+		rutebaga.commons.Log.log(v.getString());
 	}
 
 }

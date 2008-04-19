@@ -19,12 +19,12 @@ public class BoundsProfile
 	{
 		for (int i = 0; i < 100; i++)
 		{
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			System.out.println("TEST " + i);
-			System.out.println();
-			System.out.println();
+			rutebaga.commons.Log.log();
+			rutebaga.commons.Log.log();
+			rutebaga.commons.Log.log();
+			rutebaga.commons.Log.log("TEST " + i);
+			rutebaga.commons.Log.log();
+			rutebaga.commons.Log.log();
 			run();
 		}
 	}
@@ -41,7 +41,7 @@ public class BoundsProfile
 
 		// LOOPING
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < testLength; i++)
 		{
@@ -49,16 +49,16 @@ public class BoundsProfile
 		}
 		double average = (double) (System.currentTimeMillis() - time)
 				/ INTHASH_TEST_LENGTH;
-		System.out.println("Average loop time: " + average + "ms");
+		rutebaga.commons.Log.log("Average loop time: " + average + "ms");
 
 		// INSTANCE HASHING
 
-		System.out.println("Initializing values...");
+		rutebaga.commons.Log.log("Initializing values...");
 		Instance instanceArr[] = new Instance[testLength / 1000];
 		for (int i = 0; i < instanceArr.length; i++)
 			instanceArr[i] = new CharEntity();
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < instanceArr.length; i++)
 		{
@@ -71,43 +71,43 @@ public class BoundsProfile
 
 		// UID HASHING
 
-		System.out.println("Initializing values...");
+		rutebaga.commons.Log.log("Initializing values...");
 		UID uidArr[] = new UID[testLength];
 		for (int i = 0; i < uidArr.length; i++)
 		{
 			uidArr[i] = new UID();
 		}
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < uidArr.length; i++)
 		{
 			uidArr[i].hashCode();
 		}
 		average = (double) (System.currentTimeMillis() - time) / uidArr.length;
-		System.out.println("Average hash time for UIDs: " + average + "ms");
+		rutebaga.commons.Log.log("Average hash time for UIDs: " + average + "ms");
 
 		// RANDOM NUMBER GENERATION SPEED
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < testLength; i++)
 		{
 			random.nextInt();
 		}
 		average = (double) (System.currentTimeMillis() - time) / testLength;
-		System.out.println("Average random int time: " + average + "ms");
+		rutebaga.commons.Log.log("Average random int time: " + average + "ms");
 
 		// HASHING
 
-		System.out.println("Initializing values...");
+		rutebaga.commons.Log.log("Initializing values...");
 		MutableIntVector2D iv2dArr[] = new MutableIntVector2D[testLength];
 		for (int i = 0; i < testLength; i++)
 			iv2dArr[i] = new MutableIntVector2D((short) random
 					.nextInt(Short.MAX_VALUE), (short) random
 					.nextInt(Short.MAX_VALUE));
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < testLength; i++)
 		{
@@ -115,17 +115,17 @@ public class BoundsProfile
 		}
 		average = (double) (System.currentTimeMillis() - time)
 				/ INTHASH_TEST_LENGTH;
-		System.out.println("Average hash time for MutableIntVector2D: "
+		rutebaga.commons.Log.log("Average hash time for MutableIntVector2D: "
 				+ average + "ms");
 
 		// HASHSET
 
-		System.out.println("Initializing values...");
+		rutebaga.commons.Log.log("Initializing values...");
 		Set<MutableIntVector2D> set = new HashSet<MutableIntVector2D>();
 		for (int i = 0; i < 100; i++)
 			set.add(iv2dArr[i]);
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < testLength; i++)
 		{
@@ -133,12 +133,12 @@ public class BoundsProfile
 		}
 		average = (double) (System.currentTimeMillis() - time)
 				/ INTHASH_TEST_LENGTH;
-		System.out.println("Average MutableIntVector2D lookup time: " + average
+		rutebaga.commons.Log.log("Average MutableIntVector2D lookup time: " + average
 				+ "ms");
 
 		// ADDITION (NOT MUTABLE)
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < testLength; i += 2)
 		{
@@ -146,12 +146,12 @@ public class BoundsProfile
 		}
 		average = (double) (System.currentTimeMillis() - time)
 				/ (INTHASH_TEST_LENGTH / 2);
-		System.out.println("Average MutableIntVector2D add time: " + average
+		rutebaga.commons.Log.log("Average MutableIntVector2D add time: " + average
 				+ "ms");
 
 		// ADDITION (MUTABLE)
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < testLength; i += 2)
 		{
@@ -159,17 +159,17 @@ public class BoundsProfile
 		}
 		average = (double) (System.currentTimeMillis() - time)
 				/ (INTHASH_TEST_LENGTH / 2);
-		System.out.println("Average MutableIntVector2D add time: " + average
+		rutebaga.commons.Log.log("Average MutableIntVector2D add time: " + average
 				+ "ms");
 
 		// TEST FOR SMALL VALUES
 
-		// System.out.println("Initializing values...");
+		// rutebaga.commons.Log.log("Initializing values...");
 		// for(int i=0; i<testLength; i++)
 		// iv2dArr[i] = new MutableIntVector2D(random.nextInt(100),
 		// random.nextInt(100));
 		//		
-		// System.out.println("Testing...");
+		// rutebaga.commons.Log.log("Testing...");
 		// time = System.currentTimeMillis();
 		// for(int i=0; i<testLength; i++)
 		// {
@@ -177,16 +177,16 @@ public class BoundsProfile
 		// }
 		// average =
 		// (double)(System.currentTimeMillis()-time)/INTHASH_TEST_LENGTH;
-		// System.out.println("Average hash time for small MutableIntVector2Ds:
+		// rutebaga.commons.Log.log("Average hash time for small MutableIntVector2Ds:
 		// " + average + "ms");
 
-		System.out.println("Initializing values...");
+		rutebaga.commons.Log.log("Initializing values...");
 		int vals[] =
 		{ random.nextInt(), random.nextInt() };
 		double center = Math.min(vals[0], vals[1]);
 		double radius = Math.max(vals[0], vals[1]);
 
-		System.out.println("Testing...");
+		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();
 		for (int i = 0; i < testLength; i++)
 		{

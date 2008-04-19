@@ -123,10 +123,10 @@ public class GraphicsManager
 		frame.createBufferStrategy(2);
 		bufferStrategy = frame.getBufferStrategy();
 
-		System.out.println("INITIALIZED GRAPHICS MANAGER");
-		System.out.println("MULTIBUFFER: "
+		rutebaga.commons.Log.log("INITIALIZED GRAPHICS MANAGER");
+		rutebaga.commons.Log.log("MULTIBUFFER: "
 				+ bufferStrategy.getCapabilities().isMultiBufferAvailable());
-		System.out.println("PAGE FLIPPING: "
+		rutebaga.commons.Log.log("PAGE FLIPPING: "
 				+ bufferStrategy.getCapabilities().isPageFlipping());
 	}
 
