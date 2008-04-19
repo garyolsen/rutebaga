@@ -3,6 +3,7 @@ package rutebaga.test.scaffold;
 import rutebaga.model.entity.EntityType;
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
+import rutebaga.scaffold.builders.EntityTypeBuilder;
 import rutebaga.scaffold.builders.ImageBuilder;
 
 public class ConfigFileTest

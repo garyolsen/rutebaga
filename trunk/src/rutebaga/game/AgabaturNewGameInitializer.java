@@ -127,7 +127,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			}
 		}
 
-		avatar = ((EntityType) scaffold.get("entityDefault")).makeInstance();
+		avatar = ((EntityType<?>) scaffold.get("entityDefault")).makeInstance();
 		
 		avatar.addAbility(new CheeseArrowAbilityType().makeAbility());
 

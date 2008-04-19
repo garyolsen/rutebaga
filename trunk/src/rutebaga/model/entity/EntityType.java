@@ -3,10 +3,11 @@ package rutebaga.model.entity;
 import java.awt.Image;
 
 import rutebaga.commons.math.ValueProvider;
+import rutebaga.model.environment.ConcreteInstanceType;
 import rutebaga.model.environment.InstanceType;
 import rutebaga.model.environment.appearance.Appearance;
 
-public class EntityType implements InstanceType<Entity>
+public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 {
 	private Image image;
 	private ValueProvider<Entity> movementSpeed;
@@ -21,12 +22,15 @@ public class EntityType implements InstanceType<Entity>
 		return movementSpeed;
 	}
 
-	public Entity makeInstance()
+	public void initialize(T entity)
 	{
-		Entity entity = new CharEntity(this);
 		entity.setAppearance(new Appearance(image));
 		entity.setMovementSpeedStrat(movementSpeed);
-		return entity;
+	}
+	
+	public T create()
+	{
+		return (T) new CharEntity(this);
 	}
 
 	public void setImage(Image image)
