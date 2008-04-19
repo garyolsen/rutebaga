@@ -1,22 +1,20 @@
 package rutebaga.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ConcreteElementalList;
+import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 
 public class TitleActionInterpreter implements UserActionInterpreter {
 
-	private ViewFacade view;
+	private UserInterfaceFacade ui;
 	
 	private GameDaemon daemon;
 	
 	public void installActionInterpreter(GameDaemon daemon, Game game,
-			ViewFacade facade) {
+			UserInterfaceFacade facade) {
 		
-		this.view = facade;
+		this.ui = facade;
 		this.daemon = daemon;
 	
 		prepareTitleScreen();
@@ -56,13 +54,9 @@ public class TitleActionInterpreter implements UserActionInterpreter {
 			}
 		});
 
-		view.createTitleScreen(list);
+		ui.createTitleScreen(list);
 	}
 	
-	public void actionPerformed(ActionEvent arg0) {
-		// TitleActionInterpreter doesn't care about your silly actions
-	}
-
 	public void reactivateActionInterpreter() {
 		prepareTitleScreen();
 	}
@@ -78,18 +72,5 @@ public class TitleActionInterpreter implements UserActionInterpreter {
 
 	public void uninstallActionInterpreter() {
 		// TODO Auto-generated method stub
-	}
-
-	public void keyPressed(KeyEvent arg0) {
-		// TitleActionInterpreter doesn't care about your extraneous key presses
-	}
-
-	public void keyReleased(KeyEvent arg0) {
-		// TitleActionInterpreter doesn't care about your extraneous key
-		// releases
-	}
-
-	public void keyTyped(KeyEvent arg0) {
-		// TitleActionInterpreter doesn't care about your extraneous key typed
 	}
 }

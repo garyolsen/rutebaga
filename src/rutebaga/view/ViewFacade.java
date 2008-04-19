@@ -32,7 +32,7 @@ import rutebaga.view.rwt.View;
  * @see rutebaga.view.rwt.EventDispatcher
  * 
  */
-public class ViewFacade
+public class ViewFacade implements UserEventSource, UserInterfaceFacade
 {
 
 	private View view;

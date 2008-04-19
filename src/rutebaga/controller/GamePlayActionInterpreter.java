@@ -2,6 +2,7 @@ package rutebaga.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Set;
 
 import rutebaga.commons.math.EllipseBounds2D;
@@ -12,9 +13,10 @@ import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.World;
+import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 
-public class GamePlayActionInterpreter implements UserActionInterpreter {
+public class GamePlayActionInterpreter implements UserActionInterpreter, KeyListener {
 
 	private World world;
 	
@@ -28,29 +30,25 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 	}
 	
 	public boolean eventsFallThrough() {
-		// TODO Auto-generated method stub
+		// Root interpreter
 		return false;
 	}
 
 	public void reactivateActionInterpreter() {
 		// TODO Auto-generated method stub
-		
 	}
 
-	public void installActionInterpreter(GameDaemon daemon, Game game, ViewFacade facade) {
-		facade.createGamePlayScreen(avatar); 
+	public void installActionInterpreter(GameDaemon daemon, Game game, UserInterfaceFacade facade) {
+		facade.createGamePlayScreen(avatar);
+		daemon.registerAsKeyListener(this);
 	}
 
 	public void tick() {
-		if(world != null) world.tick();
+		if (world != null)
+			world.tick();
 	}
 
 	public void uninstallActionInterpreter() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -66,7 +64,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 		final Vector2D NORTHEAST = new Vector2D(0, -MOVE_SPEED);
 		final Vector2D SOUTHWEST = new Vector2D(0, MOVE_SPEED);
 		final Vector2D NORTHWEST = new Vector2D(-MOVE_SPEED, 0);		
-		
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_W:
 			avatar.walk(NORTH);
@@ -113,13 +111,9 @@ public class GamePlayActionInterpreter implements UserActionInterpreter {
 
 	
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

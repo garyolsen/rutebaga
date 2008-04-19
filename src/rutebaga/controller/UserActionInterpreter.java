@@ -1,8 +1,6 @@
 package rutebaga.controller;
 
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-
+import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 
 /**
@@ -42,7 +40,7 @@ import rutebaga.view.ViewFacade;
  * @see java.awt.event.KeyEvent
  * @author Matthew Chuah
  */
-public interface UserActionInterpreter extends KeyListener, ActionListener
+public interface UserActionInterpreter
 {
 
 	/**
@@ -79,7 +77,7 @@ public interface UserActionInterpreter extends KeyListener, ActionListener
 	 * @param facade
 	 *            a reference to the active ViewFacade
 	 */
-	public void installActionInterpreter(GameDaemon daemon, Game game, ViewFacade facade);
+	public void installActionInterpreter(GameDaemon daemon, Game game, UserInterfaceFacade facade);
 
 	/**
 	 * Deactivates this interpreter. This operation may only be invoked once

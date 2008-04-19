@@ -64,8 +64,19 @@ public class View
 
 		window.setVisible(true);
 		window.createBufferStrategy(2);
+	}
 
-		setFullscreen();
+	/**
+	 * Instructs the View to enter fullscreen mode.
+	 */
+	public void setFullscreen()
+	{
+		GraphicsEnvironment env = GraphicsEnvironment
+				.getLocalGraphicsEnvironment();
+
+		GraphicsDevice device = env.getDefaultScreenDevice();
+
+		device.setFullScreenWindow(window);
 
 		DisplayMode old = device.getDisplayMode();
 		DisplayMode[] modes = device.getDisplayModes();
@@ -80,12 +91,13 @@ public class View
 			}
 		}
 		Collections.sort(rectModes, new Comparator<DisplayMode>() {
-
 			public int compare(DisplayMode o1, DisplayMode o2)
 			{
-				return Math.abs(o1.getWidth()-800);
+				// return Math.abs(o1.getWidth()-800);
+				return (o1.getWidth() - 800 == 0 ||
+					o1.getBitDepth() > o2.getBitDepth() ||
+					o1.getRefreshRate() > o2.getRefreshRate()) ? 0 : 1;
 			}
-		
 		});
 		boolean ok = false;
 		for(DisplayMode mode : rectModes)
@@ -102,20 +114,6 @@ public class View
 			if(ok) break;
 		}
 		if(!ok) device.setDisplayMode(old);
-	}
-
-	/**
-	 * Instructs the View to enter fullscreen mode.
-	 */
-	public void setFullscreen()
-	{
-		GraphicsEnvironment env = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
-
-		GraphicsDevice device = env.getDefaultScreenDevice();
-
-		device.setFullScreenWindow(window);
-
 	}
 
 	private void setupDispatcher()

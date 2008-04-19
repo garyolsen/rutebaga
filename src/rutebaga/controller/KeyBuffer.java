@@ -60,10 +60,9 @@ public class KeyBuffer implements KeyListener {
 			 * then send the key event to the listener.
 			 */
 			if (events[code] != null || states[code] == KEY_DOWN) {
+				// Dispatch the cached event to the listener
 				k.keyPressed(events[code]);
-				/*
-				 * If the key is no longer held down, clear the cached event.
-				 */
+				// If the key is no longer held down, clear the cached event.
 				if (states[code] == KEY_UP)
 					events[code] = null;
 			}
