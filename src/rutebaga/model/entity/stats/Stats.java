@@ -20,7 +20,7 @@ public interface Stats
 	 *            the id of the statistic whose StatValue should be returned
 	 * @return the StatValue for the stat
 	 * 
-	 * @see StatValue
+	 * @see ConcreteStatValue
 	 */
 	StatValue getStatObject(StatisticId stat);
 
@@ -61,4 +61,8 @@ public interface Stats
 	 * @see StatisticId
 	 */
 	Set<StatisticId> getStatIds();
+	
+	void modifyStat(StatModification mod);
+	
+	void modifyStat(StatisticId id, double amount);
 }
