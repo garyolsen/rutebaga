@@ -75,6 +75,7 @@ public class View
 
 		device.setFullScreenWindow(window);
 
+		
 		DisplayMode old = device.getDisplayMode();
 		DisplayMode[] modes = device.getDisplayModes();
 		List<DisplayMode> rectModes = new LinkedList<DisplayMode>();
@@ -111,6 +112,7 @@ public class View
 			if(ok) break;
 		}
 		if(!ok) device.setDisplayMode(old);
+		
 	}
 
 	private void setupDispatcher()

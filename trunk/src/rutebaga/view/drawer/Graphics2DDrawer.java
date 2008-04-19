@@ -139,8 +139,9 @@ public class Graphics2DDrawer extends Drawer
 	
 	public void clearComposite()
 	{
-		g2d.setComposite(compositeStack.pop());
-	}
+		if(!compositeStack.empty())
+			g2d.setComposite(compositeStack.pop());
+	}	
 	
 	public void setPaint(Paint p)
 	{
