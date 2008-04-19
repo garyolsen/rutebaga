@@ -68,15 +68,15 @@ public class Chase extends NPCState
 			
 			if ( !(path == null) && !(path.isEmpty()) )
 				{
-				moveTo = path.get(0).getTile();
-				path.remove(0);
+					moveTo = path.get(0).getTile();
+					path.remove(0);
 				}
 			
 			MutableVector2D moveVector = new MutableVector2D(moveTo);
 			moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
 			moveVector.becomeUnitVector().multiplyBy(0.03);
 			
-			npc.applyImpulse(moveVector);
+			npc.walk(moveVector);
 			
 			lifetime = 300;
 			
@@ -91,21 +91,22 @@ public class Chase extends NPCState
 			MutableVector2D moveVector;
 			if ( !(lastPath == null) && !(lastPath.isEmpty()) )
 			{
-			IntVector2D moveTo = lastPath.get(0).getTile();
-			lastPath.remove(0);
-			moveVector = new MutableVector2D(moveTo);
-			moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
-			moveVector.becomeUnitVector().multiplyBy(0.03);
+				IntVector2D moveTo = lastPath.get(0).getTile();
+				lastPath.remove(0);
+				moveVector = new MutableVector2D(moveTo);
+				moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
+				moveVector.becomeUnitVector().multiplyBy(0.03);
 			}
 			else
 			{
 				moveVector = new MutableVector2D(lastDirection).becomeUnitVector().multiplyBy(0.03);
 			}
 		
-			npc.applyImpulse(moveVector);
+			npc.walk(moveVector);
 			
 			return this;
 		}
+		System.out.println("Going into hostile wander state!");
 		return NPCState.hostileWander;
 	}
 

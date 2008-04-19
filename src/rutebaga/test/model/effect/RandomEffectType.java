@@ -18,7 +18,7 @@ public class RandomEffectType implements InstanceType<RandomEffect>
 	static {
 		try
 		{
-			appearance = ImageIO.read(new File("TestImages/treasure.png"));
+			appearance = ImageIO.read(new File("TestImages/yoshi_egg01.png"));
 		}
 		catch (IOException e)
 		{
