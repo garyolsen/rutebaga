@@ -16,17 +16,13 @@ import rutebaga.model.entity.npc.state.Wander;
  */
 public abstract class NPCState
 {
-	static NPCState initialState;
+	static NPCState initialState = null;
 	
 	protected static final NPCState chase = new Chase();
 	
 	protected static final NPCState wander = new Wander();
 	
 	protected static final NPCState hostileWander = new HostileWander();
-
-	// XXX: because it's
-	// the first state,
-	// the initialState will be wander. Probably not too good.
 
 	protected static final NPCState evade = new Evade();
 

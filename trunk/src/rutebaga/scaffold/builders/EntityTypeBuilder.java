@@ -28,6 +28,7 @@ public class EntityTypeBuilder extends InstanceBuilder
 		type.setImage((Image) getObjectFor(id, "image", scaffold));
 		type.setMovementSpeed((ValueProvider<Entity>) getValueProvider(id,
 				"moveSpd", scaffold));
+		type.setRadius(this.getInteger(id, "vRadius"));
 	}
 
 }

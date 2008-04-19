@@ -55,7 +55,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		Image cheese = (Image) scaffold.get("imgCheese");
 		Image grass = (Image) scaffold.get("imgHextile");
-		Image treasure = (Image) scaffold.get("imgTreasure");
+		Image treasure = (Image) scaffold.get("imgYoshiEgg01");
 
 		Image[] tileImages = new Image[6];
 		for(int i=1; i<=6; i++)
