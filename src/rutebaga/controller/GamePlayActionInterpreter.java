@@ -9,6 +9,7 @@ import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
@@ -20,9 +21,9 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 
 	private World world;
 	
-	private CharEntity<?> avatar;
+	private Entity<?> avatar;
 	
-	public GamePlayActionInterpreter(World world, CharEntity<?> avatar) {
+	public GamePlayActionInterpreter(World world, Entity<?> avatar) {
 		this.world = world;
 		this.avatar = avatar;
 		//TODO: get rid of this

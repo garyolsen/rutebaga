@@ -8,6 +8,7 @@ import rutebaga.commons.math.Vector;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.Entity;
 import rutebaga.view.game.*;
 import rutebaga.view.rwt.ButtonComponent;
 import rutebaga.view.rwt.ContextMenu;
@@ -114,7 +115,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	}
 	
 	
-	public void createGamePlayScreen(CharEntity avatar) {
+	public void createGamePlayScreen(Entity avatar) {
 		clearView();
 		
 		view.addViewComponent(new MapComponent(avatar, view.getWidth(), view.getHeight()));

@@ -14,6 +14,7 @@ import java.util.Set;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
 import rutebaga.model.environment.Instance;
@@ -39,9 +40,9 @@ public class MapComponent extends ViewComponent
 	// private static LayerComparator layerComparator = new LayerComparator();
 	private static LocationLayerComparator<AppearanceInstance> appearanceComparator = new LocationLayerComparator<AppearanceInstance>();
 
-	private CharEntity avatar;
+	private Entity avatar;
 
-	public MapComponent(CharEntity avatar, int width, int height)
+	public MapComponent(Entity avatar, int width, int height)
 	{
 		this.avatar = avatar;
 

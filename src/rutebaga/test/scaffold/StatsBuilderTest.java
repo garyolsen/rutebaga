@@ -3,6 +3,7 @@ package rutebaga.test.scaffold;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import rutebaga.commons.Log;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
@@ -23,6 +24,8 @@ public class StatsBuilderTest
 	 */
 	public static void main(String[] args)
 	{
+		Log.logging = true;
+		
 		Builder b = new DefaultBuilder();
 		MasterScaffold s = new MasterScaffold();
 		s.registerBuilder(b);

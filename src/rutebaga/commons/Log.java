@@ -2,7 +2,7 @@ package rutebaga.commons;
 
 public class Log
 {
-	static boolean logging = false;
+	public static boolean logging = false;
 
 	public static void log(Object message)
 	{
