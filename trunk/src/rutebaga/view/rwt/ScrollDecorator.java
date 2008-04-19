@@ -61,12 +61,7 @@ public class ScrollDecorator extends ComponentDecorator {
 	public void setScrollSpeed(int speed) {
 		this.speed = speed;
 	}
-
 	
-	protected boolean processMouseEvent( MouseEvent event ) {
-		
-		return super.processMouseEvent(event);
-	}
 	protected boolean processMouseMotionEvent( MouseEvent event ) {
 		
 		if(event.getID() == MouseEvent.MOUSE_EXITED)
@@ -81,7 +76,8 @@ public class ScrollDecorator extends ComponentDecorator {
 			if( x < scrollWidth/2)
 				scroll = (x - (scrollWidth/2.0d)) / (scrollWidth/2.0d);
 		}
-		super.processMouseEvent(event);
+		
+		super.processMouseMotionEvent(event);
 		return true;
 	}
 
@@ -104,6 +100,10 @@ public class ScrollDecorator extends ComponentDecorator {
 		
 		public List<ViewComponent> getElements() {
 			return components;
+		}
+
+		public void visit(ComponentDecorator cd) {
+			components.add(cd);
 		}
 		
 	}

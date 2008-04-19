@@ -280,7 +280,6 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		}
 
 		public void visit(ViewCompositeComponent vcc) {
-			dispatcher.addComponent(vcc);
 			
 			for(ViewComponent vc : vcc.getChildren())
 				vc.visit(this);
@@ -301,7 +300,6 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		}
 
 		public void visit(ViewCompositeComponent vcc) {
-			dispatcher.removeComponent(vcc);
 			
 			for(ViewComponent vc : vcc.getChildren())
 				vc.visit(this);
