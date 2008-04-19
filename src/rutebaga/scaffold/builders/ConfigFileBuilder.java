@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import rutebaga.commons.math.ValueProvider;
+import rutebaga.commons.math.rel.ParseTreeNode;
+import rutebaga.commons.math.rel.ReversePolishParser;
+import rutebaga.model.entity.stats.Stats;
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
 
@@ -15,7 +19,10 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 		return properties.keySet().toArray(new String[0]);
 	}
 
-	private static Pattern pattern = Pattern.compile("([^\\s\\t]+)[\\s\\t]*(.*?)[\\s\\t]*(#.*)?");
+	private static Pattern pattern = Pattern
+			.compile("(#.*)?([^\\s\\t]+)?[\\s\\t]*(.*?)[\\s\\t]*(#.*)?");
+	private static int NAME_GP = 2;
+	private static int VALUE_GP = 3;
 
 	private Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>();
 
@@ -32,16 +39,20 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 		if (readData == null || readData.isEmpty())
 			return;
 		Matcher m = pattern.matcher(readData);
-		String[] tokens = new String[m.matches() ? m.groupCount() : 0];
-		System.out.println(m.groupCount());
-		for (int i = 0; i < tokens.length; i++)
+		String[] tokens = null;
+		if (m.matches())
 		{
-			tokens[i] = m.group(i+1);
-			System.out.println(":" + tokens[i] + ":");
+			tokens = new String[2];
+			tokens[0] = m.group(NAME_GP);
+			tokens[1] = m.group(VALUE_GP);
 		}
+		System.out.println(readData);
+		System.out.println(":" + tokens[0] + ":" + tokens[1] + ":");
 		if (tokens == null)
 			return;
 		if (tokens.length == 0)
+			return;
+		if (tokens[0] == null)
 			return;
 		if (tokens[1] == null || tokens[1].isEmpty())
 		{
@@ -91,5 +102,23 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	public Boolean getBoolean(String id, String property)
 	{
 		return Boolean.parseBoolean(getProperty(id, property));
+	}
+
+	public ValueProvider getValueProvider(String id, String property,
+			MasterScaffold scaffold)
+	{
+		String expr = getProperty(id, property);
+		if (expr.charAt(0) == '$')
+		{
+			return (ValueProvider) scaffold.get(expr.substring(1));
+		}
+		else
+		{
+			ParseTreeNode n = new ReversePolishParser().parse(expr);
+			ValueProviderASTVisitor v = new ValueProviderASTVisitor(
+					DefaultValueProviderFactory.getInstance(), scaffold);
+			n.accept(v);
+			return v.getValueProvider();
+		}
 	}
 }

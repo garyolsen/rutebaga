@@ -51,11 +51,7 @@ public class StatsBuilder extends ConfigFileBuilder
 		{
 			System.out.println("derived stat");
 			DerivedStatisticId derId = (DerivedStatisticId) statId;
-			String expr = getProperty(id, "value");
-			ParseTreeNode n = parser.parse(expr);
-			ValueProviderASTVisitor v = new ValueProviderASTVisitor(factory, scaffold);
-			n.accept(v);
-			ValueProvider<Stats> vp = v.getValueProvider();
+			ValueProvider<Stats> vp = getValueProvider(id, "value", scaffold);
 			derId.setBase(vp);
 		}
 		else

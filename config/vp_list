@@ -1,0 +1,37 @@
+LIST OF VALUE PROVIDERS
+---------------------------------------------------------------------------
+
+Value providers take the form VP_[id]_[params].  [params] is specified
+either by a single value or as name-value pairs:
+
+a=value;b=value
+
+PROVIDER ID		TARGET		PARAMS			DESCRIPTION
+---------------------------------------------------------------------------
+stat			Stats		single			Returns the value of the
+											statistic specified by the
+											parameter on the scaffold.	
+											
+											
+											
+LIST OF VALUE CONVERTERS
+---------------------------------------------------------------------------
+
+Converters change the target of a value provider.  Converters can't be
+nested, since this would break LoD.  If you need a new converter (agent),
+write one.											
+
+Converters are used like other value providers, except all IDs starting
+with @ are for converters, and the params are given simply by another
+value provider.  For example:
+
+VP_@entityStats_VP_stat_statHP
+
+would provide a value provider whose target is Entity, and returns the
+HP of the entity.
+
+
+CONVERTER ID	TARGET		SOURCE
+----------------------------------------------------
+@entityStats	entity		stats
+
