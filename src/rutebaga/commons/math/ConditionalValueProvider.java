@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public class ConditionalValueProvider<T> extends ValueProvider<T>
+public class ConditionalValueProvider<T> implements ValueProvider<T>
 {
 	private ValueProvider<T> condition;
 	private ValueProvider<T> trueArg;
@@ -15,7 +15,6 @@ public class ConditionalValueProvider<T> extends ValueProvider<T>
 		this.falseArg = falseArg;
 	}
 
-	@Override
 	public double getValue(T t)
 	{
 		if(condition.getValue(t) > 0)
