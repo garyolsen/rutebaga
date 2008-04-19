@@ -36,7 +36,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 
 	public void processLine(String readData)
 	{
-		if (readData == null || readData.isEmpty())
+		if (readData == null || readData.equals(""))
 			return;
 		Matcher m = pattern.matcher(readData);
 		String[] tokens = null;
@@ -54,7 +54,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			return;
 		if (tokens[0] == null)
 			return;
-		if (tokens[1] == null || tokens[1].isEmpty())
+		if (tokens[1] == null || tokens[1].equals(""))
 		{
 			rutebaga.commons.Log.log();
 			current = new HashMap<String, String>();

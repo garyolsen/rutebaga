@@ -120,7 +120,7 @@ public class ImageSliceBuilder implements Builder, ReaderProcessor
 				filenames.put(str, currentFileName);
 				currentX += currentW;
 			}
-			if (parts.length > 0 && !parts[0].isEmpty())
+			if (parts.length > 0 && !(parts.length == 0))
 			{
 				currentY += currentH;
 				currentX = 0;

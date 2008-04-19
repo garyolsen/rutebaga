@@ -85,5 +85,19 @@ public class ConcreteInventory implements Inventory
 	{
 		this.unequipped.add(item);
 	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("Unequipped Items:\n");
+		for (Item item : unequipped )
+		{
+			sb.append("Item: " + item.getName() + "\n");
+		}
+		
+		return sb.toString();
+	}
 
 }
