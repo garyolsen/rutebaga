@@ -9,9 +9,12 @@ import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.view.game.*;
+import rutebaga.view.rwt.ButtonComponent;
 import rutebaga.view.rwt.ContextMenu;
+import rutebaga.view.rwt.ScrollDecorator;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.View;
+import rutebaga.view.rwt.ViewCompositeComponent;
 
 /**
  * Provides a unified interface to manipulate the View Subsystem without
@@ -63,7 +66,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	public void constructFullscreenView()
 	{
 		view = new View(800, 600);
-		//view.setFullscreen();
+		view.setFullscreen();
 	}
 
 	/**
@@ -121,6 +124,19 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 		fps.setLocation(100, 100);
 		
 		view.addViewComponent(fps);
+		
+		ViewCompositeComponent vcc = new ViewCompositeComponent();
+
+		for (int i = 0; i < 20; i++)
+			vcc.addChild(new ButtonComponent("test" + i));
+
+		ScrollDecorator scroll = new ScrollDecorator(vcc, 600, 50);
+		scroll.setLocation(100, 500);
+		scroll.setScrollSpeed(10);
+
+		view.addViewComponent(scroll);
+		
+		
 		
 	}
 
