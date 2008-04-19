@@ -1,6 +1,5 @@
 package rutebaga.scaffold.builders;
 
-import rutebaga.test.scaffold.EntityTypeBuilder;
 
 public class DefaultBuilder extends ChainedBuilder
 {

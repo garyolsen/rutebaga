@@ -241,14 +241,24 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		this.movementListeners.add(listener);
 	}
 
+	public boolean sameTypeAs(Instance other)
+	{
+		return ObjectUtils.equals(this.type, other.type);
+	}
+
+	public void setAppearance(Appearance appearance)
+	{
+		this.appearanceManager = new StaticAppearanceManager(appearance);
+	}
+	
 	public void setAppearanceManager(AppearanceManager appearanceManager)
 	{
 		this.appearanceManager = appearanceManager;
 	}
-	
-	public void setAppearance(Appearance appearance)
+
+	public void setMovementAttributes(MovementAttributes movementAttributes)
 	{
-		this.appearanceManager = new StaticAppearanceManager(appearance);
+		this.movementAttributes = movementAttributes;
 	}
 
 	public abstract void tick();
@@ -257,7 +267,7 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	{
 		this.movementListeners.remove(listener);
 	}
-
+	
 	private void updateTickability()
 	{
 		if(tickable)
@@ -277,7 +287,7 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	{
 		return location;
 	}
-	
+
 	protected Set<MovementListener> getMovementListeners()
 	{
 		return movementListeners;
@@ -290,14 +300,14 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	{
 		return physicsContainer;
 	}
-
+	
 	protected final void setFriction(double friction)
 	{
 		this.friction = friction;
 		if (this.physicsContainer != null)
 			physicsContainer.setFriction(friction);
 	}
-	
+
 	/**
 	 * Sets the location container for this instance.
 	 * 
@@ -329,7 +339,7 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		this.physicsContainer = physicsContainer;
 		physicsContainer.setFriction(friction);
 	}
-
+	
 	protected final void setTickable(boolean tickable)
 	{
 		this.tickable = tickable;
@@ -337,11 +347,6 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		{
 			updateTickability();
 		}
-	}
-	
-	public boolean sameTypeAs(Instance other)
-	{
-		return ObjectUtils.equals(this.type, other.type);
 	}
 
 }

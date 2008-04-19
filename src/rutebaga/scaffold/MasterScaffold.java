@@ -46,9 +46,11 @@ public class MasterScaffold
 	 */
 	public Object get(String id)
 	{
+		if(id == null) return null;
 		if (scaffold.get(id) == null)
 		{
 			Builder builder = builders.get(id);
+			if(builder == null) return null;
 			Object object;
 			try
 			{

@@ -74,7 +74,9 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	protected Object getObjectFor(String id, String property,
 			MasterScaffold scaffold)
 	{
-		return scaffold.get(properties.get(id).get(property));
+		if (scaffold.get(id) != null)
+			return scaffold.get(properties.get(id).get(property));
+		return null;
 	}
 
 	protected abstract String getDefaultFileName();
