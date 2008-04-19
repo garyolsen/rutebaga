@@ -1,6 +1,9 @@
 package rutebaga.test.profiling;
 
+import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +18,8 @@ public class GraphicsProfiler
 	{
 		GraphicsManager man = new GraphicsManager();
 		man.init(800, 600);
+		
+		Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.3F);
 
 		Image image = man.createVolatileImage(800, 600);
 		Image tile;
@@ -36,7 +41,8 @@ public class GraphicsProfiler
 		for (int i = 0; i < blocks.length; i++)
 		{
 
-			Graphics g = blocks[i].getGraphics();
+			Graphics2D g = (Graphics2D) blocks[i].getGraphics();
+			g.setComposite(composite);
 			for (int x = 0; x < 700; x += 50)
 			{
 				for (int y = 0; y < 700; y += 50)
