@@ -20,3 +20,39 @@ imgHextile05
 path TestImages/hextile05.png
 imgHextile06
 path TestImages/hextile06.png
+imgYoshiNorth01
+path TestImages/yoshi_north01.png
+imgYoshiNorth02
+path TestImages/yoshi_north02.png
+imgYoshiNorth03
+path TestImages/yoshi_north03.png
+imgYoshiNorthEast01
+path TestImages/yoshi_northeast01.png
+imgYoshiNorthEast02
+path TestImages/yoshi_northeast02.png
+imgYoshiNorthEast03
+path TestImages/yoshi_northeast03.png
+imgYoshiSouthEast01
+path TestImages/yoshi_southeast01.png
+imgYoshiSouthEast02
+path TestImages/yoshi_southeast02.png
+imgYoshiSouthEast03
+path TestImages/yoshi_southeast03.png
+imgYoshiSouth01
+path TestImages/yoshi_south01.png
+imgYoshiSouth02
+path TestImages/yoshi_south02.png
+imgYoshiSouth03
+path TestImages/yoshi_south03.png
+imgYoshiSouthWest01
+path TestImages/yoshi_southwest01.png
+imgYoshiSouthWest02
+path TestImages/yoshi_southwest02.png
+imgYoshiSouthWest03
+path TestImages/yoshi_southwest03.png
+imgYoshiNorth01
+path TestImages/yoshi_northwest01.png
+imgYoshiNorthWest02
+path TestImages/yoshi_northwest02.png
+imgYoshiNorthWest03
+path TestImages/yoshi_northwest03.png
