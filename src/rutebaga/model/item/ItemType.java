@@ -1,6 +1,12 @@
 package rutebaga.model.item;
 
-public abstract class ItemType
+import rutebaga.model.environment.InstanceType;
+
+public class ItemType<T extends Item> implements InstanceType<Item>
 {
-	public abstract Item makeItem();
+
+	public Item makeInstance() {
+		return (T) new Item(this);
+	}
+	
 }

@@ -10,7 +10,7 @@ import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InstanceType;
 
-public abstract class Item<T extends Item<T>> extends Instance<T> implements Named
+public class Item<T extends Item<T>> extends Instance<T> implements Named
 {
 	private EquippableAspect equippableAspect;
 
@@ -68,5 +68,25 @@ public abstract class Item<T extends Item<T>> extends Instance<T> implements Nam
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	@Override
+	public boolean blocks(Instance other) {
+		return false;
+	}
+
+	@Override
+	public double getLayer() {
+		return 0;
+	}
+
+	@Override
+	public double getMass() {
+		return 1.0;
+	}
+
+	@Override
+	public void tick() {
+		
 	}
 }
