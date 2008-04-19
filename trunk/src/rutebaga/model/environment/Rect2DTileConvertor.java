@@ -95,4 +95,9 @@ public class Rect2DTileConvertor implements TileConvertor
 		rval.add(b);
 		return rval;
 	}
+
+	public Vector2D fromRect(GenericVector2D coordinate)
+	{
+		return new Vector2D(coordinate.getX().doubleValue(), coordinate.getY().doubleValue());
+	}
 }
