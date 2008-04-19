@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public interface BidirectionalValueProvider<T> extends ValueProvider<T>
+public abstract class BidirectionalValueProvider<T> extends ValueProvider<T>
 {
-	double addTo(T t, double value);
+	public abstract double addTo(T t, double value);
 }

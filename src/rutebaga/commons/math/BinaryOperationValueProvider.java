@@ -1,13 +1,13 @@
 package rutebaga.commons.math;
 
-public class BinaryOperationValueProvider<T> implements ValueProvider<T>
+public class BinaryOperationValueProvider<T> extends ValueProvider<T>
 {
 	private BinaryOperation operation;
-	private ValueProvider<T> arg1;
-	private ValueProvider<T> arg2;
+	private ValueProvider<? super T> arg1;
+	private ValueProvider<? super T> arg2;
 
 	public BinaryOperationValueProvider(BinaryOperation operation,
-			ValueProvider<T> arg1, ValueProvider<T> arg2)
+			ValueProvider<? super T> arg1, ValueProvider<? super T> arg2)
 	{
 		super();
 		this.operation = operation;
