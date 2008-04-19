@@ -49,4 +49,6 @@ public interface TileConvertor
 	Vector2D toRect(GenericVector2D coordinate);
 	
 	public Collection<IntVector2D> between(IntVector2D a, IntVector2D b);
+	
+	Vector2D fromRect(GenericVector2D coordinate);
 }
