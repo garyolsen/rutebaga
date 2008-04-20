@@ -3,10 +3,15 @@ package rutebaga.view;
 import java.awt.Color;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
+import rutebaga.controller.command.list.ListElement;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.view.game.*;
@@ -15,6 +20,7 @@ import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.ScrollDecorator;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.View;
+import rutebaga.view.rwt.ViewComponent;
 import rutebaga.view.rwt.ViewCompositeComponent;
 
 /**
@@ -41,6 +47,8 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 {
 
 	private View view;
+	
+	private Stack<ViewComponent> contextStack = new Stack<ViewComponent>();
 
 	/**
 	 * Passes the parameters to the {@link rutebaga.view.rwt.View View}
@@ -115,29 +123,16 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	}
 	
 	
-	public void createGamePlayScreen(Entity avatar) {
+	public void createGamePlayScreen(Entity avatar, TargetInstanceObservable observable) {
 		clearView();
 		
-		view.addViewComponent(new MapComponent(avatar, view.getWidth(), view.getHeight()));
+		view.addViewComponent(new MapComponent(observable, avatar, view.getWidth(), view.getHeight()));
 		
 		FPSTextComponent fps = new FPSTextComponent();
 		fps.setFontColor(Color.RED);
 		fps.setLocation(100, 100);
 		
 		view.addViewComponent(fps);
-		
-		ViewCompositeComponent vcc = new ViewCompositeComponent();
-
-		for (int i = 0; i < 20; i++)
-			vcc.addChild(new ButtonComponent("test" + i));
-
-		ScrollDecorator scroll = new ScrollDecorator(vcc, 600, 50);
-		scroll.setLocation(100, 500);
-		scroll.setScrollSpeed(10);
-
-		view.addViewComponent(scroll);
-		
-		
 		
 	}
 
@@ -150,9 +145,24 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The location to spawn the menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createRootContextMenu(ElementalList list, Vector vector)
+	public ContextMenu createRootContextMenu(ElementalList list, Vector2D vector)
 	{
-		return null;
+		List<String> names = new ArrayList<String>();
+		List<Command> commands = new ArrayList<Command>();
+		
+		for(ListElement element : list) {
+			commands.add(element.getCommand());
+			names.add(element.getLabel());
+		}
+			
+		ContextMenu cm = new ContextMenu(commands, names);
+		cm.setLocation(vector.getX().intValue(), (int)vector.getY().intValue());
+		
+		view.addViewComponent(cm);
+		
+		contextStack.push(cm);
+		
+		return cm;
 	}
 
 	/**
@@ -192,7 +202,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createDialogMenu(ElementalList list, Vector vector)
+	public ContextMenu createDialogMenu(ElementalList list, Vector2D vector)
 	{
 		return null;
 	}
@@ -220,6 +230,17 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 
 	}
 	
+	public void clearContextMenuStack() {
+		while(!contextStack.isEmpty()) {
+			ViewComponent vc = contextStack.pop();
+			view.removeViewComponent(vc);
+		}
+	}
+	
+	public View getView() {
+		return view;
+	}
+	
 	
 	private void clearView() {
 		view.removeAllViewComponents(view.getViewComponents());
@@ -239,5 +260,24 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	
 	public void removeMouseListener(MouseListener ml) {
 		view.removeMouseListener(ml);
+	}
+	
+	
+	private class AbilityCommand implements Command{ //TODO REMOVE THIS ONCE WE HAVE REAL COMMANDS
+
+		private Entity<?> avatar;
+		
+		public AbilityCommand(Entity avatar) {
+			this.avatar = avatar;
+		}
+		
+		public void execute() {
+			avatar.getAbilities().get(0).act(avatar);
+		}
+
+		public boolean isFeasible() {
+			return true;
+		}
+		
 	}
 }

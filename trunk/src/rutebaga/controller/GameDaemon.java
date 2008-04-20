@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -112,8 +115,18 @@ public class GameDaemon implements InterpreterManager
 				}, false);
 			}
 		};
+		
+		final MouseListener mouseProcessor = new MouseAdapter() 
+		{
+			public void mouseClicked(final MouseEvent e)
+			{
+				actionPerformed(new ActionEvent(e, MouseEvent.MOUSE_CLICKED, "") );
+			}
+		};
+		
 		this.keyBuffer = new KeyBuffer();
 		view.addKeyListener(this.keyBuffer);
+		view.addMouseListener( mouseProcessor );
 		this.ticker.setListener(new TickListener()
 		{
 			public void tick()
@@ -228,7 +241,7 @@ public class GameDaemon implements InterpreterManager
 		{
 			@Override
 			ActionListener extract(InterpreterStackRecord isr) {
-				return null;
+				return isr.actionListener;
 			}
 			@Override
 			void act(ActionListener uai)
@@ -345,6 +358,7 @@ public class GameDaemon implements InterpreterManager
 		UserActionInterpreter interpreter;
 		KeyListener keyListener;
 		TextFieldListener textFieldListener;
+		ActionListener actionListener;
 		
 		InterpreterStackRecord(UserActionInterpreter uai) {
 			interpreter = uai;
@@ -487,5 +501,11 @@ public class GameDaemon implements InterpreterManager
 		InterpreterStackRecord isr = findInterpreterStackRecord(tfl);
 		if (isr != null)
 			isr.textFieldListener = tfl;
+	}
+	
+	public void registerAsActionListener(ActionListener al) {
+		InterpreterStackRecord isr = findInterpreterStackRecord(al);
+		if(isr != null)
+			isr.actionListener = al;
 	}
 }

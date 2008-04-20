@@ -137,6 +137,7 @@ public class View
 	 */
 	public void renderFrame()
 	{
+		long start = System.currentTimeMillis();
 		if (!strategy.contentsLost())
 		{
 			Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();
@@ -156,6 +157,8 @@ public class View
 		{
 			strategy = window.getBufferStrategy();
 		}
+		
+		rutebaga.commons.Log.log("Render Frame Total Time: " + (System.currentTimeMillis() - start));
 	}
 
 	/**
@@ -231,6 +234,5 @@ public class View
 	{
 
 		return window.getGraphicsConfiguration().createCompatibleImage(w, h, Transparency.BITMASK);
-
 	}
 }

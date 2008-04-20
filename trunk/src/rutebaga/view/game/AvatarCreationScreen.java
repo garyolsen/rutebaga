@@ -19,6 +19,11 @@ public class AvatarCreationScreen extends ViewCompositeComponent {
 	public AvatarCreationScreen(int width, int height, TextFieldListener listener, ElementalList list, Command accept, Command cancel) {
 		this.setBounds(new Rectangle(width, height));
 		
+		TextLabelComponent label = new TextLabelComponent("Name: ");
+		label.setLocation(getWidth()/2 + 25, getHeight()/3);
+		
+		this.addChild(label);
+		
 		TextFieldComponent text = new TextFieldComponent();
 		text.addTextFieldListener(listener);
 		text.setLocation(getWidth()/2 + 50, getHeight()/3);
@@ -28,7 +33,7 @@ public class AvatarCreationScreen extends ViewCompositeComponent {
 		/*
 		 
 		for(ListElement element : list)
-		 
+		 	
 		 
 		 */
 		

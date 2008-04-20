@@ -1,6 +1,7 @@
 package rutebaga.controller.command;
 
 import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.list.ElementalList;
 
 /**
@@ -28,14 +29,14 @@ public class CreateRootContextMenuCommand extends CreateContextMenuCommand {
 	/**
 	 * The map location at which to open this root context menu.
 	 */
-	private Vector location;
+	private Vector2D location;
 
 	/**
 	 * Set the map location at which this command should open a context menu.
 	 * 
 	 * @param loc
 	 */
-	public void setLocation(Vector loc) {
+	public void setLocation(Vector2D loc) {
 		location = loc;
 	}
 

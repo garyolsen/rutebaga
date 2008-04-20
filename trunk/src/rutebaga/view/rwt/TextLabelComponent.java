@@ -9,13 +9,14 @@ import rutebaga.view.drawer.*;
 
 public class TextLabelComponent extends ViewComponent {
 	
-	private String label;
+	private String label = "";
 	private FontAttribute font;
 	private ColorAttribute color;
 	private CompositeAttribute composite;
 
 	public TextLabelComponent( String label ) {
-		this.label = label;
+		if(label != null)
+			this.label = label;
 		
 		font = new FontAttribute(new Font("Arial", Font.PLAIN, 10));
 		color = new ColorAttribute( Color.BLACK );
@@ -29,6 +30,8 @@ public class TextLabelComponent extends ViewComponent {
 	public void draw( Drawer draw ) {
 		draw.setAttribute( composite );
 		draw.drawString(this.getLocation(), label);
+		
+		this.setBounds(getX(), getY(), draw.getFontMetrics().stringWidth(label), font.getFont().getSize());
 	}
 	
 	public void setFont( Font font ) {

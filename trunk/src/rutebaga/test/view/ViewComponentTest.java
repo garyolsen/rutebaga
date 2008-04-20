@@ -1,7 +1,10 @@
 package rutebaga.test.view;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
+import rutebaga.controller.command.Command;
 import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.rwt.*;
 
@@ -24,13 +27,45 @@ public class ViewComponentTest {
 			ViewCompositeComponent vcc = new ViewCompositeComponent();
 			vcc.addChild(new ButtonComponent("test1"));
 			vcc.addChild(new ButtonComponent("test2"));
+			fps = new FPSTextComponent();
+			fps.setLocation(100, 100);
+			fps.setFontColor(Color.RED);	
+			vcc.addChild(fps);
 			vcc.addChild(new ButtonComponent("test3"));
 			vcc.addChild(new ButtonComponent("test4"));
+			fps = new FPSTextComponent();
+			fps.setLocation(100, 100);
+			fps.setFontColor(Color.RED);	
+			vcc.addChild(fps);
 			vcc.addChild(new ButtonComponent("test5"));
+			fps = new FPSTextComponent();
+			fps.setLocation(100, 100);
+			fps.setFontColor(Color.RED);	
+			vcc.addChild(fps);
 		
 			
 			ScrollDecorator scroll = new ScrollDecorator(vcc, 200, 100);
-			scroll.setLocation(200, 200);
+			scroll.setLocation(500, 200);
+			
+			
+			List<Command> commands = new ArrayList<Command>();
+			commands.add(null);
+			commands.add(null);
+			commands.add(null);
+			commands.add(null);
+			commands.add(null);
+			
+			List<String> names = new ArrayList<String>();
+			names.add("A");
+			names.add("B");
+			names.add("C");
+			names.add("D");
+			names.add("E");
+			
+			ContextMenu cm = new ContextMenu(commands, names);
+			cm.setLocation(200, 300);
+			
+			view.addViewComponent(cm);
 			
 			view.addViewComponent(scroll);
 			

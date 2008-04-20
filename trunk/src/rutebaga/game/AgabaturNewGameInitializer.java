@@ -15,6 +15,7 @@ import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.environment.World;
 import rutebaga.model.environment.appearance.AnimatedAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance;
@@ -193,6 +194,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			manager.setWalking(((EntityType<?>) scaffold.get("entityDefault")).getWalking());
 			npc1.setAppearanceManager(manager);
 
+			npc1.addTerrainTypes(new GrassTerrain(), new WaterTerrain());
 			npc1.setTarget(avatar);
 
 			Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,

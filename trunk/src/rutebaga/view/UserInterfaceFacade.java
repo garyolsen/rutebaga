@@ -1,12 +1,13 @@
 package rutebaga.view;
 
-import rutebaga.commons.math.Vector;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
-import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
+import rutebaga.view.game.TargetInstanceObservable;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.TextFieldListener;
+import rutebaga.view.rwt.View;
 
 public interface UserInterfaceFacade {
 	void createTitleScreen(ElementalList list);
@@ -27,7 +28,7 @@ public interface UserInterfaceFacade {
 			ElementalList list, Command accept, Command cancel);
 	
 	
-	void createGamePlayScreen(Entity avatar);
+	void createGamePlayScreen(Entity avatar, TargetInstanceObservable observable);
 
 	/**
 	 * Spawns a ContextMenu at the {@link Vector} location provided.
@@ -38,7 +39,7 @@ public interface UserInterfaceFacade {
 	 *            The location to spawn the menu.
 	 * @return The ContextMenu that was created.
 	 */
-	ContextMenu createRootContextMenu(ElementalList list, Vector vector);
+	ContextMenu createRootContextMenu(ElementalList list, Vector2D vector);
 
 	/**
 	 * Opens up a ContextMenu when a button in an existing ContextMenu is
@@ -71,7 +72,7 @@ public interface UserInterfaceFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	ContextMenu createDialogMenu(ElementalList list, Vector vector);
+	ContextMenu createDialogMenu(ElementalList list, Vector2D vector);
 	
 	/**
 	 * Shows a warning to the player.
@@ -89,4 +90,8 @@ public interface UserInterfaceFacade {
 	 *            A ContextMenu to be closed.
 	 */
 	void closeContextMenu(ContextMenu menu);
+	
+	void clearContextMenuStack();
+	
+	View getView();
 }

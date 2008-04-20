@@ -54,8 +54,8 @@ public class Hex2DTileConvertor implements TileConvertor
 		double x = rect.getX();
 		if(Math.abs(y) > eqn_m*Math.abs(x) + eqn_b)
 		{
-			rutebaga.commons.Log.log("eqn: y = " + eqn_m + "*x + " + eqn_b);
-			rutebaga.commons.Log.log();
+			//rutebaga.commons.Log.log("eqn: y = " + eqn_m + "*x + " + eqn_b);
+			//rutebaga.commons.Log.log();
 			int xDiff = (int) Math.signum(x);
 			int yDiff = (int) Math.signum(y);
 			rutebaga.commons.Log.log(xDiff + ", " + yDiff);

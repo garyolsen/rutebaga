@@ -232,6 +232,6 @@ public abstract class ViewComponent
 
 	private void eventReceived(AWTEvent e)
 	{
-		//rutebaga.commons.Log.log("ViewComponent: " + this + " received " + e);
+		rutebaga.commons.Log.log("ViewComponent: " + this + " received " + e);
 	}
 }
