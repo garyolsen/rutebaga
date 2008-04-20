@@ -47,6 +47,11 @@ public abstract class TargetableEffect<Self extends TargetableEffect<Self, Targe
 	{
 		this.target = target;
 	}
+	
+	protected TargetType getTarget()
+	{
+		return this.target;
+	}
 
 	@Override
 	public final void tick()
