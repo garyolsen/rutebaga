@@ -1,5 +1,10 @@
 package rutebaga.model.environment;
 
+/**
+ * @author Gary
+ *
+ * @param <T> MUST be a wildcard when the client instantiates
+ */
 public abstract class ConcreteInstanceType<T extends Instance> implements
 		InstanceType<T>
 {
@@ -22,6 +27,11 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 		this.movementAttributes = movementAttributes;
 	}
 
+	/**
+	 * This MUST be overridden by subclasses to guarantee type safety.
+	 * 
+	 * @return
+	 */
 	protected abstract T create();
 
 	protected void initialize(T instance)
