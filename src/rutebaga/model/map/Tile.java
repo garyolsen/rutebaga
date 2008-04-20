@@ -25,7 +25,7 @@ public class Tile<T extends Tile<T>> extends Instance<T>
 	@Override
 	public boolean blocks(Instance other)
 	{
-		return other.able(this.terrain);
+		return !other.able(this.terrain);
 	}
 
 	@Override
