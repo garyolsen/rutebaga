@@ -175,7 +175,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				+ ((arr == null) ? "" : (arr.length + ":" + arr[0])));
 
 		avatar.addAbility(new CheeseArrowAbilityType().makeAbility());
-		avatar.addTerrainTypes(new GrassTerrain());
+		avatar.whiteListTerrainTypes(new GrassTerrain());
 
 		environment.add(avatar, new Vector2D(0, 0));
 
