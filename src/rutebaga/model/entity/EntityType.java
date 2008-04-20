@@ -84,4 +84,10 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		this.walking = walking;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "EntityType: radius=" + radius + "; movementSpeed=" + movementSpeed + "; " + abilityTypes.size() + " abilities";
+	}
+
 }

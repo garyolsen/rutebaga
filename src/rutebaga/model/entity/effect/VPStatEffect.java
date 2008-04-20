@@ -44,4 +44,10 @@ public class VPStatEffect extends ReversibleEntityEffect
 		this.statId = statId;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "VPStatEffect for " + statId + "=" + augend;
+	}
+
 }

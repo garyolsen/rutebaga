@@ -34,4 +34,10 @@ public class StatEffect extends ReversibleEntityEffect
 		entity.getStats().modifyStat(modification, id);
 	}
 
+	@Override
+	public String toString()
+	{
+		return "StafEffect for " + modification;
+	}
+
 }

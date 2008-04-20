@@ -52,6 +52,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private String name;
 	private double money;
 	
+	public String toString()
+	{
+		return "Entity named " + name;
+	}
+	
 	//TODO move into AbilitySet
 	private List<Ability> abilities = new ArrayList<Ability>();
 	

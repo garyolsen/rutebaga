@@ -23,6 +23,12 @@ public class AreaEffectType extends ConcreteInstanceType<AreaEffect>
 		return blockingRate;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "AOE with blocking=" + blockingRate + " and " + effects.size() + " effects";
+	}
+
 	public Bounds2D getBounds()
 	{
 		return bounds;

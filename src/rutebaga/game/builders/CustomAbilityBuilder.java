@@ -4,12 +4,13 @@ import rutebaga.appearance.AppearanceManagerDefinition;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.environment.MovementAttributes;
 import rutebaga.scaffold.MasterScaffold;
+import rutebaga.scaffold.builders.AbstractAbilityBuilder;
 import rutebaga.scaffold.builders.AppearanceDefFactory;
 import rutebaga.scaffold.builders.ConfigFileBuilder;
 import rutebaga.test.model.ability.CheeseArrowAbilityType;
 import rutebaga.test.model.effect.RandomEffectType;
 
-public class CustomAbilityBuilder extends ConfigFileBuilder
+public class CustomAbilityBuilder extends AbstractAbilityBuilder
 {
 	@Override
 	protected String getDefaultFileName()
@@ -29,6 +30,7 @@ public class CustomAbilityBuilder extends ConfigFileBuilder
 
 	public void initialize(String id, Object object, MasterScaffold scaffold)
 	{
+		super.initialize(id, object, scaffold);
 		String typedef = getProperty(id, "type");
 		if ("~abEgg".equals(typedef))
 		{

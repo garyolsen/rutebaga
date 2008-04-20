@@ -1,0 +1,15 @@
+dmgPhysical
+name	"Physical"
+dmgConcussive
+parent	dmgPhysical
+name	"Concussive"
+
+dmgExplosive
+parent	dmgPhysical
+name	"Explosive"
+
+dmgBlunt
+parent dmgPhysical
+
+dmgMagical
+name	"Magical"
