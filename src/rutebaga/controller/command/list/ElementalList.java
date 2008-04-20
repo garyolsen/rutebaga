@@ -1,6 +1,7 @@
 package rutebaga.controller.command.list;
 
 import java.util.Iterator;
+import java.util.Observable;
 
 import rutebaga.controller.command.Command;
 
@@ -43,4 +44,6 @@ public interface ElementalList extends Iterable<ListElement>
 	 * @return
 	 */
 	public int contentSize();
+	
+	public Observable getObservable();
 }

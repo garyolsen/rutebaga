@@ -3,6 +3,7 @@ package rutebaga.controller.command.list;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Observable;
 
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandFactory;
@@ -193,6 +194,11 @@ public class ConcreteElementalList implements ElementalList,
 	 */
 	private class SingleCommandElementalList implements ElementalList {
 
+		public Observable getObservable() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 		/**
 		 * The label of the ListElement "contained" by this
 		 * SingleCommandElementalList.
@@ -268,5 +274,10 @@ public class ConcreteElementalList implements ElementalList,
 			};
 		}
 
+	}
+
+	public Observable getObservable() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

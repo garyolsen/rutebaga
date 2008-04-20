@@ -1,6 +1,7 @@
 package rutebaga.controller.command.list;
 
 import java.util.Iterator;
+import java.util.Observable;
 
 /**
  * 
@@ -115,5 +116,10 @@ public class DynamicElementalList<E> implements ElementalList
 				throw new UnsupportedOperationException();
 			}
 		};
+	}
+
+	public Observable getObservable() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
