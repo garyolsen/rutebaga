@@ -134,6 +134,10 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		flushEffectQueue();
 		getVision().tick();
+		System.out.println("\n\n\n\n");
+		System.out.println(this.getStats());
+		System.out.println(this.getInventory());
+		System.out.println("\n\n\n\n");
 	}
 	
 	private void flushEffectQueue()

@@ -8,13 +8,18 @@ import rutebaga.appearance.EntityAppearanceManager;
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.GameInitializer;
+import rutebaga.model.effect.AreaEffectType;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
+import rutebaga.model.entity.effect.StatEffect;
 import rutebaga.model.entity.npc.NPCEntity;
+import rutebaga.model.entity.stats.StatisticId;
+import rutebaga.model.environment.BlackList;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.MovementAttributes;
 import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.environment.World;
 import rutebaga.model.environment.appearance.AnimatedAppearanceManager;
@@ -22,10 +27,12 @@ import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.AppearanceManager;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance.Orientation;
+import rutebaga.model.item.SlotType;
 import rutebaga.model.map.TerrainType;
 import rutebaga.model.map.Tile;
 import rutebaga.scaffold.MasterScaffold;
 import rutebaga.test.model.ability.CheeseArrowAbilityType;
+import rutebaga.test.model.examples.EntityAreaEffect;
 
 public class AgabaturNewGameInitializer implements GameInitializer
 {
@@ -62,9 +69,15 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		Image mountain = (Image) scaffold.get("imgMountainTile01");
 		Image treasure = (Image) scaffold.get("imgYoshiEgg01");
 		
+		AreaEffectType healer = (AreaEffectType) scaffold.get("aoeHealer");
+		AreaEffectType harmer = (AreaEffectType) scaffold.get("aoeHarm");
+		
 		TerrainType grassTerrain = new TerrainType("Grass");
 		TerrainType waterTerrain = new TerrainType("Water");
 		TerrainType mountainTerrain = new TerrainType("Mountain");
+		
+		StatisticId hp = (StatisticId) scaffold.get("statHp");
+		StatisticId movement = (StatisticId) scaffold.get("statMovement");
 
 		Image[] grassTileImages = new Image[6];
 		Image[] waterTileImages = new Image[6];
@@ -105,6 +118,10 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					tile.setAppearanceManager(new AnimatedAppearanceManager(
 							grassTileApps, 2));
 					environment.add(tile, location);
+					if(random.nextDouble() < 0.1)
+						environment.add(healer.makeInstance(), location);
+					else if(random.nextDouble() < 0.1)
+						environment.add(harmer.makeInstance(), location);
 				} else if (random.nextDouble() < waterTileProb)
 				{
 					Vector2D location = new Vector2D(x, y);
@@ -130,8 +147,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				}
 			}
 		}
+		
 
-		if (showTreasure)
+		if (true)
 		{
 			for (int x = mapBounds[0] + 4; x < mapBounds[1] - 4; x++)
 			{

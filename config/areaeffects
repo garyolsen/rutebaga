@@ -1,0 +1,15 @@
+aoeHealer
+images		imgYoshiEgg01 imgYoshiEgg02 imgYoshiEgg03 imgYoshiEgg04 imgYoshiEgg05
+framewait	3
+effects		eeffHealerAOE_HP
+blocking	10
+
+aoeHarm
+images		imgLameEffect
+effects		eeffHarmAOE_HP
+blocking	10
+
+aoeSpeeder
+images		imgLameEffect
+effects		eeffMovementAOE_Movement
+blocking	10
