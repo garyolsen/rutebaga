@@ -24,6 +24,7 @@ public class ConcreteInventory implements Inventory
 	private Set<Item> unequipped = new HashSet<Item>();
 	private SlotAllocation slots = new SlotAllocation();
 	private Map<Item, Set<EntityEffect>> onUnequipEffects = new HashMap<Item, Set<EntityEffect>>();
+
 	public ConcreteInventory(Entity parent)
 	{
 		super();
@@ -44,7 +45,7 @@ public class ConcreteInventory implements Inventory
 	{
 		return item.isEquippable() && item.getEquippableAspect().canEquip(this);
 	}
-	
+
 	public void drop(Item item)
 	{
 		this.unequipped.remove(item);
@@ -75,6 +76,8 @@ public class ConcreteInventory implements Inventory
 			{
 				parent.accept(effect);
 			}
+			
+			slots.remove(item.getEquippableAspect().getAllocation());
 		}
 	}
 
@@ -109,30 +112,33 @@ public class ConcreteInventory implements Inventory
 		{
 			parent.accept(reverse);
 		}
+		slots.add(item.getEquippableAspect().getAllocation());
+		unequipped.add(item);
+		equipped.remove(item);
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-		
+
 		sb.append("Slots:\n");
-		for(SlotType type : slots.getSlotTypes())
+		for (SlotType type : slots.getSlotTypes())
 		{
-			sb.append("\t");
+			sb.append("\t").append(type.getName()).append("\t").append(slots.getAllocation(type)).append("\n");
 		}
 		sb.append("Unequipped Items:\n");
-		for (Item item : unequipped )
+		for (Item item : unequipped)
 		{
 			sb.append("\tItem: " + item.getName() + "\n");
 		}
-		
+
 		sb.append("Equipped Items:\n");
-		for (Item item : equipped )
+		for (Item item : equipped)
 		{
 			sb.append("\tItem: " + item.getName() + "\n");
 		}
-		
+
 		return sb.toString();
 	}
 
