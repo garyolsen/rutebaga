@@ -3,3 +3,4 @@ standing 	imgYoshi
 walking		imgYoshi
 moveSpd		$vpEntityMovementSpeed	
 vRadius		10
+abilities	abEggThrow abMarioThrow abYoshiThrow

@@ -40,6 +40,12 @@ public class EntityTypeBuilder extends InstanceBuilder
 		type.setStanding(getAnimatedAppearances(standingId, scaffold));
 		type.setWalking(getAnimatedAppearances(walkingId, scaffold));
 		type.setRadius(this.getInteger(id, "vRadius"));
+		
+		Object[] abilityTypes = getObjectArray(id, "abilities", "[\\s\\t]", scaffold);
+		for(Object abType : abilityTypes)
+		{
+			type.getAbilityTypes().add(abType);
+		}
 	}
 	
 	private Appearance[][] getAnimatedAppearances(String name, MasterScaffold scaffold)
@@ -48,10 +54,6 @@ public class EntityTypeBuilder extends InstanceBuilder
 		for(String dirString : directionStrings)
 		{
 			list.add(getAppearancesForDirection(name, dirString, scaffold));
-		}
-		for(Appearance[] app : list)
-		{
-			System.out.println(app.length);
 		}
 		return list.toArray(new Appearance[list.size()][]);
 	}

@@ -1,7 +1,9 @@
 package rutebaga.scaffold;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceType;
@@ -46,7 +48,6 @@ public class MasterScaffold
 	 */
 	public Object get(String id)
 	{
-		System.out.println("getting " + id);
 		if(id == null) return null;
 		if (scaffold.get(id) == null)
 		{
@@ -136,6 +137,7 @@ public class MasterScaffold
 	{
 		for (String id : builder.availableIds())
 		{
+			System.out.println("Registering " + id + " with " + builder);
 			builders.put(id, builder);
 		}
 	}
@@ -143,5 +145,10 @@ public class MasterScaffold
 	public Instance makeInstance(String type)
 	{
 		return ((InstanceType<?>) get(type)).makeInstance();
+	}
+	
+	public Set<String> getKeys()
+	{
+		return Collections.unmodifiableSet(scaffold.keySet());
 	}
 }

@@ -9,35 +9,20 @@ import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.GameInitializer;
 import rutebaga.model.effect.AreaEffectType;
-import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
-import rutebaga.model.entity.effect.StatEffect;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.stats.StatisticId;
-import rutebaga.model.environment.BlackList;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
-import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.MatrixTileConvertor;
-import rutebaga.model.environment.MovementAttributes;
-import rutebaga.model.environment.PolarTileConvertor;
-import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.World;
-import rutebaga.model.environment.appearance.AnimatedAppearanceManager;
-import rutebaga.model.environment.appearance.Appearance;
-import rutebaga.model.environment.appearance.AppearanceManager;
-import rutebaga.model.environment.appearance.StaticAppearanceManager;
-import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.model.map.River;
-import rutebaga.model.item.SlotType;
 import rutebaga.model.map.TerrainType;
 import rutebaga.model.map.Tile;
 import rutebaga.model.map.TileType;
 import rutebaga.scaffold.MasterScaffold;
-import rutebaga.test.model.ability.CheeseArrowAbilityType;
-import rutebaga.test.model.examples.EntityAreaEffect;
 
 public class AgabaturNewGameInitializer implements GameInitializer
 {
@@ -171,10 +156,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		avatar = ((EntityType<?>) scaffold.get("entityDefault")).makeInstance();
 		Object[] arr = ((EntityAppearanceManager) avatar.getAppearanceManager())
 				.getStanding();
-		System.out.println(arr + ":"
-				+ ((arr == null) ? "" : (arr.length + ":" + arr[0])));
 
-		avatar.addAbility(new CheeseArrowAbilityType().makeAbility());
 		avatar.whiteListTerrainTypes(grassTerrain);
 
 		while (!avatar.existsInUniverse())

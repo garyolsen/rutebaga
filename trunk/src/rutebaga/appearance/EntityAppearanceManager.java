@@ -29,7 +29,7 @@ public class EntityAppearanceManager extends AppearanceManager
 				changeState(new Walking());
 				currentState.tick();
 			}
-//			currentFrame++;
+			// currentFrame++;
 		}
 
 	}
@@ -56,7 +56,8 @@ public class EntityAppearanceManager extends AppearanceManager
 		Appearance getAppearance()
 		{
 			Appearance dirApps[] = walking[getDirectionOrdinal(directions)];
-			return dirApps[(currentFrame/(getWalkingWait()+1)) % dirApps.length];
+			return dirApps[(currentFrame / (getWalkingWait() + 1))
+					% dirApps.length];
 		}
 
 		@Override
@@ -67,13 +68,7 @@ public class EntityAppearanceManager extends AppearanceManager
 				changeState(new Standing());
 				currentState.tick();
 			}
-//			wait--;
-//			if(wait < 0)
-//			{
-//				System.out.println("incrementing frame " + getWalkingWait());
-//				wait = getWalkingWait();
-				currentFrame++;
-//			}
+			currentFrame++;
 		}
 
 	}
@@ -84,6 +79,7 @@ public class EntityAppearanceManager extends AppearanceManager
 
 	private Appearance[][] standing;
 	private State currentState;
+
 	public EntityAppearanceManager(Entity entity)
 	{
 		super();
@@ -136,12 +132,8 @@ public class EntityAppearanceManager extends AppearanceManager
 	{
 		double offset = 1;
 		double angle = entity.getVelocity().getAngle() + (2 + offset) * Math.PI;
-//		System.out.println(angle);
 		angle -= 2 * Math.PI * (int) (angle * 0.5 / Math.PI);
-//		System.out.println(angle);
-		// TODO add offset
 		double proportion = angle * 0.5 / Math.PI;
-//		System.out.println(proportion);
 		return (int) (proportion * total);
 	}
 
