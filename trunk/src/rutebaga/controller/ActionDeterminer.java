@@ -120,7 +120,7 @@ public class ActionDeterminer
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Inventory");
 			ConcreteListElementSource<Item> source = new ConcreteListElementSource<Item>(label, inventory.getUnequipped());
 			AvatarInventoryCommandFactory commands = new AvatarInventoryCommandFactory();
-			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands);
+			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
 			facade.createScrollMenu(list, 10);
 		}
@@ -137,7 +137,7 @@ public class ActionDeterminer
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Equipment");
 			ConcreteListElementSource<Item> source = new ConcreteListElementSource<Item>(label, inventory.getEquipped());
 			AvatarEquipmentCommandFactory commands = new AvatarEquipmentCommandFactory();
-			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands);
+			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
 			facade.createScrollMenu(list, 10);
 		}
