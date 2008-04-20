@@ -15,6 +15,10 @@ public class StaticAppearanceDef implements AppearanceManagerDefinition<Instance
 	private int offsetX;
 	private int offsetY;
 
+	public StaticAppearanceDef() {
+		super();
+	}
+
 	public Image getImage()
 	{
 		return image;
@@ -33,6 +37,11 @@ public class StaticAppearanceDef implements AppearanceManagerDefinition<Instance
 	public Orientation getOrientation()
 	{
 		return orientation;
+	}
+
+	public StaticAppearanceDef(Image image) {
+		super();
+		this.image = image;
 	}
 
 	public AppearanceManager make(Instance instance)

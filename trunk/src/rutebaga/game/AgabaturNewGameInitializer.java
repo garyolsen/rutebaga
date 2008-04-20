@@ -5,6 +5,7 @@ import java.util.Properties;
 import java.util.Random;
 
 import rutebaga.appearance.EntityAppearanceManager;
+import rutebaga.appearance.StaticAppearanceDef;
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.GameInitializer;
@@ -65,7 +66,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		int numNpcs = Integer.parseInt(config.getProperty("npcQty"));
 
 		AreaEffectType healer = (AreaEffectType) scaffold.get("aoeHealer");
-		AreaEffectType harmer = (AreaEffectType) scaffold.get("aoeHarm");
+		AreaEffectType mover = (AreaEffectType) scaffold.get("aoeSpeeder");
 
 		StatisticId hp = (StatisticId) scaffold.get("statHp");
 		StatisticId movement = (StatisticId) scaffold.get("statMovement");
@@ -92,7 +93,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					if (random.nextDouble() < 0.1)
 						environment.add(healer.makeInstance(), location);
 					else if (random.nextDouble() < 0.1)
-						environment.add(harmer.makeInstance(), location);
+						environment.add(mover.makeInstance(), location);
 				}
 				else if (random.nextDouble() < waterTileProb)
 				{
@@ -107,13 +108,22 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		}
 
 		// Rivers are broken!
-		 River river = new River();
-		 river.setLocation(new Vector2D(3,3));
-		 river.addNodeAtTail(1.0, new Vector2D(-1,-1));
-		 river.addNodeAtTail(1.0, new Vector2D(-1,-1));
-		 river.addNodeAtTail(1.0, new Vector2D(-1,-1));
-		 river.addNodeAtTail(1.0, new Vector2D(-1,-1));
-		 river.addToEnvironment(environment);
+		 for (int i = 0; i < 10; i++)
+		 {
+			 River river = new River();
+			 river.setAppearanceManager(new StaticAppearanceDef((Image) scaffold.get("imgLameEffect")));
+			 river.setLocation(new Vector2D(0,i));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addNodeAtTail(0.1, new Vector2D(1,0));
+			 river.addToEnvironment(environment);
+		 }
 
 		if (true)
 		{

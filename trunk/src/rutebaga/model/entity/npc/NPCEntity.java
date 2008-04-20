@@ -4,6 +4,7 @@ import rutebaga.commons.math.IntVector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
+import rutebaga.model.entity.Team;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.InstanceType;
@@ -23,6 +24,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 
 	private Entity target;
 	private NPCBrain brain;
+	private Team team;
 
 	public NPCEntity(InstanceType<T> type)
 	{
@@ -171,5 +173,13 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	public NPCBrain getBrain()
 	{
 		return this.brain;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 }
