@@ -1,6 +1,9 @@
 package rutebaga.model.map;
 
 import java.util.Collection;
+
+import rutebaga.appearance.AppearanceManagerDefinition;
+import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.ConcreteInstanceType;
@@ -12,24 +15,27 @@ import rutebaga.model.environment.InstanceType;
 public class River {
 
 	private RiverNode head;
+	private RiverNode tail;
 	private Vector2D location;
+	private RiverNodeType type = new RiverNodeType();
+	private AppearanceManagerDefinition appearanceManager;
 	
 	public River() {
-		head = new RiverNode(null, 1.0, new Vector2D(-1,-1));
+		
+		head = type.makeInstance();
+		head.setFactor(1.0);
+		head.setVector(new Vector2D(-1,-1));
+		tail = head;
 	}
 	
 	public void addNodeAtTail(double force, Vector2D vector) {
-		RiverNode current = head;
-		while (current.hasNext())
-		{
-			current = current.getNext();
-		}
-		RiverNodeType type = new RiverNodeType();
 		RiverNode newNode = type.create();
 		newNode.setFactor(force);
 		newNode.setVector(vector);
-		current.setNext(newNode);
-		newNode.setPrevious(current);
+		tail.setNext(newNode);
+		newNode.setPrevious(tail);
+		newNode.setAppearanceManager(appearanceManager.make(newNode));
+		tail = newNode;
 	}
 	
 	public void setLocation(Vector2D location) {
@@ -38,12 +44,15 @@ public class River {
 	
 	public void addToEnvironment(Environment e) {
 		RiverNode current = head;
-		Vector2D offset = new Vector2D(0,0);
-		while (current.hasNext())
+		IntVector2D offset = new IntVector2D(0,0);
+		while (current != null)
 		{
+			System.out.println("Added river node at " + location.plus(offset));
+			
 			e.add(current, location.plus(offset));
 			current = current.getNext();
-			offset = offset.plus(current.getVector());
+			if (current != null)
+				offset = offset.plus(current.getVector());
 		}
 	}
 	
@@ -108,11 +117,13 @@ public class River {
 		@Override
 		public void tick() {
 			Collection<Instance> instances = this.getCoexistantInstances();
-			if (previous != null)
+			System.out.println(instances);
+			if (next != null)
 			{
-				current = previous.getCurrent()*factor;
+				//current = previous.getCurrent()*factor;
 				for (Instance instance : instances) {
-					instance.applyImpulse( getTile().minus(previous.getTile()).times(current) );
+//					System.out.println(getTile().minus(previous.getTile()));
+					instance.applyImpulse( new Vector2D(next.getTile()).minus(getTile()).times(factor) );
 				}
 			}
 		}
@@ -153,5 +164,13 @@ public class River {
 			this.vector = vector;
 		}
 		
+	}
+
+	public AppearanceManagerDefinition getAppearanceManager() {
+		return appearanceManager;
+	}
+
+	public void setAppearanceManager(AppearanceManagerDefinition appearanceManager) {
+		this.appearanceManager = appearanceManager;
 	}
 }

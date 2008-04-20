@@ -7,5 +7,5 @@ appearance	static imgLameEffect C
 effects		eeffHarmAOE_HP
 
 aoeSpeeder
-appearance	static imgLameEffect C
+appearance	static imgMarioNorth01 C
 effects		eeffMovementAOE_Movement
