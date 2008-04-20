@@ -372,10 +372,13 @@ public class GameDaemon implements InterpreterManager {
 			return stack.isEmpty();
 		}
 
-		public boolean contains(Object uai) {
-			return stack.contains(uai);
+		public boolean contains(UserActionInterpreter uai) {
+			for (InterpreterStackRecord isr: this)
+				if (uai.equals(isr.interpreter))
+					return true;
+			return false;
 		}
-
+		
 		public Iterator<InterpreterStackRecord> iterator() {
 			return new Iterator<InterpreterStackRecord>() {
 				int cursor = stack.size();

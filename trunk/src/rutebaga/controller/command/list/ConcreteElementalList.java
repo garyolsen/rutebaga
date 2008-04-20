@@ -121,7 +121,7 @@ public class ConcreteElementalList implements ElementalList,
 	 *            the new label
 	 */
 	public void setLabel(String label) {
-		this.label = (label == null ? label : "");
+		this.label = (label != null ? label : "");
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class ConcreteElementalList implements ElementalList,
 		 * ConcreteElementalList.
 		 */
 		public boolean hasNext() {
-			return lists.hasNext() || currentList.hasNext();
+			return lists.hasNext() || (currentList != null && currentList.hasNext());
 		}
 
 		/**
