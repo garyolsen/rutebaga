@@ -33,7 +33,7 @@ public class ButtonComponent extends ViewComponent {
 		this.label = label;
 		
 		
-		font = new FontAttribute( new Font("Arial", Font.PLAIN, 10));
+		font = new FontAttribute( new Font("Arial", Font.BOLD, 12));
 		
 		untoggled = new CompositeAttribute();
 		untoggled.addAttribute( untoggledColor );
