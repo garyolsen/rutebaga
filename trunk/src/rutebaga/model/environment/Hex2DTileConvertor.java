@@ -115,7 +115,8 @@ public class Hex2DTileConvertor implements TileConvertor
 
 	public Vector2D fromRect(GenericVector2D coordinate)
 	{
-		//TODO actually implement
-		return new Vector2D(coordinate.getX().doubleValue(), coordinate.getY().doubleValue());
+		double y = (coordinate.getY().doubleValue()/yratio - coordinate.getX().doubleValue()/xratio)/2;
+		double x = coordinate.getY().doubleValue()/yratio - y; 
+		return new Vector2D(x, y);
 	}
 }
