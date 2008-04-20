@@ -3,6 +3,7 @@ package rutebaga.model.map;
 import java.util.Collection;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.DefaultLayers;
+import rutebaga.model.environment.ConcreteInstanceType;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
@@ -23,7 +24,10 @@ public class River {
 		{
 			current = current.getNext();
 		}
-		RiverNode newNode = new RiverNode(null, force, vector);
+		RiverNodeType type = new RiverNodeType();
+		RiverNode newNode = type.create();
+		newNode.setFactor(force);
+		newNode.setVector(vector);
 		current.setNext(newNode);
 		newNode.setPrevious(current);
 	}
@@ -43,14 +47,35 @@ public class River {
 		}
 	}
 	
-	private class RiverNode<T extends RiverNode<T>> extends Instance<T> {
+	
+	private class RiverNodeType extends ConcreteInstanceType<RiverNode>
+	{
+
+		@Override
+		protected RiverNode create() {
+			return new RiverNode(this);
+		} 
+		
+		@Override
+		protected void initialize(RiverNode instance)
+		{
+			super.initialize(instance);
+		}
+	}
+	
+	private class RiverNode extends Instance<RiverNode> {
 
 		private RiverNode previous, next;
 		private double factor;
 		private double current;
 		private Vector2D vector;
 		
-		public RiverNode(InstanceType<T> type, double factor, Vector2D vector) {
+		public RiverNode(InstanceType<RiverNode> type)
+		{
+			super(type);
+		}
+		
+		public RiverNode(InstanceType<RiverNode> type, double factor, Vector2D vector) {
 			super(type);
 			this.factor = factor;
 			this.vector = vector;
@@ -77,8 +102,7 @@ public class River {
 
 		@Override
 		public InstanceSetIdentifier getSetIdentifier() {
-			// TODO Auto-generated method stub
-			return null;
+			return InstanceSetIdentifier.EFFECT;
 		}
 
 		@Override
@@ -115,6 +139,18 @@ public class River {
 		
 		public boolean hasNext() {
 			return (this.next != null);
+		}
+
+		public double getFactor() {
+			return factor;
+		}
+
+		public void setFactor(double factor) {
+			this.factor = factor;
+		}
+
+		public void setVector(Vector2D vector) {
+			this.vector = vector;
 		}
 		
 	}

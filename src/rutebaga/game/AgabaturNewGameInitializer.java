@@ -121,13 +121,13 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		}
 
 		// Rivers are broken!
-		// River river = new River();
-		// river.setLocation(new Vector2D(3,3));
-		// river.addNodeAtTail(1.0, new Vector2D(-1,-1));
-		// river.addNodeAtTail(1.0, new Vector2D(-1,-1));
-		// river.addNodeAtTail(1.0, new Vector2D(-1,-1));
-		// river.addNodeAtTail(1.0, new Vector2D(-1,-1));
-		// river.addToEnvironment(environment);
+		 River river = new River();
+		 river.setLocation(new Vector2D(3,3));
+		 river.addNodeAtTail(1.0, new Vector2D(-1,-1));
+		 river.addNodeAtTail(1.0, new Vector2D(-1,-1));
+		 river.addNodeAtTail(1.0, new Vector2D(-1,-1));
+		 river.addNodeAtTail(1.0, new Vector2D(-1,-1));
+		 river.addToEnvironment(environment);
 
 		if (true)
 		{
