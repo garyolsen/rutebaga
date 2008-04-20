@@ -120,6 +120,9 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	 */
 	public Appearance getAppearance()
 	{
+		if ( appearanceManager == null )
+			return new Appearance(null);
+		
 		return appearanceManager.getAppearance();
 	}
 

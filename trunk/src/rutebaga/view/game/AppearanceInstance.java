@@ -20,10 +20,14 @@ public class AppearanceInstance implements Locatable, Layerable
 		super();
 		this.appearance = appearance;
 		this.coord = new Vector2D(location.x, location.y);
-		Point dimensions = new Point( appearance.getImage().getWidth(null), appearance.getImage().getHeight(null) );
+		
 		this.location = location;
-		appearance.transformPoint(location, dimensions);
+		
 		this.layer = layer;
+		if (appearance == null || appearance.getImage() == null)
+			return;
+		Point dimensions = new Point( appearance.getImage().getWidth(null), appearance.getImage().getHeight(null) );
+		appearance.transformPoint(location, dimensions);
 	}
 
 	public Vector2D getCoordinate()

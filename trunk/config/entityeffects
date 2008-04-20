@@ -38,4 +38,4 @@ value	2
 eeffHarmAOE_HP
 type	stat
 stat	statHp
-value	10
+value	-10

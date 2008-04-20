@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 import rutebaga.appearance.AppearanceManagerDefinition;
+import rutebaga.appearance.StaticAppearanceDef;
 import rutebaga.model.environment.ConcreteInstanceType;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceType;
@@ -27,6 +28,8 @@ public abstract class InstanceBuilder<T extends ConcreteInstanceType> extends
 				.get(appManDesc, scaffold);
 		if (appDef != null)
 			instance.setAppearanceDefinition(appDef);
+		else
+			instance.setAppearanceDefinition(new StaticAppearanceDef());
 
 	}
 }
