@@ -454,4 +454,9 @@ public class Environment
 	{
 		return tickableInstances;
 	}
+	
+	public IntVector2D getTileOf(Vector2D coordinate)
+	{
+		return tileConvertor.tileOf(coordinate);
+	}
 }

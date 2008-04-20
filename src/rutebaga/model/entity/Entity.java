@@ -222,4 +222,9 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		//TODO implement
 		return true;
 	}
+	
+	public IntVector2D getFacingTile()
+	{
+		return getEnvironment().getTileOf(getFacing().over(getFacing().getMagnitude()).plus(getTile()));
+	}
 }
