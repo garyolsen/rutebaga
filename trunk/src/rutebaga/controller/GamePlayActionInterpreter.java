@@ -254,9 +254,13 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			// FIXME: lol
 			IntVector2D tileCoordinate = avatar.getEnvironment()
 					.getTileConvertor().tileOf(target.getCoordinate());
-			if (avatar.canSee(tileCoordinate))
-				refreshTargetObservable();
+			if (!avatar.canSee(tileCoordinate)) {
+				target = null;
+				retarget();
+			}
 		}
+		else
+			reactivateActionInterpreter();
 	}
 
 }
