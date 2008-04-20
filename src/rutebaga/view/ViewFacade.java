@@ -144,18 +144,8 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 */
 	public int createRootContextMenu(ElementalList list, Vector2D vector) {
 		clearContextMenuStack();
-
-		List<String> names = new ArrayList<String>();
-		List<Command> commands = new ArrayList<Command>();
-
-		for (ListElement element : list) {
-			commands.add(element.getCommand());
-			names.add(element.getLabel());
-		}
-
 		ContextMenu cm = new ContextMenu(list);
-		cm
-				.setLocation(vector.getX().intValue(), (int) vector.getY()
+		cm.setLocation(vector.getX().intValue(), (int) vector.getY()
 						.intValue());
 
 		view.addViewComponent(cm);
@@ -179,13 +169,6 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 * @return The ContextMenu that was created.
 	 */
 	public int createSubContextMenu(ElementalList list, Vector2D vector) {
-		List<String> names = new ArrayList<String>();
-		List<Command> commands = new ArrayList<Command>();
-		
-		for(ListElement element : list) {
-			commands.add(element.getCommand());
-			names.add(element.getLabel());
-		}
 			
 		ContextMenu cm = new ContextMenu(list);
 		cm.setLocation(vector.getX().intValue(), (int)vector.getY().intValue());
@@ -193,6 +176,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 		view.addViewComponent(cm);
 		
 		
+		prepareContextStack();
 		contextStack.push(cm);
 		
 		return contextStack.size();
@@ -213,15 +197,9 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 *            The amount of information per scrollable page.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createScrollMenu(ElementalList list, int pageSize,
-			Vector2D vector) {
-		ViewCompositeComponent vcc = new ViewCompositeComponent();
+	public int createScrollMenu(ElementalList list, int pageSize, Vector2D vector) {
 
-		for (ListElement element : list) {
-			ButtonComponent button = new ButtonComponent(element.getLabel());
-			button.setCommand(element.getCommand());
-			vcc.addChild(button);
-		}
+		ViewCompositeComponentWrapper vcc = new ViewCompositeComponentWrapper(list);
 
 		ScrollDecorator scroll = new ScrollDecorator(vcc, pageSize * 10, 50);
 

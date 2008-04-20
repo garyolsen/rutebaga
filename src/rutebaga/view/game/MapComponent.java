@@ -312,26 +312,34 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 		currentlyTargeted = arg;
 	}
 	
-	protected boolean processMouseMotionEvent( MouseEvent event ) {
-		if(event.getID() == MouseEvent.MOUSE_MOVED) {
-			Environment environment = avatar.getEnvironment();
-			TileConverter convertor = environment.getTileConvertor();
-			
-			
-			Vector2D vector = reverseCenter(avatar, event.getPoint(), getWidth(), getHeight());
-			
-			IntVector2D tileCoord = convertor.tileOf(vector);
-
-			InstanceSet set = new ConcreteInstanceSet();
-			set.addAll(environment.instancesAt(tileCoord));
-		
-			for(Tile tile : set.getTiles()) {
-				if(tile != null)
-					mouseOverTile = tile;
-			}
-			
-		}
+	protected boolean processMouseEvent(MouseEvent event) {
+		trackMouseLocation(event.getPoint());
 		
 		return false;
+	}
+	
+	protected boolean processMouseMotionEvent( MouseEvent event ) {
+		trackMouseLocation(event.getPoint());
+		
+		return false;
+	}
+	
+	private void trackMouseLocation(Point p) {
+		Environment environment = avatar.getEnvironment();
+		TileConverter convertor = environment.getTileConvertor();
+		
+		
+		Vector2D vector = reverseCenter(avatar, p, getWidth(), getHeight());
+		
+		IntVector2D tileCoord = convertor.tileOf(vector);
+
+		InstanceSet set = new ConcreteInstanceSet();
+		set.addAll(environment.instancesAt(tileCoord));
+	
+		for(Tile tile : set.getTiles()) {
+			if(tile != null)
+				mouseOverTile = tile;
+		}
+		
 	}
 }

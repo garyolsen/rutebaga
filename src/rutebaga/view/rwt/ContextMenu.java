@@ -9,7 +9,9 @@ import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
+import java.util.Observer;
 
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
@@ -41,7 +43,7 @@ import rutebaga.view.drawer.Drawer;
  * @author Ryan
  * 
  */
-public class ContextMenu extends ViewComponent
+public class ContextMenu extends ViewComponent implements Observer 
 {
 
 	private int contextMenuRadius = 250; //screen pixels
@@ -60,6 +62,8 @@ public class ContextMenu extends ViewComponent
 	
 	private int currentContextHover;
 	
+	private boolean dirty;
+	
 	/**
 	 * Contructs a ContextMenu as a decorator of the specified ViewComponent.
 	 * 
@@ -69,10 +73,14 @@ public class ContextMenu extends ViewComponent
 	public ContextMenu(ElementalList list)
 	{
 		this.list = list;
+		if(list.getObservable() != null)
+			list.getObservable().addObserver(this);
 		initContextMenu();
 	}
 	
 	public void draw(Drawer draw) {
+		if(dirty)
+			initContextMenu();
 		
 		draw.setAttribute(contextHover);
 		
@@ -252,6 +260,10 @@ public class ContextMenu extends ViewComponent
 		}
 			
 		return false;
+	}
+
+	public void update(Observable o, Object arg) {
+		dirty = true;
 	}
 
 }
