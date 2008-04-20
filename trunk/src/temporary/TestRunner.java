@@ -16,6 +16,7 @@ import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
 
+/*
 public class TestRunner
 {
 	public static double MOVE_AMT = 0.1;
@@ -192,3 +193,4 @@ public class TestRunner
 			avatar.applyImpulse(new Vector(0, -MOVE_AMT * 3));
 	}
 }
+*/

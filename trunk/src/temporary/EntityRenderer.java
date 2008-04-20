@@ -15,6 +15,7 @@ import rutebaga.model.entity.Memory;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.map.Tile;
 
+/*
 public class EntityRenderer
 {
 	private static final int TILE_SIZE = 32;
@@ -116,3 +117,4 @@ public class EntityRenderer
 		g.setComposite(old);
 	}
 }
+*/

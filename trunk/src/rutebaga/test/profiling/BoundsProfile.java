@@ -55,8 +55,10 @@ public class BoundsProfile
 
 		rutebaga.commons.Log.log("Initializing values...");
 		Instance instanceArr[] = new Instance[testLength / 1000];
+		/*
 		for (int i = 0; i < instanceArr.length; i++)
 			instanceArr[i] = new CharEntity();
+			*/
 
 		rutebaga.commons.Log.log("Testing...");
 		time = System.currentTimeMillis();

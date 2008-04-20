@@ -1,7 +1,6 @@
 package rutebaga.test.model.environment;
 
 import rutebaga.commons.math.Bounds2D;
-import rutebaga.commons.math.RectBounds;
 import rutebaga.commons.math.Vector;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.Environment;
@@ -10,6 +9,7 @@ import rutebaga.model.environment.Rect2DTileConvertor;
 
 public class MovementTest
 {
+	/*
 	public static void main(String... args)
 	{
 		TestInstance first = new TestInstance("Alice");
@@ -111,4 +111,5 @@ public class MovementTest
 		}
 		rutebaga.commons.Log.log();
 	}
+	*/
 }

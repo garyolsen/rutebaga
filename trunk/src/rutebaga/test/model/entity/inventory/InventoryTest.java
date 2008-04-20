@@ -17,6 +17,7 @@ public class InventoryTest
 {
 	public static final StatisticId strengthId = new StatisticId("Strength");
 
+	/*
 	public static void main(String... args)
 	{
 		Entity entity = new CharEntity();
@@ -99,4 +100,5 @@ public class InventoryTest
 		rutebaga.commons.Log.log("after tick: "
 				+ entity.getStats().getValue(strengthId));
 	}
+	*/
 }

@@ -10,6 +10,7 @@ import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.map.Tile;
 
+/*
 public class EnvironmentRenderer
 {
 	private static final int TILE_SIZE = 32;
@@ -85,3 +86,4 @@ public class EnvironmentRenderer
 		this.environment = environment;
 	}
 }
+*/

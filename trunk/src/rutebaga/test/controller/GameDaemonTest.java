@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import rutebaga.controller.Game;
 import rutebaga.controller.GameDaemon;
 import rutebaga.controller.UserActionInterpreter;
+import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 
 public class GameDaemonTest
@@ -83,6 +84,12 @@ public class GameDaemonTest
 
 		public void keyTyped(KeyEvent arg0)
 		{
+		}
+
+		public void installActionInterpreter(GameDaemon daemon, Game game,
+				UserInterfaceFacade facade) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

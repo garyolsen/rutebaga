@@ -181,7 +181,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 			MouseEvent mouseEvent = (MouseEvent) event.getSource();
 			
 			
-			Vector2D vector = MapComponent.reverseCenter(converter, avatar.getCoordinate(), mouseEvent.getPoint(), facade.getView().getWidth(), facade.getView().getHeight());
+			Vector2D vector = MapComponent.reverseCenter(avatar, mouseEvent.getPoint(), facade.getView().getWidth(), facade.getView().getHeight());
 			
 			IntVector2D tileCoord = converter.tileOf(vector);
 			

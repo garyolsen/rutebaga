@@ -86,7 +86,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 		
 		for (Instance instance : avatarVision.getActiveSet())
 		{
-			Point p = centerPointOn(avatar.getEnvironment().getTileConvertor(), avatar.getCoordinate(), instance
+			Point p = centerPointOn(avatar, instance
 					.getCoordinate(), getWidth(), getHeight());
 			
 			if(currentlyTargeted != null && instance == currentlyTargeted) {
@@ -106,7 +106,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 		}
 		long time = System.currentTimeMillis();
 
-		Point p = centerPointOn(avatar.getEnvironment().getTileConvertor(), avatar.getCoordinate(), avatar
+		Point p = centerPointOn(avatar, avatar
 				.getCoordinate(), getWidth(), getHeight());
 		sortedList.add(new AppearanceInstance(avatar.getAppearance(),
 				p, avatar.getLayer()));
@@ -218,8 +218,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 			for (Memory mem : memory.get(v))
 			{
 
-				Point p = centerPointOn(avatar.getEnvironment().getTileConvertor(), avatar.getCoordinate(), mem
-						.getCoordinate(), getWidth(), getHeight());
+				Point p = centerPointOn(avatar, mem.getCoordinate(), getWidth(), getHeight());
 				
 				AppearanceInstance instance = new AppearanceInstance(mem
 						.getAppearance(), p, mem.getLayer());
@@ -274,20 +273,27 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 		draw.drawImage(p, avatar.getAppearance().getImage());
 	}
 
-	public static Point centerPointOn(TileConvertor converter, Vector2D center, Vector2D other, int width, int height)
+	public static Point centerPointOn(Instance centerInstance, Vector2D other, int width, int height)
 	{
+		TileConvertor convertor = centerInstance.getEnvironment().getTileConvertor();
+		
+		Vector2D center = centerInstance.getCoordinate();
+		
 		Point centered = new Point();
-		center = converter.toRect(center);
-		other = converter.toRect(other);
+		center = convertor.toRect(center);
+		other = convertor.toRect(other);
 
 		centered.x = (int) ((((other.get(0) - center.get(0)) * TILE_SIZE) + (width / 2)));
 		centered.y = (int) ((((other.get(1) - center.get(1)) * TILE_SIZE) + (height / 2)));
 		return centered;
 	}
 	
-	public static Vector2D reverseCenter(TileConvertor converter, Vector2D center, Point other, int width, int height)
+	public static Vector2D reverseCenter(Instance centerInstance, Point other, int width, int height)
 	{
-		center = converter.toRect(center);
+		TileConvertor convertor = centerInstance.getEnvironment().getTileConvertor();
+		Vector2D center = centerInstance.getCoordinate();
+		
+		center = convertor.toRect(center);
 		
 		double x = other.x;
 		x -= (width/2);
@@ -299,7 +305,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 		y /= TILE_SIZE;
 		y += center.get(1);
 		
-		return converter.fromRect(new Vector2D(x, y));
+		return convertor.fromRect(new Vector2D(x, y));
 	}
 
 	public void update(TargetInstanceObservable o, Instance arg) {
@@ -312,7 +318,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 			TileConvertor convertor = environment.getTileConvertor();
 			
 			
-			Vector2D vector = reverseCenter(convertor, avatar.getCoordinate(), event.getPoint(), getWidth(), getHeight());
+			Vector2D vector = reverseCenter(avatar, event.getPoint(), getWidth(), getHeight());
 			
 			IntVector2D tileCoord = convertor.tileOf(vector);
 
