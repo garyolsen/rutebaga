@@ -44,7 +44,6 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	}
 	
 	public void deregisterComponent( ViewComponent vc ) {
-		System.err.println("Removing: " + vc);
 		vc.visit(subDispatchVisitor);
 	}
 	
