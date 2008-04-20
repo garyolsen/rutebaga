@@ -27,11 +27,8 @@ import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.AppearanceManager;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance.Orientation;
-<<<<<<< .mine
 import rutebaga.model.map.River;
-=======
 import rutebaga.model.item.SlotType;
->>>>>>> .r413
 import rutebaga.model.map.TerrainType;
 import rutebaga.model.map.Tile;
 import rutebaga.scaffold.MasterScaffold;

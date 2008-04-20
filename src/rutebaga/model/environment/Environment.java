@@ -28,7 +28,7 @@ import rutebaga.model.environment.InternalContainer.PhysicsContainer;
  * 
  * @author Gary LosHuertos
  * 
- * @see TileConvertor
+ * @see TileConverter
  * @see Instance
  * 
  */
@@ -38,7 +38,7 @@ public class Environment
 	private Map<IntVector2D, HashSet<Instance>> tileCache = new HashMap<IntVector2D, HashSet<Instance>>();
 	private Map<Instance, IntVector2D> reverseTileCache = new HashMap<Instance, IntVector2D>();
 	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
-	private TileConvertor tileConvertor;
+	private TileConverter tileConvertor;
 
 	private Map<IntVector2D, Double> frictionCache = new HashMap<IntVector2D, Double>();
 
@@ -52,7 +52,7 @@ public class Environment
 	 * 
 	 * @param convertor
 	 */
-	public Environment(TileConvertor convertor)
+	public Environment(TileConverter convertor)
 	{
 		this.tileConvertor = convertor;
 	}
@@ -337,7 +337,7 @@ public class Environment
 		return tileCache;
 	}
 
-	public TileConvertor getTileConvertor()
+	public TileConverter getTileConvertor()
 	{
 		return tileConvertor;
 	}

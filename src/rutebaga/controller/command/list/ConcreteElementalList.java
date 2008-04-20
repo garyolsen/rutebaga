@@ -93,7 +93,7 @@ public class ConcreteElementalList implements ElementalList,
 	 * Add an entire ElementalList as a component of this ConcreteElementalList.
 	 * When this ConcreteElementalList's iterator runs, it will visit each of
 	 * the specified ElementalList's ListElements in the order its Iterator
-	 * returns.
+	 * returns.  No-op if <code>list</code> is null.
 	 * 
 	 * @param list
 	 *            the ElementalList to add as a child to this

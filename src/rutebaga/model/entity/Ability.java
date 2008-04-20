@@ -7,6 +7,7 @@ import rutebaga.commons.logic.ChainedRule;
 import rutebaga.commons.logic.Rule;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.environment.Environment;
+import rutebaga.model.environment.Instance;
 
 public class Ability<T>
 {
@@ -19,6 +20,12 @@ public class Ability<T>
 
 	private List<AbilityAction<T>> actions = new ArrayList<AbilityAction<T>>();
 
+	public boolean canActOn(Instance<?> i)
+	{
+		//FIXME: fix me
+		return true;
+	}
+	
 	protected void setEntity(Entity entity)
 	{
 		this.entity = entity;

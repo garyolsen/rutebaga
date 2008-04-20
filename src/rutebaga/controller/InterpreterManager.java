@@ -2,13 +2,14 @@ package rutebaga.controller;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import rutebaga.view.rwt.TextFieldListener;
 
 /**
  * @author Matthew Chuah
  */
-public interface InterpreterManager extends ActionListener
+public interface InterpreterManager
 {
 	/**
 	 * @param uai
@@ -23,4 +24,6 @@ public interface InterpreterManager extends ActionListener
 	void registerAsKeyListener(KeyListener uai);
 	
 	void registerAsTextFieldListener(TextFieldListener uai);
+	
+	void registerAsMouseListener(MouseListener uai);
 }
