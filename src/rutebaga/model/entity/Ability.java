@@ -19,17 +19,10 @@ public class Ability<T>
 	private ChainedRule<Entity> existenceRule = new ChainedRule<Entity>(true);
 
 	private List<AbilityAction<T>> actions = new ArrayList<AbilityAction<T>>();
-
-	public boolean canActOn(Instance<?> i)
-	{
-		//FIXME: fix me
-		return true;
-	}
 	
-	protected void setEntity(Entity entity)
-	{
-		this.entity = entity;
-	}
+	private AbilityType type;
+	
+	private String name;
 
 	public void act(T target)
 	{
@@ -56,6 +49,12 @@ public class Ability<T>
 		feasibilityRule.add(rule);
 	}
 
+	public boolean canActOn(Instance<?> i)
+	{
+		//FIXME: fix me
+		return true;
+	}
+	
 	public boolean exists()
 	{
 		return existenceRule.determine(entity);
@@ -70,20 +69,45 @@ public class Ability<T>
 	{
 		return entity.getCoordinate();
 	}
-	
+
 	public Environment getEnvironment()
 	{
 		return entity.getEnvironment();
 	}
-	
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public AbilityType getType()
+	{
+		return type;
+	}
+
 	public boolean isFeasible()
 	{
 		return feasibilityRule.determine(entity);
 	}
-	
+
 	public void setCategory(AbilityCategory category)
 	{
 		this.category = category;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setType(AbilityType type)
+	{
+		this.type = type;
+	}
+	
+	protected void setEntity(Entity entity)
+	{
+		this.entity = entity;
 	}
 
 }
