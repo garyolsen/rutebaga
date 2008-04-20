@@ -1,6 +1,7 @@
 package rutebaga.commons.logic;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import rutebaga.model.entity.Entity;
@@ -38,6 +39,16 @@ public class ChainedRule<T> implements Rule<T>
 		this.defaultValue = defaultValue;
 	}
 
+	public void add(Rule<T> rule)
+	{
+		this.rules.add(rule);
+	}
+
+	public void addAll(Collection<Rule<T>> rules)
+	{
+		this.rules.addAll(rules);
+	}
+
 	/**
 	 * Returns the the status of this rule in the specified context. The
 	 * semantics of the ChainedRule is specified by the default value.
@@ -56,9 +67,9 @@ public class ChainedRule<T> implements Rule<T>
 		return defaultValue;
 	}
 
-	public void add(Rule<T> rule)
+	public Collection<Rule<T>> getRules()
 	{
-		this.rules.add(rule);
+		return Collections.unmodifiableCollection(rules);
 	}
 
 	public void remove(Rule<Entity> rule)

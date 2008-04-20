@@ -388,5 +388,10 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 			updateTickability();
 		}
 	}
+	
+	public boolean isLike(Instance other)
+	{
+		return ObjectUtils.equals(this.type, other.type);
+	}
 
 }

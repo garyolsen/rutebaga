@@ -5,7 +5,7 @@ import java.awt.Point;
 
 public class Appearance
 {
-	public static enum Orientation
+	public enum Orientation
 	{
 		NW,
 		N,
@@ -17,7 +17,7 @@ public class Appearance
 		S,
 		SE;
 
-		public void transformPoint(Point point, Point dimensions)
+		private void transformPoint(Point point, Point dimensions)
 		{
 			int w = dimensions.x;
 			int h = dimensions.y;
@@ -45,17 +45,20 @@ public class Appearance
 		}
 	}
 
+	private int offsetX;
+	private int offsetY;
+
 	private Image image;
 	private Orientation orientation = Orientation.S;
-
-	public Appearance(Image image)
-	{
-		this.image = image;
-	}
 
 	public Appearance()
 	{
 		// TODO Auto-generated constructor stub
+	}
+
+	public Appearance(Image image)
+	{
+		this.image = image;
 	}
 
 	public Image getImage()
@@ -63,9 +66,9 @@ public class Appearance
 		return image;
 	}
 
-	public void setImage(Image image)
+	public int getOffsetX()
 	{
-		this.image = image;
+		return offsetX;
 	}
 
 	public Orientation getOrientation()
@@ -73,9 +76,36 @@ public class Appearance
 		return orientation;
 	}
 
+	public void setImage(Image image)
+	{
+		this.image = image;
+	}
+
+	public void setOffsetX(int offset)
+	{
+		this.offsetX = offset;
+	}
+
 	public void setOrientation(Orientation orientation)
 	{
 		this.orientation = orientation;
+	}
+	
+	public void transformPoint(Point p, Point dimensions)
+	{
+		this.orientation.transformPoint(p, dimensions);
+		p.x += this.offsetX;
+		p.y += this.offsetY;
+	}
+
+	public int getOffsetY()
+	{
+		return offsetY;
+	}
+
+	public void setOffsetY(int offsetY)
+	{
+		this.offsetY = offsetY;
 	}
 
 }

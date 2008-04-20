@@ -172,21 +172,4 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	{
 		return this.brain;
 	}
-
-	@Override
-	public Inventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Stats getStats() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public double getMass() {
-		return 1;
-	}
 }

@@ -1,6 +1,8 @@
 package rutebaga.scaffold.builders;
 
+import rutebaga.commons.logic.Rule;
 import rutebaga.model.effect.AreaEffectType;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.scaffold.MasterScaffold;
@@ -24,21 +26,16 @@ public class AOEBuilder extends InstanceBuilder
 	{
 		super.initialize(id, object, scaffold);
 
-		Appearance[] app = getAppearanceArray(id, "images", "[\\s\\t]",
-				scaffold);
-		int blockingRate = getInteger(id, "blocking");
-		Integer framewait = getInteger(id, "framewait");
 		Object[] effects = getObjectArray(id, "effects", "[\\s\\t]", scaffold);
+		Object[] rules = getObjectArray(id, "rules", "[\\s\\t]", scaffold);
 
 		AreaEffectType type = (AreaEffectType) object;
-		type.setBlockingRate(blockingRate);
 
 		for (Object effect : effects)
 			type.getEffects().add((EntityEffect) effect);
 
-		type.setAppearances(app);
-		if (framewait != null)
-			type.setFrameWait(framewait);
+		for (Object rule : rules)
+			type.getRules().add((Rule<Entity>) rule);
 	}
 
 }
