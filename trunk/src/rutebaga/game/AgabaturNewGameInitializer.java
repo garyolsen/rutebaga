@@ -24,8 +24,6 @@ import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.model.map.Tile;
 import rutebaga.scaffold.MasterScaffold;
 import rutebaga.test.model.ability.CheeseArrowAbilityType;
-import temporary.Bumper;
-import temporary.WindTunnel;
 
 public class AgabaturNewGameInitializer implements GameInitializer
 {
@@ -95,17 +93,17 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			{
 				for (int y = mapBounds[2] + 4; y < mapBounds[3] / 2 - 4; y++)
 				{
-					Vector2D location = new Vector2D(x, y);
-					if (x % 8 == 0 && y % 8 == 0)
-					{
-						WindTunnel tunnel = new WindTunnel();
-						Appearance chest = new Appearance();
-						chest.setImage(treasure);
-						tunnel
-								.setAppearanceManager(new StaticAppearanceManager(
-										chest));
-						environment.add(tunnel, location);
-					}
+//					Vector2D location = new Vector2D(x, y);
+//					if (x % 8 == 0 && y % 8 == 0)
+//					{
+//						WindTunnel tunnel = new WindTunnel();
+//						Appearance chest = new Appearance();
+//						chest.setImage(treasure);
+//						tunnel
+//								.setAppearanceManager(new StaticAppearanceManager(
+//										chest));
+//						environment.add(tunnel, location);
+//					}
 				}
 			}
 
@@ -116,13 +114,13 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					Vector2D location = new Vector2D(x, y);
 					if (x % 8 == 0 && y % 8 == 0)
 					{
-						Instance instance = new Bumper();
-						Appearance chest = new Appearance();
-						chest.setImage(treasure);
-						instance
-								.setAppearanceManager(new StaticAppearanceManager(
-										chest));
-						environment.add(instance, location);
+//						Instance instance = new Bumper();
+//						Appearance chest = new Appearance();
+//						chest.setImage(treasure);
+//						instance
+//								.setAppearanceManager(new StaticAppearanceManager(
+//										chest));
+//						environment.add(instance, location);
 					}
 				}
 			}
