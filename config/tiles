@@ -1,11 +1,11 @@
 tileGrass
 appearance	animated imgHextile 10 C
-terrain	terrGrass
+terrain		terrGrass
 
 tileWater
 appearance	animated imgWaterTile 10 C
-terrain terrWater
+terrain 	terrWater
 
 tileMountain
 appearance	animated imgMountainTile 10 C
-terrain terrMountain
+terrain 	terrMountain

@@ -39,8 +39,7 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 
 	public void setMovementAttributes(MovementAttributes movementAttributes)
 	{
-		if(movementAttributes != null)
-			this.movementAttributes = movementAttributes;
+		this.movementAttributes = movementAttributes;
 	}
 
 	/**
@@ -52,9 +51,18 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 
 	protected void initialize(T instance)
 	{
-		if(movementAttributes != null)
+		System.out.println(movementAttributes);
+		if (movementAttributes != null)
+		{
+			System.out.println("Setting with " + movementAttributes);
 			instance.setMovementAttributes(movementAttributes);
-		if(definition != null)
+		}
+		else
+		{
+			System.out.println("No attr present");
+			instance.setMovementAttributes(new MovementAttributes(false));
+		}
+		if (definition != null)
 			instance.setAppearanceManager(definition.make(instance));
 	}
 

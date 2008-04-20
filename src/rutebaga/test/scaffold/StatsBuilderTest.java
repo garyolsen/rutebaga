@@ -44,14 +44,9 @@ public class StatsBuilderTest
 					+ "\t\t" + obj);
 		}
 
-		Stats stats = new ConcreteStats(null);
-		StatisticId defensiveRating = (StatisticId) s.get("statDefRating");
-		rutebaga.commons.Log.log(stats.getValue(defensiveRating));
-
 		Entity entity = ((EntityType<?>) s.get("entityDefault")).makeInstance();
-		rutebaga.commons.Log.log(entity.getMovementSpeed());
-
-		System.out.println(entity.getAbilities().size());
+		
+		System.out.println(entity.getMovementAttributes());
 	}
 
 }

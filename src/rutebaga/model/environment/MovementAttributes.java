@@ -52,6 +52,19 @@ public class MovementAttributes
 		return false;
 	}
 
+	@Override
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("MovementAttributes:\n");
+		for(MovementAttributeSet set : movementSet.values())
+		{
+			sb.append(set).append("\t\t");
+		}
+		sb.append("\n");
+		return sb.toString();
+	}
+
 	public void add(MovementAttributeSet set, Object token)
 	{
 		movementSet.put(token, set);

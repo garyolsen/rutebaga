@@ -280,7 +280,7 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		movementAttributes.add(moveSet);
 	}
 	
-	public Object whiteListTerrainTypes(MovementAttributeSet moveSet)
+	public Object add(MovementAttributeSet moveSet)
 	{
 		Object token = UIDProvider.getUID();
 		movementAttributes.add(moveSet,token);
@@ -295,13 +295,6 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 			moveSet.add(terrain);
 		}
 		movementAttributes.add(moveSet);
-	}
-	
-	public Object blackListTerrainTypes(MovementAttributeSet moveSet)
-	{
-		Object token = UIDProvider.getUID();
-		movementAttributes.add(moveSet,token);
-		return token;
 	}
 
 	public abstract void tick();

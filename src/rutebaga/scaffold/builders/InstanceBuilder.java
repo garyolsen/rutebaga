@@ -41,6 +41,7 @@ public abstract class InstanceBuilder<T extends ConcreteInstanceType> extends
 				attr.add(set);
 			}
 		}
+		instance.setMovementAttributes(attr);
 
 		String appManDesc = getProperty(id, "appearance");
 		AppearanceManagerDefinition appDef = AppearanceDefFactory.getInstance()
