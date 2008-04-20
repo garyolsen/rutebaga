@@ -1,6 +1,7 @@
 package rutebaga.view;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -190,6 +191,25 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 */
 	public ContextMenu createScrollMenu(ElementalList list, int pageSize)
 	{
+		ViewCompositeComponent vcc = new ViewCompositeComponent();
+		
+		for(ListElement element : list ) {
+			ButtonComponent button = new ButtonComponent(element.getLabel());
+			button.setCommand(element.getCommand());
+			vcc.addChild(button);
+		}
+		
+		ScrollDecorator scroll = new ScrollDecorator(vcc, 200, pageSize * 20);
+		
+		Point p = contextStack.peek().getLocation();
+		p.y -= contextStack.peek().getHeight();
+
+		scroll.setLocation(p);
+		
+		view.addViewComponent(scroll);
+		
+		contextStack.add(scroll);
+		
 		return null;
 	}
 
