@@ -12,7 +12,7 @@ import rutebaga.scaffold.builders.AppearanceDefFactory;
 public abstract class ConcreteInstanceType<T extends Instance> implements
 		InstanceType<T>
 {
-	private MovementAttributes movementAttributes;
+	private MovementAttributes movementAttributes = new MovementAttributes();
 	private AppearanceManagerDefinition definition;
 
 	public AppearanceManagerDefinition getAppearanceDefinition()
@@ -39,7 +39,8 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 
 	public void setMovementAttributes(MovementAttributes movementAttributes)
 	{
-		this.movementAttributes = movementAttributes;
+		if(movementAttributes != null)
+			this.movementAttributes = movementAttributes;
 	}
 
 	/**
