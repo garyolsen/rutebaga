@@ -161,6 +161,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 
 	
 	public void keyReleased(KeyEvent e) {
+		if(e != null)
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SEMICOLON:
 				tabTarget();
