@@ -3,12 +3,8 @@ package rutebaga.scaffold.builders;
 import java.awt.Image;
 import java.util.ArrayList;
 
-import rutebaga.commons.math.Vector2D;
-import rutebaga.model.environment.appearance.AnimatedAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance;
-import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.model.map.TerrainType;
-import rutebaga.model.map.Tile;
 import rutebaga.model.map.TileType;
 import rutebaga.scaffold.MasterScaffold;
 
@@ -17,14 +13,14 @@ public class TileTypeBuilder extends InstanceBuilder
 
 	@Override
 	protected String getDefaultFileName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "config/tiles";
 	}
 
 	public Object create(String id) {
 		return new TileType();
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public void initialize(String id, Object object, MasterScaffold scaffold)
 	{
