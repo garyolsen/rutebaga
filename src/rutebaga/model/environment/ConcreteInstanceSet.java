@@ -107,7 +107,7 @@ public class ConcreteInstanceSet implements InstanceSet
 		boolean flag = false;
 		for (Instance instance : instances)
 		{
-			flag = flag || add(instance);
+			flag = add(instance) || flag;
 		}
 		return flag;
 	}
