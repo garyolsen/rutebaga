@@ -243,6 +243,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	
 	
 	private void clearView() {
+		System.err.println("Clearing View: " + view.getViewComponents());
 		view.removeAllViewComponents(view.getViewComponents());
 	}
 	

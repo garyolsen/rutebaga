@@ -3,10 +3,13 @@ package rutebaga.view.game;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -17,7 +20,10 @@ import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
+import rutebaga.model.environment.ConcreteInstanceSet;
+import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceSet;
 import rutebaga.model.environment.TileConvertor;
 import rutebaga.model.map.Tile;
 import rutebaga.view.drawer.ColorAttribute;
@@ -36,9 +42,13 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 
 	private static final int TILE_SIZE = 64;
 	private static final ColorAttribute FOG = new ColorAttribute(new Color(0,0,0, 150));
-	private static final ColorAttribute TARGETED = new ColorAttribute(new Color(255,0,0, 255));
+	private static final Color TARGETED = new Color(255, 0, 0, 170);
+	private static final Color MOUSE_TARGETED = new Color(0, 0, 255, 255);
+	
+	private BufferedImage targetImage;
 	
 	private Instance currentlyTargeted;
+	private Instance mouseOverTile;
 
 	// private static LayerComparator layerComparator = new LayerComparator();
 	private static LocationLayerComparator<AppearanceInstance> appearanceComparator = new LocationLayerComparator<AppearanceInstance>();
@@ -72,6 +82,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 		ArrayList<AppearanceInstance> sortedList = new ArrayList<AppearanceInstance>();
 		
 		AppearanceInstance targetInstance = null;
+		AppearanceInstance mouseTargetInstance = null;
 		
 		for (Instance instance : avatarVision.getActiveSet())
 		{
@@ -83,6 +94,11 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 						instance.getLayer());
 				
 				sortedList.add(targetInstance);
+			} else if(mouseOverTile != null && instance == mouseOverTile) {
+				mouseTargetInstance = new AppearanceInstance(instance.getAppearance(), p,
+						instance.getLayer());
+				
+				sortedList.add(mouseTargetInstance);
 			} else {
 				sortedList.add(new AppearanceInstance(instance.getAppearance(), p,
 					instance.getLayer()));
@@ -131,18 +147,34 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 			// image = compImg;
 			// }
 			if(targetInstance != null && targetInstance == instance) {
-				draw.setAttribute(TARGETED);
-				Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, .1F);
-
-				draw.setComposite(composite);
+				Image imagePaint = getTargetImage(image);
+				Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.7F);
+				
+				Graphics2D g2d = (Graphics2D) imagePaint.getGraphics();
+				g2d.drawImage(image, 0, 0, image.getWidth(null), image.getHeight(null), null);
+				g2d.setComposite(composite);
+				g2d.setColor(TARGETED);
+				g2d.fillRect(0, 0, image.getWidth(null), image.getHeight(null));
+				g2d.dispose();
+				
+				draw.drawImage(p, imagePaint);
+				
+			} else if(mouseTargetInstance != null && mouseTargetInstance == instance) {
+				Image imagePaint = getTargetImage(image);
+				Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.7F);
+				
+				Graphics2D g2d = (Graphics2D) imagePaint.getGraphics();
+				g2d.drawImage(image, 0, 0, image.getWidth(null), image.getHeight(null), null);
+				g2d.setComposite(composite);
+				g2d.setColor(MOUSE_TARGETED);
+				g2d.fillRect(0, 0, image.getWidth(null), image.getHeight(null));
+				g2d.dispose();
+				
+				draw.drawImage(p, imagePaint);
+			} else {
+				draw.drawImage(p, image);
 			}
-
-			draw.drawImage(p, image);
 			
-			if(targetInstance != null && targetInstance == instance) {
-				draw.setAttribute(null);
-				draw.clearComposite();
-			}
 
 			drawingTime += System.currentTimeMillis() - time;
 
@@ -151,6 +183,17 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 				+ (System.currentTimeMillis() - time) + "[points: "
 				+ pointCreationTime + "; drawing: " + drawingTime + "]");
 
+	}
+	
+	private Image getTargetImage(Image image) {
+		if(targetImage == null || (targetImage.getWidth() != image.getWidth(null) || targetImage.getHeight() != image.getHeight(null))) {
+			targetImage =  new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB_PRE);
+		}
+		Graphics g = targetImage.getGraphics();
+		g.setColor(new Color(0,0,0,0)); 
+		g.drawRect(0, 0, targetImage.getWidth(), targetImage.getHeight());
+		g.dispose();
+		return targetImage;
 	}
 
 	private void drawMemorySet(Drawer draw, Vision avatarVision)
@@ -263,9 +306,23 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 		currentlyTargeted = arg;
 	}
 	
-	protected boolean processMouseEvent( MouseEvent event ) {
+	protected boolean processMouseMotionEvent( MouseEvent event ) {
 		if(event.getID() == MouseEvent.MOUSE_MOVED) {
+			Environment environment = avatar.getEnvironment();
+			TileConvertor convertor = environment.getTileConvertor();
 			
+			
+			Vector2D vector = reverseCenter(convertor, avatar.getCoordinate(), event.getPoint(), getWidth(), getHeight());
+			
+			IntVector2D tileCoord = convertor.tileOf(vector);
+
+			InstanceSet set = new ConcreteInstanceSet();
+			set.addAll(environment.instancesAt(tileCoord));
+		
+			for(Tile tile : set.getTiles()) {
+				if(tile != null)
+					mouseOverTile = tile;
+			}
 			
 		}
 		
