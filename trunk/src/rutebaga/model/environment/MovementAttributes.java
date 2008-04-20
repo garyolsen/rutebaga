@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import rutebaga.commons.UIDProvider;
 import rutebaga.model.map.TerrainType;
 
 /**
@@ -40,6 +41,11 @@ public class MovementAttributes
 	public void add(MovementAttributeSet set, Object token)
 	{
 		movementSet.put(token, set);
+	}
+	
+	public void add(MovementAttributeSet set)
+	{
+		movementSet.put( UIDProvider.getUID(), set );
 	}
 
 	public void release(Object token)

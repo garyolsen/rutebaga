@@ -121,5 +121,11 @@ public class RectBounds2D extends Bounds2D
 		double yMax = lower.getY() + size.getY();
 		return x >= lower.getX() && x <= xMax && y >= lower.getY() && y <= yMax;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return size.toString();
+	}
 
 }

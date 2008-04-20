@@ -56,3 +56,25 @@ imgYoshiNorthWest02
 path TestImages/yoshi_northwest02.png
 imgYoshiNorthWest03
 path TestImages/yoshi_northwest03.png
+imgYoshiEgg01
+path TestImages/yoshi_egg01.png
+imgYoshiEgg02
+path TestImages/yoshi_egg02.png
+imgYoshiEgg03
+path TestImages/yoshi_egg03.png
+imgYoshiEgg04
+path TestImages/yoshi_egg04.png
+imgYoshiEgg05
+path TestImages/yoshi_egg05.png
+imgWaterTile01
+path TestImages/water_tile01.png
+imgWaterTile02
+path TestImages/water_tile02.png
+imgWaterTile03
+path TestImages/water_tile03.png
+imgWaterTile04
+path TestImages/water_tile04.png
+imgWaterTile05
+path TestImages/water_tile05.png
+imgWaterTile06
+path TestImages/water_tile06.png

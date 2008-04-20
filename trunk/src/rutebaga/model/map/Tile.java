@@ -51,6 +51,11 @@ public class Tile<T extends Tile<T>> extends Instance<T>
 	{
 		return false;
 	}
+	
+	public void setTerrainType(TerrainType terrain)
+	{
+		this.terrain = terrain;
+	}
 
 	@Override
 	public void tick()

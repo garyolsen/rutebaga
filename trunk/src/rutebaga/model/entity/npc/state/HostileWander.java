@@ -42,7 +42,10 @@ public class HostileWander extends NPCState {
 	public NPCState tick(NPCEntity npc)
 	{
 		if (npc.targetInSight())
+		{
+			System.out.println("I can't see...going into chase state!");
 			return NPCState.chase;
+		}
 		else
 		{	
 //			wait++;
@@ -54,6 +57,7 @@ public class HostileWander extends NPCState {
 //			
 //			npc.walk(direction);
 			
+			System.out.println("Hostile wandering around.");
 			return this;
 		}
 		
