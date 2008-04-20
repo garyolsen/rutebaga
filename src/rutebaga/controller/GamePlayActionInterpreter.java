@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
@@ -18,9 +17,10 @@ import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandQueue;
 import rutebaga.controller.command.list.ConcreteElementalList;
-import rutebaga.controller.command.list.ElementalList;
+import rutebaga.controller.keyboard.KeyBinding;
+import rutebaga.controller.keyboard.KeyBindingList;
+import rutebaga.controller.keyboard.KeyCode;
 import rutebaga.model.entity.Ability;
-import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.ConcreteInstanceSet;
@@ -32,18 +32,17 @@ import rutebaga.model.environment.TileConvertor;
 import rutebaga.model.environment.World;
 import rutebaga.model.map.Tile;
 import rutebaga.view.UserInterfaceFacade;
-import rutebaga.view.ViewFacade;
 import rutebaga.view.game.MapComponent;
 import rutebaga.view.game.TargetInstanceObservable;
 
 public class GamePlayActionInterpreter implements UserActionInterpreter, KeyListener, ActionListener {
 
 	private World world;
-	
 	private Entity<?> avatar;
 	
+	private KeyBindingList<Command> keyBindings;
+	private MovementBindingManager movementManager;
 	private UserInterfaceFacade facade;
-	
 	private CommandQueueImpl commandQueue = new CommandQueueImpl();
 	
 	private TargetInstanceObservable observable = new TargetInstanceObservable();
@@ -54,6 +53,27 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 		this.avatar = avatar;
 		//TODO: get rid of this
 		tracker = new BoundsTracker(new EllipseBounds2D(new Vector2D(3, 3)), avatar);
+		
+		this.keyBindings = new KeyBindingList<Command>();
+		this.movementManager = MovementBindingManager.defaultBindings(avatar, this.keyBindings);
+		
+		keyBindings.set(KeyCode.get(KeyEvent.VK_SPACE), new Command() {
+			public void execute() {
+				explode();
+			}
+			public boolean isFeasible() {
+				return true;
+			}
+		});
+		
+		keyBindings.set(KeyCode.get(KeyEvent.VK_ENTER), new Command() {
+			public void execute() {
+				GamePlayActionInterpreter.this.avatar.getAbilities().get(0).act(GamePlayActionInterpreter.this.avatar);
+			}
+			public boolean isFeasible() {
+				return true;
+			}
+		});
 	}
 	
 	public boolean eventsFallThrough() {
@@ -117,44 +137,9 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 	}
 
 	public void keyPressed(KeyEvent e) {
-		
-		final double MOVE_SPEED = 0.2;
-		final Vector2D SOUTH = new Vector2D(MOVE_SPEED
-				/ Math.sqrt(2), MOVE_SPEED / Math.sqrt(2));
-		final Vector2D NORTH = new Vector2D(-MOVE_SPEED
-				/ Math.sqrt(2), -MOVE_SPEED / Math.sqrt(2));
-		final Vector2D SOUTHEAST = new Vector2D(MOVE_SPEED, 0);
-		final Vector2D NORTHEAST = new Vector2D(0, -MOVE_SPEED);
-		final Vector2D SOUTHWEST = new Vector2D(0, MOVE_SPEED);
-		final Vector2D NORTHWEST = new Vector2D(-MOVE_SPEED, 0);		
-
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_W:
-			avatar.walk(NORTH);
-			break;
-		case KeyEvent.VK_A:
-			avatar.walk(SOUTHWEST);
-			break;
-		case KeyEvent.VK_S:
-			avatar.walk(SOUTH);
-			break;
-		case KeyEvent.VK_D:
-			avatar.walk(SOUTHEAST);
-			break;
-		case KeyEvent.VK_Q:
-			avatar.walk(NORTHWEST);
-			break;
-		case KeyEvent.VK_E:
-			avatar.walk(NORTHEAST);
-			break;
-		case KeyEvent.VK_SPACE:
-			explode();
-			break;
-		case KeyEvent.VK_ENTER:
-			avatar.getAbilities().get(0).act(avatar);
-			break;
-		}
-		
+		KeyBinding<Command> binding = this.keyBindings.get(KeyCode.get(e));
+		if (binding != null)
+			binding.getBinding().execute();
 	}
 	
 

@@ -17,6 +17,7 @@ import java.util.Vector;
 
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandQueue;
+import rutebaga.controller.keyboard.KeyBuffer;
 import rutebaga.view.ViewFacade;
 import rutebaga.view.rwt.TextFieldListener;
 

@@ -1,4 +1,4 @@
-package rutebaga.controller;
+package rutebaga.controller.keyboard;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -59,19 +59,13 @@ public class KeyBuffer implements KeyListener {
 			 * If there is a cached key event OR the key is still pressed down,
 			 * then send the key event to the listener.
 			 */
-			if (events[code] != null && states[code] == KEY_DOWN) {
+			if (events[code] != null || states[code] == KEY_DOWN) {
 				// Dispatch the cached event to the listener
 				k.keyPressed(events[code]);
 				// If the key is no longer held down, clear the cached event.
+				if (states[code] == KEY_UP)
+					events[code] = null;
 			}
-			
-			if (events[code] != null && states[code] == KEY_UP) {
-				// Dispatch the cached event to the listener
-				k.keyReleased((events[code]));
-				// If the key is no longer held down, clear the cached event.
-				events[code] = null;
-			}
-			
 		}
 	}
 }
