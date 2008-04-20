@@ -13,6 +13,7 @@ public class StatEffectTest
 	/**
 	 * @param args
 	 */
+	/*
 	public static void main(String[] args)
 	{
 		Entity entity = new CharEntity();
@@ -40,5 +41,6 @@ public class StatEffectTest
 
 		rutebaga.commons.Log.log("after tick: " + entity.getStats().getValue(stat));
 	}
+	*/
 
 }

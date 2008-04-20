@@ -9,6 +9,7 @@ public class VectorRectTest
 	/**
 	 * @param args
 	 */
+	/*
 	public static void main(String[] args)
 	{
 		Vector2DRectangle boundingBox = new Vector2DRectangle(new Vector(0, 0, 0),
@@ -18,5 +19,6 @@ public class VectorRectTest
 			rutebaga.commons.Log.log(v);
 		}
 	}
+	*/
 
 }

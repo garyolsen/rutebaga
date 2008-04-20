@@ -11,6 +11,7 @@ import rutebaga.model.map.Tile;
 
 public class InstanceSetTest
 {
+	/*
 	public static void main(String ... args)
 	{
 		ConcreteInstanceSet instanceSet = new ConcreteInstanceSet();
@@ -130,4 +131,5 @@ public class InstanceSetTest
 			rutebaga.commons.Log.log(instance.getClass());
 		}
 	}
+	*/
 }

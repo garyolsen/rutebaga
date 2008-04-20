@@ -7,6 +7,7 @@ import rutebaga.model.entity.npc.NPCEntity;
 public class NPCTest
 {
 
+	/*
 	public static void main(String args[])
 	{
 //		NPCEntityType npcType = new NPCEntityType();
@@ -25,4 +26,5 @@ public class NPCTest
 		npc.speak();
 		npc.barter();
 	}
+	*/
 }

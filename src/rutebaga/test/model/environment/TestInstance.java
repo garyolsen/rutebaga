@@ -4,6 +4,7 @@ import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
 
+/*
 public class TestInstance extends Instance
 {
 	public String name;
@@ -62,3 +63,4 @@ public class TestInstance extends Instance
 		return InstanceSetIdentifier.ENTITY;
 	}
 }
+*/

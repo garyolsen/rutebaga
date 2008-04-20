@@ -5,6 +5,7 @@ import rutebaga.model.environment.Rect2DTileConvertor;
 
 public class RectBoundsTest
 {
+	/*
 	public static void main(String... args)
 	{
 		Rect2DTileConvertor conv = new Rect2DTileConvertor();
@@ -13,4 +14,5 @@ public class RectBoundsTest
 			rutebaga.commons.Log.log(v);
 		}
 	}
+	*/
 }
