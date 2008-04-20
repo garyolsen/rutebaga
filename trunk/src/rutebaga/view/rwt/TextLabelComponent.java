@@ -3,6 +3,7 @@ package rutebaga.view.rwt;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 import rutebaga.view.drawer.*;
@@ -29,7 +30,10 @@ public class TextLabelComponent extends ViewComponent {
 	
 	public void draw( Drawer draw ) {
 		draw.setAttribute( composite );
-		draw.drawString(this.getLocation(), label);
+		
+		Point p = getLocation();
+		p.y += font.getFont().getSize();
+		draw.drawString(p, label);
 		
 		this.setBounds(getX(), getY(), draw.getFontMetrics().stringWidth(label), font.getFont().getSize());
 	}

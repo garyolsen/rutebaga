@@ -225,7 +225,7 @@ public abstract class ViewComponent
 		return dirtyBounds;
 	}
 	
-	protected boolean processKeyEvent( KeyEvent event ) { eventReceived(event); return false;}
+	protected boolean processKeyEvent( KeyEvent event ) { eventReceived(event); return false;}	
 	protected boolean processMouseEvent( MouseEvent event ) {eventReceived(event); return false;}
 	protected boolean processMouseMotionEvent( MouseEvent event ) {eventReceived(event); return false;}
 
