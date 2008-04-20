@@ -45,5 +45,10 @@ public interface ElementalList extends Iterable<ListElement>
 	 */
 	public int contentSize();
 	
-	public Observable getObservable();
+	/**
+	 * Indicates whether this ElementalList has changed since the last time hasChanged was accessed
+	 * by the specified object.  Returns true the first it is invoked by the object.
+	 * @return true if this ElementalList has changed since the last time it was checked
+	 */
+	public boolean hasChanged(Object object);
 }
