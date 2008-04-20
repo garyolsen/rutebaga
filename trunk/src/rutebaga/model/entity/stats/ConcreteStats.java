@@ -2,7 +2,9 @@ package rutebaga.model.entity.stats;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,6 +26,26 @@ public class ConcreteStats implements Stats
 	public Entity getParent()
 	{
 		return parent;
+	}
+
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Stats:");
+		List<StatisticId> ids = new ArrayList<StatisticId>(stats.keySet());
+		Collections.sort(ids, new Comparator<StatisticId>()
+		{
+			public int compare(StatisticId o1, StatisticId o2)
+			{
+				return o1.getName().compareTo(o2.getName());
+			}	
+		});
+		for(StatisticId id : ids)
+		{
+			sb.append("\t").append(id.getName()).append("\t").append(getValue(id)).append("\n");
+		}
+		return sb.toString();
 	}
 
 	public StatValue getStatObject(StatisticId stat)

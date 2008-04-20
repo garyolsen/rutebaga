@@ -27,6 +27,16 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 		return name;
 	}
 
+	public List<EntityEffect> getPermanentEffects()
+	{
+		return permanentEffects;
+	}
+
+	public List<ReversibleEntityEffect> getReversibleEffects()
+	{
+		return reversibleEffects;
+	}
+
 	public boolean isEquippable()
 	{
 		return equippable;
@@ -45,6 +55,16 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public void setPermanentEffects(List<EntityEffect> permanentEffects)
+	{
+		this.permanentEffects = permanentEffects;
+	}
+
+	public void setReversibleEffects(List<ReversibleEntityEffect> reversibleEffects)
+	{
+		this.reversibleEffects = reversibleEffects;
 	}
 
 	@Override

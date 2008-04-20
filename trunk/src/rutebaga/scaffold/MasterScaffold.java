@@ -46,6 +46,7 @@ public class MasterScaffold
 	 */
 	public Object get(String id)
 	{
+		System.out.println("getting " + id);
 		if(id == null) return null;
 		if (scaffold.get(id) == null)
 		{

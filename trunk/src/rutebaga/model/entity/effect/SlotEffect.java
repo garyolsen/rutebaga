@@ -29,4 +29,24 @@ public class SlotEffect extends ReversibleEntityEffect
 		entity.getInventory().getCurrentAllocations().add(type, qty);
 	}
 
+	public SlotType getType()
+	{
+		return type;
+	}
+
+	public void setType(SlotType type)
+	{
+		this.type = type;
+	}
+
+	public int getQty()
+	{
+		return qty;
+	}
+
+	public void setQty(int qty)
+	{
+		this.qty = qty;
+	}
+
 }

@@ -1,0 +1,7 @@
+slotHand
+name	Hand
+max		2
+
+slotRing
+name	Ring
+max		4

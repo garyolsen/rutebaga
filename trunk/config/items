@@ -1,0 +1,11 @@
+itemSword
+name			Sword
+equippable		true
+allocation		slotHand	2
+reffects		eeffSwordEq_Strength eeffSwordEq_ReduceRings
+
+itemPotion
+name			Potion
+equippable		false
+usable			true
+useeffects		

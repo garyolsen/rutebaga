@@ -1,5 +1,6 @@
 package rutebaga.scaffold.builders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -122,5 +123,23 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			n.accept(v);
 			return v.getValueProvider();
 		}
+	}
+	
+	public String[] getStringArray(String id, String property, String regexp)
+	{
+		String prop = getProperty(id, property);
+		if(prop == null) return new String[0];
+		String[] rval = prop.split(regexp);
+		return rval;
+	}
+	
+	public Object[] getObjectArray(String id, String property, String regexp, MasterScaffold scaffold)
+	{
+		ArrayList list = new ArrayList();
+		for(String scaffId : getStringArray(id, property, regexp))
+		{
+			list.add(scaffold.get(scaffId));
+		}
+		return list.toArray();
 	}
 }
