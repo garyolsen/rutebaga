@@ -21,3 +21,11 @@ appearance	animated imgYoshiSouth 5 C
 lifetime	100
 speed		0.3
 category	abcatAttacks
+
+abThrowFireBall
+name		Throw Fire Ball
+type		~abEgg
+appearance	animated imgFireBall 1 C
+lifetime	100
+speed		0.3
+category	abcatAttacks
