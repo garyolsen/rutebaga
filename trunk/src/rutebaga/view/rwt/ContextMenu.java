@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.sun.tools.javac.util.Pair;
-
 import rutebaga.controller.command.Command;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
