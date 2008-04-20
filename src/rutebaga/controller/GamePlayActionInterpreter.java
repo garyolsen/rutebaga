@@ -5,8 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Iterator;
 import java.util.Set;
 
 import rutebaga.commons.math.EllipseBounds2D;
@@ -15,12 +13,10 @@ import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CreateRootContextMenuCommand;
-import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.keyboard.KeyBinding;
 import rutebaga.controller.keyboard.KeyBindingList;
 import rutebaga.controller.keyboard.KeyCode;
-import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.ConcreteInstanceSet;
@@ -38,7 +34,8 @@ import rutebaga.view.game.TargetInstanceObservable;
 public class GamePlayActionInterpreter extends MouseAdapter implements
 		UserActionInterpreter, KeyListener {
 
-	private KeyBindingList<Command> keyBindings;
+	private KeyBindingList<Command> keyPressBindings;
+	private KeyBindingList<Command> keyReleaseBindings;
 	private MovementBindingManager movementManager;
 	private UserInterfaceFacade facade;
 	private GameDaemon daemon;
@@ -60,32 +57,43 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 				avatar);
 
 		this.actionDeterminer = new ActionDeterminer(avatar);
-		this.keyBindings = new KeyBindingList<Command>();
+		this.keyPressBindings = new KeyBindingList<Command>();
+		this.keyReleaseBindings = new KeyBindingList<Command>();
 		this.movementManager = MovementBindingManager.defaultBindings(avatar,
-				this.keyBindings);
+				this.keyPressBindings);
+		initializeKeyBindings();
+	}
 
-		keyBindings.set(KeyCode.get(KeyEvent.VK_SPACE), new Command() {
+	private void initializeKeyBindings() {
+		keyPressBindings.set(KeyCode.get(KeyEvent.VK_SPACE), new Command() {
 			public void execute() {
 				explode();
 			}
-
 			public boolean isFeasible() {
 				return true;
 			}
 		});
 
-		keyBindings.set(KeyCode.get(KeyEvent.VK_ENTER), new Command() {
+		keyPressBindings.set(KeyCode.get(KeyEvent.VK_ENTER), new Command() {
 			public void execute() {
 				GamePlayActionInterpreter.this.avatar.getAbilities().get(0)
 						.act(target != null ? target : GamePlayActionInterpreter.this.avatar);
 			}
-
+			public boolean isFeasible() {
+				return true;
+			}
+		});
+		
+		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_SEMICOLON), new Command() {
+			public void execute() {
+				targetNextEntity();
+			}
 			public boolean isFeasible() {
 				return true;
 			}
 		});
 	}
-
+	
 	public boolean eventsFallThrough() {
 		// I'm a root interpreter!
 		return false;
@@ -122,7 +130,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	}
 
 	public void keyPressed(KeyEvent e) {
-		KeyBinding<Command> binding = this.keyBindings.get(KeyCode.get(e));
+		KeyBinding<Command> binding = this.keyPressBindings.get(KeyCode.get(e));
 		if (binding != null)
 			binding.getBinding().execute();
 	}
@@ -147,11 +155,9 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	}
 
 	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_SEMICOLON:
-			targetNextEntity();
-			break;
-		}
+		KeyBinding<Command> binding = this.keyReleaseBindings.get(KeyCode.get(e));
+		if (binding != null)
+			binding.getBinding().execute();
 	}
 
 	public void keyTyped(KeyEvent e) {
