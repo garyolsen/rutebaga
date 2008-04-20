@@ -22,6 +22,10 @@ public class MovementAttributes
 
 	public boolean able(TerrainType terrain)
 	{
+		// if no MovementAttributeSets are in collection, return true
+		if ( movementSet.isEmpty() )
+			return true;
+		
 		Iterator<MovementAttributeSet> masIterator = movementSet.values()
 				.iterator();
 
