@@ -260,6 +260,29 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	{
 		this.movementAttributes = movementAttributes;
 	}
+	
+	/**
+	 * This method permanently adds the passed TerrainTypes to
+	 * this Instance's WhiteList.
+	 * 
+	 * @param terrains
+	 */
+	public void addTerrainTypes(TerrainType... terrains)
+	{
+		MovementAttributeSet moveSet = new WhiteList();
+		for (TerrainType terrain : terrains)
+		{
+			moveSet.add(terrain);
+		}
+		movementAttributes.add(moveSet);
+	}
+	
+	public Object addTerrainTypes(MovementAttributeSet moveSet)
+	{
+		Object token = UIDProvider.getUID();
+		movementAttributes.add(moveSet,token);
+		return token;
+	}
 
 	public abstract void tick();
 

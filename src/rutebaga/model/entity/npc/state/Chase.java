@@ -23,7 +23,7 @@ public class Chase extends NPCState
 	private AStarNodeLocationManager manager;
 	
 	private int lifetime = 0;
-	private Vector2D lastDirection = null;
+	private IntVector2D lastTile;
 	private List<AStarNodeLocationAdapter> lastPath;
 
 	@Override
@@ -61,6 +61,7 @@ public class Chase extends NPCState
 			
 		} else if (!(npc.getTarget() == null) && (npc.targetInSight()))
 		{
+			System.out.println("I am chasing you!");
 			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc, npc.getTargetTile());
 			List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
 			
@@ -78,36 +79,38 @@ public class Chase extends NPCState
 			
 			npc.walk(moveVector);
 			
-			lifetime = 300;
-			
-			lastDirection = moveVector;
+			lifetime = 100;
 			lastPath = path;
+			lastTile = npc.getTile();
 			
 			return this;
 		}
-		if(this.lifetime > 0)
+		if( !(lastPath == null) && !lastPath.isEmpty() && (lifetime > 0) )
 		{
-			this.lifetime--;
+			System.out.println(lastTile);
+			System.out.println("I lost sight of you. Interest level at: " + lifetime);
+			lifetime--;
 			MutableVector2D moveVector;
-			if ( !(lastPath == null) && !(lastPath.isEmpty()) )
+			System.out.println("Pathfinding to last known position...");
+			IntVector2D moveTo = lastPath.get(0).getTile();
+			if ( (npc.getTile().getX() != lastTile.getX()) && (npc.getTile().getY() != lastTile.getY()) )
 			{
-				IntVector2D moveTo = lastPath.get(0).getTile();
+				System.out.println("Removing tile from list");
+				lastTile = npc.getTile();
 				lastPath.remove(0);
-				moveVector = new MutableVector2D(moveTo);
-				moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
-				moveVector.becomeUnitVector().multiplyBy(0.03);
 			}
-			else
-			{
-				moveVector = new MutableVector2D(lastDirection).becomeUnitVector().multiplyBy(0.03);
-			}
-		
+			moveVector = new MutableVector2D(moveTo);
+			moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
+			moveVector.becomeUnitVector().multiplyBy(0.03);
 			npc.walk(moveVector);
-			
 			return this;
 		}
-		System.out.println("Going into hostile wander state!");
-		return NPCState.hostileWander;
+		else
+		{
+			System.out.println("Going into hostile wander state!");
+			return NPCState.hostileWander;
+		}
+		
 	}
 
 }
