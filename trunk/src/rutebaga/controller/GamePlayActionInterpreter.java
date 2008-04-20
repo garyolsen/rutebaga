@@ -225,11 +225,13 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	}
 
 	private void refreshTargetObservable() {
+		observable.setChanged();
 		if (target != null) {
 			Tile<?> tile = findTileAt(target);
-			observable.setChanged();
 			observable.notifyAllObservers(tile);
 		}
+		else
+			observable.notifyAllObservers(null);
 	}
 
 	private void targetNextEntity() {
@@ -264,10 +266,10 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			if (!avatar.canSee(tileCoordinate)) {
 				target = null;
 				retarget();
+				return;
 			}
 		}
-		else
-			reactivateActionInterpreter();
+		refreshTargetObservable();
 	}
 
 }
