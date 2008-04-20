@@ -16,6 +16,7 @@ import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.MatrixTileConvertor;
+import rutebaga.model.environment.PolarTileConvertor;
 import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.World;
 import rutebaga.model.map.River;
@@ -44,6 +45,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		double u = 1, v = 1;
 		TileConverter orth = new MatrixTileConvertor(u*u, -u*v, -u*v, v*v, 1/(u*u+v*v));
 		TileConverter parr = new MatrixTileConvertor(0, 0, 0.5, 1);
+		TileConverter scale = new MatrixTileConvertor(2,0,0,2);
 		Environment environment = new Environment(new Hex2DTileConvertor());
 
 		Properties config = (Properties) scaffold.get("confGame");

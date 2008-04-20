@@ -69,6 +69,12 @@ public class ViewComponentTest {
 			
 			view.addViewComponent(scroll);
 			
+			TextFieldComponent component = new TextFieldComponent();
+			component.setHasFocus(true);
+			component.setLocation(400,200);
+			
+			view.addViewComponent(component);
+			
 			while(true)
 				view.renderFrame();
 

@@ -70,7 +70,7 @@ public class ActionDeterminer
 		ConcreteElementalList list = new ConcreteElementalList();
 		for (Ability<?> ability: avatar.getAbilities())
 			if (ability.canActOn(target))
-				list.add(ability.toString(), QueueCommand.makeForQueue(new AbilityCommand(ability, target), queue));
+				list.add(ability.getName(), QueueCommand.makeForQueue(new AbilityCommand(ability, target), queue));
 		if (avatar == target)
 			addSelfCommands(list);
 		return list;
