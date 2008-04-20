@@ -1,6 +1,10 @@
 package rutebaga.controller.command.list;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Set;
 
 import rutebaga.controller.command.LabelDeterminer;
 import rutebaga.model.entity.stats.ConcreteStatValue;
@@ -12,7 +16,18 @@ public class StatsListElementSource implements ListElementSource<StatValue> {
 	
 	private LabelDeterminer label;
 	private Stats stats;
-
+	private Map<StatisticId, Double> cache;
+	
+	public StatsListElementSource() {
+		this.cache = new HashMap<StatisticId, Double>();
+	}
+	
+	private void constructCache() {
+		cache.clear();
+		for (StatisticId id: stats.getStatIds())
+			cache.put(id, stats.getValue(id));
+	}
+	
 	public void setLabel(LabelDeterminer label) {
 		this.label = label;
 	}
@@ -30,7 +45,17 @@ public class StatsListElementSource implements ListElementSource<StatValue> {
 	}
 	
 	public Iterator<StatValue> iterator() {
+		constructCache();
 		return new StatsIterator();
+	}
+
+	public boolean hasChanged(Object object) {
+		if (cache.size() != stats.getStatIds().size())
+			return true;
+		for (StatisticId id: cache.keySet())
+			if (cache.get(id) != stats.getValue(id))
+				return true;
+		return false;
 	}
 	
 	private class StatsIterator implements Iterator<StatValue> {

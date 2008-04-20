@@ -1,6 +1,7 @@
 package rutebaga.controller.command.list;
 
 import java.util.Iterator;
+import java.util.Observable;
 
 /**
  * 
@@ -34,4 +35,11 @@ public interface ListElementSource<E> {
 	 * @return number of ListElements returned by this ListElementSource's iterator
 	 */
 	public int contentSize();
+	
+	/**
+	 * Indicates whether <em>any</em> of the elements returned by this source have
+	 * changed since the last time hasChanged was invoked by the specified Object.
+	 * @return true if this ListElementSource's iterator will return different elements from the last time it was invoked.
+	 */
+	public boolean hasChanged(Object object);
 }

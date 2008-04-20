@@ -83,6 +83,10 @@ public class DynamicElementalList<E> implements ElementalList
 		return source.getLabel();
 	}
 
+	public boolean hasChanged(Object object) {
+		return source.hasChanged(object);
+	}
+	
 	/**
 	 * Gets an Iterator over the {@link ListElement ListElements} of this
 	 * DynamicElementalList.
@@ -116,10 +120,5 @@ public class DynamicElementalList<E> implements ElementalList
 				throw new UnsupportedOperationException();
 			}
 		};
-	}
-
-	public Observable getObservable() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

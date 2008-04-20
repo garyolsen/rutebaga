@@ -1,9 +1,11 @@
 package rutebaga.controller.command.list;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Observable;
+import java.util.Set;
 
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandFactory;
@@ -43,6 +45,15 @@ public class ConcreteElementalList implements ElementalList,
 	private LinkedList<ElementalList> list = new LinkedList<ElementalList>();
 
 	/**
+	 * Indicates whether this ConcreteElementalList has been changed wrt the object.  
+	 */
+	private Set<Object> changed = new HashSet<Object>();
+	
+	private void change() {
+		changed.clear();
+	}
+	
+	/**
 	 * Returns an ElementalList of Commands that just returns this
 	 * ConcreteElementalList.
 	 * 
@@ -60,7 +71,7 @@ public class ConcreteElementalList implements ElementalList,
 	 */
 	public int contentSize() {
 		int size = 0;
-		for (ElementalList element: list)
+		for (ElementalList element : list)
 			size += element.contentSize();
 		return size;
 	}
@@ -73,6 +84,7 @@ public class ConcreteElementalList implements ElementalList,
 	 */
 	public void add(String label) {
 		add(label, null);
+		change();
 	}
 
 	/**
@@ -88,21 +100,24 @@ public class ConcreteElementalList implements ElementalList,
 	public void add(String label, Command command) {
 		// To hell with efficiency!
 		list.add(new SingleCommandElementalList(label, command));
+		change();
 	}
 
 	/**
 	 * Add an entire ElementalList as a component of this ConcreteElementalList.
 	 * When this ConcreteElementalList's iterator runs, it will visit each of
 	 * the specified ElementalList's ListElements in the order its Iterator
-	 * returns.  No-op if <code>list</code> is null.
+	 * returns. No-op if <code>list</code> is null.
 	 * 
 	 * @param list
 	 *            the ElementalList to add as a child to this
 	 *            ConcreteElementalList
 	 */
 	public void add(ElementalList list) {
-		if (list != null)
+		if (list != null) {
 			this.list.add(list);
+			change();
+		}
 	}
 
 	/*
@@ -122,6 +137,7 @@ public class ConcreteElementalList implements ElementalList,
 	 */
 	public void setLabel(String label) {
 		this.label = (label != null ? label : "");
+		change();
 	}
 
 	/**
@@ -146,8 +162,7 @@ public class ConcreteElementalList implements ElementalList,
 	 */
 	private class ConcreteElementalListIterator implements
 			Iterator<ListElement> {
-		private Iterator<ElementalList> lists = ConcreteElementalList.this.list
-				.iterator();
+		private Iterator<ElementalList> lists = ConcreteElementalList.this.list.iterator();
 
 		private Iterator<ListElement> currentList;
 
@@ -193,11 +208,6 @@ public class ConcreteElementalList implements ElementalList,
 	 * with.
 	 */
 	private class SingleCommandElementalList implements ElementalList {
-
-		public Observable getObservable() {
-			// TODO Auto-generated method stub
-			return null;
-		}
 
 		/**
 		 * The label of the ListElement "contained" by this
@@ -251,8 +261,7 @@ public class ConcreteElementalList implements ElementalList,
 
 				public ListElement next() {
 					if (visited)
-						throw new NoSuchElementException(
-								"Only one ListElement!");
+						throw new NoSuchElementException("Only one ListElement!");
 					else {
 						visited = true;
 						return new ListElement() {
@@ -268,16 +277,24 @@ public class ConcreteElementalList implements ElementalList,
 				}
 
 				public void remove() throws UnsupportedOperationException {
-					throw new UnsupportedOperationException(
-							"Mommy, make the bad man stop ><");
+					throw new UnsupportedOperationException("Mommy, make the bad man stop ><");
 				}
 			};
 		}
 
+		public boolean hasChanged(Object object) {
+			return false;
+		}
+
 	}
 
-	public Observable getObservable() {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean hasChanged(Object object) {
+		boolean hasChanged = !changed.contains(object);
+		changed.add(object);
+		
+		for (ElementalList e: list)
+			hasChanged |= e.hasChanged(object);
+		
+		return hasChanged;
 	}
 }

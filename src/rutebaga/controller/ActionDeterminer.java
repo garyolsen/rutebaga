@@ -12,7 +12,7 @@ import rutebaga.controller.command.LabelDeterminer;
 import rutebaga.controller.command.QueueCommand;
 import rutebaga.controller.command.list.BackedListElementFactory;
 import rutebaga.controller.command.list.ConcreteElementalList;
-import rutebaga.controller.command.list.ConcreteListElementSource;
+import rutebaga.controller.command.list.CollectionListElementSource;
 import rutebaga.controller.command.list.DynamicElementalList;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.command.list.ListElementFactory;
@@ -118,7 +118,7 @@ public class ActionDeterminer
 		public void execute() {
 			Inventory inventory = target.getInventory();
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Inventory");
-			ConcreteListElementSource<Item> source = new ConcreteListElementSource<Item>(label, inventory.getUnequipped());
+			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, inventory.getUnequipped());
 			AvatarInventoryCommandFactory commands = new AvatarInventoryCommandFactory();
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
@@ -135,7 +135,7 @@ public class ActionDeterminer
 		public void execute() {
 			Inventory inventory = target.getInventory();
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Equipment");
-			ConcreteListElementSource<Item> source = new ConcreteListElementSource<Item>(label, inventory.getEquipped());
+			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, inventory.getEquipped());
 			AvatarEquipmentCommandFactory commands = new AvatarEquipmentCommandFactory();
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
