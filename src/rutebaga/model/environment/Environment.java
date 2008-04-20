@@ -349,7 +349,7 @@ public class Environment
 	{
 		long time = System.currentTimeMillis();
 		int moveCt = 0;
-		for (Instance instance : instances)
+		for (Instance<?> instance : instances)
 		{
 			Vector2D velocity = instance.getVelocity();
 			if (velocity.getMagnitude() <= 0.0001)

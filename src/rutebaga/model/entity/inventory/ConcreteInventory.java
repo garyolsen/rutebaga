@@ -119,7 +119,7 @@ public class ConcreteInventory implements Inventory
 		sb.append("Slots:\n");
 		for(SlotType type : slots.getSlotTypes())
 		{
-			sb.append("\t")
+			sb.append("\t");
 		}
 		sb.append("Unequipped Items:\n");
 		for (Item item : unequipped )

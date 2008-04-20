@@ -27,7 +27,7 @@ import rutebaga.model.map.TerrainType;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Instance<T extends Instance<T>> implements Layerable, Locatable, Orientable
+public abstract class Instance<T extends Instance<T>> implements Layerable, Locatable
 {
 	private long id = UIDProvider.getLongUID();
 	
