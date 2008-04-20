@@ -1,15 +1,11 @@
 aoeHealer
-images		imgYoshiEgg01 imgYoshiEgg02 imgYoshiEgg03 imgYoshiEgg04 imgYoshiEgg05
-framewait	3
+appearance	animated imgYoshiEgg 10 C
 effects		eeffHealerAOE_HP
-blocking	10
 
 aoeHarm
-images		imgLameEffect
+appearance	static imgLameEffect C
 effects		eeffHarmAOE_HP
-blocking	10
 
 aoeSpeeder
-images		imgLameEffect
+appearance	static imgLameEffect C
 effects		eeffMovementAOE_Movement
-blocking	10

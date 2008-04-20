@@ -17,6 +17,8 @@ public class DefaultBuilder extends ChainedBuilder
 		register(new ItemTypeBuilder());
 		register(new EntityEffectBuilder());
 		register(new AOEBuilder());
+		register(new TileTypeBuilder());
+		register(new TerrainTypeBuilder());
 	}
 
 }

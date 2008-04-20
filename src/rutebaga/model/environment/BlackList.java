@@ -5,23 +5,28 @@ import java.util.Set;
 
 import rutebaga.model.map.TerrainType;
 
-public class BlackList implements MovementAttributeSet {
+public class BlackList implements MovementAttributeSet
+{
 
 	private Set<TerrainType> terrainSet = new HashSet<TerrainType>();
 
-	public boolean able(TerrainType terrain) {
-		for (TerrainType t : terrainSet) {
-			if (t.getName() == terrain.getName())
+	public boolean able(TerrainType terrain)
+	{
+		for (TerrainType t : terrainSet)
+		{
+			if (t.equals(terrain))
 				return false;
 		}
 		return true;
 	}
 
-	public void add(TerrainType terrain) {
+	public void add(TerrainType terrain)
+	{
 		terrainSet.add(terrain);
 	}
 
-	public void remove(TerrainType terrain) {
+	public void remove(TerrainType terrain)
+	{
 		terrainSet.remove(terrain);
 	}
 

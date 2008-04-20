@@ -22,10 +22,8 @@ public class WhiteList implements MovementAttributeSet
 
 		for (TerrainType t : terrainSet)
 		{
-			if (t.getName() == terrain.getName())
-			{
+			if (t.equals(terrain))
 				return true;
-			}
 		}
 
 		return false;
@@ -33,6 +31,8 @@ public class WhiteList implements MovementAttributeSet
 
 	public void add(TerrainType terrain)
 	{
+		if(terrain == null)
+			throw new RuntimeException();
 		terrainSet.add(terrain);
 	}
 

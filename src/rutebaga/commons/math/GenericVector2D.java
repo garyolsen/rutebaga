@@ -10,4 +10,5 @@ public interface GenericVector2D<T extends Number, U extends GenericVector2D<T, 
 	T get(int idx);
 	T getX();
 	T getY();
+	double getMagnitude();
 }

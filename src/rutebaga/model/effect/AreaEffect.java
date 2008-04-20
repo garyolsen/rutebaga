@@ -3,6 +3,7 @@ package rutebaga.model.effect;
 import java.util.ArrayList;
 import java.util.List;
 
+import rutebaga.commons.logic.ChainedRule;
 import rutebaga.commons.math.Bounds2D;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.entity.Entity;
@@ -21,27 +22,27 @@ public class AreaEffect extends Instance<AreaEffect>
 	private int blockingRate;
 	private int current = 0;
 	private BoundsTracker boundsTracker;
+	private ChainedRule<Entity> rules = new ChainedRule<Entity>(true);
 
 	public AreaEffect(InstanceType<AreaEffect> type)
 	{
 		super(type);
 	}
 
-	public void setBounds(Bounds2D bounds)
-	{
-		boundsTracker = new BoundsTracker(bounds, this);
-	}
-
-	@Override
-	public boolean isMobile()
-	{
-		return false;
-	}
-
 	@Override
 	public boolean blocks(Instance other)
 	{
 		return false;
+	}
+
+	public int getBlockingRate()
+	{
+		return blockingRate;
+	}
+
+	public List<EntityEffect> getEffects()
+	{
+		return effects;
 	}
 
 	@Override
@@ -56,10 +57,31 @@ public class AreaEffect extends Instance<AreaEffect>
 		return Double.POSITIVE_INFINITY;
 	}
 
+	public ChainedRule<Entity> getRules()
+	{
+		return rules;
+	}
+
 	@Override
 	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.EFFECT;
+	}
+
+	@Override
+	public boolean isMobile()
+	{
+		return false;
+	}
+
+	public void setBlockingRate(int blockingRate)
+	{
+		this.blockingRate = blockingRate;
+	}
+
+	public void setBounds(Bounds2D bounds)
+	{
+		boundsTracker = new BoundsTracker(bounds, this);
 	}
 
 	@Override
@@ -87,21 +109,6 @@ public class AreaEffect extends Instance<AreaEffect>
 				entity.accept(effect);
 			}
 		}
-	}
-
-	public int getBlockingRate()
-	{
-		return blockingRate;
-	}
-
-	public void setBlockingRate(int blockingRate)
-	{
-		this.blockingRate = blockingRate;
-	}
-
-	public List<EntityEffect> getEffects()
-	{
-		return effects;
 	}
 
 }

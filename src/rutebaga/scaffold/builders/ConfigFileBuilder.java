@@ -3,10 +3,12 @@ package rutebaga.scaffold.builders;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import rutebaga.commons.logic.Rule;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.rel.ParseTreeNode;
 import rutebaga.commons.math.rel.ReversePolishParser;
@@ -131,6 +133,18 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			n.accept(v);
 			return v.getValueProvider();
 		}
+	}
+	
+	public Rule[] getRules(String id, String property,
+			MasterScaffold scaffold)
+	{
+		String[] ids = getStringArray(id, property, "[\\w\\t]");
+		List<Rule> rules = new ArrayList<Rule>();
+		for(String strId : ids)
+		{
+			DefaultRuleFactory.getInstance().get(strId, scaffold);
+		}
+		return rules.toArray(new Rule[0]);
 	}
 
 	public String[] getStringArray(String id, String property, String regexp)

@@ -22,7 +22,7 @@ public class AppearanceInstance implements Locatable, Layerable
 		this.coord = new Vector2D(location.x, location.y);
 		Point dimensions = new Point( appearance.getImage().getWidth(null), appearance.getImage().getHeight(null) );
 		this.location = location;
-		appearance.getOrientation().transformPoint(location, dimensions);
+		appearance.transformPoint(location, dimensions);
 		this.layer = layer;
 	}
 
