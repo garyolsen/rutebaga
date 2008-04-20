@@ -1,19 +1,16 @@
 package rutebaga.view;
 
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import rutebaga.commons.math.Vector;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.command.list.ListElement;
-import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.view.game.*;
 import rutebaga.view.rwt.ButtonComponent;
@@ -127,8 +124,6 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	public void createGamePlayScreen(Entity avatar, TargetInstanceObservable observable) {
 		clearView();
 		
-		System.err.println("test");
-		
 		view.addViewComponent(new MapComponent(observable, avatar, view.getWidth(), view.getHeight()));
 		
 		FPSTextComponent fps = new FPSTextComponent();
@@ -160,7 +155,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 			names.add(element.getLabel());
 		}
 			
-		ContextMenu cm = new ContextMenu(commands, names);
+		ContextMenu cm = new ContextMenu(list);
 		cm.setLocation(vector.getX().intValue(), (int)vector.getY().intValue());
 		
 		view.addViewComponent(cm);
@@ -185,7 +180,23 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 */
 	public int createSubContextMenu(ElementalList list, Vector2D vector)
 	{
-		return 0;
+		List<String> names = new ArrayList<String>();
+		List<Command> commands = new ArrayList<Command>();
+		
+		for(ListElement element : list) {
+			commands.add(element.getCommand());
+			names.add(element.getLabel());
+		}
+			
+		ContextMenu cm = new ContextMenu(list);
+		cm.setLocation(vector.getX().intValue(), (int)vector.getY().intValue());
+		
+		view.addViewComponent(cm);
+		
+		
+		contextStack.push(cm);
+		
+		return contextStack.size();
 	}
 	
 	public int createSubContextMenu(ElementalList list) {

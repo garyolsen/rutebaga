@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Random;
 
 import rutebaga.controller.command.Command;
+import rutebaga.controller.command.list.ElementalList;
+import rutebaga.controller.command.list.ListElement;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 
@@ -52,8 +54,7 @@ public class ContextMenu extends ViewComponent
 	
 	private List<Polygon> contextTriangles = new ArrayList<Polygon>();
 	
-	private List<Command> contextCommands;
-	private List<String> commandNames;
+	private ElementalList list;
 	
 	private List<ViewComponent> components = new ArrayList<ViewComponent>();
 	
@@ -65,20 +66,9 @@ public class ContextMenu extends ViewComponent
 	 * @param decorated
 	 *            The ViewComponent to be decorated.
 	 */
-	public ContextMenu(List<Command> contextCommands, List<String> names)
+	public ContextMenu(ElementalList list)
 	{
-		this.contextCommands = contextCommands;
-		if(contextCommands.size() == 1) {
-			contextCommands.add(null);
-			contextCommands.add(null);
-			names.add("");
-			names.add("");
-		} else if( contextCommands.size() == 2) {
-			contextCommands.add(null);
-			names.add("");
-		}
-		
-		this.commandNames = names;
+		this.list = list;
 		initContextMenu();
 	}
 	
@@ -98,10 +88,16 @@ public class ContextMenu extends ViewComponent
 	
 	private void initContextMenu() {
 
-		int angularSeparation = 360 / contextCommands.size();
+		int angularSeparation = 0;
+		if(list.contentSize() > 3)
+			angularSeparation = 360 / list.contentSize();
+		else
+			angularSeparation = 120;
 		
-		generateContextTriangles(angularSeparation, contextCommands.size());
-		generateComponents(contextCommands, angularSeparation);
+		int i = (list.contentSize() > 3) ? list.contentSize() : 3;
+		
+		generateContextTriangles(angularSeparation, i);
+		generateComponents(angularSeparation);
 		
 		setBoundsWithContextTriangles();
 	}
@@ -128,15 +124,17 @@ public class ContextMenu extends ViewComponent
 		
 	}
 	
-	private void generateComponents(List<Command> commands, int angle) {
+	private void generateComponents(int angle) {
 		int currentAngle = 0;
 		
 		int i = 0;
+		
+		components.clear();
 
 		
-		for(Command command : commands) {
-			ButtonComponent button = new ButtonComponent(commandNames.get(i));
-			button.setCommand(command);
+		for(ListElement element : list) {
+			ButtonComponent button = new ButtonComponent(element.getLabel());
+			button.setCommand(element.getCommand());
 			button.setUntoggledColor(buttonColor);
 			button.setToggledColor(buttonToggledColor);
 			
@@ -158,10 +156,45 @@ public class ContextMenu extends ViewComponent
 			components.add(button);
 			i++;
 		}
+		
+		if(i < 3) {
+
+			int num = 3 - i;
+			
+			for(int j = 0; j < num; j++) {
+				ButtonComponent button = new ButtonComponent();
+				button.setCommand(null);
+				button.setUntoggledColor(buttonColor);
+				button.setToggledColor(buttonToggledColor);
+				
+				Polygon poly = new Polygon();
+				
+				poly.addPoint(0, 0);
+				
+				poly.addPoint( (int) (componentSize * Math.cos(Math.toRadians(currentAngle))), (int) (componentSize * Math.sin(Math.toRadians(currentAngle))));
+				
+				button.setLocation( getX() + (int) ( componentSize * Math.cos(Math.toRadians(currentAngle + angle/2)) ), getY() + (int) ( componentSize * Math.sin(Math.toRadians(currentAngle + angle/2)) ));
+						
+				currentAngle += angle;
+				
+				poly.addPoint( (int) (componentSize * Math.cos(Math.toRadians(currentAngle))), (int) (componentSize * Math.sin(Math.toRadians(currentAngle))));
+				
+				button.setBounds(poly);
+			
+				components.add(button);
+				i++;
+			}
+			
+		}
 	}
 	
 	private void moveComponents() {
-		int angle = 360 / contextCommands.size();
+		int angle = 0;
+		if(list.contentSize() > 3)
+			angle = 360 / list.contentSize();
+		else
+			angle = 120;
+		
 		
 		int currentAngle = 0;
 		

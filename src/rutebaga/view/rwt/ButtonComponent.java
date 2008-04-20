@@ -89,16 +89,22 @@ public class ButtonComponent extends ViewComponent {
 	}
 	
 	protected boolean processMouseEvent( MouseEvent event ) {
-		if(event.getID() == MouseEvent.MOUSE_PRESSED) {
-			toggle = true;
-		} else if(event.getID() == MouseEvent.MOUSE_RELEASED) {
-			toggle = false;
-		} else if(event.getID() == MouseEvent.MOUSE_CLICKED) {
-			if(command != null && command.isFeasible())
-				command.execute();
+		if(command != null ) {
+			if(event.getID() == MouseEvent.MOUSE_PRESSED) {
+				toggle = true;
+			} else if(event.getID() == MouseEvent.MOUSE_RELEASED) {
+				toggle = false;
+			} else if(event.getID() == MouseEvent.MOUSE_CLICKED) {
+				if(command != null && command.isFeasible())
+					command.execute();
+			}
 		}
 		
 		return true;
+	}
+	
+	public void setLabel(String label ) {
+		this.label = label;
 	}
 	
 	public void setCommand( Command command )  {
