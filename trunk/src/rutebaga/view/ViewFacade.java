@@ -202,7 +202,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 		ScrollDecorator scroll = new ScrollDecorator(vcc, 200, pageSize * 20);
 		
 		Point p = contextStack.peek().getLocation();
-		p.y -= contextStack.peek().getHeight();
+		p.y -= contextStack.peek().getHeight()/2;
 
 		scroll.setLocation(p);
 		
