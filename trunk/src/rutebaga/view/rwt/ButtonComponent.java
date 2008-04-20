@@ -18,6 +18,10 @@ public class ButtonComponent extends ViewComponent {
 	private Command command;
 	
 	private CompositeAttribute untoggled, toggled, text;
+	
+	private ColorAttribute untoggledColor = new ColorAttribute(Color.GRAY);
+	private ColorAttribute toggledColor = new ColorAttribute(Color.DARK_GRAY);
+	
 	private FontAttribute font;
 
 	public ButtonComponent() {
@@ -32,10 +36,10 @@ public class ButtonComponent extends ViewComponent {
 		font = new FontAttribute( new Font("Arial", Font.PLAIN, 10));
 		
 		untoggled = new CompositeAttribute();
-		untoggled.addAttribute( new ColorAttribute( new Color(0,0,255,150) ) );
+		untoggled.addAttribute( untoggledColor );
 		
 		toggled = new CompositeAttribute();
-		toggled.addAttribute( new ColorAttribute( Color.DARK_GRAY ) );
+		toggled.addAttribute( toggledColor );
 		
 		text = new CompositeAttribute();
 		text.addAttribute( font );
@@ -103,6 +107,14 @@ public class ButtonComponent extends ViewComponent {
 	
 	public void setButtonShape( Shape shape ) {
 		this.setBounds(shape);
+	}
+	
+	public void setUntoggledColor( Color color ) {
+		untoggledColor.setColor(color);
+	}
+	
+	public void setToggledColor( Color color ) {
+		toggledColor.setColor(color);
 	}
 
 }

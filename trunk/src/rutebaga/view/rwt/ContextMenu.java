@@ -42,10 +42,13 @@ import rutebaga.view.drawer.Drawer;
 public class ContextMenu extends ViewComponent
 {
 
-	private int contextMenuRadius = 200; //screen pixels
+	private int contextMenuRadius = 250; //screen pixels
 	private int componentSize = 50;
 	
 	private static Color buttonColor = new Color(0,0,255, 70);
+	private static Color buttonToggledColor = new Color(0,0,255,170);
+	
+	private static ColorAttribute contextHover = new ColorAttribute(new Color(0,50,0, 50));
 	
 	private List<Polygon> contextTriangles = new ArrayList<Polygon>();
 	
@@ -53,6 +56,8 @@ public class ContextMenu extends ViewComponent
 	private List<String> commandNames;
 	
 	private List<ViewComponent> components = new ArrayList<ViewComponent>();
+	
+	private int currentContextHover;
 	
 	/**
 	 * Contructs a ContextMenu as a decorator of the specified ViewComponent.
@@ -68,6 +73,9 @@ public class ContextMenu extends ViewComponent
 			contextCommands.add(null);
 			names.add("");
 			names.add("");
+		} else if( contextCommands.size() == 2) {
+			contextCommands.add(null);
+			names.add("");
 		}
 		
 		this.commandNames = names;
@@ -75,18 +83,22 @@ public class ContextMenu extends ViewComponent
 	}
 	
 	public void draw(Drawer draw) {
+		
+		draw.setAttribute(contextHover);
+		
+		draw.drawShape(getLocation(), contextTriangles.get(currentContextHover));
+		
+		draw.setAttribute(null);
 
 		for(ViewComponent component : components)
 			component.draw(draw);
+		
 		
 	}
 	
 	private void initContextMenu() {
 
 		int angularSeparation = 360 / contextCommands.size();
-		
-		if(angularSeparation == 360)
-			angularSeparation = 45;
 		
 		generateContextTriangles(angularSeparation, contextCommands.size());
 		generateComponents(contextCommands, angularSeparation);
@@ -96,9 +108,6 @@ public class ContextMenu extends ViewComponent
 	
 	private void generateContextTriangles(int angle, int number) {
 		int currentAngle = 0;
-		
-		if(number == 1)
-			currentAngle = 245;
 		
 		contextTriangles.clear();
 		
@@ -122,15 +131,14 @@ public class ContextMenu extends ViewComponent
 	private void generateComponents(List<Command> commands, int angle) {
 		int currentAngle = 0;
 		
-		if(commands.size() == 1)
-			currentAngle = 245;
-		
 		int i = 0;
 
 		
 		for(Command command : commands) {
 			ButtonComponent button = new ButtonComponent(commandNames.get(i));
 			button.setCommand(command);
+			button.setUntoggledColor(buttonColor);
+			button.setToggledColor(buttonToggledColor);
 			
 			Polygon poly = new Polygon();
 			
@@ -188,8 +196,10 @@ public class ContextMenu extends ViewComponent
 	protected boolean processMouseEvent( MouseEvent event ) {
 		int i = 0;
 		for(Polygon s : contextTriangles) {
-			if(s.contains( event.getX() - this.getX(), event.getY() - this.getY()))
+			if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
+				currentContextHover = i;
 				return components.get(i).processMouseEvent(event);
+			}
 			
 			i++;
 		}
@@ -198,7 +208,16 @@ public class ContextMenu extends ViewComponent
 	}
 	
 	protected boolean processMouseMotionEvent( MouseEvent event ) { 
-		
+		int i = 0;
+		for(Polygon s : contextTriangles) {
+			if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
+				currentContextHover = i;
+				break;
+			}
+			
+			i++;
+		}
+			
 		return false;
 	}
 
