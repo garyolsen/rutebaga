@@ -39,7 +39,7 @@ public interface UserInterfaceFacade {
 	 *            The location to spawn the menu.
 	 * @return The ContextMenu that was created.
 	 */
-	ContextMenu createRootContextMenu(ElementalList list, Vector2D vector);
+	int createRootContextMenu(ElementalList list, Vector2D vector);
 
 	/**
 	 * Opens up a ContextMenu when a button in an existing ContextMenu is
@@ -49,7 +49,7 @@ public interface UserInterfaceFacade {
 	 *            A list of choices for the player.
 	 * @return The ContextMenu that was created.
 	 */
-	ContextMenu createSubContextMenu(ElementalList list);
+	int createSubContextMenu(ElementalList list, Vector2D vector);
 	
 	/**
 	 * In a ContextMenu, shows a scrollable menu capable of displaying mass
@@ -61,7 +61,7 @@ public interface UserInterfaceFacade {
 	 *            The amount of information per scrollable page.
 	 * @return The ContextMenu that was created.
 	 */
-	ContextMenu createScrollMenu(ElementalList list, int pageSize);
+	int createScrollMenu(ElementalList list, int pageSize, Vector2D vector);
 
 	/**
 	 * Spawns a DialogMenu at the provided {@link Vector} location.
@@ -72,7 +72,7 @@ public interface UserInterfaceFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	ContextMenu createDialogMenu(ElementalList list, Vector2D vector);
+	int createDialogMenu(ElementalList list, Vector2D vector);
 	
 	/**
 	 * Shows a warning to the player.
@@ -89,9 +89,11 @@ public interface UserInterfaceFacade {
 	 * @param menu
 	 *            A ContextMenu to be closed.
 	 */
-	void closeContextMenu(ContextMenu menu);
+	void closeContextMenu(int menu);
 	
 	void clearContextMenuStack();
+	
+	void popContextMenu();
 	
 	View getView();
 }

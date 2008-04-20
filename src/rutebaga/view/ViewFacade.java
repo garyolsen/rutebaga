@@ -146,8 +146,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The location to spawn the menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createRootContextMenu(ElementalList list, Vector2D vector)
+	public int createRootContextMenu(ElementalList list, Vector2D vector)
 	{
+		clearContextMenuStack();
+		
 		List<String> names = new ArrayList<String>();
 		List<Command> commands = new ArrayList<Command>();
 		
@@ -161,9 +163,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 		
 		view.addViewComponent(cm);
 		
+		
 		contextStack.push(cm);
 		
-		return cm;
+		return contextStack.size();
 	}
 
 	/**
@@ -174,9 +177,9 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            A list of choices for the player.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createSubContextMenu(ElementalList list)
+	public int createSubContextMenu(ElementalList list, Vector2D vector)
 	{
-		return null;
+		return 0;
 	}
 
 	/**
@@ -189,7 +192,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The amount of information per scrollable page.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createScrollMenu(ElementalList list, int pageSize)
+	public int createScrollMenu(ElementalList list, int pageSize, Vector2D vector)
 	{
 		ViewCompositeComponent vcc = new ViewCompositeComponent();
 		
@@ -199,18 +202,16 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 			vcc.addChild(button);
 		}
 		
-		ScrollDecorator scroll = new ScrollDecorator(vcc, 200, pageSize * 20);
-		
-		Point p = contextStack.peek().getLocation();
-		p.y -= contextStack.peek().getHeight()/2;
+		ScrollDecorator scroll = new ScrollDecorator(vcc, pageSize * 10, 50);
 
-		scroll.setLocation(p);
+		scroll.setLocation(vector.getX().intValue(), vector.getY().intValue());
 		
 		view.addViewComponent(scroll);
 		
+		prepareContextStack();
 		contextStack.add(scroll);
 		
-		return null;
+		return contextStack.size();
 	}
 
 	/**
@@ -222,9 +223,9 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public ContextMenu createDialogMenu(ElementalList list, Vector2D vector)
+	public int createDialogMenu(ElementalList list, Vector2D vector)
 	{
-		return null;
+		return 0;
 	}
 
 	/**
@@ -245,7 +246,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 * @param menu
 	 *            A ContextMenu to be closed.
 	 */
-	public void closeContextMenu(ContextMenu menu)
+	public void closeContextMenu(int menu)
 	{
 
 	}
@@ -255,6 +256,16 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 			ViewComponent vc = contextStack.pop();
 			view.removeViewComponent(vc);
 		}
+	}
+	
+	public void popContextMenu() {
+		view.removeViewComponent(contextStack.pop());
+		if(contextStack.size() > 0)
+			view.addViewComponent(contextStack.peek());
+	}
+	
+	private void prepareContextStack() {
+		view.removeViewComponent(contextStack.peek());
 	}
 	
 	public View getView() {
