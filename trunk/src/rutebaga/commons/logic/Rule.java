@@ -1,5 +1,7 @@
 package rutebaga.commons.logic;
 
+import java.io.Serializable;
+
 /**
  * Used to determine a truth value in a given context.
  * 
@@ -8,7 +10,7 @@ package rutebaga.commons.logic;
  * @param <T>
  *            The context for this Rule.
  */
-public interface Rule<T>
+public interface Rule<T> extends Serializable
 {
 	/**
 	 * Evaluates the rule in the given context.
