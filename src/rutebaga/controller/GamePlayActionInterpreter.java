@@ -13,7 +13,9 @@ import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CreateRootContextMenuCommand;
+import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.ElementalList;
+import rutebaga.controller.keyboard.ConcreteKeyBinding;
 import rutebaga.controller.keyboard.KeyBinding;
 import rutebaga.controller.keyboard.KeyBindingList;
 import rutebaga.controller.keyboard.KeyCode;
@@ -34,12 +36,14 @@ import rutebaga.view.game.TargetInstanceObservable;
 public class GamePlayActionInterpreter extends MouseAdapter implements
 		UserActionInterpreter, KeyListener {
 
+	private KeyBinding<Command> rebindingState;
+	private boolean allowRebinding;
 	private KeyBindingList<Command> keyPressBindings;
 	private KeyBindingList<Command> keyReleaseBindings;
-	private MovementBindingManager movementManager;
 	private UserInterfaceFacade facade;
 	private GameDaemon daemon;
 	private ActionDeterminer actionDeterminer;
+	private boolean paused;
 
 	private World world;
 	private Entity<?> avatar;
@@ -59,7 +63,8 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		this.actionDeterminer = new ActionDeterminer(avatar);
 		this.keyPressBindings = new KeyBindingList<Command>();
 		this.keyReleaseBindings = new KeyBindingList<Command>();
-		this.movementManager = MovementBindingManager.defaultBindings(avatar,
+		// TODO: redo the way movement bindings work
+		MovementBindingSource movementBindings = MovementBindingSource.defaultBindings(avatar,
 				this.keyPressBindings);
 		initializeKeyBindings();
 	}
@@ -69,6 +74,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			public void execute() {
 				explode();
 			}
+
 			public boolean isFeasible() {
 				return true;
 			}
@@ -76,24 +82,31 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 		keyPressBindings.set(KeyCode.get(KeyEvent.VK_ENTER), new Command() {
 			public void execute() {
-				GamePlayActionInterpreter.this.avatar.getAbilities().get(0)
-						.act(target != null ? target : GamePlayActionInterpreter.this.avatar);
+				GamePlayActionInterpreter.this.avatar
+						.getAbilities()
+						.get(0)
+						.act(
+								target != null ? target
+										: GamePlayActionInterpreter.this.avatar);
 			}
+
 			public boolean isFeasible() {
 				return true;
 			}
 		});
-		
-		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_SEMICOLON), new Command() {
-			public void execute() {
-				targetNextEntity();
-			}
-			public boolean isFeasible() {
-				return true;
-			}
-		});
+
+		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_SEMICOLON),
+				new Command() {
+					public void execute() {
+						targetNextEntity();
+					}
+
+					public boolean isFeasible() {
+						return true;
+					}
+				});
 	}
-	
+
 	public boolean eventsFallThrough() {
 		// I'm a root interpreter!
 		return false;
@@ -118,9 +131,11 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	}
 
 	public void tick() {
-		if (world != null) {
-			world.tick();
-			updateTargetedTile();
+		if (!paused) {
+			if (world != null) {
+				world.tick();
+				updateTargetedTile();
+			}
 		}
 	}
 
@@ -129,10 +144,52 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 	}
 
+	private boolean rebindEvent(KeyEvent e) {
+		return (e.getModifiersEx() & KeyEvent.SHIFT_DOWN_MASK) == KeyEvent.SHIFT_DOWN_MASK;
+	}
+
 	public void keyPressed(KeyEvent e) {
+		if (rebindingState != null)
+			completeRebinding(KeyCode.get(e.getKeyCode()));
+		allowRebinding = false;
 		KeyBinding<Command> binding = this.keyPressBindings.get(KeyCode.get(e));
+		if (binding != null) {
+			if (rebindEvent(e))
+				startRebinding(binding);
+			else
+				binding.getBinding().execute();
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
+		allowRebinding = true;
+		KeyBinding<Command> binding = this.keyReleaseBindings.get(KeyCode.get(e));
 		if (binding != null)
 			binding.getBinding().execute();
+	}
+
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	private void startRebinding(KeyBinding<Command> binding) {
+		rebindingState = binding;
+		paused = true;
+		ConcreteElementalList list = new ConcreteElementalList();
+		list.setLabel("Key Binding");
+		facade.createWarningBox(list, true);
+	}
+
+	private void completeRebinding(KeyCode code) {
+		if (allowRebinding) {
+			keyPressBindings.remove(rebindingState);
+			KeyBinding<Command> newBinding = new ConcreteKeyBinding<Command>(code,
+					rebindingState.getBinding());
+			keyPressBindings.set(newBinding);
+			rebindingState = null;
+			paused = false;
+			facade.clearWarningBox();
+		}
 	}
 
 	private final BoundsTracker tracker;
@@ -154,22 +211,12 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		}
 	}
 
-	public void keyReleased(KeyEvent e) {
-		KeyBinding<Command> binding = this.keyReleaseBindings.get(KeyCode.get(e));
-		if (binding != null)
-			binding.getBinding().execute();
-	}
-
-	public void keyTyped(KeyEvent e) {
-
-	}
-
 	private InstanceSet determineTargetSet(Point screenLocation) {
 		Environment environment = avatar.getEnvironment();
 		TileConverter converter = environment.getTileConvertor();
 
-		Vector2D vector = MapComponent.reverseCenter(avatar, screenLocation, facade.getView().getWidth(),
-				facade.getView().getHeight());
+		Vector2D vector = MapComponent.reverseCenter(avatar, screenLocation,
+				facade.getView().getWidth(), facade.getView().getHeight());
 
 		IntVector2D tileCoordinates = converter.tileOf(vector);
 
@@ -201,8 +248,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 					target = null;
 				else
 					target = actionDeterminer.determineTarget(set);
-			}
-			else
+			} else
 				target = null;
 			retarget();
 			break;
@@ -212,7 +258,8 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	private void retarget() {
 		facade.clearContextMenuStack();
 		if (target != null) {
-			ElementalList list = actionDeterminer.determineActions(target, daemon.getCommandQueue());
+			ElementalList list = actionDeterminer.determineActions(target,
+					daemon.getCommandQueue());
 			if (list != null) {
 				CreateRootContextMenuCommand command = new CreateRootContextMenuCommand(
 						list);
@@ -229,8 +276,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		if (target != null) {
 			Tile<?> tile = findTileAt(target);
 			observable.notifyAllObservers(tile);
-		}
-		else
+		} else
 			observable.notifyAllObservers(null);
 	}
 

@@ -20,6 +20,7 @@ import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.View;
 import rutebaga.view.rwt.ViewComponent;
 import rutebaga.view.rwt.ViewCompositeComponent;
+import rutebaga.view.rwt.WarningBox;
 
 /**
  * Provides a unified interface to manipulate the View Subsystem without
@@ -41,13 +42,14 @@ import rutebaga.view.rwt.ViewCompositeComponent;
  * @see rutebaga.view.rwt.EventDispatcher
  * 
  */
-public class ViewFacade implements UserEventSource, UserInterfaceFacade
-{
+public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 
 	private View view;
-	
+
 	private Stack<ViewComponent> contextStack = new Stack<ViewComponent>();
 
+	private WarningBox warningBox;
+	
 	/**
 	 * Passes the parameters to the {@link rutebaga.view.rwt.View View}
 	 * Constructor.
@@ -58,8 +60,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            Height of the game.
 	 * @see rutebaga.view.rwt.View#View(int, int)
 	 */
-	public void constructView(int width, int height)
-	{
+	public void constructView(int width, int height) {
 		view = new View(width, height);
 	}
 
@@ -70,10 +71,9 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 * 
 	 * @see rutebaga.view.rwt.View#View(int, int)
 	 */
-	public void constructFullscreenView()
-	{
+	public void constructFullscreenView() {
 		view = new View(800, 600);
-		//view.setFullscreen();
+		// view.setFullscreen();
 	}
 
 	/**
@@ -81,8 +81,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 * will call {@link rutebaga.view.rwt.View#renderFrame()}. Otherwise
 	 * nothing is done.
 	 */
-	public void renderFrame()
-	{
+	public void renderFrame() {
 		if (view != null)
 			view.renderFrame();
 	}
@@ -93,11 +92,11 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 * @param list
 	 *            A list of choices for the player.
 	 */
-	public void createTitleScreen(ElementalList list)
-	{
+	public void createTitleScreen(ElementalList list) {
 		clearView();
-		
-		view.addViewComponent(new TitleScreen(list, view.getWidth(), view.getHeight()));
+
+		view.addViewComponent(new TitleScreen(list, view.getWidth(), view
+				.getHeight()));
 	}
 
 	/**
@@ -113,25 +112,25 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The {@link Command} for what to do on cancellation.
 	 */
 	public void createAvatarCreationScreen(TextFieldListener listener,
-			ElementalList list, Command accept, Command cancel)
-	{
+			ElementalList list, Command accept, Command cancel) {
 		clearView();
-		
-		view.addViewComponent(new AvatarCreationScreen(view.getWidth(), view.getHeight(), listener, list, accept, cancel) );
+
+		view.addViewComponent(new AvatarCreationScreen(view.getWidth(), view
+				.getHeight(), listener, list, accept, cancel));
 	}
-	
-	
-	public void createGamePlayScreen(Entity avatar, TargetInstanceObservable observable) {
+
+	public void createGamePlayScreen(Entity avatar,
+			TargetInstanceObservable observable) {
 		clearView();
-		
+
 		view.addViewComponent(new MapComponent(observable, avatar, view.getWidth(), view.getHeight()));
 		
 		FPSTextComponent fps = new FPSTextComponent();
 		fps.setFontColor(Color.RED);
 		fps.setLocation(100, 100);
-		
+
 		view.addViewComponent(fps);
-		
+
 	}
 
 	/**
@@ -143,31 +142,32 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The location to spawn the menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createRootContextMenu(ElementalList list, Vector2D vector)
-	{
+	public int createRootContextMenu(ElementalList list, Vector2D vector) {
 		clearContextMenuStack();
-		
+
 		List<String> names = new ArrayList<String>();
 		List<Command> commands = new ArrayList<Command>();
-		
-		for(ListElement element : list) {
+
+		for (ListElement element : list) {
 			commands.add(element.getCommand());
 			names.add(element.getLabel());
 		}
-			
+
 		ContextMenu cm = new ContextMenu(list);
-		cm.setLocation(vector.getX().intValue(), (int)vector.getY().intValue());
-		
+		cm
+				.setLocation(vector.getX().intValue(), (int) vector.getY()
+						.intValue());
+
 		view.addViewComponent(cm);
-		
-		
+
 		contextStack.push(cm);
-		
+
 		return contextStack.size();
 	}
-	
+
 	public int createRootContextMenu(ElementalList list) {
-		return createRootContextMenu(list,  new Vector2D(view.getWidth()/2, view.getHeight()/2));
+		return createRootContextMenu(list, new Vector2D(view.getWidth() / 2,
+				view.getHeight() / 2));
 	}
 
 	/**
@@ -178,8 +178,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            A list of choices for the player.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createSubContextMenu(ElementalList list, Vector2D vector)
-	{
+	public int createSubContextMenu(ElementalList list, Vector2D vector) {
 		List<String> names = new ArrayList<String>();
 		List<Command> commands = new ArrayList<Command>();
 		
@@ -198,9 +197,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 		
 		return contextStack.size();
 	}
-	
+
 	public int createSubContextMenu(ElementalList list) {
-		return createSubContextMenu(list,  new Vector2D(view.getWidth()/2, view.getHeight()/2));
+		return createSubContextMenu(list, new Vector2D(view.getWidth() / 2,
+				view.getHeight() / 2));
 	}
 
 	/**
@@ -213,30 +213,31 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The amount of information per scrollable page.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createScrollMenu(ElementalList list, int pageSize, Vector2D vector)
-	{
+	public int createScrollMenu(ElementalList list, int pageSize,
+			Vector2D vector) {
 		ViewCompositeComponent vcc = new ViewCompositeComponent();
-		
-		for(ListElement element : list ) {
+
+		for (ListElement element : list) {
 			ButtonComponent button = new ButtonComponent(element.getLabel());
 			button.setCommand(element.getCommand());
 			vcc.addChild(button);
 		}
-		
+
 		ScrollDecorator scroll = new ScrollDecorator(vcc, pageSize * 10, 50);
 
 		scroll.setLocation(vector.getX().intValue(), vector.getY().intValue());
-		
+
 		view.addViewComponent(scroll);
-		
+
 		prepareContextStack();
 		contextStack.add(scroll);
-		
+
 		return contextStack.size();
 	}
-	
+
 	public int createScrollMenu(ElementalList list, int pageSize) {
-		return createScrollMenu(list, pageSize, new Vector2D(view.getWidth()/2, view.getHeight()/2));
+		return createScrollMenu(list, pageSize, new Vector2D(
+				view.getWidth() / 2, view.getHeight() / 2));
 	}
 
 	/**
@@ -248,15 +249,14 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createDialogMenu(ElementalList list, Vector2D vector)
-	{
+	public int createDialogMenu(ElementalList list, Vector2D vector) {
 		return 0;
 	}
-	
-	public int createDialogMenu(ElementalList list) {
-		return createDialogMenu(list, new Vector2D(view.getWidth()/2, view.getHeight()/2));
-	}
 
+	public int createDialogMenu(ElementalList list) {
+		return createDialogMenu(list, new Vector2D(view.getWidth() / 2, view
+				.getHeight() / 2));
+	}
 
 	/**
 	 * Shows a warning to the player.
@@ -264,88 +264,85 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	 * @param list
 	 *            A list of items to be presented to the player.
 	 */
-	public void createWarningBox(ElementalList list)
-	{
+	public void createWarningBox(ElementalList list, boolean blocking) {
+		int width = 400;
+		int height = 200;
+		createWarningBox(list, new Vector2D((view.getWidth() - width) / 2,
+				(view.getHeight() - height) / 2), new Vector2D(400, 200), blocking);
+	}
 
+	public void createWarningBox(ElementalList list, Vector2D vector, boolean blocking) {
+		createWarningBox(list, new Vector2D(view.getWidth() / 2, view
+				.getHeight() / 2), blocking);
+	}
+
+	private void createWarningBox(ElementalList list, Vector2D location,
+			Vector2D visibleDimensions, boolean blocking) {
+		clearWarningBox();
+		Vector2D blockingDimensions = blocking ? new Vector2D(view.getWidth(),
+				view.getHeight()) : visibleDimensions;
+		warningBox = new WarningBox(list, visibleDimensions, blockingDimensions);
+		warningBox.setLocation(location.getX().intValue(), location.getY().intValue());
+		view.addViewComponent(warningBox);
+	}
+
+	public void clearWarningBox() {
+		if (warningBox != null) {
+			view.removeViewComponent(warningBox);
+			warningBox = null;
+		}
 	}
 	
-	public void createWarningBox(ElementalList list, Vector2D vector) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
 	 * Closes a {@link ContextMenu}. This could either be the root, or
-	 * somewhere in the menu heirarchy.
+	 * somewhere in the menu hierarchy.
 	 * 
 	 * @param menu
 	 *            A ContextMenu to be closed.
 	 */
-	public void closeContextMenu(int menu)
-	{
+	public void closeContextMenu(int menu) {
 
 	}
-	
+
 	public void clearContextMenuStack() {
-		while(!contextStack.isEmpty()) {
+		while (!contextStack.isEmpty()) {
 			ViewComponent vc = contextStack.pop();
 			view.removeViewComponent(vc);
 		}
 	}
-	
+
 	public void popContextMenu() {
 		view.removeViewComponent(contextStack.pop());
-		if(contextStack.size() > 0)
+		if (contextStack.size() > 0)
 			view.addViewComponent(contextStack.peek());
 	}
-	
+
 	private void prepareContextStack() {
 		view.removeViewComponent(contextStack.peek());
 	}
-	
+
 	public View getView() {
 		return view;
 	}
-	
-	
+
 	private void clearView() {
 		view.removeAllViewComponents(view.getViewComponents());
 	}
-	
-	public void addKeyListener(KeyListener kl ) {
+
+	public void addKeyListener(KeyListener kl) {
 		view.addKeyListener(kl);
 	}
-	
+
 	public void removeKeyListener(KeyListener kl) {
 		view.removeKeyListener(kl);
 	}
-	
+
 	public void addMouseListener(MouseListener ml) {
 		view.addMouseListener(ml);
 	}
-	
+
 	public void removeMouseListener(MouseListener ml) {
 		view.removeMouseListener(ml);
 	}
-	
-	
-	private class AbilityCommand implements Command{ //TODO REMOVE THIS ONCE WE HAVE REAL COMMANDS
-
-		private Entity<?> avatar;
-		
-		public AbilityCommand(Entity avatar) {
-			this.avatar = avatar;
-		}
-		
-		public void execute() {
-			avatar.getAbilities().get(0).act(avatar);
-		}
-
-		public boolean isFeasible() {
-			return true;
-		}
-		
-	}
-
 
 }

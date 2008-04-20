@@ -88,10 +88,12 @@ public interface UserInterfaceFacade {
 	 * @param list
 	 *            A list of items to be presented to the player.
 	 */
-	void createWarningBox(ElementalList list);
+	void createWarningBox(ElementalList list, boolean blocking);
 	
-	void createWarningBox(ElementalList list, Vector2D vector);
+	void createWarningBox(ElementalList list, Vector2D vector, boolean blocking);
 
+	public void clearWarningBox();
+	
 	/**
 	 * Closes a {@link ContextMenu}. This could either be the root, or
 	 * somewhere in the menu heirarchy.

@@ -12,13 +12,13 @@ import rutebaga.controller.keyboard.KeyBindingList;
 import rutebaga.controller.keyboard.KeyCode;
 import rutebaga.model.entity.Entity;
 
-public class MovementBindingManager {
+public class MovementBindingSource {
 
 	private KeyBindingList<Command> bindings;
 	private Entity entity;
 	private Map<Double, KeyBinding<Command>> directions;
 
-	public static MovementBindingManager defaultBindings(Entity entity,
+	public static MovementBindingSource defaultBindings(Entity entity,
 			KeyBindingList<Command> bindings) {
 		// TODO: Eliminate need for MOVE_SPEED
 		final double MOVE_SPEED = 0.2;
@@ -31,7 +31,7 @@ public class MovementBindingManager {
 		final Vector2D SOUTHWEST = new Vector2D(0, MOVE_SPEED);
 		final Vector2D NORTHWEST = new Vector2D(-MOVE_SPEED, 0);
 
-		MovementBindingManager manager = new MovementBindingManager(entity,
+		MovementBindingSource manager = new MovementBindingSource(entity,
 				bindings);
 		manager.setDirectionBinding(KeyCode.get(KeyEvent.VK_Q), NORTHWEST);
 		manager.setDirectionBinding(KeyCode.get(KeyEvent.VK_W), NORTH);
@@ -43,7 +43,7 @@ public class MovementBindingManager {
 		return manager;
 	}
 
-	public MovementBindingManager(Entity entity,
+	public MovementBindingSource(Entity entity,
 			KeyBindingList<Command> bindings) {
 		if (entity == null)
 			throw new NullPointerException();
