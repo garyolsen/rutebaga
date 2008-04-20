@@ -78,3 +78,15 @@ imgWaterTile05
 path TestImages/water_tile05.png
 imgWaterTile06
 path TestImages/water_tile06.png
+imgMountainTile01
+path TestImages/mountain_tile01.png
+imgMountainTile02
+path TestImages/mountain_tile02.png
+imgMountainTile03
+path TestImages/mountain_tile03.png
+imgMountainTile04
+path TestImages/mountain_tile04.png
+imgMountainTile05
+path TestImages/mountain_tile05.png
+imgMountainTile06
+path TestImages/mountain_tile06.png

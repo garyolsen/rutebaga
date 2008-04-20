@@ -22,6 +22,7 @@ import rutebaga.model.environment.appearance.AppearanceManager;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance.Orientation;
 import rutebaga.model.map.GrassTerrain;
+import rutebaga.model.map.MountainTerrain;
 import rutebaga.model.map.Tile;
 import rutebaga.model.map.WaterTerrain;
 import rutebaga.scaffold.MasterScaffold;
@@ -59,23 +60,29 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		//Image cheese = (Image) scaffold.get("imgCheese");
 		Image grass = (Image) scaffold.get("imgHextile");
 		Image water = (Image) scaffold.get("imgWaterTile01");
+		Image mountain = (Image) scaffold.get("imgMountainTile01");
 		Image treasure = (Image) scaffold.get("imgYoshiEgg01");
 
 		Image[] grassTileImages = new Image[6];
 		Image[] waterTileImages = new Image[6];
+		Image[] mountainTileImages = new Image[6];
 		for (int i = 1; i <= 6; i++)
 		{
 			grassTileImages[i - 1] = (Image) scaffold.get("imgHextile0" + i);
 			waterTileImages[i - 1] = (Image) scaffold.get("imgWaterTile0" + i);
+			mountainTileImages[i - 1] = (Image) scaffold.get("imgMountainTile0" + i);
 		}
 		Appearance[] grassTileApps = new Appearance[12];
 		Appearance[] waterTileApps = new Appearance[12];
+		Appearance[] mountainTileApps = new Appearance[12];
 		for (int i = 0; i < 6; i++)
 		{
 			grassTileApps[i] = grassTileApps[12 - i - 1] = new Appearance(grassTileImages[i]);
 			waterTileApps[i] = waterTileApps[12 - i - 1] = new Appearance(waterTileImages[i]);
+			mountainTileApps[i] = mountainTileApps[12 - i - 1] = new Appearance(mountainTileImages[i]);
 			grassTileApps[i].setOrientation(Orientation.C);
 			waterTileApps[i].setOrientation(Orientation.C);
+			mountainTileApps[i].setOrientation(Orientation.C);
 		}
 
 		Random random = new Random();
@@ -84,7 +91,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		{
 			for (int y = mapBounds[2]; y < mapBounds[3]; y++)
 			{
-				if (random.nextDouble() < waterTileProb)
+				if (random.nextDouble() < grassTileProb)
 				{
 					Vector2D location = new Vector2D(x, y);
 					Tile tile = new Tile(null);
@@ -95,7 +102,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					tile.setAppearanceManager(new AnimatedAppearanceManager(
 							grassTileApps, 2));
 					environment.add(tile, location);
-				} else
+				} else if (random.nextDouble() < waterTileProb)
 				{
 					Vector2D location = new Vector2D(x, y);
 					Tile tile = new Tile(null);
@@ -105,6 +112,17 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					waterAppearance.setImage(water);
 					tile.setAppearanceManager(new AnimatedAppearanceManager(
 							waterTileApps, 2));
+					environment.add(tile, location);
+				} else
+				{
+					Vector2D location = new Vector2D(x, y);
+					Tile tile = new Tile(null);
+					tile.setTerrainType(new MountainTerrain());
+					Appearance mountainAppearance = new Appearance();
+					mountainAppearance.setOrientation(Orientation.C);
+					mountainAppearance.setImage(mountain);
+					tile.setAppearanceManager(new AnimatedAppearanceManager(
+							mountainTileApps, 2));
 					environment.add(tile, location);
 				}
 			}
