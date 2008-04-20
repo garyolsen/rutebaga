@@ -13,5 +13,10 @@ public class ClippingAttribute implements Attribute {
 	public void apply(Drawer drawer) {
 		drawer.setClipping(clip);
 	}
+	
+	
+	public void setClipping( Shape clip ) {
+		this.clip = clip;
+	}
 
 }
