@@ -86,7 +86,6 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			{
 				Vector2D location = new Vector2D(x, y);
 				Tile tile = null;
-				if (random.nextDouble() < grassTileProb)
 				if ((x == 0 && y == 0) || random.nextDouble() < grassTileProb)
 				{
 					tile = grass.makeInstance();
@@ -158,8 +157,6 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		avatar = ((EntityType<?>) scaffold.get("entityDefault")).makeInstance();
 		Object[] arr = ((EntityAppearanceManager) avatar.getAppearanceManager())
 				.getStanding();
-
-		avatar.whiteListTerrainTypes(grassTerrain);
 
 		while (!avatar.existsInUniverse())
 		{

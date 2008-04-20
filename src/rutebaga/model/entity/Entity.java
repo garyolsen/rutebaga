@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.corba.se.impl.orbutil.ObjectUtility;
+
 import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.Bounds2D;
@@ -158,7 +160,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	@Override
 	public final boolean blocks(Instance other)
 	{
-		return other.getSetIdentifier().equals(InstanceSetIdentifier.ENTITY);
+		return ObjectUtility.equals(other.getSetIdentifier(), InstanceSetIdentifier.ENTITY);
 //		return false;
 	}
 
