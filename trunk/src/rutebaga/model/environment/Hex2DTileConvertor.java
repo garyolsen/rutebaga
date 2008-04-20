@@ -26,7 +26,7 @@ import rutebaga.commons.math.Vector2D;
  * @author Gary LosHuertos
  * 
  */
-public class Hex2DTileConvertor implements TileConvertor
+public class Hex2DTileConvertor implements TileConverter
 {
 	final static double xratio = Math.sqrt(3) / 2.0;
 	final static double yratio = 1.0 / 2.0;

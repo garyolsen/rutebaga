@@ -13,7 +13,7 @@ import rutebaga.commons.math.Vector2D;
  * 
  * @see Environment
  */
-public interface TileConvertor
+public interface TileConverter
 {
 	/**
 	 * Determines the discrete tile-space coordinate of a coordinate in actual

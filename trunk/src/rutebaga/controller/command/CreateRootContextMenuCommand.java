@@ -48,6 +48,7 @@ public class CreateRootContextMenuCommand extends CreateContextMenuCommand {
 	 */
 	@Override
 	public void execute() {
-		getViewFacade().createRootContextMenu(getElements(), location);
+		getUIFacade().clearContextMenuStack();
+		getUIFacade().createRootContextMenu(getElements(), location);
 	}
 }

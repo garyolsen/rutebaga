@@ -1,6 +1,7 @@
 package rutebaga.controller.command;
 
 import rutebaga.controller.command.list.ElementalList;
+import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 
 /**
@@ -16,28 +17,26 @@ import rutebaga.view.ViewFacade;
  * 
  * @author Matthew Chuah
  */
-public abstract class CreateContextMenuCommand implements Command
-{
+public abstract class CreateContextMenuCommand implements Command {
 
 	private ElementalList elements;
 
-	private ViewFacade facade;
+	private UserInterfaceFacade facade;
 
 	public CreateContextMenuCommand() {
 	}
-	
+
 	public CreateContextMenuCommand(ElementalList list) {
 		setElements(list);
 	}
-	
+
 	/**
 	 * Set the list of elements to put in the context menu.
 	 * 
 	 * @param list
 	 *            a list of elements to display
 	 */
-	public final void setElements(ElementalList list)
-	{
+	public final void setElements(ElementalList list) {
 		elements = list;
 	}
 
@@ -47,14 +46,13 @@ public abstract class CreateContextMenuCommand implements Command
 	 * 
 	 * @param view
 	 */
-	public final void setViewFacade(ViewFacade view)
-	{
+	public final void setUIFacade(UserInterfaceFacade view) {
 		facade = view;
 	}
 
 	/**
-	 * Asks the ViewFacade to open a context menu with the list of elements
-	 * specified.
+	 * Asks the UserInterfaceFacade to open a context menu with the list of
+	 * elements specified.
 	 * 
 	 * @see rutebaga.controller.command.Command#execute()
 	 */
@@ -65,8 +63,7 @@ public abstract class CreateContextMenuCommand implements Command
 	 * 
 	 * @see rutebaga.controller.command.Command#isFeasible()
 	 */
-	public boolean isFeasible()
-	{
+	public boolean isFeasible() {
 		return true;
 	}
 
@@ -76,8 +73,7 @@ public abstract class CreateContextMenuCommand implements Command
 	 * 
 	 * @return
 	 */
-	protected final ViewFacade getViewFacade()
-	{
+	protected final UserInterfaceFacade getUIFacade() {
 		return facade;
 	}
 
@@ -87,8 +83,7 @@ public abstract class CreateContextMenuCommand implements Command
 	 * 
 	 * @return this CreateContextMenuCommand's ElementalList
 	 */
-	protected final ElementalList getElements()
-	{
+	protected final ElementalList getElements() {
 		return elements;
 	}
 }

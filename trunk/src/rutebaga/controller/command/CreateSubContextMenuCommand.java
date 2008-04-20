@@ -28,6 +28,6 @@ public class CreateSubContextMenuCommand extends CreateContextMenuCommand {
 	 */
 	@Override
 	public void execute() {
-		getViewFacade().createSubContextMenu(getElements());
+		getUIFacade().createSubContextMenu(getElements());
 	}
 }

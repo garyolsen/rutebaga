@@ -24,7 +24,7 @@ import rutebaga.model.environment.ConcreteInstanceSet;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSet;
-import rutebaga.model.environment.TileConvertor;
+import rutebaga.model.environment.TileConverter;
 import rutebaga.model.map.Tile;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
@@ -275,7 +275,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 
 	public static Point centerPointOn(Instance centerInstance, Vector2D other, int width, int height)
 	{
-		TileConvertor convertor = centerInstance.getEnvironment().getTileConvertor();
+		TileConverter convertor = centerInstance.getEnvironment().getTileConvertor();
 		
 		Vector2D center = centerInstance.getCoordinate();
 		
@@ -290,7 +290,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 	
 	public static Vector2D reverseCenter(Instance centerInstance, Point other, int width, int height)
 	{
-		TileConvertor convertor = centerInstance.getEnvironment().getTileConvertor();
+		TileConverter convertor = centerInstance.getEnvironment().getTileConvertor();
 		Vector2D center = centerInstance.getCoordinate();
 		
 		center = convertor.toRect(center);
@@ -315,7 +315,7 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 	protected boolean processMouseMotionEvent( MouseEvent event ) {
 		if(event.getID() == MouseEvent.MOUSE_MOVED) {
 			Environment environment = avatar.getEnvironment();
-			TileConvertor convertor = environment.getTileConvertor();
+			TileConverter convertor = environment.getTileConvertor();
 			
 			
 			Vector2D vector = reverseCenter(avatar, event.getPoint(), getWidth(), getHeight());
