@@ -22,10 +22,8 @@ import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.AppearanceManager;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance.Orientation;
-import rutebaga.model.map.GrassTerrain;
-import rutebaga.model.map.MountainTerrain;
+import rutebaga.model.map.TerrainType;
 import rutebaga.model.map.Tile;
-import rutebaga.model.map.WaterTerrain;
 import rutebaga.scaffold.MasterScaffold;
 import rutebaga.test.model.ability.CheeseArrowAbilityType;
 
@@ -63,6 +61,10 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		Image water = (Image) scaffold.get("imgWaterTile01");
 		Image mountain = (Image) scaffold.get("imgMountainTile01");
 		Image treasure = (Image) scaffold.get("imgYoshiEgg01");
+		
+		TerrainType grassTerrain = new TerrainType("Grass");
+		TerrainType waterTerrain = new TerrainType("Water");
+		TerrainType mountainTerrain = new TerrainType("Mountain");
 
 		Image[] grassTileImages = new Image[6];
 		Image[] waterTileImages = new Image[6];
@@ -96,7 +98,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				{
 					Vector2D location = new Vector2D(x, y);
 					Tile tile = new Tile(null);
-					tile.setTerrainType(new GrassTerrain());
+					tile.setTerrainType(grassTerrain);
 					Appearance grassAppearance = new Appearance();
 					grassAppearance.setOrientation(Orientation.C);
 					grassAppearance.setImage(grass);
@@ -107,7 +109,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				{
 					Vector2D location = new Vector2D(x, y);
 					Tile tile = new Tile(null);
-					tile.setTerrainType(new WaterTerrain());
+					tile.setTerrainType(waterTerrain);
 					Appearance waterAppearance = new Appearance();
 					waterAppearance.setOrientation(Orientation.C);
 					waterAppearance.setImage(water);
@@ -118,7 +120,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				{
 					Vector2D location = new Vector2D(x, y);
 					Tile tile = new Tile(null);
-					tile.setTerrainType(new MountainTerrain());
+					tile.setTerrainType(mountainTerrain);
 					Appearance mountainAppearance = new Appearance();
 					mountainAppearance.setOrientation(Orientation.C);
 					mountainAppearance.setImage(mountain);
@@ -175,7 +177,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				+ ((arr == null) ? "" : (arr.length + ":" + arr[0])));
 
 		avatar.addAbility(new CheeseArrowAbilityType().makeAbility());
-		avatar.whiteListTerrainTypes(new GrassTerrain());
+		avatar.whiteListTerrainTypes(grassTerrain);
 
 		environment.add(avatar, new Vector2D(0, 0));
 
@@ -194,7 +196,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			manager.setWalking(((EntityType<?>) scaffold.get("entityDefault")).getWalking());
 			npc1.setAppearanceManager(manager);
 
-			npc1.whiteListTerrainTypes(new GrassTerrain(), new WaterTerrain());
+			npc1.whiteListTerrainTypes(grassTerrain, waterTerrain);
 			npc1.setTarget(avatar);
 
 			Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
