@@ -1,25 +1,14 @@
+##############################################################################
+#							CHARACTER SPRITES								 #
+##############################################################################
+
 imgCheese 
 path TestImages/cheese.png
-imgGrass
-path TestImages/grass.jpg
-imgHextile
-path TestImages/hextile.png
 imgPoint
 path TestImages/point.png
 imgTreasure
 path TestImages/treasure.png
-imgHextile01
-path TestImages/hextile01.png
-imgHextile02
-path TestImages/hextile02.png
-imgHextile03
-path TestImages/hextile03.png
-imgHextile04
-path TestImages/hextile04.png
-imgHextile05
-path TestImages/hextile05.png
-imgHextile06
-path TestImages/hextile06.png
+
 imgYoshiNorth01
 path TestImages/mario_mounted_north01.png
 imgYoshiNorth02
@@ -66,6 +55,29 @@ imgYoshiEgg04
 path TestImages/yoshi_egg04.png
 imgYoshiEgg05
 path TestImages/yoshi_egg05.png
+
+##############################################################################
+#							   TILE SPRITES 								 #
+##############################################################################
+
+imgGrass
+path TestImages/grass.jpg
+imgHextile
+path TestImages/hextile.png
+
+imgHextile01
+path TestImages/hextile01.png
+imgHextile02
+path TestImages/hextile02.png
+imgHextile03
+path TestImages/hextile03.png
+imgHextile04
+path TestImages/hextile04.png
+imgHextile05
+path TestImages/hextile05.png
+imgHextile06
+path TestImages/hextile06.png
+
 imgWaterTile01
 path TestImages/water_tile01.png
 imgWaterTile02
@@ -89,6 +101,15 @@ path TestImages/mountain_tile04.png
 imgMountainTile05
 path TestImages/mountain_tile05.png
 imgMountainTile06
+path TestImages/mountain_tile06.png
+
+
+##############################################################################
+#							   EFFECT SPRITES 								 #
+##############################################################################
+
+imgLameEffect
+path TestImages/stupidEffect.png
 path TestImages/mountain_tile06.png
 imgmarioNorth01
 path TestImages/mario_north01.png
