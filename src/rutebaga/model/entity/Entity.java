@@ -54,6 +54,18 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private String name;
 	private double money;
 	
+	private Vector2D facing = new Vector2D(0, 0);
+	
+	public Vector2D getFacing()
+	{
+		return facing;
+	}
+
+	public void setFacing(Vector2D facing)
+	{
+		this.facing = facing;
+	}
+
 	public String toString()
 	{
 		return "Entity named " + name;
@@ -178,6 +190,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public void walk(Vector2D direction)
 	{
 		double magnitude = direction.getMagnitude();
+		if(magnitude > 0.005) this.facing = direction;
 		this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)/magnitude));
 	}
 
