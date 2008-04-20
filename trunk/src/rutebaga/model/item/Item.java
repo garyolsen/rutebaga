@@ -2,10 +2,13 @@ package rutebaga.model.item;
 
 import java.util.List;
 
+import rutebaga.model.DefaultLayers;
 import rutebaga.model.Named;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
 import rutebaga.model.entity.inventory.Inventory;
+import rutebaga.model.environment.ConcreteInstanceSet;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InstanceType;
@@ -39,7 +42,7 @@ public class Item<T extends Item<T>> extends Instance<T> implements Named
 
 	@Override
 	public double getLayer() {
-		return 0;
+		return DefaultLayers.GROUND.getLayer();
 	}
 
 	@Override
@@ -92,7 +95,17 @@ public class Item<T extends Item<T>> extends Instance<T> implements Named
 
 	@Override
 	public void tick() {
+		ConcreteInstanceSet set = new ConcreteInstanceSet();
+		set.addAll(getEnvironment().instancesAt(getTile()));
 		
+		for(Entity entity : set.getEntities()) {
+			if(entity.getInventory() != null) {
+				this.giveTo(entity.getInventory());
+				this.getEnvironment().remove(this);
+				break;
+			}
+		}
+			
 	}
 
 	public void setEquippableAspect(EquippableAspect equippableAspect)
