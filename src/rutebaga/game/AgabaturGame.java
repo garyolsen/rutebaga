@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import rutebaga.controller.Game;
 import rutebaga.controller.GameInitializer;
+import rutebaga.game.builders.CustomAbilityBuilder;
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
 import rutebaga.scaffold.builders.DefaultBuilder;
@@ -15,6 +16,7 @@ public class AgabaturGame implements Game
 	{
 		Collection<Builder> rval = new ArrayList<Builder>();
 		rval.add(new DefaultBuilder());
+		rval.add(new CustomAbilityBuilder());
 		return rval;
 	}
 

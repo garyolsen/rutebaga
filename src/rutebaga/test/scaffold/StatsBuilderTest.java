@@ -1,10 +1,14 @@
 package rutebaga.test.scaffold;
 
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import rutebaga.commons.Log;
 import rutebaga.commons.math.ValueProvider;
+import rutebaga.game.builders.CustomAbilityBuilder;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
@@ -23,13 +27,20 @@ public class StatsBuilderTest
 	 * @param args
 	 */
 	public static void main(String[] args)
-	{
-		Log.logging = true;
-		
+	{		
 		Builder b = new DefaultBuilder();
 		MasterScaffold s = new MasterScaffold();
 		s.registerBuilder(b);
+		s.registerBuilder(new CustomAbilityBuilder());
 		s.build();
+		
+		SortedSet<String> keys = new TreeSet<String>();
+		keys.addAll(s.getKeys());
+		
+		for(String key : keys)
+		{
+			System.out.println(key + "\t\t" + s.get(key));
+		}
 		
 		Stats stats = new ConcreteStats(null);
 		StatisticId defensiveRating = (StatisticId) s.get("statDefRating");
@@ -37,6 +48,8 @@ public class StatsBuilderTest
 		
 		Entity entity = ((EntityType<?>) s.get("entityDefault")).makeInstance();
 		rutebaga.commons.Log.log(entity.getMovementSpeed());
+		
+		System.out.println(entity.getAbilities().size());
 	}
 
 }

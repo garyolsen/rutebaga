@@ -17,9 +17,19 @@ import rutebaga.model.map.TerrainType;
  */
 public class MovementAttributes
 {
-
 	private Map<Object, MovementAttributeSet> movementSet = new HashMap<Object, MovementAttributeSet>();
 
+	public MovementAttributes()
+	{
+		
+	}
+	
+	public MovementAttributes(boolean asBlacklist)
+	{
+		MovementAttributeSet set = asBlacklist ? new BlackList() : new WhiteList();
+		add(set);
+	}
+	
 	public boolean able(TerrainType terrain)
 	{
 		// if no MovementAttributeSets are in collection, return true

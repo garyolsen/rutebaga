@@ -30,7 +30,7 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 		return movementAttributes;
 	}
 
-	public T makeInstance()
+	public final T makeInstance()
 	{
 		T rval = create();
 		initialize(rval);

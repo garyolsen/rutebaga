@@ -34,7 +34,6 @@ public class ItemTypeBuilder extends InstanceBuilder
 		String[] slots = getStringArray(id, "allocation", "[\\s\\t]");
 		for(int i=0; i<slots.length; i+=2)
 		{
-			System.out.println(slots[i] + ":" + slots[i+1]);
 			SlotType type = (SlotType) scaffold.get(slots[i]);
 			int qty = Integer.parseInt(slots[i+1]);
 			//XXX LOD

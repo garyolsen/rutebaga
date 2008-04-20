@@ -1,36 +1,38 @@
 package rutebaga.test.model.effect;
 
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+import rutebaga.commons.math.ValueProvider;
+import rutebaga.model.environment.ConcreteInstanceType;
 
-import javax.imageio.ImageIO;
-
-import rutebaga.commons.math.ConstantValueProvider;
-import rutebaga.model.environment.InstanceType;
-import rutebaga.model.environment.appearance.Appearance;
-import rutebaga.model.environment.appearance.StaticAppearanceManager;
-
-public class RandomEffectType implements InstanceType<RandomEffect>
+public class RandomEffectType extends ConcreteInstanceType<RandomEffect>
 {
-	private static Image appearance;
+	private int lifetime = 100;
+	private ValueProvider<RandomEffect> speed;
 	
-	static {
-		try
-		{
-			appearance = ImageIO.read(new File("TestImages/yoshi_egg01.png"));
-		}
-		catch (IOException e)
-		{
-			throw new RuntimeException(e);
-		}
+	public int getLifetime()
+	{
+		return lifetime;
 	}
 
-	public RandomEffect makeInstance()
+	public void setLifetime(int lifetime)
 	{
-		RandomEffect rval = new RandomEffect(new ConstantValueProvider(0.06));
-		rval.setAppearanceManager(new StaticAppearanceManager(new Appearance(appearance)));
-		rval.setLifetime(100);
+		this.lifetime = lifetime;
+	}
+	
+	@Override
+	protected RandomEffect create()
+	{
+		RandomEffect rval = new RandomEffect(speed);
+		rval.setLifetime(lifetime);
 		return rval;
+	}
+
+	public ValueProvider<RandomEffect> getSpeed()
+	{
+		return speed;
+	}
+
+	public void setSpeed(ValueProvider<RandomEffect> speed)
+	{
+		this.speed = speed;
 	}
 }
