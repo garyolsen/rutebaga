@@ -43,7 +43,7 @@ public class HostileWander extends NPCState {
 	{
 		if (npc.targetInSight())
 		{
-			System.out.println("I can't see...going into chase state!");
+			rutebaga.commons.Log.log("I can't see...going into chase state!");
 			return NPCState.chase;
 		}
 		else
@@ -57,7 +57,7 @@ public class HostileWander extends NPCState {
 //			
 //			npc.walk(direction);
 			
-			System.out.println("Hostile wandering around.");
+			rutebaga.commons.Log.log("Hostile wandering around.");
 			return this;
 		}
 		

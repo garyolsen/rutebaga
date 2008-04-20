@@ -61,7 +61,7 @@ public class Chase extends NPCState
 			
 		} else if (!(npc.getTarget() == null) && (npc.targetInSight()))
 		{
-			System.out.println("I am chasing you!");
+			rutebaga.commons.Log.log("I am chasing you!");
 			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc, npc.getTargetTile());
 			List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
 			
@@ -87,15 +87,15 @@ public class Chase extends NPCState
 		}
 		if( !(lastPath == null) && !lastPath.isEmpty() && (lifetime > 0) )
 		{
-			System.out.println(lastTile);
-			System.out.println("I lost sight of you. Interest level at: " + lifetime);
+			rutebaga.commons.Log.log(lastTile);
+			rutebaga.commons.Log.log("I lost sight of you. Interest level at: " + lifetime);
 			lifetime--;
 			MutableVector2D moveVector;
-			System.out.println("Pathfinding to last known position...");
+			rutebaga.commons.Log.log("Pathfinding to last known position...");
 			IntVector2D moveTo = lastPath.get(0).getTile();
 			if ( (npc.getTile().getX() != lastTile.getX()) && (npc.getTile().getY() != lastTile.getY()) )
 			{
-				System.out.println("Removing tile from list");
+				rutebaga.commons.Log.log("Removing tile from list");
 				lastTile = npc.getTile();
 				lastPath.remove(0);
 			}
@@ -107,7 +107,7 @@ public class Chase extends NPCState
 		}
 		else
 		{
-			System.out.println("Going into hostile wander state!");
+			rutebaga.commons.Log.log("Going into hostile wander state!");
 			return NPCState.hostileWander;
 		}
 		
