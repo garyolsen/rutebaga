@@ -1,8 +1,8 @@
 terrGrass
-name Grass
+name	Grass
 
 terrWater
-name Water
+name	Water
 
 terrMountain
-name Mountain
+name	Mountain

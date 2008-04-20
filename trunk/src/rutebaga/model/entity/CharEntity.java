@@ -12,6 +12,7 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	private ConcreteStats stats = new ConcreteStats(this);
 
 	private ConcreteInventory inventory = new ConcreteInventory(this);
+
 	public CharEntity(InstanceType<T> type)
 	{
 		super(type);

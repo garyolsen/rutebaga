@@ -28,6 +28,19 @@ public class WhiteList implements MovementAttributeSet
 
 		return false;
 	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("Whitelist[");
+		for(TerrainType type : terrainSet)
+		{
+			sb.append(type.getName()).append("|");
+		}
+		sb.append("]");
+		return sb.toString();
+	}
 
 	public void add(TerrainType terrain)
 	{

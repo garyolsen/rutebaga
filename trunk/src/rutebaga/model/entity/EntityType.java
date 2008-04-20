@@ -52,6 +52,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 
 	public void initialize(T entity)
 	{
+		super.initialize(entity);
 		EntityAppearanceManager manager = new EntityAppearanceManager(entity);
 		manager.setStanding(standing);
 		manager.setWalking(walking);

@@ -10,6 +10,19 @@ public class BlackList implements MovementAttributeSet
 
 	private Set<TerrainType> terrainSet = new HashSet<TerrainType>();
 
+	@Override
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("Blacklist[");
+		for(TerrainType type : terrainSet)
+		{
+			sb.append(type.getName()).append("|");
+		}
+		sb.append("]");
+		return sb.toString();
+	}
+
 	public boolean able(TerrainType terrain)
 	{
 		for (TerrainType t : terrainSet)
