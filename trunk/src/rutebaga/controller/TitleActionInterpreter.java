@@ -34,13 +34,18 @@ public class TitleActionInterpreter implements UserActionInterpreter {
 		});
 
 		list.add("New Game", new Command() {
+			
+			private boolean activated = false;
 			public boolean isFeasible() {
 				return true;
 			}
 
 			public void execute() {
-				UserActionInterpreter uai = new AvatarInitializationActionInterpreter();
-				daemon.activate(uai);
+				if(!activated) {
+					UserActionInterpreter uai = new AvatarInitializationActionInterpreter();
+					daemon.activate(uai);
+					activated = true;
+				}
 			}
 		});
 

@@ -114,6 +114,22 @@ public class GameDaemon implements InterpreterManager
 					}
 				}, false);
 			}
+			@Override
+			public void keyReleased(final KeyEvent e)
+			{
+				processEvent(new EventCommand<KeyListener>()
+				{
+					@Override
+					KeyListener extract(InterpreterStackRecord isr) {
+						return isr.keyListener;
+					}
+					@Override
+					void act(KeyListener kl)
+					{
+						kl.keyReleased(e);
+					}
+				}, false);
+			}
 		};
 		
 		final MouseListener mouseProcessor = new MouseAdapter() 
