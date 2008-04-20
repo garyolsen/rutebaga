@@ -27,7 +27,11 @@ import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.AppearanceManager;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.environment.appearance.Appearance.Orientation;
+<<<<<<< .mine
+import rutebaga.model.map.River;
+=======
 import rutebaga.model.item.SlotType;
+>>>>>>> .r413
 import rutebaga.model.map.TerrainType;
 import rutebaga.model.map.Tile;
 import rutebaga.scaffold.MasterScaffold;
@@ -148,7 +152,15 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			}
 		}
 		
-
+		//Rivers are broken!
+//		River river = new River();
+//		river.setLocation(new Vector2D(3,3));
+//		river.addNodeAtTail(1.0, new Vector2D(-1,-1));
+//		river.addNodeAtTail(1.0, new Vector2D(-1,-1));
+//		river.addNodeAtTail(1.0, new Vector2D(-1,-1));
+//		river.addNodeAtTail(1.0, new Vector2D(-1,-1));
+//		river.addToEnvironment(environment);
+		
 		if (true)
 		{
 			for (int x = mapBounds[0] + 4; x < mapBounds[1] - 4; x++)
