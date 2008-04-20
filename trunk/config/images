@@ -235,3 +235,12 @@ imgPowerUp02
 path TestImages/power_up02.png
 imgPowerUp03
 path TestImages/power_up03.png
+
+imgFireBall01
+path TestImages/fireball01.png
+imgFireBall02
+path TestImages/fireball02.png
+imgFireBall03
+path TestImages/fireball03.png
+imgFireBall04
+path TestImages/fireball04.png

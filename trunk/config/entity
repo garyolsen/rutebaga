@@ -3,5 +3,5 @@ standing 	imgMario
 walking		imgMario
 moveSpd		$vpEntityMovementSpeed	
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
 movement	whitelist terrGrass
