@@ -32,7 +32,7 @@ public class ButtonComponent extends ViewComponent {
 		font = new FontAttribute( new Font("Arial", Font.PLAIN, 10));
 		
 		untoggled = new CompositeAttribute();
-		untoggled.addAttribute( new ColorAttribute( Color.LIGHT_GRAY ) );
+		untoggled.addAttribute( new ColorAttribute( new Color(0,0,255,150) ) );
 		
 		toggled = new CompositeAttribute();
 		toggled.addAttribute( new ColorAttribute( Color.DARK_GRAY ) );
@@ -60,9 +60,10 @@ public class ButtonComponent extends ViewComponent {
 		
 		draw.setAttribute( untoggled );
 		draw.drawShape(getLocation(), getBounds());
+		
 	
-		centeredText.x = this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
-		centeredText.y = this.getLocation().y + (getHeight() / 2) + ( font.getFont().getSize() / 2 );
+		centeredText.x = (int)getBounds().getBounds().getX() + this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
+		centeredText.y = (int)getBounds().getBounds().getY() + this.getLocation().y + (getHeight() / 2) + ( font.getFont().getSize() / 2 );
 		
 		draw.setAttribute( text );
 		draw.drawString( centeredText , label);
@@ -76,8 +77,8 @@ public class ButtonComponent extends ViewComponent {
 		Point centeredText = new Point();
 		FontMetrics fm = draw.getFontMetrics();
 	
-		centeredText.x = this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
-		centeredText.y = this.getLocation().y + (getHeight() / 2) + ( font.getFont().getSize() / 2 );
+		centeredText.x = (int)getBounds().getBounds().getX() + this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
+		centeredText.y = (int)getBounds().getBounds().getY() + this.getLocation().y + (getHeight() / 2) + ( font.getFont().getSize() / 2 );
 		
 		draw.setAttribute(text);
 		draw.drawString( centeredText , label);

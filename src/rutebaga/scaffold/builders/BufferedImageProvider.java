@@ -6,8 +6,6 @@ import java.awt.Image;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageTypeSpecifier;
-
 public class BufferedImageProvider implements ImageProvider
 {
 	private GraphicsConfiguration configuration;
@@ -36,6 +34,6 @@ public class BufferedImageProvider implements ImageProvider
 		if (configuration != null)
 			return configuration.createCompatibleImage(w, h, transparency);
 		else
-			return new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+			return new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 	}
 }

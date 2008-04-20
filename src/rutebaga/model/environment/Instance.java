@@ -1,4 +1,4 @@
-package rutebaga.model.environment;
+ package rutebaga.model.environment;
 
 import java.util.HashSet;
 import java.util.Set;

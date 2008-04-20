@@ -13,38 +13,42 @@ import java.util.Set;
 
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
-import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.Memory;
 import rutebaga.model.entity.Vision;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.TileConvertor;
+import rutebaga.model.map.Tile;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ViewComponent;
 import temporary.LocationLayerComparator;
 
-import static rutebaga.model.environment.appearance.Appearance.Orientation.*;
 
 /**
  * Shows the actual gameplay.
  * 
  */
 @SuppressWarnings("unchecked")
-public class MapComponent extends ViewComponent
+public class MapComponent extends ViewComponent implements TargetInstanceObserver
 {
 
 	private static final int TILE_SIZE = 64;
 	private static final ColorAttribute FOG = new ColorAttribute(new Color(0,0,0, 150));
+	private static final ColorAttribute TARGETED = new ColorAttribute(new Color(255,0,0, 255));
+	
+	private Instance currentlyTargeted;
 
 	// private static LayerComparator layerComparator = new LayerComparator();
 	private static LocationLayerComparator<AppearanceInstance> appearanceComparator = new LocationLayerComparator<AppearanceInstance>();
 
 	private Entity avatar;
 
-	public MapComponent(Entity avatar, int width, int height)
+	public MapComponent(TargetInstanceObservable observable, Entity avatar, int width, int height)
 	{
 		this.avatar = avatar;
+		
+		observable.addObserver(this);
 
 		this.setBounds(new Rectangle(width, height));
 	}
@@ -54,31 +58,43 @@ public class MapComponent extends ViewComponent
 		long time;
 		time = System.currentTimeMillis();
 		drawMemorySet(draw, avatar.getVision());
-		//rutebaga.commons.Log.log("memory set total: " + (System.currentTimeMillis() - time));
+		rutebaga.commons.Log.log("memory set total: " + (System.currentTimeMillis() - time));
 		time = System.currentTimeMillis();
 		drawVisibleSet(draw, avatar.getVision());
-		//rutebaga.commons.Log.log("visible set total: " + (System.currentTimeMillis() - time));
+		rutebaga.commons.Log.log("visible set total: " + (System.currentTimeMillis() - time));
 		// drawAvatar(draw);
+
 	}
 
 	private void drawVisibleSet(Drawer draw, Vision avatarVision)
 	{
 		ArrayList<AppearanceInstance> sortedList = new ArrayList<AppearanceInstance>();
+		
+		AppearanceInstance targetInstance = null;
+		
 		for (Instance instance : avatarVision.getActiveSet())
 		{
-			Point p = centerPointOnAvatar(avatar.getCoordinate(), instance
-					.getCoordinate());
-			sortedList.add(new AppearanceInstance(instance.getAppearance(), p,
+			Point p = centerPointOn(avatar.getEnvironment().getTileConvertor(), avatar.getCoordinate(), instance
+					.getCoordinate(), getWidth(), getHeight());
+			
+			if(currentlyTargeted != null && instance == currentlyTargeted) {
+				targetInstance = new AppearanceInstance(instance.getAppearance(), p,
+						instance.getLayer());
+				
+				sortedList.add(targetInstance);
+			} else {
+				sortedList.add(new AppearanceInstance(instance.getAppearance(), p,
 					instance.getLayer()));
+			}
 		}
 		long time = System.currentTimeMillis();
 
-		Point p = centerPointOnAvatar(avatar.getCoordinate(), avatar
-				.getCoordinate());
+		Point p = centerPointOn(avatar.getEnvironment().getTileConvertor(), avatar.getCoordinate(), avatar
+				.getCoordinate(), getWidth(), getHeight());
 		sortedList.add(new AppearanceInstance(avatar.getAppearance(),
 				p, avatar.getLayer()));
 		Collections.sort(sortedList, appearanceComparator);
-		//rutebaga.commons.Log.log("sorting instances: " + (System.currentTimeMillis() - time));
+		rutebaga.commons.Log.log("sorting instances: " + (System.currentTimeMillis() - time));
 
 		time = System.currentTimeMillis();
 
@@ -94,6 +110,7 @@ public class MapComponent extends ViewComponent
 			time = System.currentTimeMillis();
 
 			Image image = instance.getAppearance().getImage();
+				
 
 			// FIXME encapsulate -- necessary to watch bounds checking
 			// if (avatar.getTile().equals(instance.getTile()))
@@ -112,15 +129,26 @@ public class MapComponent extends ViewComponent
 			// g.dispose();
 			// image = compImg;
 			// }
+			if(targetInstance != null && targetInstance == instance) {
+				draw.setAttribute(TARGETED);
+				Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, .1F);
+
+				draw.setComposite(composite);
+			}
 
 			draw.drawImage(p, image);
+			
+			if(targetInstance != null && targetInstance == instance) {
+				draw.setAttribute(null);
+				draw.clearComposite();
+			}
 
 			drawingTime += System.currentTimeMillis() - time;
 
 		}
-		//rutebaga.commons.Log.log("drawing instances: "
-		//		+ (System.currentTimeMillis() - time) + "[points: "
-		//		+ pointCreationTime + "; drawing: " + drawingTime + "]");
+		rutebaga.commons.Log.log("drawing instances: "
+				+ (System.currentTimeMillis() - time) + "[points: "
+				+ pointCreationTime + "; drawing: " + drawingTime + "]");
 
 	}
 
@@ -128,20 +156,14 @@ public class MapComponent extends ViewComponent
 	{
 		long time;
 
-		time = System.currentTimeMillis();
-		
-		//rutebaga.commons.Log.log("drawing fog: "
-		//		+ (System.currentTimeMillis() - time));
-
-		Composite composite = AlphaComposite.getInstance(
-				AlphaComposite.SRC_ATOP, 0.3F);
+		//Composite composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.3F);
 
 		//draw.setComposite(composite);
 
 		time = System.currentTimeMillis();
 		Map<IntVector2D, Set<Memory>> memory = avatarVision.getMemory();
-		//rutebaga.commons.Log.log("memory access: "
-		//		+ (System.currentTimeMillis() - time));
+		rutebaga.commons.Log.log("memory access: "
+				+ (System.currentTimeMillis() - time));
 
 		ArrayList<AppearanceInstance> sortedMemory = new ArrayList<AppearanceInstance>();
 
@@ -152,8 +174,8 @@ public class MapComponent extends ViewComponent
 			for (Memory mem : memory.get(v))
 			{
 
-				Point p = centerPointOnAvatar(avatar.getCoordinate(), mem
-						.getCoordinate());
+				Point p = centerPointOn(avatar.getEnvironment().getTileConvertor(), avatar.getCoordinate(), mem
+						.getCoordinate(), getWidth(), getHeight());
 				
 				AppearanceInstance instance = new AppearanceInstance(mem
 						.getAppearance(), p, mem.getLayer());
@@ -175,13 +197,13 @@ public class MapComponent extends ViewComponent
 			}
 		}
 
-		//rutebaga.commons.Log.log("memory point collection: "
-		//		+ (System.currentTimeMillis() - time));
+		rutebaga.commons.Log.log("memory point collection: "
+				+ (System.currentTimeMillis() - time));
 
 		time = System.currentTimeMillis();
 		Collections.sort(sortedMemory, appearanceComparator);
-		//rutebaga.commons.Log.log("sorting memories: "
-		//		+ (System.currentTimeMillis() - time));
+		rutebaga.commons.Log.log("sorting memories: "
+				+ (System.currentTimeMillis() - time));
 
 		time = System.currentTimeMillis();
 
@@ -190,13 +212,15 @@ public class MapComponent extends ViewComponent
 			draw.drawImage(mem.getLocation(), mem.getAppearance().getImage());
 		}
 
-		//rutebaga.commons.Log.log("drawing memories: "
-		//		+ (System.currentTimeMillis() - time));
+
 
 		draw.setAttribute(FOG);
 		draw.drawRectangle(new Point(getX(), getY()), getWidth(), getHeight());
 		draw.setAttribute(null);
 		draw.clearComposite();
+		
+		rutebaga.commons.Log.log("drawing memories: "
+				+ (System.currentTimeMillis() - time));
 	}
 
 	@SuppressWarnings("unused")
@@ -206,20 +230,36 @@ public class MapComponent extends ViewComponent
 		draw.drawImage(p, avatar.getAppearance().getImage());
 	}
 
-	private Point centerPointOnAvatar(Vector2D center, Vector2D other)
+	public static Point centerPointOn(TileConvertor converter, Vector2D center, Vector2D other, int width, int height)
 	{
 		Point centered = new Point();
+		center = converter.toRect(center);
+		other = converter.toRect(other);
 
-		TileConvertor conv = avatar.getEnvironment().getTileConvertor();
-		center = conv.toRect(center);
-		other = conv.toRect(other);
-
-		centered.x = (int) Math
-				.round(((other.get(0) - center.get(0)) * TILE_SIZE)
-						+ (getWidth() / 2));
-		centered.y = (int) Math
-				.round(((other.get(1) - center.get(1)) * TILE_SIZE)
-						+ (getHeight() / 2));
+		centered.x = (int) ((((other.get(0) - center.get(0)) * TILE_SIZE) + (width / 2)));
+		centered.y = (int) ((((other.get(1) - center.get(1)) * TILE_SIZE) + (height / 2)));
 		return centered;
 	}
+	
+	public static Vector2D reverseCenter(TileConvertor converter, Vector2D center, Point other, int width, int height)
+	{
+		center = converter.toRect(center);
+		
+		double x = other.x;
+		x -= (width/2);
+		x /= TILE_SIZE;
+		x += center.get(0);
+		
+		double y = other.y;
+		y -= (height/2);
+		y /= TILE_SIZE;
+		y += center.get(1);
+		
+		return converter.fromRect(new Vector2D(x, y));
+	}
+
+	public void update(TargetInstanceObservable o, Instance arg) {
+		currentlyTargeted = arg;
+	}
+	
 }
