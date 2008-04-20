@@ -17,6 +17,8 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	private List<ViewComponent> registeredComponents;
 	private List<ViewComponent> containsMouse;
 	
+	private MouseEvent lastMouse;
+	
 	private List<KeyListener> keyListeners = new ArrayList<KeyListener>();
 	private List<MouseListener> mouseListeners = new ArrayList<MouseListener>();
 	
@@ -42,6 +44,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	}
 	
 	public void deregisterComponent( ViewComponent vc ) {
+		System.err.println("Removing: " + vc);
 		vc.visit(subDispatchVisitor);
 	}
 	
@@ -81,8 +84,13 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	private void dumpRegisterQueue() {
 		if(registerQueue.size() > 0)
 			synchronized(registerQueue) {
-				for(ViewComponent vc : registerQueue)
+				for(ViewComponent vc : registerQueue) {
 					registeredComponents.add(vc);
+					if(lastMouse != null && vc.getBounds().contains(new Point(lastMouse.getX() - vc.getX(), lastMouse.getY() - vc.getY())))
+						containsMouse.add(vc);
+				}
+				
+				registerQueue.clear();
 			}
 	}
 	
@@ -94,10 +102,13 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 					containsMouse.remove(vc);
 				}
 					
+				deregisterQueue.clear();
 			}
 	}
 	
 	public void keyPressed(KeyEvent e) {
+		flushQueues();
+		
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) //TODO remove when controller handles this!
 			System.exit(0);
 		
@@ -113,11 +124,11 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			for(KeyListener kl : keyListeners)
 				kl.keyPressed(e);
 		
-		flushQueues();
 		eventReceivedTest(e);
 	}
 
 	public void keyReleased(KeyEvent e) {
+		flushQueues();
 		boolean consumed = false;
 		
 		synchronized(registeredComponents) {
@@ -130,11 +141,12 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			for(KeyListener kl : keyListeners)
 				kl.keyReleased(e);
 		
-		flushQueues();
+		
 		eventReceivedTest(e);
 	}
 
 	public void keyTyped(KeyEvent e) {
+		flushQueues();
 		boolean consumed = false;
 		
 		for(ViewComponent vc : registeredComponents)
@@ -145,45 +157,56 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			for(KeyListener kl : keyListeners)
 				kl.keyTyped(e);
 		
-		flushQueues();
 		eventReceivedTest(e);
 	}
 
 	
 	
 	public void mouseClicked(MouseEvent e) {
+		flushQueues();
 		boolean consumed = false;
 		
-		for(ViewComponent vc : containsMouse)
+		for(ViewComponent vc : containsMouse) {
 			consumed |= vc.processMouseEvent(e);
+			if(consumed)
+				break;
+		}
 		
 		if(!consumed)
 			for(MouseListener ml : mouseListeners)
 				ml.mouseClicked(e);
 		
-		flushQueues();
 		eventReceivedTest(e);
+		lastMouse = e;
 	}
 	
 	public void mousePressed(MouseEvent e) {
+		flushQueues();
 		boolean consumed = false;
 		
-		for(ViewComponent vc : containsMouse)
+		for(ViewComponent vc : containsMouse) {
 			consumed |= vc.processMouseEvent(e);
+			if(consumed)
+				break;
+		}
 		
 		if(!consumed)
 			for(MouseListener ml : mouseListeners)
 				ml.mousePressed(e);
 		
-		flushQueues();
 		eventReceivedTest(e);
+		lastMouse = e;
 	}
 
 	public void mouseReleased(MouseEvent e) {
+		flushQueues();
 		boolean consumed = false;
 		
-		for(ViewComponent vc : containsMouse)
+		for(ViewComponent vc : containsMouse) {
 			consumed |= vc.processMouseEvent(e);
+			if(consumed)
+				break;
+		}
 		
 		if(!consumed)
 			for(MouseListener ml : mouseListeners)
@@ -191,18 +214,28 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		
 		flushQueues();
 		eventReceivedTest(e);
+		lastMouse = e;
 	}
 
 	public void mouseEntered(MouseEvent e) {
+		flushQueues();
+		
 		for(MouseListener ml : mouseListeners)
 			ml.mouseEntered(e);
+		
+		lastMouse = e;
 	}
 	public void mouseExited(MouseEvent e) {
+		flushQueues();
+		
 		for(MouseListener ml : mouseListeners)
 			ml.mouseEntered(e);
+		
+		lastMouse = e;
 	}
 
 	public void mouseDragged(MouseEvent e) {
+		flushQueues();
 		
 		for(ViewComponent vc : registeredComponents) {
 			Point mouse = new Point(e.getX() - vc.getX(), e.getY() - vc.getY());
@@ -222,11 +255,12 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			}
 		}
 		
-		flushQueues();
 		eventReceivedTest(e);
+		lastMouse = e;
 	}
 
 	public void mouseMoved(MouseEvent e) {
+		flushQueues();
 		
 		for(ViewComponent vc : registeredComponents) {
 			Point mouse = new Point(e.getX() - vc.getX(), e.getY() - vc.getY());
@@ -247,8 +281,8 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			}
 		}
 		
-		flushQueues();
 		eventReceivedTest(e);
+		lastMouse = e;
 	}
 	
 	private void mouseEntered(ViewComponent vc, MouseEvent e) {
@@ -300,6 +334,8 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		}
 
 		public void visit(ViewCompositeComponent vcc) {
+			
+			dispatcher.removeComponent(vcc);
 			
 			for(ViewComponent vc : vcc.getChildren())
 				vc.visit(this);

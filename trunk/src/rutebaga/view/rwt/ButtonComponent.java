@@ -92,6 +92,8 @@ public class ButtonComponent extends ViewComponent {
 		} else if(event.getID() == MouseEvent.MOUSE_CLICKED) {
 			if(command != null && command.isFeasible())
 				command.execute();
+			
+			System.err.println("What!" + this + " Label: " + label);
 		}
 		
 		return true;
