@@ -2,11 +2,15 @@ package rutebaga.controller;
 
 import java.util.Set;
 
+import rutebaga.controller.command.AvatarEquipmentCommandFactory;
+import rutebaga.controller.command.AvatarInventoryCommandFactory;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandQueue;
 import rutebaga.controller.command.CreateContextMenuCommand;
 import rutebaga.controller.command.FixedLabelDeterminer;
+import rutebaga.controller.command.LabelDeterminer;
 import rutebaga.controller.command.QueueCommand;
+import rutebaga.controller.command.list.BackedListElementFactory;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.ConcreteListElementSource;
 import rutebaga.controller.command.list.DynamicElementalList;
@@ -17,6 +21,7 @@ import rutebaga.controller.command.list.StatsListElementFactory;
 import rutebaga.controller.command.list.StatsListElementSource;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.StatValue;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSet;
@@ -85,20 +90,23 @@ public class ActionDeterminer
 	}
 	
 	private void addSelfCommands(ConcreteElementalList list) {
-		/*
-		 * inventory
-		 * stats
-		 * abilties
-		 */
 		CreateContextMenuCommand command;
 		
 		command = new CreateInventoryMenuCommand(avatar);
 		command.setUIFacade(facade);
 		list.add("Inventory", command);
 		
+		command = new CreateEquipmentMenuCommand(avatar);
+		command.setUIFacade(facade);
+		list.add("Equipment", command);
+		
 		command = new CreateStatsDisplayCommand(avatar);
 		command.setUIFacade(facade);
 		list.add("Stats", command);
+		
+		command = new CreateAbilitiesMenuCommand(avatar);
+		command.setUIFacade(facade);
+		list.add("Abilities", command);
 	}
 	
 	private class CreateInventoryMenuCommand extends CreateContextMenuCommand {
@@ -108,9 +116,30 @@ public class ActionDeterminer
 		}
 		@Override
 		public void execute() {
-			/*
-			ConcreteListElementSource source = new ConcreteListElementSource<Item>(target.getInventory());
-			*/
+			Inventory inventory = target.getInventory();
+			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Inventory");
+			ConcreteListElementSource<Item> source = new ConcreteListElementSource<Item>(label, inventory.getUnequipped());
+			AvatarInventoryCommandFactory commands = new AvatarInventoryCommandFactory();
+			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands);
+			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
+			facade.createScrollMenu(list, 10);
+		}
+	}
+	
+	private class CreateEquipmentMenuCommand extends CreateContextMenuCommand {
+		private Entity target;
+		public CreateEquipmentMenuCommand(Entity target) {
+			this.target = target;
+		}
+		@Override
+		public void execute() {
+			Inventory inventory = target.getInventory();
+			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Equipment");
+			ConcreteListElementSource<Item> source = new ConcreteListElementSource<Item>(label, inventory.getEquipped());
+			AvatarEquipmentCommandFactory commands = new AvatarEquipmentCommandFactory();
+			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands);
+			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
+			facade.createScrollMenu(list, 10);
 		}
 	}
 	
@@ -123,10 +152,28 @@ public class ActionDeterminer
 		public void execute() {
 			StatsListElementSource source = new StatsListElementSource();
 			source.setStats(target.getStats());
-			source.setLabel(new FixedLabelDeterminer(target.getName()));
+			source.setLabel(new FixedLabelDeterminer(target.getName() + "'s Stats"));
 			StatsListElementFactory factory = new StatsListElementFactory(); 
 			DynamicElementalList<StatValue> list = new DynamicElementalList<StatValue>(source, factory);
 			facade.createScrollMenu(list, 10);
+		}
+	}
+	
+	private class CreateAbilitiesMenuCommand extends CreateContextMenuCommand {
+		private Entity target;
+		public CreateAbilitiesMenuCommand(Entity target) {
+			this.target = target;
+		}
+		@Override
+		public void execute() {
+			/*
+			StatsListElementSource source = new StatsListElementSource();
+			source.setStats(target.getStats());
+			source.setLabel(new FixedLabelDeterminer(target.getName() + "'s Stats"));
+			StatsListElementFactory factory = new StatsListElementFactory(); 
+			DynamicElementalList<Ability> list = new DynamicElementalList<Ability>(source, factory);
+			facade.createScrollMenu(list, 10);
+			*/
 		}
 	}
 	
