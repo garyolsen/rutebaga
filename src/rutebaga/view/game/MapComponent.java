@@ -6,6 +6,7 @@ import java.awt.Composite;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -262,4 +263,12 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 		currentlyTargeted = arg;
 	}
 	
+	protected boolean processMouseEvent( MouseEvent event ) {
+		if(event.getID() == MouseEvent.MOUSE_MOVED) {
+			
+			
+		}
+		
+		return false;
+	}
 }
