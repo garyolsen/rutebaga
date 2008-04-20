@@ -267,7 +267,7 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	 * 
 	 * @param terrains
 	 */
-	public void addTerrainTypes(TerrainType... terrains)
+	public void whiteListTerrainTypes(TerrainType... terrains)
 	{
 		MovementAttributeSet moveSet = new WhiteList();
 		for (TerrainType terrain : terrains)
@@ -277,7 +277,24 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		movementAttributes.add(moveSet);
 	}
 	
-	public Object addTerrainTypes(MovementAttributeSet moveSet)
+	public Object whiteListTerrainTypes(MovementAttributeSet moveSet)
+	{
+		Object token = UIDProvider.getUID();
+		movementAttributes.add(moveSet,token);
+		return token;
+	}
+	
+	public void blackListTerrainTypes(TerrainType... terrains)
+	{
+		MovementAttributeSet moveSet = new BlackList();
+		for (TerrainType terrain : terrains)
+		{
+			moveSet.add(terrain);
+		}
+		movementAttributes.add(moveSet);
+	}
+	
+	public Object blackListTerrainTypes(MovementAttributeSet moveSet)
 	{
 		Object token = UIDProvider.getUID();
 		movementAttributes.add(moveSet,token);
