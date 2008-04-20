@@ -1,5 +1,5 @@
 aoeHealer
-appearance	animated imgYoshiEgg 10 C
+appearance	animated imgPowerUp 10 C
 effects		eeffHealerAOE_HP
 
 aoeHarm

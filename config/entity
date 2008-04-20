@@ -1,6 +1,6 @@
 entityDefault
-standing 	imgYoshi
-walking		imgYoshi
+standing 	imgMario
+walking		imgMario
 moveSpd		$vpEntityMovementSpeed	
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow

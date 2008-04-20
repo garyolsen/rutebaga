@@ -10,41 +10,155 @@ imgTreasure
 path TestImages/treasure.png
 
 imgYoshiNorth01
-path TestImages/mario_mounted_north01.png
+path TestImages/yoshi_north01.png
 imgYoshiNorth02
-path TestImages/mario_mounted_north02.png
+path TestImages/yoshi_north02.png
 imgYoshiNorth03
-path TestImages/mario_mounted_north03.png
+path TestImages/yoshi_north03.png
 imgYoshiNorthEast01
-path TestImages/mario_mounted_northeast01.png
+path TestImages/yoshi_northeast01.png
 imgYoshiNorthEast02
-path TestImages/mario_mounted_northeast02.png
+path TestImages/yoshi_northeast02.png
 imgYoshiNorthEast03
-path TestImages/mario_mounted_northeast03.png
+path TestImages/yoshi_northeast03.png
 imgYoshiSouthEast01
-path TestImages/mario_mounted_southeast01.png
+path TestImages/yoshi_southeast01.png
 imgYoshiSouthEast02
-path TestImages/mario_mounted_southeast02.png
+path TestImages/yoshi_southeast02.png
 imgYoshiSouthEast03
-path TestImages/mario_mounted_southeast03.png
+path TestImages/yoshi_southeast03.png
 imgYoshiSouth01
-path TestImages/mario_mounted_south01.png
+path TestImages/yoshi_south01.png
 imgYoshiSouth02
-path TestImages/mario_mounted_south02.png
+path TestImages/yoshi_south02.png
 imgYoshiSouth03
-path TestImages/mario_mounted_south03.png
+path TestImages/yoshi_south03.png
 imgYoshiSouthWest01
-path TestImages/mario_mounted_southwest01.png
+path TestImages/yoshi_southwest01.png
 imgYoshiSouthWest02
-path TestImages/mario_mounted_southwest02.png
+path TestImages/yoshi_southwest02.png
 imgYoshiSouthWest03
-path TestImages/mario_mounted_southwest03.png
+path TestImages/yoshi_southwest03.png
 imgYoshiNorthWest01
-path TestImages/mario_mounted_northwest01.png
+path TestImages/yoshi_northwest01.png
 imgYoshiNorthWest02
-path TestImages/mario_mounted_northwest02.png
+path TestImages/yoshi_northwest02.png
 imgYoshiNorthWest03
+path TestImages/yoshi_northwest03.png
+
+imgMarioNorth01
+path TestImages/mario_north01.png
+imgMarioNorth02
+path TestImages/mario_north02.png
+imgMarioNorth03
+path TestImages/mario_north03.png
+imgMarioNorthEast01
+path TestImages/mario_northeast01.png
+imgMarioNorthEast02
+path TestImages/mario_northeast02.png
+imgMarioNorthEast03
+path TestImages/mario_northeast03.png
+imgMarioSouthEast01
+path TestImages/mario_southeast01.png
+imgMarioSouthEast02
+path TestImages/mario_southeast02.png
+imgMarioSouthEast03
+path TestImages/mario_southeast03.png
+imgMarioSouth01
+path TestImages/mario_south01.png
+imgMarioSouth02
+path TestImages/mario_south02.png
+imgMarioSouth03
+path TestImages/mario_south03.png
+imgMarioSouthWest01
+path TestImages/mario_southwest01.png
+imgMarioSouthWest02
+path TestImages/mario_southwest02.png
+imgMarioSouthWest03
+path TestImages/mario_southwest03.png
+imgMarioNorthWest01
+path TestImages/mario_northwest01.png
+imgMarioNorthWest02
+path TestImages/mario_northwest02.png
+imgMarioNorthWest03
+path TestImages/mario_northwest03.png
+
+imgMarioMountedNorth01
+path TestImages/mario_mounted_north01.png
+imgMarioMountedNorth02
+path TestImages/mario_mounted_north02.png
+imgMarioMountedNorth03
+path TestImages/mario_mounted_north03.png
+imgMarioMountedNorthEast01
+path TestImages/mario_mounted_northeast01.png
+imgMarioMountedNorthEast02
+path TestImages/mario_mounted_northeast02.png
+imgMarioMountedNorthEast03
+path TestImages/mario_mounted_northeast03.png
+imgMarioMountedSouthEast01
+path TestImages/mario_mounted_southeast01.png
+imgMarioMountedSouthEast02
+path TestImages/mario_mounted_southeast02.png
+imgMarioMountedSouthEast03
+path TestImages/mario_mounted_southeast03.png
+imgMarioMountedSouth01
+path TestImages/mario_mounted_south01.png
+imgMarioMountedSouth02
+path TestImages/mario_mounted_south02.png
+imgMarioMountedSouth03
+path TestImages/mario_mounted_south03.png
+imgMarioMountedSouthWest01
+path TestImages/mario_mounted_southwest01.png
+imgMarioMountedSouthWest02
+path TestImages/mario_mounted_southwest02.png
+imgMarioMountedSouthWest03
+path TestImages/mario_mounted_southwest03.png
+imgMarioMountedNorthWest01
+path TestImages/mario_mounted_northwest01.png
+imgMarioMountedNorthWest02
+path TestImages/mario_mounted_northwest02.png
+imgMarioMountedNorthWest03
 path TestImages/mario_mounted_northwest03.png
+
+imgMarioWetNorth01
+path TestImages/mario_wet_north01.png
+imgMarioWetNorth02
+path TestImages/mario_wet_north02.png
+imgMarioWetNorth03
+path TestImages/mario_wet_north03.png
+imgMarioWetNorthEast01
+path TestImages/mario_wet_northeast01.png
+imgMarioWetNorthEast02
+path TestImages/mario_wet_northeast02.png
+imgMarioWetNorthEast03
+path TestImages/mario_wet_northeast03.png
+imgMarioWetSouthEast01
+path TestImages/mario_wet_southeast01.png
+imgMarioWetSouthEast02
+path TestImages/mario_wet_southeast02.png
+imgMarioWetSouthEast03
+path TestImages/mario_wet_southeast03.png
+imgMarioWetSouth01
+path TestImages/mario_wet_south01.png
+imgMarioWetSouth02
+path TestImages/mario_wet_south02.png
+imgMarioWetSouth03
+path TestImages/mario_wet_south03.png
+imgMarioWetSouthWest01
+path TestImages/mario_wet_southwest01.png
+imgMarioWetSouthWest02
+path TestImages/mario_wet_southwest02.png
+imgMarioWetSouthWest03
+path TestImages/mario_wet_southwest03.png
+imgMarioWetNorthWest01
+path TestImages/mario_wet_northwest01.png
+imgMarioWetNorthWest02
+path TestImages/mario_wet_northwest02.png
+imgMarioWetNorthWest03
+path TestImages/mario_wet_northwest03.png
+
+
+
 imgYoshiEgg01
 path TestImages/yoshi_egg01.png
 imgYoshiEgg02
@@ -111,41 +225,13 @@ path TestImages/mountain_tile06.png
 imgLameEffect
 path TestImages/stupidEffect.png
 path TestImages/mountain_tile06.png
-imgmarioNorth01
-path TestImages/mario_north01.png
-imgmarioNorth02
-path TestImages/mario_north02.png
-imgmarioNorth03
-path TestImages/mario_north03.png
-imgmarioNorthEast01
-path TestImages/mario_northeast01.png
-imgmarioNorthEast02
-path TestImages/mario_northeast02.png
-imgmarioNorthEast03
-path TestImages/mario_northeast03.png
-imgmarioSouthEast01
-path TestImages/mario_southeast01.png
-imgmarioSouthEast02
-path TestImages/mario_southeast02.png
-imgmarioSouthEast03
-path TestImages/mario_southeast03.png
-imgmarioSouth01
-path TestImages/mario_south01.png
-imgmarioSouth02
-path TestImages/mario_south02.png
-imgmarioSouth03
-path TestImages/mario_south03.png
-imgmarioSouthWest01
-path TestImages/mario_southwest01.png
-imgmarioSouthWest02
-path TestImages/mario_southwest02.png
-imgmarioSouthWest03
-path TestImages/mario_southwest03.png
-imgmarioNorthWest01
-path TestImages/mario_northwest01.png
-imgmarioNorthWest02
-path TestImages/mario_northwest02.png
-imgmarioNorthWest03
-path TestImages/mario_northwest03.png
+
 imgLameEffect
 path TestImages/stupidEffect.png
+
+imgPowerUp01
+path TestImages/power_up01.png
+imgPowerUp02
+path TestImages/power_up02.png
+imgPowerUp03
+path TestImages/power_up03.png
