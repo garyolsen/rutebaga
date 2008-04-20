@@ -3,3 +3,13 @@ standing 	imgYoshi
 walking		imgYoshi
 moveSpd		$vpEntityMovementSpeed	
 vRadius		10
+entityMario
+standing 	imgMario
+walking		imgMario
+moveSpd		$vpEntityMovementSpeed	
+vRadius		10
+entityMarioMounted
+standing 	imgMarioMounted
+walking		imgMarioMounted
+moveSpd		$vpEntityMovementSpeed	
+vRadius		10
