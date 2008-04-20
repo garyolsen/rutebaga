@@ -108,7 +108,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		{
 			for (int y = mapBounds[2]; y < mapBounds[3]; y++)
 			{
-				if (random.nextDouble() < grassTileProb)
+				if ((x == 0 && y == 0) || random.nextDouble() < grassTileProb)
 				{
 					Vector2D location = new Vector2D(x, y);
 					Tile tile = new Tile(null);
