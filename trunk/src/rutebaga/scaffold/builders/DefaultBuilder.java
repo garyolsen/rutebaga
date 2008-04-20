@@ -16,6 +16,7 @@ public class DefaultBuilder extends ChainedBuilder
 		register(new SlotTypeBuilder());
 		register(new ItemTypeBuilder());
 		register(new EntityEffectBuilder());
+		register(new AOEBuilder());
 	}
 
 }

@@ -2,6 +2,8 @@
 #          					   EQUIPMENT                                   #
 ############################################################################
 
+# SWORD
+
 eeffSwordEq_Strength
 type	stat
 stat	statStrength
@@ -17,3 +19,23 @@ value	-1
 #          					     ITEMS                                     #
 ############################################################################
 
+
+
+############################################################################
+#          					  AREA EFFECTS                                 #
+############################################################################
+
+eeffHealerAOE_HP
+type	stat
+stat	statHp
+value	10
+
+eeffMovementAOE_Movement
+type	stat
+stat	statMovement
+value	2
+
+eeffHarmAOE_HP
+type	stat
+stat	statHp
+value	10

@@ -1,5 +1,6 @@
 package rutebaga.scaffold.builders;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.rel.ParseTreeNode;
 import rutebaga.commons.math.rel.ReversePolishParser;
 import rutebaga.model.entity.stats.Stats;
+import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
 
@@ -21,7 +23,11 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	}
 
 	private static Pattern pattern = Pattern
-			.compile("(#.*)?([^\\s\\t]+)?[\\s\\t]*(.*?)[\\s\\t]*(#.*)?"); // matches each line, excluding comments
+			.compile("(#.*)?([^\\s\\t]+)?[\\s\\t]*(.*?)[\\s\\t]*(#.*)?"); // matches
+	// each
+	// line,
+	// excluding
+	// comments
 	private static int NAME_GP = 2; // the group of the name
 	private static int VALUE_GP = 3; // the group of the value
 
@@ -94,7 +100,9 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 
 	public Integer getInteger(String id, String property)
 	{
-		return Integer.parseInt(getProperty(id, property));
+		if (getProperty(id, property) != null)
+			return Integer.parseInt(getProperty(id, property));
+		return null;
 	}
 
 	public Double getDouble(String id, String property)
@@ -124,19 +132,21 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			return v.getValueProvider();
 		}
 	}
-	
+
 	public String[] getStringArray(String id, String property, String regexp)
 	{
 		String prop = getProperty(id, property);
-		if(prop == null) return new String[0];
+		if (prop == null)
+			return new String[0];
 		String[] rval = prop.split(regexp);
 		return rval;
 	}
-	
-	public Object[] getObjectArray(String id, String property, String regexp, MasterScaffold scaffold)
+
+	public Object[] getObjectArray(String id, String property, String regexp,
+			MasterScaffold scaffold)
 	{
 		ArrayList list = new ArrayList();
-		for(String scaffId : getStringArray(id, property, regexp))
+		for (String scaffId : getStringArray(id, property, regexp))
 		{
 			list.add(scaffold.get(scaffId));
 		}

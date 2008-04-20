@@ -79,10 +79,24 @@ public class ConcreteInstanceSet implements InstanceSet
 	}
 
 	public ConcreteInstanceSet(
-			Map<InstanceSetIdentifier, ? extends Set<? extends Instance>> backingMap, Set<InstanceSetIdentifier> ids)
+			Map<InstanceSetIdentifier, ? extends Set<? extends Instance>> backingMap,
+			Set<InstanceSetIdentifier> ids)
 	{
 		this.sets = backingMap;
 		this.acceptedTypes = ids;
+	}
+
+	public ConcreteInstanceSet(Collection<Instance> instances,
+			InstanceSetIdentifier... ids)
+	{
+		this();
+		if (ids.length > 0)
+		{
+			acceptedTypes.clear();
+			for (InstanceSetIdentifier id : ids)
+				acceptedTypes.add(id);
+		}
+		this.addAll(instances);
 	}
 
 	/*
@@ -92,7 +106,8 @@ public class ConcreteInstanceSet implements InstanceSet
 	 */
 	public boolean add(Instance instance)
 	{
-		if(!check(instance)) return false;
+		if (!check(instance))
+			return false;
 		boolean flag = getSetFor(instance).add(instance);
 		return flag;
 	}
@@ -130,7 +145,8 @@ public class ConcreteInstanceSet implements InstanceSet
 	 */
 	public boolean contains(Object arg0)
 	{
-		if(!check(arg0)) return false;
+		if (!check(arg0))
+			return false;
 		Instance instance = (Instance) arg0;
 		return getSetFor(instance).contains(instance);
 	}
@@ -230,7 +246,8 @@ public class ConcreteInstanceSet implements InstanceSet
 	 */
 	public boolean remove(Object arg0)
 	{
-		if(!check(arg0)) return false;
+		if (!check(arg0))
+			return false;
 		Instance instance = (Instance) arg0;
 		return getSetFor(instance).remove(instance);
 	}
@@ -273,7 +290,7 @@ public class ConcreteInstanceSet implements InstanceSet
 	public int size()
 	{
 		int size = 0;
-		for(InstanceSetIdentifier id : this.acceptedTypes)
+		for (InstanceSetIdentifier id : this.acceptedTypes)
 			size += sets.get(id).size();
 		return size;
 	}
