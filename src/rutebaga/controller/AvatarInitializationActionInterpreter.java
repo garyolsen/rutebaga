@@ -19,11 +19,16 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 
 	public void installActionInterpreter(final GameDaemon daemon, final Game game, final UserInterfaceFacade facade) {
 		Command accept = new Command() {
+			private boolean activated = false;
+			
 			public void execute() {
-				GameInitializer gi = game.getGameInitializer();
-				gi.build();
-				UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), gi.getAvatar());
-				daemon.activate(gpai);
+				if(!activated) {
+					GameInitializer gi = game.getGameInitializer();
+					gi.build();
+					UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), gi.getAvatar());
+					daemon.activate(gpai);
+					activated = true;
+				}
 			}
 
 			public boolean isFeasible() {

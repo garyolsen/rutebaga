@@ -99,10 +99,10 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 					}
 				}
 			} else {
-				targetedEntity = null;
-				facade.clearContextMenuStack();
-				observable.setChanged();
-				observable.notifyAllObservers(null);
+				//targetedEntity = null;
+				//facade.clearContextMenuStack();
+				//observable.setChanged();
+				//observable.notifyAllObservers(null);
 			}
 		}
 	}
@@ -154,7 +154,9 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 			avatar.getAbilities().get(0).act(avatar);
 			break;
 		}
+		
 	}
+	
 
 	private final BoundsTracker tracker;
 	private void explode()
@@ -173,10 +175,16 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 	}
 
 	
-	public void keyReleased(KeyEvent arg0) {
+	public void keyReleased(KeyEvent e) {
+		switch(e.getKeyCode()) {
+			case KeyEvent.VK_SEMICOLON:
+				tabTarget();
+				break;
+		}
 	}
 
-	public void keyTyped(KeyEvent arg0) {
+	public void keyTyped(KeyEvent e) {
+
 	}
 
 	public void actionPerformed(ActionEvent event) {
@@ -190,12 +198,7 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 			
 			Vector2D vector = MapComponent.reverseCenter(converter, avatar.getCoordinate(), mouseEvent.getPoint(), facade.getView().getWidth(), facade.getView().getHeight());
 			
-			System.out.println("New Vector : " + vector.getX() + ", " + vector.getY());
-			System.out.println("Avatar Vector : "  + avatar.getCoordinate().getX() + ", " + avatar.getCoordinate().getY());
-			
 			IntVector2D tileCoord = converter.tileOf(vector);
-			
-			System.out.println("Tile Coord of Click: " + tileCoord.getX() + ", " + tileCoord.getY());
 			
 			if(avatar.canSee(tileCoord)) {
 				
@@ -205,24 +208,8 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 				for(Entity entity : set.getEntities()) {
 					
 					if(entity != null) {
-						ConcreteElementalList list = new ConcreteElementalList();
+						constructRootContextMenu(entity);
 						
-						for (Ability<?> a : avatar.getAbilities() ) {
-							list.add(a.toString(), new ContextMenuCommand(new AbilityCommand(entity, a)));
-						}
-						
-						targetedEntity = entity;
-						
-						for(Tile tile : set.getTiles()) {
-							if(tile != null) {
-								observable.setChanged();
-								observable.notifyAllObservers(tile); 
-								break;
-							}
-						
-						}
-						facade.clearContextMenuStack();
-						facade.createRootContextMenu(list, new Vector2D(facade.getView().getWidth()/2, facade.getView().getHeight()/2));
 						
 						return;
 					}
@@ -239,6 +226,60 @@ public class GamePlayActionInterpreter implements UserActionInterpreter, KeyList
 			observable.notifyAllObservers(null);
 
 		}
+	}
+	
+	private void tabTarget() {
+		InstanceSet set = new ConcreteInstanceSet();
+		set.addAll(avatar.getVision().getActiveSet());
+		
+		Entity previousEntity = targetedEntity;
+		
+		boolean next = false || (targetedEntity == null);
+		
+		for(Entity entity : set.getEntities()) {
+			if(next) {
+				targetedEntity = entity;
+				constructRootContextMenu(entity);
+				break;
+			}
+			
+			if(targetedEntity == entity)
+				next = true;
+		}
+		
+		if(previousEntity == targetedEntity) {
+			for(Entity entity : set.getEntities()) {
+				targetedEntity = entity;
+				constructRootContextMenu(entity);
+				break;
+			}
+		}
+		
+	}
+	
+	private void constructRootContextMenu(Entity entity) {
+		ConcreteElementalList list = new ConcreteElementalList();
+		
+		for (Ability<?> a : avatar.getAbilities() ) {
+			list.add(a.toString(), new ContextMenuCommand(new AbilityCommand(entity, a)));
+		}
+		
+		InstanceSet set = new ConcreteInstanceSet();
+		set.addAll(entity.getEnvironment().instancesAt(entity.getTile()));
+		
+		for(Tile tile : set.getTiles()) {
+			if(tile != null) {
+				observable.setChanged();
+				observable.notifyAllObservers(tile); 
+				break;
+			}
+		
+		}
+		
+		targetedEntity = entity;
+		facade.clearContextMenuStack();
+		facade.createRootContextMenu(list, new Vector2D(facade.getView().getWidth()/2, facade.getView().getHeight()/2));
+		
 	}
 	
 	private class ContextMenuCommand implements Command {
