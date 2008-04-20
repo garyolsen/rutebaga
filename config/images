@@ -147,3 +147,5 @@ imgmarioNorthWest02
 path TestImages/mario_northwest02.png
 imgmarioNorthWest03
 path TestImages/mario_northwest03.png
+imgLameEffect
+path TestImages/stupidEffect.png
