@@ -1,17 +1,23 @@
 abMarioThrow
+name		Throw Mario
 type		~abEgg
 appearance	animated imgmarioSouth 5 C
 lifetime	100
 speed		0.1
+category	abcatAttacks
 
 abEggThrow
+name		Throw Egg
 type		~abEgg
 appearance	animated imgYoshiEgg 10 C
 lifetime	100
 speed		0.9
+category	abcatAttacks
 
 abYoshiThrow
+name		Throw Yoshi
 type		~abEgg
 appearance	animated imgYoshiSouth 5 C
 lifetime	100
 speed		0.3
+category	abcatAttacks

@@ -17,6 +17,12 @@ public class StatisticId
 		this.name = name;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "Stat " + name + " (init " + initialValue + ")";
+	}
+
 	public double getInitialValue()
 	{
 		return initialValue;

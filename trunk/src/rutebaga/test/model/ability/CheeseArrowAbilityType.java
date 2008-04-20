@@ -7,7 +7,7 @@ import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceType;
 import rutebaga.test.model.effect.RandomEffectType;
 
-public class CheeseArrowAbilityType implements AbilityType
+public class CheeseArrowAbilityType extends AbilityType
 {
 	private InstanceType effectType;
 
@@ -18,7 +18,7 @@ public class CheeseArrowAbilityType implements AbilityType
 
 	public Ability makeAbility()
 	{
-		Ability<Instance> ability = new Ability<Instance>();
+		Ability<Instance> ability = super.makeAbility();
 
 		SpawnAction spawn = new SpawnAction(effectType);
 		

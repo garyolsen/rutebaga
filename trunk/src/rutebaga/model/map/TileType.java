@@ -23,4 +23,10 @@ public class TileType<T extends Tile> extends ConcreteInstanceType<T> {
 		return (T) tile;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "Tile with " + terrain;
+	}
+
 }

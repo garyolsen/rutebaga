@@ -28,4 +28,10 @@ public class TerrainType {
 		this.name = name;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "TerrainType " + name;
+	}
+
 }

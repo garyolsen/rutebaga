@@ -20,4 +20,10 @@ public class StatModification
 	{
 		return stat;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "StatModification for " + stat + "=" + amount;
+	}
 }

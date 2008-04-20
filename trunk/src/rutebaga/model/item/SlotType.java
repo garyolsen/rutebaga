@@ -35,4 +35,10 @@ public class SlotType
 	{
 		return globalMax == null ? total : Math.min(globalMax, total);
 	}
+
+	@Override
+	public String toString()
+	{
+		return "SlotType " + name + "(max " + globalMax + ")";
+	}
 }

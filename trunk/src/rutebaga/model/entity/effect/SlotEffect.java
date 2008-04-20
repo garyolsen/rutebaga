@@ -34,6 +34,12 @@ public class SlotEffect extends ReversibleEntityEffect
 		return type;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "SlotEffect for " + type + "=" + qty;
+	}
+
 	public void setType(SlotType type)
 	{
 		this.type = type;

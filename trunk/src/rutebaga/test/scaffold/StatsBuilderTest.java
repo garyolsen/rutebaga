@@ -27,28 +27,30 @@ public class StatsBuilderTest
 	 * @param args
 	 */
 	public static void main(String[] args)
-	{		
+	{
 		Builder b = new DefaultBuilder();
 		MasterScaffold s = new MasterScaffold();
 		s.registerBuilder(b);
 		s.registerBuilder(new CustomAbilityBuilder());
 		s.build();
-		
+
 		SortedSet<String> keys = new TreeSet<String>();
 		keys.addAll(s.getKeys());
-		
-		for(String key : keys)
+
+		for (String key : keys)
 		{
-			System.out.println(key + "\t\t" + s.get(key));
+			Object obj = s.get(key);
+			System.out.println(key + "\t\t" + obj.getClass().getSimpleName()
+					+ "\t\t" + obj);
 		}
-		
+
 		Stats stats = new ConcreteStats(null);
 		StatisticId defensiveRating = (StatisticId) s.get("statDefRating");
 		rutebaga.commons.Log.log(stats.getValue(defensiveRating));
-		
+
 		Entity entity = ((EntityType<?>) s.get("entityDefault")).makeInstance();
 		rutebaga.commons.Log.log(entity.getMovementSpeed());
-		
+
 		System.out.println(entity.getAbilities().size());
 	}
 
