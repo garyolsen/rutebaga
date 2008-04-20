@@ -131,7 +131,7 @@ public class EntityAppearanceManager extends AppearanceManager
 	private int getDirectionOrdinal(int total)
 	{
 		double offset = 1;
-		double angle = entity.getVelocity().getAngle() + (2 + offset) * Math.PI;
+		double angle = entity.getFacing().getAngle() + (2 + offset) * Math.PI;
 		angle -= 2 * Math.PI * (int) (angle * 0.5 / Math.PI);
 		double proportion = angle * 0.5 / Math.PI;
 		return (int) (proportion * total);

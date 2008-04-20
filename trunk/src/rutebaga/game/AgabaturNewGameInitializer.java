@@ -17,6 +17,7 @@ import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.MatrixTileConvertor;
+import rutebaga.model.environment.MovementAttributeSet;
 import rutebaga.model.environment.PolarTileConvertor;
 import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.World;
@@ -165,8 +166,6 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		}
 
 		avatar = ((EntityType<?>) scaffold.get("entityDefault")).makeInstance();
-		Object[] arr = ((EntityAppearanceManager) avatar.getAppearanceManager())
-				.getStanding();
 
 		while (!avatar.existsInUniverse())
 		{
