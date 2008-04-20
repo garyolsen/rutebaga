@@ -1,7 +1,7 @@
 abMarioThrow
 name		Throw Mario
 type		~abEgg
-appearance	animated imgmarioSouth 5 C
+appearance	animated imgMarioSouth 5 C
 lifetime	100
 speed		0.1
 category	abcatAttacks
