@@ -40,6 +40,8 @@ public interface UserInterfaceFacade {
 	 * @return The ContextMenu that was created.
 	 */
 	int createRootContextMenu(ElementalList list, Vector2D vector);
+	
+	int createRootContextMenu(ElementalList list);
 
 	/**
 	 * Opens up a ContextMenu when a button in an existing ContextMenu is
@@ -50,6 +52,8 @@ public interface UserInterfaceFacade {
 	 * @return The ContextMenu that was created.
 	 */
 	int createSubContextMenu(ElementalList list, Vector2D vector);
+	
+	int createSubContextMenu(ElementalList list);
 	
 	/**
 	 * In a ContextMenu, shows a scrollable menu capable of displaying mass
@@ -62,6 +66,8 @@ public interface UserInterfaceFacade {
 	 * @return The ContextMenu that was created.
 	 */
 	int createScrollMenu(ElementalList list, int pageSize, Vector2D vector);
+	
+	int createScrollMenu(ElementalList list, int pageSize);
 
 	/**
 	 * Spawns a DialogMenu at the provided {@link Vector} location.
@@ -74,6 +80,8 @@ public interface UserInterfaceFacade {
 	 */
 	int createDialogMenu(ElementalList list, Vector2D vector);
 	
+	int createDialogMenu(ElementalList list);
+	
 	/**
 	 * Shows a warning to the player.
 	 * 
@@ -81,6 +89,8 @@ public interface UserInterfaceFacade {
 	 *            A list of items to be presented to the player.
 	 */
 	void createWarningBox(ElementalList list);
+	
+	void createWarningBox(ElementalList list, Vector2D vector);
 
 	/**
 	 * Closes a {@link ContextMenu}. This could either be the root, or
