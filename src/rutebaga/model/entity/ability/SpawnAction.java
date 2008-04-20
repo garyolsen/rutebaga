@@ -22,6 +22,8 @@ public class SpawnAction<T extends Instance, U extends Instance & Targetable<T>>
 	{
 		rutebaga.commons.Log.log("EXECUTING!!!");
 		U instance = type.makeInstance();
+		if(target == null)
+			throw new RuntimeException("target is null");
 		instance.setTarget(target);
 		Environment e = ability.getEnvironment();
 		// XXX LoD violation
