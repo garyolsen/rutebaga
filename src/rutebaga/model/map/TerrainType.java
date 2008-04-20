@@ -12,14 +12,20 @@ package rutebaga.model.map;
  * @author Gary
  * 
  */
-public interface TerrainType
-{
+public class TerrainType {
 
-	/**
-	 * Returns a unique String that describes this TerrainType.
-	 * 
-	 * @return The name of this TerrainType.
-	 */
-	public String getName();
+	private String name;
+
+	public TerrainType(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

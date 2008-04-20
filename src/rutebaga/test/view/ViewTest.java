@@ -190,9 +190,9 @@ public class ViewTest
 
 			if (RENDER_MAP)
 			{
-				MapComponent map = new MapComponent(avatar, view.getWidth(),
-						view.getHeight());
-				view.addViewComponent(map);
+//				MapComponent map = new MapComponent(avatar, view.getWidth(),
+//						view.getHeight());
+//				view.addViewComponent(map);
 			}
 
 			FPSTextComponent fps = new FPSTextComponent();

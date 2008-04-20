@@ -1,0 +1,11 @@
+grassTile
+animation hextile
+terrain	terrGrass
+
+waterTile
+animation water_tile
+terrain terrWater
+
+mountainTile
+animation mountain_tile
+terrain terrMountain
