@@ -127,6 +127,8 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	public void createGamePlayScreen(Entity avatar, TargetInstanceObservable observable) {
 		clearView();
 		
+		System.err.println("test");
+		
 		view.addViewComponent(new MapComponent(observable, avatar, view.getWidth(), view.getHeight()));
 		
 		FPSTextComponent fps = new FPSTextComponent();
@@ -168,6 +170,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 		
 		return contextStack.size();
 	}
+	
+	public int createRootContextMenu(ElementalList list) {
+		return createRootContextMenu(list,  new Vector2D(view.getWidth()/2, view.getHeight()/2));
+	}
 
 	/**
 	 * Opens up a ContextMenu when a button in an existing ContextMenu is
@@ -180,6 +186,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	public int createSubContextMenu(ElementalList list, Vector2D vector)
 	{
 		return 0;
+	}
+	
+	public int createSubContextMenu(ElementalList list) {
+		return createSubContextMenu(list,  new Vector2D(view.getWidth()/2, view.getHeight()/2));
 	}
 
 	/**
@@ -213,6 +223,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 		
 		return contextStack.size();
 	}
+	
+	public int createScrollMenu(ElementalList list, int pageSize) {
+		return createScrollMenu(list, pageSize, new Vector2D(view.getWidth()/2, view.getHeight()/2));
+	}
 
 	/**
 	 * Spawns a DialogMenu at the provided {@link Vector} location.
@@ -227,6 +241,11 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	{
 		return 0;
 	}
+	
+	public int createDialogMenu(ElementalList list) {
+		return createDialogMenu(list, new Vector2D(view.getWidth()/2, view.getHeight()/2));
+	}
+
 
 	/**
 	 * Shows a warning to the player.
@@ -237,6 +256,11 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 	public void createWarningBox(ElementalList list)
 	{
 
+	}
+	
+	public void createWarningBox(ElementalList list, Vector2D vector) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -311,4 +335,6 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade
 		}
 		
 	}
+
+
 }

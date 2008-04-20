@@ -65,9 +65,8 @@ public class Graphics2DDrawer extends Drawer
 	{
 		//applyAttribute();
 
-		if (img == null)
-			return;
-		g2d.drawImage(img, p.x, p.y, img.getWidth(null), img.getHeight(null), null);
+		if (img != null)
+			g2d.drawImage(img, p.x, p.y, img.getWidth(null), img.getHeight(null), null);
 	}
 
 	@Override
