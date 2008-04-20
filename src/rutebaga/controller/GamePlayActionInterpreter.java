@@ -104,6 +104,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		this.facade = facade;
 		this.daemon = daemon;
 
+		this.actionDeterminer.setUIFacade(facade);
 		this.viewCenter = new Vector2D(facade.getView().getWidth() / 2, facade
 				.getView().getHeight() / 2);
 	}
