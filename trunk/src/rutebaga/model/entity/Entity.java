@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import com.sun.corba.se.impl.orbutil.ObjectUtility;
 
@@ -20,6 +21,7 @@ import rutebaga.commons.math.Vector2D;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.Named;
 import rutebaga.model.entity.inventory.Inventory;
+import rutebaga.model.entity.npc.Speech;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
@@ -68,6 +70,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	
 	private int decayTime = 3000; //in milliseconds
 	private long deathTimer = 0l;
+	
+	private Stack<Speech> speechStack = new Stack<Speech>();
 
 	private SkillLevelManager skillLevelManager = new SkillLevelManager();
 
@@ -402,6 +406,18 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	
 	public void setDecayTime(int decayTime) {
 		this.decayTime = decayTime;
+	}
+	
+	public void recieveSpeech(Entity entity, String speech) {
+		speechStack.push( new Speech(entity, speech) );
+	}
+	
+	public Stack<Speech> getSpeech() {
+		return speechStack;
+	}
+	
+	public void clearSpeech() {
+		speechStack.clear();
 	}
 
 }
