@@ -1,0 +1,16 @@
+[[module ChildPages]]
+
+The Controller subsystem interprets high-level user input events, translating them into discernible actions in the Model and View.
+
+[[image Controller%20Overview.gif]]
+
+The {{GameDaemon}} is active throughout the game, containing a stack of active {{UserActionInterpreter}}s.  The top {{UserActionInterpreter}} on the stack receives user events first, and has the option to pass it down to interpreters lower in the stack.  {{UserActionInterpreter}}s are responsible for setting up the View and telling it what to display, but not necessarily how to do it.
+
+This {{GameDaemon}} also contains the game clock and is responsible for telling the Model and View when to 'tick' and render, respectively.  The {{TimeManager}} causes updates to occur in this order: process Commands issued by user, tick Model, and render View.  Internally, the Controller may use a queue for commands issued by user actions.  
+
+{{UserActionInterpreter}}s may receive input from the user (via the View) in three ways.
+# having the View display a set of commands with callbacks to the Controller,
+# accepting key press events through the {{KeyListener}} interface which all interpreters are required to implement,
+# and accepting location click events through the {{LocationClickListener}} interface.
+
+A {{UserActionInterpreter}} in the Controller typically responds to a user action by issuing a set of {{Command}}s to the View and specifying how to display them, such as in the form of a context menu or speech bubble.  These {{Command}}s are typically callbacks to the Controller or direct interfaces to the Model.

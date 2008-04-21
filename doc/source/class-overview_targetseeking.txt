@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{TargetSeeking}} is an {{Effect}} that holds a target.
+
++ Responsibilities
+
+Holds a reference to a target.
+
++ Collaborators
+
+<none>
+
++ UML Class Diagram
+
+[[image http://plaza.ufl.edu/nstamas/OOP/TargetSeeking.png]]
+
++ Implementor
+
+Nick
+
++ Tester
+
+Gary

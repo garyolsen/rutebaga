@@ -1,0 +1,26 @@
+[[f>toc]]
+
++ Overview
+
+An {{ElementalList}} is an //ordered// collection of {{[[[class-overview:ListElement]]]}}s.  Clients access {{ListElement}}s via the provided {{Iterator}}.  {{ElementalList}}s allow the Controller to encapsulate a list of named {{Command}}s to pass to the View.  An instance of {{ElementalList}} may return a unique {{Iterator}} each time {{iterator}} is invoked.  {{ElementalList}}s also provide a label possibly describing the collection as a whole.  Clients of {{ElementalList}} should be aware that implementations {{ElementalList}} may return a different label and collection of {{ListElement}}s each time the list is queried.
+
++ Responsibilities
+
+Contains a list of labeled {{ListElement}}s.
+
++ Collaborators
+
+An {{ElementalList}} is a collection of {{[[[class-overview:ListElement]]]}}s.
+{{[[[class-overview:UserActionInterpreter]]]}}s typically create {{ElementalList}}s to provide {{[[[class-overview:Command]]]}}s to the View.
+
++ UML Class Diagram
+
+[[image ElementalList.gif]]
+
++ Implementor
+
+Matt
+
++ Tester
+
+Ryan

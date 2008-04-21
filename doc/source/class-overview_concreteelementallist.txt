@@ -1,0 +1,35 @@
+[[f>toc]]
+
++ Overview
+
+{{ConcreteElementalList}} is a basic implementation of {{[[[class-overview:ElementalList]]]}} that composites several named {{[[[class-overview:Command]]]}}s.  The {{ConcreteElementalList}} is also labeled, as required by its interface.
+
+{{ConcreteElementalList}} offers two {{add}} mutators, one which adds a named {{String}}-{{Command}} pair and one which adds a set of {{Command}}s in the form of an {{ElementalList}}.  Composited {{Command}}s cannot be removed, but can be accessed via the {{Iterator}}, as per the interface.  The {{Iterator}} will return {{ListElement}}s containing the {{Command}}s in the same order they were added to the {{ConcreteElementalList}}.  {{Command}}s added to the {{ConcreteElementalList}} via the {{add(ElementalList)}} operation will be returned in the same order the {{ElementalList}} {{Iterator}} returns them.  Duplicate {{Command}}s are both possible and allowed, so clients of {{ConcreteElementalList}} must take care to avoid duplicates if they desire Set semantics.
+
++ Responsibilities
+
+* Contain a list of {{Command}}s.
+* Allow additional {{Command}}s to be added at any time.
+* Allow sequential access to contained {{Command}}s via an {{Iterator}}.
+
++ Collaborators
+
+{{[[[class-overview:Command]]]}}s can be added to the {{ConcreteElementalList}}.
+{{[[[class-overview:ElementalList]]]}}s can be added to the {{ConcreteElementalList}}.
+{{[[[class-overview:ListElement]]]}}s are returned by the {{ConcreteElementalList}} {{Iterator}}.
+
++ UML Class Diagram
+
+[[image ConcreteElementalList.gif]]
+
++ Implementor
+
+Identify which team member(s) are responsible for implementing this class.
+
+If nobody has been assigned yet, add the "classes-requiring-implementor" tag to this page.
+
++ Tester
+
+Identify which team member(s) are responsible for testing this class.
+
+If nobody has been assigned yet, add the "classes-requiring-tester" tag to this page.

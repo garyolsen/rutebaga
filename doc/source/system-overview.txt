@@ -1,0 +1,18 @@
+This is a high-level discussion on the software's architecture.
+
++ Major Subsystems
+
+* {{[[[Abilities Subsystem]]]}} describes what an entity can do (with exception to moving and mounting, which all entities can do).  Certain abilities can be attributed skill points, increasing that entity's proficiency at performing that ability.  Appropriate abilities will be able to be chosen through the context menus in the view.
+* {{[[[Commons Library]]]}} defines reusable data structures that are not bound to any particular subsystem, including rules, vectors, and matrices.
+* {{[[[Controller Subsystem]]]}} handles interaction between the user and the view, talking to the model when necessary.  Also manages user-defined controls.  
+* {{[[[Effect Subsystem]]]}} describes rules useful for creating attacks, equipment, or items.
+* {{[[[Entity Subsystem]]]}} is the foundation for the player, NPCs, and mounts.
+* {{[[[Environment Subsystem]]]}} describes the hierarchy under which all game instances are contained and all game ticks are passed into.
+* {{[[[Item Subsystem]]]}} describes all things that can go into an inventory.
+* {{[[[npcsubsystem|NPC Subsystem]]]}} extends entity to provide for autonomous NPCs with state-based AI.
+* {{[[[Scaffold Subsystem]]]}} is responsible for initializing and providing access to widely-used objects.  Allows for loading and saving.
+* {{[[[View Subsystem]]]}} displays everything.  Keeps track of how instances can be displayed, and shows the user a friendly interface.
+
++ How They Interact
+
+[[image http://plaza.ufl.edu/nstamas/OOP/ViewControllerInteraction.png]]

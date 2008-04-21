@@ -1,0 +1,33 @@
+[[f>toc]]
+
++ Overview
+
+{{DynamicElementalList}} is an implementation of {{[[[class-overview:ElementalList]]]}} which dynamically constructs the {{[[[class-overview:ListElement]]]}}s returned by its {{Iterator}} on the fly (when the {{Iterator}} is requested).  This is a generic class that should be parameterized by the type of thing to be represented in the list.  The {{DynamicElementalList}} must be initialized with a {{[[[class-overview:ListElementSource]]]}} and a {{[[[class-overview:ListElementFactory]]]}}, both of which must be parameterized by the same type as the {{DynamicElementalList}}.  The {{ListElementSource}} is used to produce objects of the parameterizing type.  These objects are then fed to the {{ListElementFactory}}, which creates the {{ListElement}}s returned by the {{DynamicElementalList}}'s {{Iterator}}.
+
+The {{DynamicElementalList}} may internally cache {{ListElement}}s if it detects that the source has not changed.
+
++ Responsibilities
+
+{{DynamicElementalList}} is responsible for producing a set of {{ListElement}}s which may dynamically vary whenever the {{Iterator}} is queried.
+
++ Collaborators
+
+{{[[[class-overview:ListElement]]]}}s are returned by {{DynamicElementalList}}'s {{Iterator}}.
+{{[[[class-overview:ListElementSource]]]}} produces elements of the parameterizing type.
+{{[[[class-overview:ListElementFactory]]]}} produces {{ListElement}}s when given elements of the parameterizing type.
+
++ UML Class Diagram
+
+[[image DynamicElementalList.gif]]
+
++ Implementor
+
+Identify which team member(s) are responsible for implementing this class.
+
+If nobody has been assigned yet, add the "classes-requiring-implementor" tag to this page.
+
++ Tester
+
+Identify which team member(s) are responsible for testing this class.
+
+If nobody has been assigned yet, add the "classes-requiring-tester" tag to this page.

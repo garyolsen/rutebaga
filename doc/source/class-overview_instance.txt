@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{Instance}} represents an object which is able to exist in a physical area.  {{Instance}} is extended by concrete classes to provide them with support for existing in an environment.  {{Instance}} then provides operations to that class and clients of that class for manipulating and querying its existence within physical space, often referencing an object defining the overarching type. The type can be deferred to for operations concerning the instances type.
+
++ Responsibilities
+
+{{Instance}} is responsible for storing state related to an object's existence in physical space.
+
++ Collaborators
+
+{{Instance}}s are placed into physical space by {{Environment}}s.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:instance/instance.gif]]
+
++ Implementor
+
+Gary
+
++ Tester
+
+Will

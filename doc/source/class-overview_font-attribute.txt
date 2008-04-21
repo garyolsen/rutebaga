@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{Font Attribute}} provides the ability for {{[[[class-overview:ViewComponent]]]}}s to specify their font without directly calling the {{[[[class-overview:Drawer]]]}}'s individual methods.
+
++ Responsibilities
+
+Control a {{[[[class-overview:ViewComponent]]]}}'s font.
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+
++ UML Class Diagram
+
+[[<image FontAttribute.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{CharEntity}} is an anthropomorphic entity.  {{CharEntity}} is distinguished from its superclass, {{Entity}}, in that it actually contains its own stats, inventory, et cetera; {{Entity}} merely specifies that its subclasses must //provide access to// these objects.  That is, whereas {{[[[class-overview:Vehicle]]]}} forwards requests for these attributes to its mounted entity, {{CharEntity}} "owns" these objects.
+
++ Responsibilities
+
+{{CharEntity}} is responsible for storing state related to entities: inventory, stats, visibility, and team assignment.
+
++ Collaborators
+
+{{CharEntity}} has an inventory, stats, visibility, and team.  Shopkeeping aspects have a {{CharEntity}}.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:charentity/charentity.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Nick

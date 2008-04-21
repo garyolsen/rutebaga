@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{Stats}} provides access to the values of an entity's statistics.  As {{Stats}} is an interface, this access may either be internally stored by the implementing class, or it may be deferred to another class as a proxy.  For instance, {{[[[class-overview:CharEntity]]]}} directly stores its stats, whereas {{[[[class-overview:Vehicle]]]}} defers its operations through a proxy to its mounted entity's stats.
+
++ Responsibilities
+
+{{Stats}} is responsible for providing and modifying the values of its owning entity's statistics.
+
++ Collaborators
+
+{{Stats}} has no direct collaborators.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:stats/stats.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Nick

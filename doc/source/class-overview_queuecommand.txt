@@ -1,0 +1,28 @@
+[[f>toc]]
+
++ Overview
+
+{{QueueCommand}} is a convenience implementation of {{[[[class-overview:Command]]]}} that queues another {{Command}} on the {{[[[class-overview:CommandQueue]]]}} when its {{execute}} operation is invoked.  This component {{Command}}, as well as the {{CommandQueue}} to enqueue the command in, must be specified when the {{QueueCommand}} is created.  {{QueueCommand}} instances are immutable.  The {{isFeasible}} operation forwards to the component {{Command}}.
+
+(The {{CommandQueue}} is expected to execute the component {{Command}} at a later time, but {{QueueCommand}} does not guarantee that its component {{Command}}'s {{execute}} operation will ever be invoked.)
+
++ Responsibilities
+
+* Enqueue a given {{Command}} on a specified {{CommandQueue}} for later execution.
+
++ Collaborators
+
+{{Command}} is a component of {{QueueCommand}}.
+{{QueueCommand}} queues {{Command}}s on a {{CommandQueue}}.
+
++ UML Class Diagram
+
+[[image QueueCommand.gif]]
+
++ Implementor
+
+Matt
+
++ Tester
+
+Ryan

@@ -1,0 +1,13 @@
+[[module ChildPages]]
+
+The Effect Subsystem contains the functionality related to the "affecting" of {{Entity}}s.  {{Effect}}s are spawned by {{AbilityAction}}s, and they exists as an {{Instance}} in the game, inheriting functionality related to movement.
+
+{{Effect}}s are rule-based, which gives them criteria for completion.
+
+Implementations of {{EntityEffect}} will define the "affecting" behavior.  An example of an implementation of {{EntityEffect}} would be DamageHealth.
+
+{{EntityEffect}} is part of the entity package, and declares a protected operation //affect( Entity )//, which an Entity would call.
+
+{{TargetSeeking}} effects have an {{Instance}} as a target, and take advantage of {{Instance}}'s pathfinding abilities to seek out its target {{Instance}}.
+
+[[image http://plaza.ufl.edu/nstamas/OOP/EffectSubsystem.png]]

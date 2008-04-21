@@ -1,0 +1,33 @@
+[[f>toc]]
+
++ Overview
+
+{{ConcreteStats}} is the default implementation of {{[[[class-overview:stats]]]}}.  It provides access to the values of statistics, and mandated by its interface.
+
+{{ConcreteStats}} uses a daemon to manage rules governing its contained stats.  The daemon is responsible for executing appropriate actions for the statistics specified by the game data.  Examples of these changes could be:
+
+* decrementing life count by one when HP is below zero
+* altering defensive rating when strength changes
+* etc.
+
++ Responsibilities
+
+To its clients, {{ConcreteStats}} is responsible for storing, modifying, and preserving the integrity of an entity's stats.
+
++ Collaborators
+
+{{[[[class-overview:StatsDaemon]]]}} ensures the integrity of the enclosed stats by checking their values after modifications (subcontractor).
+
+{{[[[class-overview:StatValue]]]}} is used to store the actual value of each stat.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:concretestats/concretestats.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Nick

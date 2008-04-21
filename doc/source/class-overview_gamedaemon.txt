@@ -1,0 +1,39 @@
+[[f>toc]]
+
++ Overview
+
+The {{GameDaemon}} manages {{[[[class-overview:UserActionInterpreter]]]}}s, controlling when they are active.  This class also controls when actions occur, including processing commands and rendering the View.  The timing mechanism is delegated to a {{[[[class-overview:TimeManager]]]}} component.
+
+The {{GameDaemon}} maintains a stack of {{UserActionInterpreter}}s, where the top interpreter receives tick notifications, and has the option of allowing ticks to "bubble down" the stack by asserting {{eventsFallThrough}}.  When activated, interpreters are given references to the {{GameDaemon}} and {{ViewFacade}}.
+
+The {{GameDaemon}} also maintains a queue of {{[[[class-overview:Command]]]}}s.  {{Command}}s that manipulate the model should always be queued so they can be executed in sequential order at an appropriate time.  The {{[[[class-overview:QueueCommand]]]}} allows clients to automatically queue a {{Command}} when it is executed.
+
++ Responsibilities
+
+* Cause the View to render.
+* Send ticks to {{UserActionInterpreter}}s.
+* Process queued {{Command}}s.
+
++ Collaborators
+
+{{[[[class-overview:View Facade]]]}} receives render notifications from {{GameDaemon}}.
+{{[[[class-overview:TimeManager]]]}} sends tick notifications to {{GameDaemon}}.
+{{[[[class-overview:UserActionInterpreter]]]}} are installed by the {{GameDaemon}}, and also manipulate the stack and command queue.
+{{[[[class-overview:Command]]]}}s are queued for delayed execution by the {{GameDaemon}}.
+{{[[[class-overview:QueueCommand]]]}} queues its component {{Command}} for delayed execution by the {{GameDaemon}}.
+
++ UML Class Diagram
+
+[[image GameDaemon.gif]]
+
++ Implementor
+
+Identify which team member(s) are responsible for implementing this class.
+
+If nobody has been assigned yet, add the "classes-requiring-implementor" tag to this page.
+
++ Tester
+
+Identify which team member(s) are responsible for testing this class.
+
+If nobody has been assigned yet, add the "classes-requiring-tester" tag to this page.

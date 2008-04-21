@@ -1,0 +1,26 @@
+[[f>toc]]
+
++ Overview
+
+Some clients require a list of rules to be used in the determination of another.  For this, a {{ChainedRule}} is used.
+
+The behavior of the rule is determined by its default value.  This value defines whether the rule will follow {{AND}} or {{OR}} semantics; a rule with a default value of {{true}} will return false if at least one subrule returns {{false}} ({{AND}} semantics), whereas a rule with a default value of {{false}} will return true if at least one subrule returns {{true}} ({{OR}} semantics).
+
++ Responsibilities
+
+{{ChainedRule}} is responsible for determining a rule based on a set of subrules.
+
++ Collaborators
+
+{{ChainedRule}} has a single collaborator, {{[[[class-overview:rule|Rule]]]}}.  Subrules are expected to conform to the {{Rule}} interface.  The subrules collaborate with {{ChainedRule}} to determine its underlying logic.
+
++ UML Class Diagram
+[[image http://rutebaga.wikidot.com/local--files/class-overview:chainedrule/chainedrule.GIF]]
+
++ Implementor
+
+Gary
+
++ Tester
+
+Will

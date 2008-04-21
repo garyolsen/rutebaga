@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{Clipping Attribute}} provides the ability for {{ViewComponent}}s to specify their clipping behavior without directly calling the Drawer's individual methods.
+
++ Responsibilities
+
+Control a {{ViewComponent}}'s clipping. 
+
++ Collaborators
+
+Works with the {{[[[class-overview:Drawer]]]}}.
+
++ UML Class Diagram
+
+[[<image ClippingAttribute.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

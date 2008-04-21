@@ -1,0 +1,28 @@
+[[f>toc]]
+
++ Overview
+
+{{ListElement}}s are discrete elements in an itemized list.  Each {{ListElement}} offers a label describing itself and may further provide an associated {{Command}}.
+
++ Responsibilities
+
+* {{ListElement}} provides a label that describes itself.
+* {{ListElement}} may also provide an associated {{Command}}.
+
++ Collaborators
+
+{{[[[class-overview:ElementalList]]]}}s are aggregations of {{ListElement}}s.
+{{[[[class-overview:ListElementFactory]]]}}s produce {{ListElement}}s.
+{{[[[class-overview:Command]]]}} may be an associated member of {{ListElement}}.
+
++ UML Class Diagram
+
+[[image ListElement.gif]]
+
++ Implementor
+
+Matt
+
++ Tester
+
+Ryan

@@ -1,0 +1,36 @@
+[[f>toc]]
+
++ Overview
+
+{{StatValue}} encapsulates the properties of a particular statistic as related to an entity.
+
+Any entity has certain enumerated attributes related to each statistic:
+
+* acceptable value range; and,
+* current value
+
+{{StatValue}} exists to provide a uniform interface to access and modify the actual value of a stat, while ensuring that its value remains consistent (i.e., truncates the value to keep it within its range).
+
++ Responsibilities
+
+{{StatValue}} is responsible for:
+
+* storing the value of a statistic
+* keeping the value of the statistic consistent
+* providing access to the value
+
++ Collaborators
+
+{{StatValue}} uses {{[[[class-overview:transformation]]]}} to calculate the value of a change in a stat (subcontractor).
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:statvalue/statvalue.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Nick

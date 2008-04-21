@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{NPCBrain}} specifies the interface that a {{ConcreteNPCBrain}} must support allowing seamless swapping of different {{ConcreteNPCBrain}}s.  The operations it supports are abstractions of inputs to an {{NPC brain}}.
+
++ Responsibilities
+
+Specifies the set of operations a ConcreteNPCBrain must support.
+
++ Collaborators
+
+{{ [[[class-overview:ConcreteNPCBrain]]] }}
+
++ UML Class Diagram
+
+[[image http://plaza.ufl.edu/nstamas/OOP/NPCBrain.png]]
+
++ Implementor
+
+Nick
+
++ Tester
+
+Will

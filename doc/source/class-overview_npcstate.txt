@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+Encapsulates state-specific behavior of a {{ConcreteNPCBrain}} and defines state transitions.  For example, a default state might be wander, but hostile action might facilitate a transition to the chase or the attack state.
+
++ Responsibilities
+
+{{NPCState}} is responsible for encapsulating state-specific behavior and defining state transitions.
+
++ Collaborators
+
+{{NPCState}}s aggregate to form a {{ConcreteNPCBrain}}.
+
++ UML Class Diagram
+
+[[image http://plaza.ufl.edu/nstamas/OOP/NPCState.png]]
+
++ Implementor
+
+Nick
+
++ Tester
+
+Will

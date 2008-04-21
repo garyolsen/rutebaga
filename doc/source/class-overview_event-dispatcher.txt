@@ -1,0 +1,29 @@
+[[f>toc]]
+
++ Overview
+
+The {{EventDispatcher}} allows for the capturing of AWT's {{[http://java.sun.com/j2se/1.4.2/docs/api/java/awt/event/KeyEvent.html KeyEvent]}}s and {{[http://java.sun.com/j2se/1.4.2/docs/api/java/awt/event/MouseEvent.html MouseEvent]}}s. These captured events can then be distributed to the various {{[[[class-overview:ViewComponent]]]}}s that have been registered with the {{EventDispatcher}}. The {{[[[class-overview:View-Facade|ViewFacade]]]}} is responsible for registering new {{[[[class-overview:ViewComponent]]]}}s with the {{EventDispatcher}} if they want to receive inputs from the user.
+
++ Responsibilities
+
+* Capture key and mouse events and distribute them to the registered {{[[[class-overview:ViewComponent]]]}}s.
+
++ Collaborators
+
+* {{[[[class-overview:ViewComponent]]]}}
+
++ UML Class Diagram
+
+[[<image EventDispatcher.png]]
+
++ Activity Diagram
+
+[[<image Activity-EventDispatcher.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

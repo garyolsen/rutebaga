@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{MovementListener}} provides an interface for notifying an object of an instance's movement.
+
++ Responsibilities
+
+{{MovementListener}} has no responsibilities to clients of the interface.
+
++ Collaborators
+
+{{MovementListener}} is notified by {{Environment}}.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:movementlistener/movementlistener.gif]]
+
++ Implementor
+
+Gary
+
++ Tester
+
+Will

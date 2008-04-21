@@ -1,0 +1,27 @@
+[[f>toc]]
+
++ Overview
+
+The {{DialogDecorator}} class provides the functionality of creating a dialog box around a {{[[[class-overview:ViewComponent]]]}}. The size of the Dialog box is dependent on the bounding size of the {{[[[class-overview:ViewComponent]]]}} it is decorating.
+
+
++ Responsibilities
+
+* Draw a dialog box that surrounds the {{[[[class-overview:ViewComponent]]]}} that it is decorating.
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+* [[[class-overview:ViewComponent]]]
+
++ UML Class Diagram
+
+[[<image DialogDecorator.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

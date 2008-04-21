@@ -1,0 +1,27 @@
+[[f>toc]]
+
++ Overview
+
+{{AbilityInstance}} is the object that represents a particular entity's state in relation to an {{AbilityType}}.  To the {{Entity}}, the {{AbilityInstance}} is what "does the work" of its abilities, but under the hood {{AbilityInstance}} defers almost all of its operations to its {{AbilityType}}, acting only as a retainer of state.
+
++ Responsibilities
+
+{{AbilityInstance}} is responsible for storing the state of an ability with relation to an entity.
+
++ Collaborators
+
+{{AbilityInstance}} is "owned" by an {{[[[class-overview:Entity]]]}}.
+
+{{[[[class-overview:AbilityType]]]}} provides the behavior of {{AbilityInstance}}.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:abilityinstance/ability.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Gary

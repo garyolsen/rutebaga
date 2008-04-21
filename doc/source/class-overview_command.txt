@@ -1,0 +1,31 @@
+[[f>toc]]
+
++ Overview
+
+{{Command}} objects encapsulate an action and its parameters.  A {{Command}} is //typically// produced by the Controller and passed to the View, who can execute it agnostic of its meaning, but {{Command}} objects may be used in any context.  Clients of {{Command}}s should be aware that {{Command}}s may have state and change their //feasibility// arbitrarily without notification.  The behavior of the {{execute}} operation is undefined if {{isFeasible}} returns **false**.
+
+The {{Command}} interface allows the {{execute}} operation to be invoked multiple times on a single instance.  An implementation can require that {{execute}} not be invoked more than once by causing {{isFeasible}} to become **false** after {{execute}} is called.
+
++ Responsibilities
+
+* Encapsulate an abstract action, allowing clients to perform the action without any knowledge of its meaning.
+
++ Collaborators
+
+{{[[[class-overview:Button Component]]]}} accepts a {{Command}} and executes it when clicked.
+{{[[[class-overview:ListElement]]]}} may have an optional {{Command}} associated with it.
+{{[[[class-overview:QueueCommand]]]}} executes a {{Command}} at tick-time.
+{{[[[class-overview:CompositeCommand]]]}} executes multiple {{Command}}s.
+{{[[[class-overview:ActionDeterminer]]]}} produces possible {{Command}}s for a particular {{[[[class-overview:Instance]]]}} or set of {{Instances}}.
+
++ UML Class Diagram
+
+[[=image Command.gif]]
+
++ Implementor
+
+Matt
+
++ Tester
+
+Ryan

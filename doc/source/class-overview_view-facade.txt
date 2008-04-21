@@ -1,0 +1,32 @@
+[[f>toc]]
+
++ Overview
+
+The purpose of the {{ViewFacade}} class is to provide a unified interface to manipulate the View Subsystem without intimate knowledge of how the View Subsystem works. This class uses the //Façade// pattern to accomplish this goal.
+
++ Responsibilities
+
+* Initialize the View system for rendering (includes setting up key, mouse and mouseMotion listeners)
+* Construct and tear down the view when transitioning between different states of the game (Title, AvatarCreation, GamePlay)
+* Manage the {{[[[class-overview:Context-Menu|ContextMenu]]]}} stack
+* Render the View for this current frame
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+* [[[class-overview:Context-Menu|ContextMenu]]]
+* [[[class-overview:ViewComponent]]]
+* [[[class-overview:Event-Dispatcher|EventDispatcher]]]
+
+
++ UML Class Diagram
+
+[[<image ViewFacade.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

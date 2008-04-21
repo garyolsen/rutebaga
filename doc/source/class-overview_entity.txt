@@ -1,0 +1,27 @@
+[[f>toc]]
+
++ Overview
+
+{{Entity}} stores state related to an entity in a physical environment.  Entities are objects defined by certain anthropomorphic attributes, such as containing stats and an inventory.  However, entities are //not necessarily// anthropomorphic themselves.
+
+{{Entity}} is defined by its {{[[[class-overview:EntityType]]]}}, to which it forwards most of its behavior.  {{Entity}} exists only to retain state.  Subclasses of {{Entity}} that require new operations should defer the execution of those operations to their own subclass of {{[[[class-overview:EntityType]]]}}.
+
++ Responsibilities
+
+{{Entity}} is responsible for storing and accessing entity-related state such as stats, inventory, and vision.
+
++ Collaborators
+
+{{[[[class-overview:EntityType]]]}} defines the behavior of the {{Entity}} (subcontractor).
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:entity/entity.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Nick

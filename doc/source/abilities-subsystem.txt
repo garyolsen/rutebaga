@@ -1,0 +1,11 @@
+[[module ChildPages]]
+
+The Abilities subsystems is used for the abilities that an Entity can perform.  These abilities are split into two components: {{AbilityInstance}}, which stores the state of an ability as it relates to a particular entity; and {{AbilityType}}, which is a shared definition of behavior.
+
+[[image http://rutebaga.wikidot.com/local--files/abilities-subsystem/abilities-overview.gif]]
+
+Abilities have several state-dependent attributes.  When an ability is //feasible//, it is able to be carried out by an entity.  This is distinguished from the ability's //existence//, which is essentially whether or not the entity should be aware they have the ability and can use it.  For instance, passive abilities never "exist".
+
+Abilities have a cooldown.  The initial value of this cooldown is provided by a {{ValueProvider}}.  The current cooldown value of {{AbilityInstance}} is stored in its {{cooldown}} attribute.  This is decremented each tick.  An ability is considered infeasible if its cooldown is greater than zero.
+
+Abilities are separated into nested categories.  Entities have skill levels associated with these categories.  The skill level of an entity for an ability is defined as the sum of all skill levels preceding it in a hierarchy.

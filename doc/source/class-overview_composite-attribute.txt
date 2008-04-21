@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{Composite Attribute}} composites together multiple {{[[[class-overview:Attribute]]]}}s.
+
++ Responsibilities
+
+{{Composite Attribute}}s are responsible for applying a composition of multiple {{[[[class-overview:Attribute]]]}}s.
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+
++ UML Class Diagram
+
+[[<image  CompositeAttribute.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

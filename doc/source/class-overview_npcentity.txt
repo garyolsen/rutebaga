@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{NPCEntity}} is a subtype of {{Entity}} and adds needed functionality to an {{Entity}} that is not player controlled.  It supports a simple interface that mostly delegates to its {{NPCBrain}}.
+
++ Responsibilities
+
+{{NPCEntity}} is responsible for storing and accessing NPC-related state such as the {{NPCBrain}}.
+
++ Collaborators
+
+The {{[[[class-overview:NPCBrain]]]}} controls the {{NPCEntity}} as the player controls a {{CharEntity}}.
+
++ UML Class Diagram
+
+[[image http://plaza.ufl.edu/nstamas/OOP/NPCEntity.png]]
+
++ Implementor
+
+Nick
+
++ Tester
+
+Will

@@ -1,0 +1,27 @@
+[[f>toc]]
+
++ Overview
+
+A {{Vector}} stores a vector in a coordinate system.  This vector can then be used as a location or displacement vector.  Basic operations can be performed on {{Vector}}, which return new {{Vector}}s.  However, {{Vector}} is not immutable, so setting one of its components will be reflected to the object's clients.
+
++ Responsibilities
+
+{{Vector}} is responsible for storing spatial vector information and for providing vector operations.
+
++ Collaborators
+
+{{Vector}} has no collaborators.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:vector/vector.GIF]]
+
+If no UML diagram has been made yet, add the "classes-requiring-uml" tag to this page.
+
++ Implementor
+
+Gary
+
++ Tester
+
+Will

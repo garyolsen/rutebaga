@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{AbilityAction}} provides an action that will be performed when an ability is executed upon a target.  {{Ability Action}}s make up {{Ability Type}}s.
+
++ Responsibilities
+
+Classes implementing {{AbilityAction}} are responsible for invoking the appropriate operations upon the target.  The {{AbilityAction}} should fulfill the responsibilities of their {{Ability Type}}.
+
++ Collaborators
+
+The behavior of {{AbilityAction}} may be dependent upon the {{Target}} type's state and the {{AbilityInstance}} that invoked it.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:abilityaction/abilityaction.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Gary

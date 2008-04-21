@@ -1,0 +1,16 @@
+[[f>toc]]
+
++ Overview
+The {{Attribute}} interface provides the ability for {{[[[class-overview:ViewComponent]]]}}s to specify drawing information without having to directly call the {{[[[class-overview:Drawer]]]}}'s individual methods. These {{Attribute}}s can be preserved within the {{[[[class-overview:Drawer]]]}} so that {{Attribute}}s can continue to effect any subsequent {{draw(...)}} calls to the {{[[[class-overview:Drawer]]]}}.
+
+
+++ Implementing Classes
+[[module ChildPages]]
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+
+
++ UML Overview
+[[<image Attribute.png]]

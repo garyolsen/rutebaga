@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{Effect}} references a set of completion rules that specifies the time-related behavior of an {{Effect}}.
+
++ Responsibilities
+
+Hold a set of completion rules.
+
++ Collaborators
+
+<none>
+
++ UML Class Diagram
+
+[[image http://plaza.ufl.edu/nstamas/OOP/Effect.png]]
+
++ Implementor
+
+Nick
+
++ Tester
+
+Gary

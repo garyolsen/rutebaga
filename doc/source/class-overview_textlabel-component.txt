@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+The {{TextLabelComponent}} provides the very simply ability of displaying a String to the view with whatever {{[http://java.sun.com/j2se/1.4.2/docs/api/java/awt/Font.html Font]}} or {{[http://java.sun.com/j2se/1.4.2/docs/api/java/awt/Color.html Color]}} attributes that have been specified.
+
++ Responsibilities
+
+* Draw a string to the screen with the proper formatting ({{[http://java.sun.com/j2se/1.4.2/docs/api/java/awt/Color.html Color]}} , {{[http://java.sun.com/j2se/1.4.2/docs/api/java/awt/Font.html Font]}}, etc.)
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+
++ UML Class Diagram
+
+[[<image TextLabelComponent.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

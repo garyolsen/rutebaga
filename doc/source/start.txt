@@ -1,0 +1,21 @@
+Check out the links to the left to get started.
+
+You can post to each page's forum by using the "discuss" link.
+
+Keep in mind, we'll need to:
+
+* update the [[[system-overview|System Overview]]] page
+* update/create pages for each subsystem, the parent of each of which should be set to [[[subsystems|Subsystems]]] (the subsystems page will automatically display all of its children)
+* create pages for each class, setting its parent page to its relevant subsystem (each subsystem page must have a ChildPages module installed)
+
+
+----
+
+
+Gary LosHuertos: anyway.  I clearly have avoidance issues, seeing as a made a logo of a rutabaga before actually doing any work
+Nick Stamas: and you introduced another permutation of the spelling i see
+Gary LosHuertos: this is the spelling as according to wikipedia
+Gary LosHuertos: so yes, the URL and the actual site use different spellings
+Nick Stamas: haha
+Gary LosHuertos: we could just use regexps, and call it rut[ea]b[ea]ga
+Nick Stamas: i think you just came up with our new name

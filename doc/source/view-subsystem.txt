@@ -1,0 +1,3 @@
+The View Subsystem is responsible for setting up the visual representation of the game model.
+
+[[module ChildPages]]

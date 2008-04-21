@@ -1,0 +1,28 @@
+[[f>toc]]
+
++ Overview
+
+{{Environment}} manages {{Instance}}s that are within it, mapping them to specific tile locations.  {{Environment}} essentially provides the role of nature, managing movement and physical effects.
+
++ Responsibilities
+
+{{Environment}} is responsible for performing movement transformations on the instances within it, as well as for providing access to information about what instances exist in particular regions of space.
+
++ Collaborators
+
+{{Bounds}} are used by {{Environment}} when accessing information about instances' locations.
+
+{{Instance}}s are the primary component of {{Environment}}.
+
+{{MovementListener}}s are notified by {{Environment}}.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:environment/environment.gif]]
++ Implementor
+
+Gary
+
++ Tester
+
+Will

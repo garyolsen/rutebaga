@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{ConcreteNPCBrain}} acts as context, which is capable of swapping its internal state.  It supports the set of operations specified in {{NPCBrain}}, and NPCEntity passes incoming messages to its {{ConcreteNPCBrain}}.  Depending on its current {{State}}, {{ConcreteNPCBrain}} will appear to act differently.
+
++ Responsibilities
+
+* Keeps track of the state of an {{NPCEntity}}.
+
++ Collaborators
+
+{{ [[[class-overview:NPCState]]] }}
+
++ UML Class Diagram
+
+[[image http://plaza.ufl.edu/nstamas/OOP/ConcreteNPCBrain.png]]
+
++ Implementor
+
+Nick
+
++ Tester
+
+Will

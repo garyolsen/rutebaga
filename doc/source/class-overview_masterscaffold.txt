@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+The master scaffold initializes and keeps track of objects that are "on the scaffold" used in game initialization.
+
++ Responsibilities
+
+{{MasterScaffold}} is responsible for providing access to objects based on a unique key.  {{MasterScaffold}} delegates responsibility for initializing and creating objects to the {{Builder}} registered with that key.
+
++ Collaborators
+
+{{Builder}} creates and initializes objects for {{MasterScaffold}}.  {{MasterScaffold}} provides access to objects for {{Builder}}s.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:masterscaffold/masterscaffold.GIF]]
+
++ Implementor
+
+Gary
+
++ Tester
+
+Will
