@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
 import rutebaga.controller.command.LabelDeterminer;
 
 public class CollectionListElementSource<E> implements ListElementSource<E> {
@@ -24,8 +23,6 @@ public class CollectionListElementSource<E> implements ListElementSource<E> {
 	}
 
 	public Iterator<E> iterator() {
-		cache.clear();
-		cache.addAll(source);
 		return source.iterator();
 	}
 
@@ -33,18 +30,24 @@ public class CollectionListElementSource<E> implements ListElementSource<E> {
 		return source.size();
 	}
 
-	public boolean hasChanged(Object object) {
+	public boolean hasChanged(Object object) {	
 		if (cache.size() != contentSize())
 			return true; // Source changed since cache was formed
 		
-		int cacheSize = cache.size();
-		cache.retainAll(source);
+		do {
+			int cacheSize = cache.size();
+			cache.retainAll(source);
 		
-		if (cacheSize != cache.size())
-			return false; // Source lost objects since cache was formed
-		if (cache.size() != source.size())
-			return false; // Source gained objects since cache was formed
+			if (cacheSize != cache.size())
+				break; // Source lost objects since cache was formed
+			if (cache.size() != source.size())
+				break; // Source gained objects since cache was formed
 		
-		return true;
+			cache.clear();
+			cache.addAll(source);
+		
+			return true;
+		} while (false);
+		return false;
 	}
 }

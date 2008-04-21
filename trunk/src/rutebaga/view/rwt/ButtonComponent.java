@@ -80,7 +80,6 @@ public class ButtonComponent extends ViewComponent {
 		draw.setAttribute( untoggled );
 		draw.drawShape(getLocation(), getBounds());
 		
-	
 		centeredText.x = (int)getBounds().getBounds().getX() + this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
 		centeredText.y = (int)getBounds().getBounds().getY() + this.getLocation().y + (getHeight() / 2) + ( font.getFont().getSize() / 2 );
 		

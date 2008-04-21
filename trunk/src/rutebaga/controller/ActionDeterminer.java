@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import rutebaga.commons.logic.Rule;
 import rutebaga.controller.command.AvatarAbilityCommandFactory;
 import rutebaga.controller.command.AvatarEquipmentCommandFactory;
 import rutebaga.controller.command.AvatarInventoryCommandFactory;
@@ -14,6 +15,7 @@ import rutebaga.controller.command.CreateContextMenuCommand;
 import rutebaga.controller.command.FixedLabelDeterminer;
 import rutebaga.controller.command.LabelDeterminer;
 import rutebaga.controller.command.ShopkeeperInventoryCommandFactory;
+import rutebaga.controller.command.list.AbilityListElementSource;
 import rutebaga.controller.command.list.BackedListElementFactory;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.CollectionListElementSource;
@@ -215,9 +217,7 @@ public class ActionDeterminer
 		}
 		@Override
 		public void execute() {
-			List<Ability> abilities = avatar.getAbilities();
-			LabelDeterminer label = new FixedLabelDeterminer(avatar.getName() + "'s Abilities");
-			CollectionListElementSource<Ability> source = new CollectionListElementSource<Ability>(label, abilities);
+			AbilityListElementSource source = new AbilityListElementSource(avatar.getAbilities());
 			AvatarAbilityCommandFactory commands = new AvatarAbilityCommandFactory(avatar, target, facade, queue);
 			BackedListElementFactory<Ability> factory = new BackedListElementFactory<Ability>(commands, facade);
 			DynamicElementalList<Ability> list = new DynamicElementalList<Ability>(source, factory);
