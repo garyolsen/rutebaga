@@ -34,7 +34,7 @@ public class EntityTypeBuilder extends InstanceBuilder
 		type.setMovementSpeed((ValueProvider<Entity>) getValueProvider(id,
 				"moveSpd", scaffold));
 		
-		type.setBargainSkillAmount((ValueProvider<Entity>) getValueProvider(id, "bargain", scaffold));
+//		type.setBargainSkillAmount((ValueProvider<Entity>) getValueProvider(id, "bargain", scaffold));
 		
 		String standingId = getProperty(id, "standing");
 		String walkingId = getProperty(id, "walking");

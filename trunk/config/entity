@@ -7,6 +7,22 @@ vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
 movement	whitelist terrGrass
 
+entityMario
+standing 	imgMario
+walking		imgMario
+moveSpd		$vpEntityMovementSpeed	
+vRadius		10
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+movement	whitelist terrGrass
+
+entityWetMario
+standing 	imgMarioWet
+walking		imgMarioWet
+moveSpd		$vpEntityMovementSpeed	
+vRadius		10
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+movement	whitelist terrGrass
+
 entityNPCKoopa
 standing 	imgKoopa
 walking		imgKoopa
