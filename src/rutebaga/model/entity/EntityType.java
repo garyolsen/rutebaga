@@ -25,6 +25,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private List<AbilityType> abilityTypes = new ArrayList<AbilityType>();
 
 	private int radius;
+	private int decayTime;
 
 	public T create()
 	{
@@ -59,14 +60,20 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	public void initialize(T entity)
 	{
 		super.initialize(entity);
-		EntityAppearanceManager manager = new EntityAppearanceManager(entity);
-		manager.setStanding(standing);
-		manager.setWalking(walking);
-		entity.setAppearanceManager(manager);
+		
+		if(standing != null && walking != null) {
+			EntityAppearanceManager manager = new EntityAppearanceManager(entity);
+			manager.setStanding(standing);
+			manager.setWalking(walking);
+			entity.setAppearanceManager(manager);
+		}
+		
+
 		entity.setMovementSpeedStrat(movementSpeed);
 		entity.setBargainSkill(bargainSkillAmount);
 		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
+		
 		for (AbilityType type : abilityTypes)
 		{
 			entity.addAbility(type.makeAbility());
@@ -129,6 +136,14 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	public void setSkillPtStrat(BidirectionalValueProvider<Entity> skillPtStrat)
 	{
 		this.skillPtStrat = skillPtStrat;
+	}
+	
+	public void setDecayTime(int decayTime) {
+		this.decayTime = decayTime;
+	}
+	
+	public int getDecayTime() {
+		return decayTime;
 	}
 
 }

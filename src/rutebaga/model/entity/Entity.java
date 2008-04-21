@@ -20,6 +20,7 @@ import rutebaga.model.DefaultLayers;
 import rutebaga.model.Named;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
+import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InstanceType;
@@ -63,6 +64,9 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private Team team;
 	private Storefront storeFront;
 	private double money;
+	
+	private int decayTime = 0;
+	private long deathStart = 0l;
 
 	private SkillLevelManager skillLevelManager = new SkillLevelManager();
 
@@ -75,6 +79,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	// TODO move into AbilitySet
 	private List<Ability> abilities = new ArrayList<Ability>();
+	
+	private Mount mount;
 
 	public Entity(InstanceType<T> type)
 	{
@@ -142,6 +148,10 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public boolean canSee(IntVector2D v)
 	{
+		if(mount != null) 
+			return mount.canSee(v);
+		
+		
 		Vector2D dV = new Vector2D(v.getX(), v.getY());
 		return visionBounds.contains(dV.minus(this.getCoordinate()));
 	}
@@ -165,11 +175,17 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public Vector2D getFacing()
 	{
+		if(mount != null)
+			return mount.getFacing();
+		
 		return facing;
 	}
 
 	public IntVector2D getFacingTile()
 	{
+		if(mount != null)
+			mount.getFacingTile();
+		
 		return getEnvironment().getTileOf(
 				getFacing().over(getFacing().getMagnitude()).plus(getTile()));
 	}
@@ -212,11 +228,14 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public Vision getVision()
 	{
+		if(mount != null)
+			return mount.getVision();
+		
 		return vision;
 	}
 
 	public Bounds2D getVisionBounds()
-	{
+	{	
 		return visionBounds;
 	}
 
@@ -271,6 +290,12 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	@Override
 	public void tick()
 	{
+		if(isDead() && deathStart == 0) {
+			deathStart = System.currentTimeMillis();
+		} else if(isDead()) {
+			decayTime -= System.currentTimeMillis();
+		}
+		
 		flushEffectQueue();
 		getVision().tick();
 	}
@@ -282,11 +307,15 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public void walk(Vector2D direction)
 	{
-		double magnitude = direction.getMagnitude();
-		if (magnitude > 0.005)
-			this.facing = direction;
-		this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)
-				/ magnitude));
+		if(mount != null) {
+			mount.walk(direction);
+		} else {
+			double magnitude = direction.getMagnitude();
+			if (magnitude > 0.005)
+				this.facing = direction;
+			this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)
+					/ magnitude));
+		}
 	}
 
 	private void flushEffectQueue()
@@ -302,7 +331,39 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		return effectQueue;
 	}
+	
+	public void setMount(Mount mount) {
+		this.mount = mount;
+	}
+	
+	public Mount getMount(Mount mount) {
+		return mount;
+	}
+	
+	public void mount(Mount mount) {
+		mount.mount(this);
+	}
+	
+	public void dismount(Mount mount) {
+		mount.dismount(this);
+	}
 
+	@Override
+	public Vector2D getCoordinate() {
+		if(mount != null)
+			return mount.getCoordinate();
+		
+		return super.getCoordinate();
+	}
+
+	@Override
+	public Environment getEnvironment() {
+		if(mount != null)
+			return mount.getEnvironment();
+		
+		return super.getEnvironment();
+	}
+	
 	public BidirectionalValueProvider<Entity> getSkillPtStrat()
 	{
 		return skillPtStrat;
@@ -311,6 +372,27 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public void setSkillPtStrat(BidirectionalValueProvider<Entity> skillPtStrat)
 	{
 		this.skillPtStrat = skillPtStrat;
+	}
+
+	@Override
+	public Appearance getAppearance() {
+		if(mount != null)
+			return mount.getAppearance();
+
+		return super.getAppearance();
+	}
+
+	@Override
+	public boolean isMobile() {
+		return !isDead();
+	}
+	
+	public int getDecayTime() {
+		return decayTime;
+	}
+	
+	public void setDecayTime(int decayTime) {
+		this.decayTime = decayTime;
 	}
 
 }
