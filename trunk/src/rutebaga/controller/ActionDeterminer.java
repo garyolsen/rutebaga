@@ -129,7 +129,8 @@ public class ActionDeterminer
 		list.add("Stats", command);
 		
 		if(target.getStoreFront() != null) {
-			target.getStoreFront();
+			command = new CreateStoreBuyMenuCommand(target, queue);
+			list.add("Buy", command);
 		}
 	}
 	
@@ -224,26 +225,24 @@ public class ActionDeterminer
 		}
 	}
 	
-	private class CreateStoreFrontMenuCommand extends CreateContextMenuCommand {
+	private class CreateStoreBuyMenuCommand extends CreateContextMenuCommand {
 
 		private Entity<?> target;
 		private CommandQueue queue;
 		
-		public CreateStoreFrontMenuCommand(Entity<?> target, CommandQueue queue) {
+		public CreateStoreBuyMenuCommand(Entity<?> target, CommandQueue queue) {
 			this.target = target;
 			this.queue = queue;
 		}
 		
 		public void execute() {
-			StoreInstance store = target.getStoreFront().getInstance(avatar);	
-			Collection<Item> items = store.getItems();
+			StoreInstance store = target.getStoreFront().getInstance(avatar);
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Store");
-			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, items);
+			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, store.getItems());
 			ShopkeeperInventoryCommandFactory commands = new ShopkeeperInventoryCommandFactory(store, facade, queue);
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
-			
-			
+			facade.createSubContextMenu(createCloseableList(list));
 		}
 		
 	}

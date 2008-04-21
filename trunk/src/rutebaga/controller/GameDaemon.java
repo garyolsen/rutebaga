@@ -158,6 +158,14 @@ public class GameDaemon implements InterpreterManager {
 		 */
 		this.ticker.unpause();
 	}
+	
+	public void pause() {
+		ticker.pause();
+	}
+	
+	public void unpause() {
+		ticker.unpause();
+	}
 
 	/**
 	 * Prepares and returns a reference to a new GameDaemon that does not queue
