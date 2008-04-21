@@ -19,6 +19,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private Appearance[][] standing;
 	private ValueProvider<Entity> movementSpeed;
 	private ValueProvider<Entity> bargainSkillAmount;
+	private ValueProvider<Entity> deadStrategy;
 	private List<AbilityType> abilityTypes = new ArrayList<AbilityType>();
 	private int radius;
 
@@ -61,6 +62,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		entity.setAppearanceManager(manager);
 		entity.setMovementSpeedStrat(movementSpeed);
 		entity.setBargainSkill(bargainSkillAmount);
+		entity.setDeadStrategy(deadStrategy);
 		for(AbilityType type : abilityTypes)
 		{
 			entity.addAbility(type.makeAbility());
@@ -100,6 +102,16 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 
 	public void setBargainSkillAmount(ValueProvider<Entity> bargainSkillAmount) {
 		this.bargainSkillAmount = bargainSkillAmount;
+	}
+
+	public ValueProvider<Entity> getDeadStrategy()
+	{
+		return deadStrategy;
+	}
+
+	public void setDeadStrategy(ValueProvider<Entity> deadStrategy)
+	{
+		this.deadStrategy = deadStrategy;
 	}
 
 }

@@ -33,6 +33,8 @@ public class EntityTypeBuilder extends InstanceBuilder
 	
 		type.setMovementSpeed((ValueProvider<Entity>) getValueProvider(id,
 				"moveSpd", scaffold));
+		type.setDeadStrategy((ValueProvider<Entity>) getValueProvider(id,
+				"deadStrat", scaffold));
 		
 //		type.setBargainSkillAmount((ValueProvider<Entity>) getValueProvider(id, "bargain", scaffold));
 		

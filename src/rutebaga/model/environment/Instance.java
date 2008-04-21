@@ -42,13 +42,13 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	private boolean tickable = true;
 	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
 	private String name;
+	private FlagManager flagManager = new FlagManager();
 	
-
 	public Instance(InstanceType<T> type)
 	{
 		this.type = type;
 	}
-
+	
 	/**
 	 * Checks to see whether an instance is allowed to be over a terrain type.
 	 * 
@@ -60,6 +60,13 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	public Boolean able(TerrainType terrain)
 	{
 		return movementAttributes.able(terrain);
+	}
+
+	public Object add(MovementAttributeSet moveSet)
+	{
+		Object token = UIDProvider.getUID();
+		movementAttributes.add(moveSet,token);
+		return token;
 	}
 
 	/**
@@ -82,6 +89,16 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	public void applyMomentum(GenericVector2D momentum)
 	{
 		this.physicsContainer.applyMomentum(momentum);
+	}
+
+	public void blackListTerrainTypes(TerrainType... terrains)
+	{
+		MovementAttributeSet moveSet = new BlackList();
+		for (TerrainType terrain : terrains)
+		{
+			moveSet.add(terrain);
+		}
+		movementAttributes.add(moveSet);
 	}
 
 	/**
@@ -164,6 +181,11 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		return location == null ? null : location.getEnvironment();
 	}
 
+	public boolean getFlag(String flag)
+	{
+		return flagManager.isSet(flag);
+	}
+
 	/**
 	 * Determines the space-friction that this instance donates to its tile.
 	 * 
@@ -192,6 +214,10 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	public MovementAttributes getMovementAttributes()
 	{
 		return movementAttributes;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public Orientation getOrientation()
@@ -237,21 +263,31 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 			appearanceManager.tick();
 	}
 
+	public boolean isLike(Instance other)
+	{
+		return ObjectUtils.equals(this.type, other.type);
+	}
+
 	public boolean isMobile()
 	{
 		return true;
 	}
-
+	
 	public void registerMovementListener(MovementListener listener)
 	{
 		this.movementListeners.add(listener);
 	}
 
+	public void remove()
+	{
+		this.getEnvironment().remove(this);
+	}
+	
 	public boolean sameTypeAs(Instance other)
 	{
 		return ObjectUtils.equals(this.type, other.type);
 	}
-
+	
 	public void setAppearance(Appearance appearance)
 	{
 		this.appearanceManager = new StaticAppearanceManager(appearance);
@@ -262,11 +298,27 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		this.appearanceManager = appearanceManager;
 	}
 
+	public void setFlag(String flag, boolean value)
+	{
+		flagManager.setFlag(flag, value);
+	}
+
 	public void setMovementAttributes(MovementAttributes movementAttributes)
 	{
 		this.movementAttributes = movementAttributes;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public abstract void tick();
+
+	public void unregisterMovementListener(MovementListener listener)
+	{
+		this.movementListeners.remove(listener);
+	}
+
 	/**
 	 * This method permanently adds the passed TerrainTypes to
 	 * this Instance's WhiteList.
@@ -283,30 +335,6 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		movementAttributes.add(moveSet);
 	}
 	
-	public Object add(MovementAttributeSet moveSet)
-	{
-		Object token = UIDProvider.getUID();
-		movementAttributes.add(moveSet,token);
-		return token;
-	}
-	
-	public void blackListTerrainTypes(TerrainType... terrains)
-	{
-		MovementAttributeSet moveSet = new BlackList();
-		for (TerrainType terrain : terrains)
-		{
-			moveSet.add(terrain);
-		}
-		movementAttributes.add(moveSet);
-	}
-
-	public abstract void tick();
-
-	public void unregisterMovementListener(MovementListener listener)
-	{
-		this.movementListeners.remove(listener);
-	}
-	
 	private void updateTickability()
 	{
 		if(tickable)
@@ -318,7 +346,7 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 			getEnvironment().getTickableInstances().remove(this);
 		}
 	}
-	
+
 	/**
 	 * @return the location container for this instance
 	 */
@@ -331,7 +359,7 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	{
 		return movementListeners;
 	}
-
+	
 	/**
 	 * @return the physics container for this instance
 	 */
@@ -366,7 +394,7 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 			getEnvironment().getTickableInstances().remove(this);
 		}
 	}
-
+	
 	/**
 	 * Sets the physics container for this instance.
 	 * 
@@ -386,24 +414,6 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		{
 			updateTickability();
 		}
-	}
-	
-	public boolean isLike(Instance other)
-	{
-		return ObjectUtils.equals(this.type, other.type);
-	}
-
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void remove()
-	{
-		this.getEnvironment().remove(this);
 	}
 
 }
