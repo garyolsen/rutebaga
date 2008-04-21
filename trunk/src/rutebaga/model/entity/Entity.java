@@ -60,7 +60,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private Storefront storeFront;
 	private double money;
 	
-	private ValueProvider<CharEntity> bargainSkillAmount = new ConstantValueProvider<CharEntity>(1.0);
+	private ValueProvider<Entity> bargainSkillAmount = new ConstantValueProvider<Entity>(1.0);
 	
 	//TODO move into AbilitySet
 	private List<Ability> abilities = new ArrayList<Ability>();
@@ -233,8 +233,9 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return bargainSkillAmount;
 	}
 	
-	public void setBargainSkill(ValueProvider<CharEntity> bargainSkillAmount) {
-		this.bargainSkillAmount = bargainSkillAmount;
+	public void setBargainSkill(ValueProvider<Entity> bargainSkillAmount) {
+		if( bargainSkillAmount != null)
+			this.bargainSkillAmount = bargainSkillAmount;
 	}
 	
 	public void addToMoney(double value) {
