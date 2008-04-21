@@ -17,6 +17,7 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	private ConcreteStats stats = new ConcreteStats(this);
 	private ConcreteStats damageResistance = new ConcreteStats(this);
 	private ConcreteInventory inventory = new ConcreteInventory(this);
+	private double mass = 1.0;
 
 	public CharEntity(InstanceType<T> type)
 	{
@@ -32,7 +33,7 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	@Override
 	public double getMass()
 	{
-		return 1.0;
+		return mass + inventory.getWeight();
 	}
 
 	@Override
@@ -45,6 +46,11 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	public Stats getDamageResistance()
 	{
 		return damageResistance;
+	}
+
+	@Override
+	public void setMass(double mass) {
+		this.mass = mass;
 	}
 	
 }

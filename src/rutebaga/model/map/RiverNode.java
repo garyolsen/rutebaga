@@ -103,5 +103,10 @@ public class RiverNode extends Instance<RiverNode> {
 	public void setCurrent(double current) {
 		this.current = current;
 	}
+
+	@Override
+	public void setMass(double mass) {
+		//can't set a river node's mass
+	}
 	
 }

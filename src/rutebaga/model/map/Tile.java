@@ -15,6 +15,7 @@ import rutebaga.model.environment.InstanceType;
 public class Tile<T extends Tile<T>> extends Instance<T>
 {
 	private TerrainType terrain;
+	private double mass;
 
 	public Tile(InstanceType<T> type)
 	{
@@ -60,6 +61,11 @@ public class Tile<T extends Tile<T>> extends Instance<T>
 	@Override
 	public void tick()
 	{
+	}
+
+	@Override
+	public void setMass(double mass) {
+		//tiles have infinite mass
 	}
 
 }

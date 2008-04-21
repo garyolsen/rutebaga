@@ -15,6 +15,7 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 	private MovementAttributes movementAttributes = new MovementAttributes();
 	private AppearanceManagerDefinition definition;
 	private String name;
+	private double mass;
 	
 	public String getName() {
 		return name;
@@ -72,6 +73,16 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 		}
 		if (definition != null)
 			instance.setAppearanceManager(definition.make(instance));
+		
+		instance.setMass(mass);
+	}
+
+	public double getMass() {
+		return mass;
+	}
+
+	public void setMass(Double mass) {
+		this.mass = mass;
 	}
 
 }

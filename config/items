@@ -18,7 +18,7 @@ useeffects		eeffPotion_Healthuseeffects
 itemFireFlower
 name			Fire Flower
 appearance static imgFireFlower C
-mass			0.5	
+mass			100.0	
 equippable		false
 usable			true
 useeffects		
@@ -50,7 +50,7 @@ useeffects
 itemBananaPeel
 name			Banana Peel
 appearance static imgBananaPeel C
-mass			0.7	
+mass			10000.0
 equippable		false
 usable			true
 useeffects

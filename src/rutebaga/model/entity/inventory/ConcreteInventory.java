@@ -25,6 +25,7 @@ public class ConcreteInventory implements Inventory
 	private Set<Item> unequipped = new HashSet<Item>();
 	private SlotAllocation slots = new SlotAllocation();
 	private Map<Item, Set<EntityEffect>> onUnequipEffects = new HashMap<Item, Set<EntityEffect>>();
+	private double weight;
 
 	public ConcreteInventory(Entity parent)
 	{
@@ -53,6 +54,8 @@ public class ConcreteInventory implements Inventory
 		this.equipped.remove(item);
 		
 		parent.getEnvironment().add(item, new Vector2D( parent.getFacingTile() ));
+		
+		recalculateWeight();
 	}
 
 	public void equip(Item<?> item)
@@ -118,6 +121,7 @@ public class ConcreteInventory implements Inventory
 		slots.add(item.getEquippableAspect().getAllocation());
 		unequipped.add(item);
 		equipped.remove(item);
+		recalculateWeight();
 	}
 
 	@Override
@@ -155,20 +159,26 @@ public class ConcreteInventory implements Inventory
 	public boolean remove(Item item) {
 		if (equipped.contains(item))
 			return false;
+		
+		recalculateWeight();
 		return unequipped.remove(item);
 	}
 	
 	public double getWeight() {
-		double weight = 0.0;
-		for (Item item : equipped)
-		{
-			weight = item.getMass() + weight;
-		}
-		for (Item item : unequipped)
-		{
-			weight = item.getMass() + weight;
-		}
 		return weight;
+	}
+	
+	private void recalculateWeight() {
+		double m = 0.0;
+		for (Item i : equipped)
+		{
+			m = i.getMass() + weight;
+		}
+		for (Item i : unequipped)
+		{
+			m = i.getMass() + weight;
+		}
+		weight = m;
 	}
 
 }
