@@ -59,7 +59,7 @@ public class FlagEffect extends EntityEffect
 	{
 		double value = valueProvider.getValue(entity);
 		int comp = Double.compare(value, 0);
-		System.out.println("switching flag " + flag + " by " + comp);
+		//System.out.println("switching flag " + flag + " by " + comp);
 		if (comp == 0)
 			return;
 		entity.setFlag(flag, comp > 0);

@@ -41,9 +41,9 @@ feasibility {
 
 
 
-abMagicMissle
+abMagicMissile
 
-name		Magic Missle
+name		Magic Missile
 category	abcatSpells
 actions {
 	damage		dmgTPMagicMissle	10

@@ -29,6 +29,9 @@ public class ItemTypeBuilder extends InstanceBuilder
 		Boolean equippable = getBoolean(id, "equippable");
 		itemType.setEquippable(equippable == null ? false : equippable);
 		
+		Boolean useable = getBoolean(id, "usable");
+		itemType.setUsable(useable == null ? false : useable);
+		
 		// ALLOCATIONS
 		// FORMAT: idx*2 -> slot name; idx*2+1 -> qty
 		String[] slots = getStringArray(id, "allocation", "[\\s\\t]");
@@ -38,6 +41,12 @@ public class ItemTypeBuilder extends InstanceBuilder
 			int qty = Integer.parseInt(slots[i+1]);
 			//XXX LOD
 			itemType.getAllocation().add(type, qty);
+		}
+		
+		// Usable Entity EFFECTS
+		for(Object obj : getObjectArray(id, "useeffects", "[\\s\\t]", scaffold))
+		{
+			itemType.getUsableEffects().add(obj);
 		}
 		
 		// REVERSIBLE EFFECTS
@@ -51,6 +60,8 @@ public class ItemTypeBuilder extends InstanceBuilder
 		{
 			itemType.getPermanentEffects().add(obj);
 		}
+		
+
 		
 	}
 

@@ -10,10 +10,11 @@ import rutebaga.model.environment.InstanceType;
 
 public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 {
-	private boolean equippable = false;
+	private boolean equippable = false, usable = false;
 	private SlotAllocation allocation = new SlotAllocation();
 	private List<EntityEffect> permanentEffects = new ArrayList<EntityEffect>();
 	private List<ReversibleEntityEffect> reversibleEffects = new ArrayList<ReversibleEntityEffect>();
+	private List<EntityEffect> usableEffects = new ArrayList<EntityEffect>();
 	private double mass = 1.0;
 
 	@Override
@@ -44,6 +45,19 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 	{
 		return equippable;
 	}
+	
+	public boolean isUsable()
+	{
+		return usable;
+	}
+	
+	public List<EntityEffect> getUsableEffects() {
+		return usableEffects;
+	}
+	
+	public void setUsableEffects(List<EntityEffect> usableEffects) {
+		this.usableEffects = usableEffects;
+	}
 
 	public void setAllocation(SlotAllocation allocation)
 	{
@@ -53,6 +67,10 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 	public void setEquippable(boolean equippable)
 	{
 		this.equippable = equippable;
+	}
+	
+	public void setUsable( boolean usable) {
+		this.usable = usable;
 	}
 
 	public void setPermanentEffects(List<EntityEffect> permanentEffects)
@@ -79,12 +97,24 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 		if (equippable)
 		{
 			EquippableAspect equip = new EquippableAspect();
-			equip.getAllocation().add(allocation);
-			equip.getPermanentEquipEffects().addAll(permanentEffects);
-			equip.getReversibleEquipEffects().addAll(reversibleEffects);
-			instance.setEquippableAspect(equip);
-			instance.setMass(mass);
+			if(equippable) {
+				equip.getAllocation().add(allocation);
+				equip.getPermanentEquipEffects().addAll(permanentEffects);
+				equip.getReversibleEquipEffects().addAll(reversibleEffects);
+				instance.setEquippableAspect(equip);
+			}
 		}
+			
+		if(usable) {
+			UsableAspect usable = new UsableAspect();
+			for(EntityEffect effect : usableEffects) {
+				usable.addEffect(effect);
+			}
+			instance.setUsableAspect(usable);
+		}
+	
+		instance.setMass(mass);
+		
 	}
 
 	public double getMass() {

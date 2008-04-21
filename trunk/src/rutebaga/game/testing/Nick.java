@@ -21,7 +21,7 @@ public class Nick {
 		Nick.environment = environment;
 		Nick.avatar = avatar;
 
-		new Thread()
+	/*	new Thread()
 		{
 
 			@Override
@@ -44,6 +44,6 @@ public class Nick {
 
 			}
 
-		}.start();
+		}.start();*/
 	}
 }
