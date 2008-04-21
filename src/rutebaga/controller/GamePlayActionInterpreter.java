@@ -112,7 +112,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 
-		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_DELETE), new Command() {
+		Command quitCommand = new Command() {
 			public void execute() {
 				paused = true;
 				facade.clearContextMenuStack();
@@ -142,7 +142,9 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			public boolean isFeasible() {
 				return true;
 			}
-		});
+		};
+		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_DELETE), quitCommand);
+		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_BACK_SPACE), quitCommand);
 
 	}
 

@@ -60,7 +60,7 @@ public class ContextMenu extends ViewComponent
 	
 	private List<ButtonComponent> components = new ArrayList<ButtonComponent>();
 	
-	private int currentContextHover;
+	private int currentContextHover = -1;
 	
 	private boolean dirty;
 	
@@ -82,12 +82,13 @@ public class ContextMenu extends ViewComponent
 				initContextMenu();
 			}
 		
-		draw.setAttribute(contextHover);
-		
-		draw.drawShape(getLocation(), contextTriangles.get(currentContextHover));
-		
-		draw.setAttribute(null);
+		if (currentContextHover >= 0) {
+			draw.setAttribute(contextHover);
 
+			draw.drawShape(getLocation(), contextTriangles.get(currentContextHover));
+
+			draw.setAttribute(null);
+		}
 		for(ViewComponent component : components)
 			component.draw(draw);
 		
@@ -260,14 +261,14 @@ public class ContextMenu extends ViewComponent
 	
 	protected boolean processMouseMotionEvent( MouseEvent event ) { 
 		int i = 0;
-		boolean changed = false;
 		
 		synchronized(this) {
 			for(Polygon s : contextTriangles) {
 				if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
 					if (i == currentContextHover)
 						break;
-					components.get(currentContextHover).setHighlighted(false);
+					if (currentContextHover >= 0)
+						components.get(currentContextHover).setHighlighted(false);
 					currentContextHover = i;
 					components.get(i).setHighlighted(true);
 					moveComponents();

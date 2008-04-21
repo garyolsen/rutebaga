@@ -7,8 +7,11 @@ import java.util.NoSuchElementException;
 import java.util.Observable;
 import java.util.Set;
 
+import rutebaga.commons.logic.Rule;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandFactory;
+import rutebaga.controller.command.FixedLabelDeterminer;
+import rutebaga.controller.command.LabelDeterminer;
 
 /**
  * 
@@ -48,6 +51,8 @@ public class ConcreteElementalList implements ElementalList,
 	 * Indicates whether this ConcreteElementalList has been changed wrt the object.  
 	 */
 	private Set<Object> changed = new HashSet<Object>();
+
+	private Rule<Object> changedDeterminer;
 	
 	private void change() {
 		changed.clear();
@@ -104,6 +109,22 @@ public class ConcreteElementalList implements ElementalList,
 	}
 
 	/**
+	 * Add a named Command to this ConcreteElementalList with the given
+	 * LabelDeterminer.
+	 * 
+	 * @param label
+	 *            the String element to add to this list
+	 * @param command
+	 *            the Command to associate with this list element
+	 */
+	public void add(LabelDeterminer label, Command command) {
+		// To hell with efficiency!
+		list.add(new SingleCommandElementalList(label, command));
+		change();
+	}
+
+	
+	/**
 	 * Add an entire ElementalList as a component of this ConcreteElementalList.
 	 * When this ConcreteElementalList's iterator runs, it will visit each of
 	 * the specified ElementalList's ListElements in the order its Iterator
@@ -140,6 +161,14 @@ public class ConcreteElementalList implements ElementalList,
 		change();
 	}
 
+	public void setChangeDeterminer(Rule<Object> determiner) {
+		changedDeterminer = determiner;
+	}
+	
+	public Rule<Object> getChangeDeterminer() {
+		return changedDeterminer;
+	}
+	
 	/**
 	 * Returns an Iterator over all the ListElements contained by this
 	 * ConcreteElementalList. If an entire ElementalList has been added as a
@@ -207,13 +236,15 @@ public class ConcreteElementalList implements ElementalList,
 	 * the label-command pair the SingleCommandElementalList was constructed
 	 * with.
 	 */
+	private static final LabelDeterminer defaultLabelDeterminer = new FixedLabelDeterminer("");
 	private class SingleCommandElementalList implements ElementalList {
-
+		
 		/**
 		 * The label of the ListElement "contained" by this
 		 * SingleCommandElementalList.
 		 */
-		private String label;
+		private LabelDeterminer labelDeterminer;
+		private String cachedLabel;
 
 		/**
 		 * The command of the ListElement "contained" by this
@@ -233,12 +264,27 @@ public class ConcreteElementalList implements ElementalList,
 		 *            SingleCommandElementalList
 		 */
 		public SingleCommandElementalList(String label, Command command) {
-			this.label = (label == null ? "" : label);
+			this(label == null ? null : new FixedLabelDeterminer(label), command);
+		}
+
+		/**
+		 * Create a new SingleCommandElementalList with the specified LabelDeterminer
+		 * and command. If label is null, it will be replaced by the empty string.
+		 * 
+		 * @param label
+		 *            the label of the ListElement to be contained by this
+		 *            SingleCommandElementalList
+		 * @param command
+		 *            the command of the ListElement to be contained by this
+		 *            SingleCommandElementalList
+		 */
+		public SingleCommandElementalList(LabelDeterminer label, Command command) {
+			this.labelDeterminer = (label == null ? defaultLabelDeterminer : label);
 			this.command = command;
 		}
 
 		public String getLabel() {
-			return label;
+			return labelDeterminer.getLabel();
 		}
 
 		public int contentSize() {
@@ -266,7 +312,7 @@ public class ConcreteElementalList implements ElementalList,
 						visited = true;
 						return new ListElement() {
 							public String getLabel() {
-								return SingleCommandElementalList.this.label;
+								return SingleCommandElementalList.this.getLabel();
 							}
 
 							public Command getCommand() {
@@ -283,12 +329,16 @@ public class ConcreteElementalList implements ElementalList,
 		}
 
 		public boolean hasChanged(Object object) {
-			return false;
+			boolean changed = !labelDeterminer.getLabel().equals(cachedLabel);
+			cachedLabel = labelDeterminer.getLabel();
+			return changed;
 		}
-
 	}
 
 	public boolean hasChanged(Object object) {
+		if (changedDeterminer != null)
+			return changedDeterminer.determine(object);
+	
 		boolean hasChanged = !changed.contains(object);
 		changed.add(object);
 		
