@@ -363,6 +363,54 @@ path TestImages/fireball03.png
 imgFireBall04
 path TestImages/fireball04.png
 
+imgBolt01
+path TestImages/bolt01.png
+imgBolt02
+path TestImages/bolt02.png
+imgBolt03
+path TestImages/bolt03.png
+imgBolt04
+path TestImages/bolt04.png
+imgBolt05
+path TestImages/bolt05.png
+imgBolt06
+path TestImages/bolt06.png
+imgBolt07
+path TestImages/bolt07.png
+imgBolt08
+path TestImages/bolt08.png
+imgBolt09
+path TestImages/bolt09.png
+imgBolt10
+path TestImages/bolt10.png
+imgBolt11
+path TestImages/bolt11.png
+imgBolt12
+path TestImages/bolt12.png
+
+imgNuke01
+path TestImages/nuke01.png
+imgNuke02
+path TestImages/nuke02.png
+imgNuke03
+path TestImages/nuke03.png
+imgNuke04
+path TestImages/nuke04.png
+imgNuke05
+path TestImages/nuke05.png
+imgNuke06
+path TestImages/nuke06.png
+imgNuke07
+path TestImages/nuke07.png
+imgNuke08
+path TestImages/nuke08.png
+imgNuke09
+path TestImages/nuke09.png
+imgNuke10
+path TestImages/nuke10.png
+imgNuke11
+path TestImages/nuke11.png
+
 imgBeam01
 path TestImages/beam01.png
 imgBeam02

@@ -6,4 +6,14 @@ lifetime		100
 decBeam
 
 appearance		animated imgBeam 2 C
-lifetime		40
+lifetime		38
+
+decBolt
+
+appearance		animated imgBolt 2 C
+lifetime		22
+
+decNuke
+
+appearance		animated imgNuke 2 C
+lifetime		20
