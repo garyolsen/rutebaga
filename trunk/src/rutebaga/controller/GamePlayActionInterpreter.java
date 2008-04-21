@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.Set;
 
@@ -23,6 +25,8 @@ import rutebaga.controller.keyboard.KeyBinding;
 import rutebaga.controller.keyboard.KeyBindingList;
 import rutebaga.controller.keyboard.KeyCode;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.stats.StatValue;
+import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.environment.BoundsTracker;
 import rutebaga.model.environment.ConcreteInstanceSet;
 import rutebaga.model.environment.Environment;
@@ -51,11 +55,12 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 	private World world;
 	private Entity<?> avatar;
+	private Collection<StatisticId> displayedStats;
 
 	private TargetInstanceObservable observable = new TargetInstanceObservable();
 	private Instance<?> target;
 
-	public GamePlayActionInterpreter(World world, Entity<?> avatar) {
+	public GamePlayActionInterpreter(World world, Entity<?> avatar, Collection<StatisticId> displayedStats) {
 		this.world = world;
 		this.avatar = avatar;
 		// TODO: get rid of this
@@ -69,6 +74,8 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		MovementBindingSource movementBindings = MovementBindingSource.defaultBindings(avatar,
 				this.keyPressBindings);
 		initializeKeyBindings();
+		
+		this.displayedStats = displayedStats;
 	}
 
 	private void initializeKeyBindings() {
@@ -159,7 +166,11 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 	public void installActionInterpreter(GameDaemon daemon, Game game,
 			UserInterfaceFacade facade) {
-		facade.createGamePlayScreen(avatar, observable);
+		Collection<StatValue> stats = new ArrayList<StatValue>();
+		for (StatisticId id: displayedStats)
+			stats.add(avatar.getStats().getStatObject(id));
+		
+		facade.createGamePlayScreen(avatar, observable, stats);
 		daemon.registerAsKeyListener(this);
 		daemon.registerAsMouseListener(this);
 
