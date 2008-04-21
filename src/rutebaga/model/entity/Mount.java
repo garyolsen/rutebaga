@@ -8,6 +8,7 @@ import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.inventory.Inventory;
+import rutebaga.model.entity.stats.ConcreteStats;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.InstanceType;
 import rutebaga.model.storefront.Storefront;
@@ -34,9 +35,7 @@ public class Mount<T extends Mount<T>> extends Entity<T> {
 
 	@Override
 	public void walk(Vector2D direction) {
-		System.out.println("Mount walking...");
 		super.walk(direction);
-		System.out.println("Mount coords: " + this.getCoordinate());
 	}
 
 	public boolean canMount(Entity entity) {
@@ -80,7 +79,7 @@ public class Mount<T extends Mount<T>> extends Entity<T> {
 		if(isMounted())
 			return mountee.getDamageResistance();
 		
-		return null;
+		return new ConcreteStats(this);
 	}
 
 	@Override
