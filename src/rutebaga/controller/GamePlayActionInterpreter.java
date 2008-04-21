@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.EmptyStackException;
 import java.util.Set;
 
 import rutebaga.commons.math.EllipseBounds2D;
@@ -38,6 +39,7 @@ import rutebaga.view.game.TargetInstanceObservable;
 public class GamePlayActionInterpreter extends MouseAdapter implements
 		UserActionInterpreter, KeyListener {
 
+	private double lastRebindingMessageId;
 	private KeyBinding<Command> rebindingState;
 	private boolean allowRebinding;
 	private KeyBindingList<Command> keyPressBindings;
@@ -236,24 +238,50 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 	}
 
+	private boolean checkKeyBindingCollision(KeyCode code) {
+		found: while (true) {
+			for (KeyBinding<Command> binding: keyPressBindings)
+				if (binding.getKeyCode().equals(code))
+					break found;
+			for (KeyBinding<Command> binding: keyReleaseBindings)
+				if (binding.getKeyCode().equals(code))
+					break found;
+			return false;
+		}
+		facade.createDialogMenu("'" + code.getKeyName() + "' already bound!  Try again.");
+		lastRebindingMessageId = Math.random();
+		return true;
+	}
+	
 	private void startRebinding(KeyBinding<Command> binding) {
 		rebindingState = binding;
 		paused = true;
+		keyPressBindings.remove(rebindingState);
 		facade.createDialogMenu("Press a key to bind it to " + binding.getName() + "!");
+		lastRebindingMessageId = Math.random();
 	}
-
+	
 	private void completeRebinding(KeyCode code) {
 		if (allowRebinding) {
-			facade.popContextMenu();
-			keyPressBindings.remove(rebindingState);
+			try {
+				facade.popContextMenu();
+			}
+			catch (EmptyStackException e) {
+				
+			}
+			if (checkKeyBindingCollision(code))
+				return;
 			KeyBinding<Command> newBinding = new ConcreteKeyBinding<Command>(rebindingState.getName(),
 					code, rebindingState.getBinding());
 			keyPressBindings.set(newBinding);
 			rebindingState = null;
 			final int menuId  = facade.createDialogMenu("Bound '" + newBinding.getKeyCode().getKeyName() + "' to " + newBinding.getName());
+			lastRebindingMessageId = Math.random();
+			final double myRebindingMessageId = lastRebindingMessageId; // Hack
 			QueueCommand.makeForQueue(new Command() {
 				public void execute() {
-					facade.closeContextMenu(menuId);
+					if (myRebindingMessageId == lastRebindingMessageId)
+						facade.closeContextMenu(menuId);
 				}
 				public boolean isFeasible() {
 					return true;
