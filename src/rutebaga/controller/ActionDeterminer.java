@@ -18,6 +18,7 @@ import rutebaga.controller.command.FixedLabelDeterminer;
 import rutebaga.controller.command.LabelDeterminer;
 import rutebaga.controller.command.QueueCommand;
 import rutebaga.controller.command.ShopkeeperInventoryCommandFactory;
+import rutebaga.controller.command.ShopkeeperSellCommandFactory;
 import rutebaga.controller.command.list.AbilityListElementSource;
 import rutebaga.controller.command.list.AbilityUseListElementFactory;
 import rutebaga.controller.command.list.BackedListElementFactory;
@@ -148,6 +149,9 @@ public class ActionDeterminer
 		if(target.getStoreFront() != null) {
 			command = new CreateStoreBuyMenuCommand(target, queue);
 			list.add("Buy", command);
+			
+			command = new CreateStoreSellMenuCommand(avatar, target, queue);
+			list.add("Sell", command);
 		}
 		
 		list.add("Talk", QueueCommand.makeForQueue(new TalkCommand(avatar, target), queue));
@@ -268,6 +272,29 @@ public class ActionDeterminer
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Store");
 			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, store.getItems());
 			ShopkeeperInventoryCommandFactory commands = new ShopkeeperInventoryCommandFactory(store, facade, queue);
+			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
+			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
+			facade.createSubContextMenu(createCloseableList(list));
+		}
+		
+	}
+	
+	private class CreateStoreSellMenuCommand extends CreateContextMenuCommand {
+
+		private Entity<?> avatar, target;
+		private CommandQueue queue;
+		
+		public CreateStoreSellMenuCommand(Entity<?> avatar, Entity<?> target, CommandQueue queue) {
+			this.avatar = avatar;
+			this.target = target;
+			this.queue = queue;
+		}
+		
+		public void execute() {
+			StoreInstance store = target.getStoreFront().getInstance(avatar);
+			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Store");
+			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, avatar.getInventory().getUnequipped());
+			ShopkeeperSellCommandFactory commands = new ShopkeeperSellCommandFactory(avatar, target, facade, queue);
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
 			facade.createSubContextMenu(createCloseableList(list));

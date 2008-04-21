@@ -70,4 +70,9 @@ public class VendingMachineInstance implements StoreInstance {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public boolean canBuy(Item item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
