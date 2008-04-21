@@ -206,10 +206,13 @@ public class ContextMenu extends ViewComponent
 		
 		int currentAngle = 0;
 		
-		for(ViewComponent component : components) {
-			component.setLocation( getX() + (int) ( componentSize * Math.cos(Math.toRadians(currentAngle + angle/2)) ), getY() + (int) ( componentSize * Math.sin(Math.toRadians(currentAngle + angle/2)) ));
+		synchronized(components) {
 			
-			currentAngle += angle;
+			for(ViewComponent component : components) {
+				component.setLocation( getX() + (int) ( componentSize * Math.cos(Math.toRadians(currentAngle + angle/2)) ), getY() + (int) ( componentSize * Math.sin(Math.toRadians(currentAngle + angle/2)) ));
+				
+				currentAngle += angle;
+			}
 		}
 	}
 	
@@ -241,7 +244,9 @@ public class ContextMenu extends ViewComponent
 			for(Polygon s : contextTriangles) {
 				if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
 					currentContextHover = i;
-					return components.get(i).processMouseEvent(event);
+					synchronized(components) {
+						return components.get(i).processMouseEvent(event);
+					}
 				}
 				
 				i++;
