@@ -1,11 +1,13 @@
 package rutebaga.scaffold.builders;
 
 import rutebaga.commons.math.ValueProvider;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.ability.EntityEffectAction;
 import rutebaga.model.entity.effect.FlagEffect;
 import rutebaga.model.entity.effect.SlotEffect;
 import rutebaga.model.entity.effect.StatEffect;
+import rutebaga.model.entity.effect.TeleportEffect;
 import rutebaga.model.entity.effect.VPStatEffect;
 import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.item.SlotType;
@@ -15,7 +17,7 @@ public class EntityEffectBuilder extends ConfigFileBuilder
 {
 	private enum Type
 	{
-		STAT, SLOT, FLAG, ENTITYEFFECT;
+		STAT, SLOT, FLAG, ENTITYEFFECT, TELEPORT;
 	}
 
 	@Override
@@ -36,6 +38,8 @@ public class EntityEffectBuilder extends ConfigFileBuilder
 			return new SlotEffect(null, 0);
 		case FLAG:
 			return new FlagEffect();
+		case TELEPORT:
+			return new TeleportEffect();
 		}
 		return null;
 	}
@@ -61,6 +65,12 @@ public class EntityEffectBuilder extends ConfigFileBuilder
 			FlagEffect fleff = (FlagEffect) object;
 			fleff.setFlag(getProperty(id, "flag"));
 			fleff.setValueProvider(getValueProvider(id, "value", scaffold));
+			break;
+		case TELEPORT:
+			TeleportEffect teleEff = (TeleportEffect) object;
+			int x = getInteger(id, "x");
+			int y = getInteger(id, "y");
+			teleEff.setVector(new Vector2D(x,y));
 			break;
 		}
 	}

@@ -62,3 +62,8 @@ eeffSetSomeFlagFalse
 type	flag
 flag	something
 value	-1
+
+eeffTeleport_1
+type	teleport
+x		10
+y		10
