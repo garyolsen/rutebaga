@@ -25,7 +25,7 @@ public class EntityAppearanceManager extends AppearanceManager
 		@Override
 		void tick()
 		{
-			System.out.println("standing");
+//			System.out.println("standing");
 			if (entity.isWalking())
 			{
 				changeState(new Walking());
@@ -65,7 +65,7 @@ public class EntityAppearanceManager extends AppearanceManager
 		@Override
 		void tick()
 		{
-			System.out.println("walking");
+//			System.out.println("walking");
 			if (!entity.isWalking())
 			{
 				changeState(new Standing());
