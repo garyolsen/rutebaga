@@ -176,6 +176,8 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			if (world != null) {
 				world.tick();
 				updateTargetedTile();
+				if (avatar.isDead())
+					avatarDied();
 			}
 		}
 	}
@@ -185,6 +187,22 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 	}
 
+	private void avatarDied() {
+		paused = true;
+		facade.clearContextMenuStack();
+		ConcreteElementalList list = new ConcreteElementalList();
+		list.setLabel("You are pwnd!");
+		list.add("Crap", new Command() {
+			public void execute() {
+				daemon.deactivate(GamePlayActionInterpreter.this);
+			}
+			public boolean isFeasible() {
+				return true;
+			}
+		});
+		facade.createWarningBox(list, true);
+	}
+	
 	private boolean rebindEvent(KeyEvent e) {
 		return (e.getModifiersEx() & KeyEvent.SHIFT_DOWN_MASK) == KeyEvent.SHIFT_DOWN_MASK;
 	}
