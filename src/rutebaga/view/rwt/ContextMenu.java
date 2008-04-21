@@ -43,7 +43,7 @@ import rutebaga.view.drawer.Drawer;
  * @author Ryan
  * 
  */
-public class ContextMenu extends ViewComponent implements Observer 
+public class ContextMenu extends ViewComponent 
 {
 
 	private int contextMenuRadius = 250; //screen pixels
@@ -73,13 +73,11 @@ public class ContextMenu extends ViewComponent implements Observer
 	public ContextMenu(ElementalList list)
 	{
 		this.list = list;
-		if(list.getObservable() != null)
-			list.getObservable().addObserver(this);
 		initContextMenu();
 	}
 	
 	public void draw(Drawer draw) {
-		if(dirty)
+		if (list.hasChanged(this))
 			initContextMenu();
 		
 		draw.setAttribute(contextHover);
@@ -261,9 +259,4 @@ public class ContextMenu extends ViewComponent implements Observer
 			
 		return false;
 	}
-
-	public void update(Observable o, Object arg) {
-		dirty = true;
-	}
-
 }

@@ -1,25 +1,19 @@
 package rutebaga.view.game;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.command.list.ListElement;
+import rutebaga.view.drawer.Drawer;
 import rutebaga.view.rwt.ButtonComponent;
 import rutebaga.view.rwt.ViewComponent;
 import rutebaga.view.rwt.ViewCompositeComponent;
 
-public class ViewCompositeComponentWrapper extends ViewCompositeComponent implements Observer {
+public class ViewCompositeComponentWrapper extends ViewCompositeComponent {
 
 	private ElementalList list;
 	
 	public ViewCompositeComponentWrapper(ElementalList list ) {
 		
 		this.list = list;
-		
-		if(list.getObservable() != null)
-			list.getObservable().addObserver(this);
-		
 		
 		updateChildren();
 	}
@@ -37,7 +31,12 @@ public class ViewCompositeComponentWrapper extends ViewCompositeComponent implem
 		}
 	}
 
-	public void update(Observable o, Object arg) {
-		updateChildren();
+	@Override
+	public void draw(Drawer draw) {
+		if (list.hasChanged(this))
+			updateChildren();
+		super.draw(draw);
 	}
+	
+	
 }
