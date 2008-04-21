@@ -8,45 +8,67 @@ import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.AppearanceManager;
 import rutebaga.model.environment.appearance.Appearance.Orientation;
 
+/**
+ * Knows how to represent an animation. An animation is associated with an
+ * orientation and a sequence of images.
+ * 
+ */
 public class AnimatedAppearanceDef implements
-		AppearanceManagerDefinition<Instance>
-{
+		AppearanceManagerDefinition<Instance> {
 	private Image[] images;
+
 	private int wait;
+
 	private Orientation orientation;
+
 	private int offsetX;
+
 	private int offsetY;
 
-	public Image[] getImages()
-	{
+	/**
+	 * 
+	 * @return The images that make up the frames of animation.
+	 */
+	public Image[] getImages() {
 		return images;
 	}
 
-	public int getOffsetX()
-	{
+	/**
+	 * @return The amount this animation is being moved horizontally.
+	 */
+	public int getOffsetX() {
 		return offsetX;
 	}
 
-	public int getOffsetY()
-	{
+	/**
+	 * @return The amount this animation is being moved vertically.
+	 */
+	public int getOffsetY() {
 		return offsetY;
 	}
 
-	public Orientation getOrientation()
-	{
+	/**
+	 * @return The direction this animation is facing.
+	 */
+	public Orientation getOrientation() {
 		return orientation;
 	}
 
-	public int getWait()
-	{
+	/**
+	 * @return The amount of ticks between animation frames.
+	 */
+	public int getWait() {
 		return wait;
 	}
 
-	public AppearanceManager make(Instance instance)
-	{
+	/**
+	 * @param instance
+	 * @return An AppearanceManager using this AnimatedAppearanceDef to
+	 *         represent the provided Instance.
+	 */
+	public AppearanceManager make(Instance instance) {
 		Appearance[] appearances = new Appearance[images.length];
-		for (int i=0; i<images.length; i++)
-		{
+		for (int i = 0; i < images.length; i++) {
 			Image image = images[i];
 			Appearance appearance = new Appearance(image);
 			if (orientation != null)
@@ -55,32 +77,48 @@ public class AnimatedAppearanceDef implements
 			appearance.setOffsetY(offsetY);
 			appearances[i] = appearance;
 		}
-		AnimatedAppearanceManager manager = new AnimatedAppearanceManager(appearances, wait);
+		AnimatedAppearanceManager manager = new AnimatedAppearanceManager(
+				appearances, wait);
 		return manager;
 	}
 
-	public void setImages(Image[] images)
-	{
+	/**
+	 * @param images
+	 *            The series of images that will animate.
+	 */
+	public void setImages(Image[] images) {
 		this.images = images;
 	}
 
-	public void setOffsetX(int offsetX)
-	{
+	/**
+	 * @param offsetX
+	 *            The horizontal offset for each frame of this animation.
+	 */
+	public void setOffsetX(int offsetX) {
 		this.offsetX = offsetX;
 	}
 
-	public void setOffsetY(int offsetY)
-	{
+	/**
+	 * @param offsetY
+	 *            The vertical offset for each frame of this animation.
+	 */
+	public void setOffsetY(int offsetY) {
 		this.offsetY = offsetY;
 	}
 
-	public void setOrientation(Orientation orientation)
-	{
+	/**
+	 * @param orientation
+	 *            The direction that this animation is facing.
+	 */
+	public void setOrientation(Orientation orientation) {
 		this.orientation = orientation;
 	}
 
-	public void setWait(int wait)
-	{
+	/**
+	 * @param wait
+	 *            The amount of ticks between animation frames.
+	 */
+	public void setWait(int wait) {
 		this.wait = wait;
 	}
 
