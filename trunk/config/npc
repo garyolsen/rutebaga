@@ -6,3 +6,4 @@ moveSpd		$vpEntityMovementSpeed
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow
 movement	whitelist terrGrass
+bargain		1.0
