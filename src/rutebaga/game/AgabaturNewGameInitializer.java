@@ -6,6 +6,7 @@ import java.util.Properties;
 import java.util.Random;
 
 import rutebaga.appearance.AnimatedAppearanceDef;
+import rutebaga.appearance.AppearanceManagerDefinition;
 import rutebaga.appearance.EntityAppearanceManager;
 import rutebaga.appearance.StaticAppearanceDef;
 import rutebaga.commons.math.ConstantValueProvider;
@@ -26,9 +27,11 @@ import rutebaga.model.environment.MovementAttributeSet;
 import rutebaga.model.environment.PolarTileConvertor;
 import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.World;
+import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.item.ItemType;
 import rutebaga.model.item.SlotType;
 import rutebaga.model.map.River;
+import rutebaga.model.map.RiverType;
 import rutebaga.model.map.TerrainType;
 import rutebaga.model.map.Tile;
 import rutebaga.model.map.TileType;
@@ -197,23 +200,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			}
 		}
 
-		for (int i = 0; i < 10; i++)
-		{
-			River river = new River();
-			river.setAppearanceManager(new StaticAppearanceDef((Image) scaffold
-					.get("imgLameEffect")));
-			river.setLocation(new Vector2D(0, i));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addNodeAtTail(0.1, new Vector2D(1, 0));
-			river.addToEnvironment(environment);
-		}
+		RiverType river = (RiverType) scaffold.get("rivDefaultRiver");
+		river.make().addToEnvironment(environment);
 
 		if (true)
 		{
