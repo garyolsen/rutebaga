@@ -20,15 +20,15 @@ lifetime		20
 
 decShell
 
-appearance		animated imgShell 2 C
-lifetime		21
+appearance		animated imgShell 3 C
+lifetime		32
 
 decBubble
 
-appearance		animated imgBubble 2 C
-lifetime		24
+appearance		animated imgBubble 3 C
+lifetime		36
 
 decLife
 
-appearance		animated imgLife 2 S
-lifetime		10
+appearance		animated imgLife 4 C
+lifetime		20

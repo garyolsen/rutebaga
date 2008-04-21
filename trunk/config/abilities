@@ -3,8 +3,8 @@ abBubble
 name Protect
 category	abcatSpells
 actions{
-	damage		dmgTpHeal	- 0 10
-	spawn		target	static decBubble
+	damage		dmgTpProtect	- 0 3
+	spawn		target	static decShell
 	entityeffect	source	eeff_Spell_MP	
 }
 feasibility {
@@ -13,11 +13,11 @@ feasibility {
 
 abShell
 
-name Shell
+name Agility
 category	abcatSpells
 actions{
-	damage		dmgTpHeal	- 0 10
-	spawn		target	static decShell
+	damage		dmgTpAgility	- 0 3
+	spawn		target	static decBubble
 	entityeffect	source	eeff_Spell_MP	
 }
 feasibility {
@@ -29,7 +29,7 @@ abHeal
 name Heal
 category	abcatSpells
 actions{
-	damage		dmgTpHeal	- 0 10
+	damage		dmgTpHeal	- 0 30
 	spawn		target	static decLife
 	entityeffect	source	eeff_Spell_MP	
 }
