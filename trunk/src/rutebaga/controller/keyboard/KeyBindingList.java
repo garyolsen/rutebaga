@@ -70,15 +70,15 @@ public class KeyBindingList<C> implements Iterable<KeyBinding<C>> {
 		private KeyBinding<C> nextBinding;
 		
 		public IteratorImpl() {
-			index = 0;
-			nextBinding = bindings[index];
+			nextBinding = bindings[0];
+			index = 1;
 		}
 		
 		public boolean hasNext() {
 			if (nextBinding != null)
 				return true;
 			while (index < bindings.length && nextBinding == null)
-				nextBinding = bindings[++index];
+				nextBinding = bindings[index++];
 			return nextBinding != null;
 		}
 
