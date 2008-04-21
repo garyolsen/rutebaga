@@ -18,7 +18,7 @@ moveSpd		$vpEntityMovementSpeed
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
 wallet	$vpEntityWallet
-vRadius		10
+vRadius		7
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abBolt abNuke abBindWounds
 movement	whitelist terrGrass
 
@@ -27,9 +27,9 @@ standing 	imgMarioWet
 walking		imgMarioWet
 moveSpd		$vpEntityMovementSpeed	
 wallet	$vpEntityWallet
-vRadius		10
+vRadius		6
 abilities	abThrowFireBall abEggThrow abMarioThrow abYoshiThrow
-movement	whitelist terrGrass
+movement	whitelist terrWater
 
 entityNPCKoopa
 standing 	imgKoopa
@@ -59,4 +59,16 @@ bargain		$vpEntityBargainSkillAmount
 wallet	$vpEntityWallet
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+movement	whitelist terrGrass terrWater terrMountain
+
+entityGoomba
+team		teamRed
+standing 	imgMario
+walking		imgMario
+moveSpd		$vpEntityMovementSpeed	
+deadStrat	$vpEntityDeadStrategy
+skillPtStrat	$vpEntitySkillPtStrategy
+wallet	$vpEntityWallet
+vRadius		6
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abBolt abNuke abBindWounds
 movement	whitelist terrGrass

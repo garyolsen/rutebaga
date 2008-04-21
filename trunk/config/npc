@@ -7,5 +7,5 @@ deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy	
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow
-movement	whitelist terrGrass
+movement	whitelist terrGrass terrWater terrMountain
 bargain		1.0

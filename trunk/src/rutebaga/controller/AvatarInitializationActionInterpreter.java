@@ -15,6 +15,7 @@ import rutebaga.view.rwt.TextFieldListener;
 public class AvatarInitializationActionInterpreter implements UserActionInterpreter, TextFieldListener {
 
 	private String name;
+	private int job = 0;
 	
 	public boolean eventsFallThrough() {
 		// AvatarInitializationActionInterpreter is a 'root' interpreter
@@ -58,9 +59,9 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 				GameInitializer gi = game.getGameInitializer();
 				gi.build();
 				Entity<?>[] avatars = gi.getAvatars();
-				UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), avatars[0], gi.getDisplayedStats());
+				UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), avatars[job], gi.getDisplayedStats());
 
-				avatars[0].setName(name);
+				avatars[job].setName(name);
 				
 				facade.clearWarningBox();
 				// Connascence: you must deactivate this interpreter before activating the new one
@@ -88,8 +89,31 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 		ConcreteElementalList list = new ConcreteElementalList();
 		
 		list.setLabel(new DefaultNameProvider().getLabel());
-		
-		// This is where you populate the list with Occupation buttons
+	
+		list.add("Plumber", new Command() {
+			public void execute() {
+				job = 0;
+			}
+			public boolean isFeasible() {
+				return true;
+			}
+		});
+		list.add("Lurker", new Command() {
+			public void execute() {
+				job = 1;
+			}
+			public boolean isFeasible() {
+				return true;
+			}
+		});
+		list.add("Dino", new Command() {
+			public void execute() {
+				job = 2;
+			}
+			public boolean isFeasible() {
+				return true;
+			}
+		});
 
 		daemon.registerAsTextFieldListener(this);
 		facade.createAvatarCreationScreen(this, list, accept, cancel);

@@ -266,7 +266,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		}
 
 		avatar1 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
-		avatar2 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
+		avatar2 = ((EntityType<?>) scaffold.get("entityWetMario")).makeInstance();
 		avatar3 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
 		EntityAppearanceManager wetManager1 = new EntityAppearanceManager(avatar1);
 		EntityAppearanceManager wetManager2 = new EntityAppearanceManager(avatar2);
@@ -286,6 +286,22 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		while (!avatar1.existsInUniverse())
 		{
 			environment.add(avatar1, new Vector2D(random.nextInt(mapBounds[1]
+					- mapBounds[0])
+					+ mapBounds[0], random.nextInt(mapBounds[3] - mapBounds[2])
+					+ mapBounds[2]));
+		}
+
+		while (!avatar2.existsInUniverse())
+		{
+			environment.add(avatar2, new Vector2D(random.nextInt(mapBounds[1]
+					- mapBounds[0])
+					+ mapBounds[0], random.nextInt(mapBounds[3] - mapBounds[2])
+					+ mapBounds[2]));
+		}
+
+		while (!avatar3.existsInUniverse())
+		{
+			environment.add(avatar3, new Vector2D(random.nextInt(mapBounds[1]
 					- mapBounds[0])
 					+ mapBounds[0], random.nextInt(mapBounds[3] - mapBounds[2])
 					+ mapBounds[2]));
