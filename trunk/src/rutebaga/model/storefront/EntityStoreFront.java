@@ -12,7 +12,7 @@ public class EntityStoreFront implements Storefront {
 	
 	public EntityStoreFront(Entity seller) {
 		this.seller = seller;
-		items = seller.getInventory().getItems();
+		items = seller.getInventory().getUnequipped();
 	}
 	
 	public StoreInstance getInstance(Entity user) {
