@@ -4,10 +4,10 @@ name		Demi
 category	abcatSpells
 actions {
 	damage		dmgTpDemi	max 0.25 / 4 VP_@entityStats_VP_stat_statIntellect		
-	spawn		target static decFire
-	spawn		source static decFire			
+	spawn		target static decBeam
+#	spawn		source static decBeam			
 }
-existence	R_static_false
+existence	R_static_true
 
 abMagicMissle
 

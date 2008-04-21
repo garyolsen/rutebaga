@@ -1,5 +1,5 @@
 confGame
-npcQty 1
+npcQty 5
 size 30
 grassTileProb 1
 waterTileProb .5
