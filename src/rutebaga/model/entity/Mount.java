@@ -39,7 +39,7 @@ public class Mount<T extends Mount<T>> extends Entity<T> {
 	}
 
 	public boolean canMount(Entity entity) {
-		return !isMounted();
+		return !isMounted() && (entity.getFacingTile().equals(getTile()) );
 	}
 	
 	public boolean isMounted() {
@@ -50,6 +50,7 @@ public class Mount<T extends Mount<T>> extends Entity<T> {
 		if(canMount(entity)) {
 			mountee = entity;
 
+			entity.getEnvironment().remove(entity);
 			entity.setMount(this);
 			
 			for(ReversibleEntityEffect effect : vehicle.getEntityEffects()) {
@@ -63,14 +64,20 @@ public class Mount<T extends Mount<T>> extends Entity<T> {
 	
 	public void dismount(Entity entity) {
 		if(mountee == entity) {
-			mountee = null;
-			entity.setMount(null);
+			getEnvironment().add(entity, new Vector2D(this.getFacingTile().getX(), this.getFacingTile().getY()));
 			
-			for(EntityEffect effect : onDismount) {
-				entity.accept(effect);
+			
+			if(entity.existsInUniverse()) {
+				mountee = null;
+				entity.setMount(null);
+				
+				for(EntityEffect effect : onDismount) {
+					entity.accept(effect);
+				}
+				
+				onDismount.clear();
+				
 			}
-			
-			onDismount.clear();
 		}
 	}
 
