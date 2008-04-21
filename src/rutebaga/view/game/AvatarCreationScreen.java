@@ -16,8 +16,8 @@ public class AvatarCreationScreen extends ViewCompositeComponent {
 	private static final ColorAttribute background = new ColorAttribute(new Color(255,255,255));
 
 	
-	public AvatarCreationScreen(int width, int height, TextFieldListener listener, ElementalList list, Command accept, Command cancel) {
-		this.setBounds(new Rectangle(width, height));
+	public AvatarCreationScreen(Rectangle bounds, TextFieldListener listener, ElementalList list, Command accept, Command cancel) {
+		this.setBounds(bounds);
 		
 		TextLabelComponent label = new TextLabelComponent("Name: ");
 		label.setLocation(getWidth()/2, getHeight()/3);
@@ -27,6 +27,7 @@ public class AvatarCreationScreen extends ViewCompositeComponent {
 		text.addTextFieldListener(listener);
 		text.setLocation(getWidth()/2 + 50, getHeight()/3);
 		text.setHasFocus(true);
+		text.setText(list.getLabel());
 		
 		this.addChild(text);
 		

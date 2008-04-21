@@ -55,6 +55,16 @@ public class TextFieldComponent extends ViewComponent
 		this.setBounds(new Rectangle(width, height));
 	}
 	
+	public String getText() {
+		return contents.toString();
+	}
+	
+	public void setText(String text) {
+		contents.delete(0, contents.length()).append(text);
+		cursorPosition = contents.length();
+		updateListeners();
+	}
+	
 	public void draw(Drawer draw)
 	{
 		Rectangle rect = getBounds().getBounds();

@@ -1,6 +1,7 @@
 package rutebaga.controller;
 
 import rutebaga.controller.command.Command;
+import rutebaga.controller.command.LabelDeterminer;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
@@ -81,14 +82,15 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 				return true;
 			}
 		};
-
+		
 		ConcreteElementalList list = new ConcreteElementalList();
 		
+		list.setLabel(new DefaultNameProvider().getLabel());
+		
 		// This is where you populate the list with Occupation buttons
-		
-		facade.createAvatarCreationScreen(this, list, accept, cancel);
-		
+
 		daemon.registerAsTextFieldListener(this);
+		facade.createAvatarCreationScreen(this, list, accept, cancel);
 	}
 
 	public void reactivateActionInterpreter() {
@@ -106,5 +108,16 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 	
 	public void fieldChanged(String string) {
 		this.name = string;
+	}
+	
+	private class DefaultNameProvider implements LabelDeterminer {
+		public String getLabel() {
+			try {
+				return System.getProperty("user.name", "Dave");
+			}
+			catch (Exception e) {
+				return "Dave";
+			}
+		}
 	}
 }
