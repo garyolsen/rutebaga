@@ -41,23 +41,28 @@ public class HostileWander extends NPCState {
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-		if (npc.targetInSight())
-		{
-			rutebaga.commons.Log.log("I can't see...going into chase state!");
-			return NPCState.chase;
-		}
+		if (npc.isDead())
+			return NPCState.dead;
 		else
-		{	
-//			wait++;
-//			if ( (wait % 10) == 0)
-//			{
-//				direction = new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
-//			}
-//			
-//			npc.walk(direction);
-			
-			rutebaga.commons.Log.log("Hostile wandering around.");
-			return this;
+		{
+			if (npc.targetInSight())
+			{
+				rutebaga.commons.Log.log("I can't see...going into chase state!");
+				return NPCState.chase;
+			}
+			else
+			{	
+	//			wait++;
+	//			if ( (wait % 10) == 0)
+	//			{
+	//				direction = new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
+	//			}
+	//			
+	//			npc.walk(direction);
+				
+				rutebaga.commons.Log.log("Hostile wandering around.");
+				return this;
+			}
 		}
 		
 	}
