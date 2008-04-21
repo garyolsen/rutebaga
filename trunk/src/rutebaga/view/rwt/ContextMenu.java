@@ -111,21 +111,23 @@ public class ContextMenu extends ViewComponent
 	private void generateContextTriangles(int angle, int number) {
 		int currentAngle = 0;
 		
-		contextTriangles.clear();
-		
-		for(int i=0; i < number; i++) {
-			Polygon poly = new Polygon();
+		synchronized(contextTriangles) {
+			contextTriangles.clear();
 			
-			poly.addPoint(0, 0);
-			
-			poly.addPoint( (int) (contextMenuRadius * Math.cos(Math.toRadians(currentAngle))), (int) (contextMenuRadius * Math.sin(Math.toRadians(currentAngle))));
-			
-			currentAngle += angle;
-			
-			poly.addPoint( (int) (contextMenuRadius * Math.cos(Math.toRadians(currentAngle))), (int) (contextMenuRadius * Math.sin(Math.toRadians(currentAngle))));
-			
-			contextTriangles.add(poly);
-			
+			for(int i=0; i < number; i++) {
+				Polygon poly = new Polygon();
+				
+				poly.addPoint(0, 0);
+				
+				poly.addPoint( (int) (contextMenuRadius * Math.cos(Math.toRadians(currentAngle))), (int) (contextMenuRadius * Math.sin(Math.toRadians(currentAngle))));
+				
+				currentAngle += angle;
+				
+				poly.addPoint( (int) (contextMenuRadius * Math.cos(Math.toRadians(currentAngle))), (int) (contextMenuRadius * Math.sin(Math.toRadians(currentAngle))));
+				
+				contextTriangles.add(poly);
+				
+			}
 		}
 		
 	}
@@ -234,13 +236,16 @@ public class ContextMenu extends ViewComponent
 	
 	protected boolean processMouseEvent( MouseEvent event ) {
 		int i = 0;
-		for(Polygon s : contextTriangles) {
-			if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
-				currentContextHover = i;
-				return components.get(i).processMouseEvent(event);
+		
+		synchronized(contextTriangles) {
+			for(Polygon s : contextTriangles) {
+				if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
+					currentContextHover = i;
+					return components.get(i).processMouseEvent(event);
+				}
+				
+				i++;
 			}
-			
-			i++;
 		}
 		
 		return true;
@@ -248,13 +253,16 @@ public class ContextMenu extends ViewComponent
 	
 	protected boolean processMouseMotionEvent( MouseEvent event ) { 
 		int i = 0;
-		for(Polygon s : contextTriangles) {
-			if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
-				currentContextHover = i;
-				break;
+		
+		synchronized(contextTriangles) {
+			for(Polygon s : contextTriangles) {
+				if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
+					currentContextHover = i;
+					break;
+				}
+				
+				i++;
 			}
-			
-			i++;
 		}
 			
 		return false;
