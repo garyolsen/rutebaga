@@ -27,7 +27,6 @@ public class KeyBindingList<C> implements Iterable<KeyBinding<C>> {
 	public void set(KeyBinding<C> binding) {
 		if (get(binding.getKeyCode()) == null)
 			++bindingCount;
-		// FIXME: LoD vio
 		int code = binding.getKeyCode().getKeyCode();
 		ensureCapacity(code);
 		bindings[code] = binding;
