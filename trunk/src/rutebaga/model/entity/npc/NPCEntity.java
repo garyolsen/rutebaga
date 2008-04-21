@@ -1,6 +1,11 @@
 package rutebaga.model.entity.npc;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Random;
+import java.util.Set;
+import java.util.Stack;
 
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
@@ -30,6 +35,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	private boolean pausing = true;
 	private Random rand = new Random();
 	private MutableVector2D direction=new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
+	private Stack<Speech> speechStack = new Stack<Speech>();
 	
 	public NPCEntity(InstanceType<T> type)
 	{
@@ -88,12 +94,14 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	/**
 	 * Instructs this NPCEntity to speak. Will be forwarded to
 	 * {@link NPCEntityType}.
+	 * @return 
 	 * 
 	 * @see NPCEntityType
 	 */
-	public void speak(Entity entity)
+	public Stack<Speech> speak(Entity entity)
 	{
 		brain.speak(this);
+		return getSpeech();
 	}
 
 	/**
@@ -194,6 +202,18 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 
 	public void setPausing(boolean pausing) {
 		this.pausing = pausing;
+	}
+	
+	public void makeNewSpeech(Entity entity, String speech) {
+		speechStack.push( new Speech(entity, speech) );
+	}
+	
+	public Stack<Speech> getSpeech() {
+		return speechStack;
+	}
+	
+	public void clearSpeech() {
+		speechStack.clear();
 	}
 
 }
