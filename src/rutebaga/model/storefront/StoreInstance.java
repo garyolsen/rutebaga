@@ -9,6 +9,8 @@ public interface StoreInstance {
 	
 	public double priceOf(Item item);
 	
+	public boolean canSell(Item item);
+	
 	public void sell(Item item);
 	
 	public double sellPriceOf(Item item);

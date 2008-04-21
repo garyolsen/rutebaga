@@ -32,7 +32,7 @@ public class EntityStoreInstance implements StoreInstance {
 	}
 
 	public void sell(Item item) {
-		if (userHasSufficientFunds(sellPriceOf(item)))
+		if (canSell(item))
 		{
 			if (seller.getInventory().remove(item))
 			{
@@ -41,6 +41,10 @@ public class EntityStoreInstance implements StoreInstance {
 				depositFundsInSeller(sellPriceOf(item));
 			}
 		}
+	}
+	
+	public boolean canSell(Item item) {
+		return userHasSufficientFunds(sellPriceOf(item));
 	}
 
 	private void depositFundsInSeller(double sellPriceOf) {
