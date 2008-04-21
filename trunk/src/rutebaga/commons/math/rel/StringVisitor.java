@@ -44,4 +44,9 @@ public class StringVisitor implements ParseTreeVisitor
 		return sb.toString();
 	}
 
+	public void visitValueProviderNode(ValueProviderNode node)
+	{
+		sb.append("@").append(node.getValue()).append("@");
+	}
+
 }

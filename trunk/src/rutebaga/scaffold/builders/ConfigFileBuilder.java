@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import rutebaga.commons.logic.Rule;
+import rutebaga.commons.math.SymbolicFunction;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.rel.ParseTreeNode;
 import rutebaga.commons.math.rel.ReversePolishParser;
@@ -83,6 +84,8 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	protected Object getObjectFor(String id, String property,
 			MasterScaffold scaffold)
 	{
+		if(!contains(id, property))
+			return null;
 		if (scaffold.get(id) != null)
 			return scaffold.get(properties.get(id).get(property));
 		return null;
@@ -109,17 +112,28 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 
 	public Double getDouble(String id, String property)
 	{
+		if(!contains(id, property))
+			return null;
 		return Double.parseDouble(getProperty(id, property));
+	}
+	
+	public boolean contains(String id, String property)
+	{
+		return getProperty(id, property) != null && !getProperty(id, property).equals("");
 	}
 
 	public Boolean getBoolean(String id, String property)
 	{
+		if(!contains(id, property))
+			return null;
 		return Boolean.parseBoolean(getProperty(id, property));
 	}
 
 	public ValueProvider getValueProvider(String id, String property,
 			MasterScaffold scaffold)
 	{
+		if(!contains(id, property))
+			return null;
 		String expr = getProperty(id, property);
 		if (expr.charAt(0) == '$')
 		{
@@ -138,6 +152,8 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	public Rule[] getRules(String id, String property,
 			MasterScaffold scaffold)
 	{
+		if(!contains(id, property))
+			return null;
 		String[] ids = getStringArray(id, property, "[\\w\\t]");
 		List<Rule> rules = new ArrayList<Rule>();
 		for(String strId : ids)
@@ -149,6 +165,8 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 
 	public String[] getStringArray(String id, String property, String regexp)
 	{
+		if(!contains(id, property))
+			return null;
 		String prop = getProperty(id, property);
 		if (prop == null)
 			return new String[0];
@@ -159,11 +177,32 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	public Object[] getObjectArray(String id, String property, String regexp,
 			MasterScaffold scaffold)
 	{
+		if(!contains(id, property))
+			return null;
 		ArrayList list = new ArrayList();
 		for (String scaffId : getStringArray(id, property, regexp))
 		{
 			list.add(scaffold.get(scaffId));
 		}
 		return list.toArray();
+	}
+	
+	public SymbolicFunction getFunction(String id, String property,
+			MasterScaffold scaffold)
+	{
+		if(!contains(id, property))
+			return null;
+		String expr = getProperty(id, property);
+		if (expr.charAt(0) == '$')
+		{
+			return (SymbolicFunction) scaffold.get(expr.substring(1));
+		}
+		else
+		{
+			ParseTreeNode n = new ReversePolishParser(DefaultValueProviderFactory.getInstance(), scaffold).parse(expr);
+			SymbolicFunction s = new SymbolicFunction();
+			s.setTreeRoot(n);
+			return s;
+		}
 	}
 }

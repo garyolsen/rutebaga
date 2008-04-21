@@ -21,6 +21,8 @@ public class DefaultBuilder extends ChainedBuilder
 		register(new TerrainTypeBuilder());
 		register(new AbilityCategoryBuilder());
 		register(new NPCTypeBuilder());
+		register(new DamageBuilder());
+		register(new DamageTypeBuilder());
 	}
 
 }

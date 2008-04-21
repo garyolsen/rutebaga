@@ -7,16 +7,29 @@ import rutebaga.commons.math.BinaryOperation;
 import rutebaga.commons.math.DefaultOperationTable;
 import rutebaga.commons.math.OperationTable;
 import rutebaga.commons.math.UnaryOperation;
+import rutebaga.scaffold.MasterScaffold;
+import rutebaga.scaffold.builders.AbstractValueProviderFactory;
 
 public class ReversePolishParser implements Parser
 {
 	private OperationTable table;
 	private Set<String> operations;
-	
+
+	private AbstractValueProviderFactory factory;
+	private MasterScaffold scaffold;
+
 	private int currentLocation;
-	
+
 	private String[] parts;
-	
+
+	public ReversePolishParser(AbstractValueProviderFactory factory,
+			MasterScaffold scaffold)
+	{
+		this();
+		this.factory = factory;
+		this.scaffold = scaffold;
+	}
+
 	public ReversePolishParser()
 	{
 		this(DefaultOperationTable.getInstance());
@@ -29,6 +42,25 @@ public class ReversePolishParser implements Parser
 		operations = table.getOperations();
 	}
 
+	public ReversePolishParser(OperationTable table,
+			AbstractValueProviderFactory factory, MasterScaffold scaffold)
+	{
+		super();
+		this.table = table;
+		this.factory = factory;
+		this.scaffold = scaffold;
+	}
+
+	public AbstractValueProviderFactory getFactory()
+	{
+		return factory;
+	}
+
+	public MasterScaffold getScaffold()
+	{
+		return scaffold;
+	}
+
 	public ParseTreeNode parse(String expression)
 	{
 		parts = expression.split("[\\s]+");
@@ -36,15 +68,26 @@ public class ReversePolishParser implements Parser
 		return getNextNode();
 	}
 
+	public void setFactory(AbstractValueProviderFactory factory)
+	{
+		this.factory = factory;
+	}
+
+	public void setScaffold(MasterScaffold scaffold)
+	{
+		this.scaffold = scaffold;
+	}
+
 	private ParseTreeNode getNextNode()
 	{
 		String part = parts[currentLocation++];
 		ParseTreeNode node;
-		if(operations.contains(part))
+		if (operations.contains(part))
 		{
-			if(table.isBinaryOp(part))
+			if (table.isBinaryOp(part))
 			{
-				node = new BinaryNode(table.getBinaryOp(part), getNextNode(), getNextNode());
+				node = new BinaryNode(table.getBinaryOp(part), getNextNode(),
+						getNextNode());
 			}
 			else
 			{
@@ -58,9 +101,12 @@ public class ReversePolishParser implements Parser
 				double value = Double.parseDouble(part);
 				node = new ValueNode(value);
 			}
-			catch(NumberFormatException e)
+			catch (NumberFormatException e)
 			{
-				node = new SymbolNode(part);
+				if (part.substring(0, 1).equals("&"))
+					node = new ValueProviderNode(factory.get(part.substring(1), scaffold));
+				else
+					node = new SymbolNode(part);
 			}
 		}
 		return node;

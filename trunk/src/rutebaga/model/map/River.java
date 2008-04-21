@@ -47,7 +47,7 @@ public class River {
 		IntVector2D offset = new IntVector2D(0,0);
 		while (current != null)
 		{
-			//System.out.println("Added river node at " + location.plus(offset));
+			System.out.println("Added river node at " + location.plus(offset));
 			
 			e.add(current, location.plus(offset));
 			current = current.getNext();
@@ -117,7 +117,7 @@ public class River {
 		@Override
 		public void tick() {
 			Collection<Instance> instances = this.getCoexistantInstances();
-			//System.out.println(instances);
+//			System.out.println(instances);
 			if (next != null)
 			{
 				//current = previous.getCurrent()*factor;

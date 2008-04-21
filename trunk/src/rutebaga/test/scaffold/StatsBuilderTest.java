@@ -8,8 +8,10 @@ import java.util.logging.Logger;
 
 import rutebaga.commons.Log;
 import rutebaga.commons.math.ValueProvider;
+import rutebaga.commons.math.rel.StringVisitor;
 import rutebaga.game.builders.CustomAbilityBuilder;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.Damage;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.stats.ConcreteStats;
@@ -44,9 +46,10 @@ public class StatsBuilderTest
 					+ "\t\t" + obj);
 		}
 
-		Entity entity = ((EntityType<?>) s.get("entityDefault")).makeInstance();
-		
-		System.out.println(entity.getMovementAttributes());
+		Damage damage = (Damage) s.get("dmgTpDemi");
+		StringVisitor v = new StringVisitor();
+		damage.getMagnitudeProvider().getTreeRoot().accept(v);
+		System.out.println(v.getString());
 	}
 
 }
