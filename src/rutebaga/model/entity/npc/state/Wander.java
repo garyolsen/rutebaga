@@ -2,6 +2,7 @@ package rutebaga.model.entity.npc.state;
 
 import java.util.Random;
 
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
 import rutebaga.commons.math.MutableVector2D;
@@ -19,7 +20,6 @@ public class Wander extends NPCState
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
-		npc.makeNewSpeech(npc, "I'm willing to barter.");
 		return this;
 	}
 
@@ -36,9 +36,9 @@ public class Wander extends NPCState
 	}
 
 	@Override
-	public NPCState speak(NPCEntity npc)
+	public NPCState speak(NPCEntity npc, Entity entity)
 	{
-		npc.makeNewSpeech(npc, "I'm wandering around...");
+		entity.recieveSpeech(npc, "I'm wandering around...");
 		return this;
 	}
 

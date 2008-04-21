@@ -1,5 +1,6 @@
 package rutebaga.model.entity.npc.state;
 
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
 
@@ -21,7 +22,7 @@ public class Dead extends NPCState {
 	}
 
 	@Override
-	public NPCState speak(NPCEntity npc) {
+	public NPCState speak(NPCEntity npc, Entity entity) {
 		return NPCState.dead;
 	}
 

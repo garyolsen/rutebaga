@@ -1,5 +1,7 @@
 package rutebaga.model.entity.npc;
 
+import rutebaga.model.entity.Entity;
+
 public class NPCSimpleBrain implements NPCBrain
 {
 
@@ -20,9 +22,9 @@ public class NPCSimpleBrain implements NPCBrain
 		currentState = currentState.makeHostile(npc);
 	}
 
-	public void speak(NPCEntity npc)
+	public void speak(NPCEntity npc, Entity entity)
 	{
-		currentState = currentState.speak(npc);
+		currentState = currentState.speak(npc, entity);
 	}
 
 	public void tick(NPCEntity npc)
