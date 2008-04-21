@@ -9,14 +9,17 @@ import rutebaga.model.entity.Ability;
 public class AbilityListElementSource implements ListElementSource<Ability> {
 
 	private Collection<Ability> abilities;
+	private int feasibleCount = 0;
 	
 	public AbilityListElementSource(Collection<Ability> abilities) {
-		this.abilities = new ArrayList<Ability>();
-		this.abilities.addAll(abilities);
 		ArrayList<Ability> doNotWant = new ArrayList<Ability>();
 		for (Ability ability: abilities)
 			if (!ability.exists())
 				doNotWant.add(ability);
+			else if (ability.isFeasible())
+				++feasibleCount;
+		this.abilities = new ArrayList<Ability>();
+		this.abilities.addAll(abilities);
 		this.abilities.removeAll(doNotWant);
 	}
 	
@@ -29,7 +32,12 @@ public class AbilityListElementSource implements ListElementSource<Ability> {
 	}
 
 	public boolean hasChanged(Object object) {
-		return false;
+		int oldFeasibleCount = feasibleCount;
+		feasibleCount = 0;
+		for (Ability ability: abilities)
+			if (ability.isFeasible())
+				++feasibleCount;
+		return (oldFeasibleCount != feasibleCount);
 	}
 
 	public Iterator<Ability> iterator() {

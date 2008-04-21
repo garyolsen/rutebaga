@@ -14,6 +14,7 @@ public class ButtonComponent extends ViewComponent {
 	
 	private String label;
 	private boolean toggle = false;
+	private boolean hover = false;
 	
 	private Command command;
 	
@@ -21,6 +22,7 @@ public class ButtonComponent extends ViewComponent {
 	
 	private ColorAttribute untoggledColor = new ColorAttribute(Color.GRAY);
 	private ColorAttribute toggledColor = new ColorAttribute(Color.DARK_GRAY);
+	private ColorAttribute hoverColor = new ColorAttribute(Color.LIGHT_GRAY);
 	
 	private FontAttribute font;
 	private FontAttribute normalFont;
@@ -77,7 +79,7 @@ public class ButtonComponent extends ViewComponent {
 		Point centeredText = new Point();
 		FontMetrics fm = draw.getFontMetrics();
 		
-		draw.setAttribute( untoggled );
+		draw.setAttribute( hover ? hoverColor : untoggled );
 		draw.drawShape(getLocation(), getBounds());
 		
 		centeredText.x = (int)getBounds().getBounds().getX() + this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
@@ -97,7 +99,7 @@ public class ButtonComponent extends ViewComponent {
 	}
 	
 	private void drawToggled( Drawer draw ) {
-		draw.setAttribute( toggled );
+		draw.setAttribute( hover ? hoverColor : toggled );
 		draw.drawShape(getLocation(), getBounds());
 		
 		Point centeredText = new Point();
@@ -128,6 +130,17 @@ public class ButtonComponent extends ViewComponent {
 			}
 		}
 		
+		return true;
+	}
+
+	@Override
+	protected boolean processMouseMotionEvent(MouseEvent event) {
+		if (event.getID() == MouseEvent.MOUSE_ENTERED)
+			hover = true;
+		else if (event.getID() == MouseEvent.MOUSE_EXITED)
+			hover = false;
+		else
+			return super.processMouseMotionEvent(event);
 		return true;
 	}
 	
