@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import rutebaga.commons.logic.Rule;
 import rutebaga.commons.math.SymbolicFunction;
 import rutebaga.commons.math.ValueProvider;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.commons.math.rel.ParseTreeNode;
 import rutebaga.commons.math.rel.ReversePolishParser;
 import rutebaga.model.entity.stats.Stats;
@@ -206,6 +207,19 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			n.accept(v);
 			return v.getValueProvider();
 		}
+	}
+	
+	public Vector2D getVector2D(String id, String property)
+	{
+		if (!contains(id, property))
+			return null;
+		return getVector2D(getProperty(id, property));
+	}
+	
+	public Vector2D getVector2D(String description)
+	{
+		String[] parts = description.split("[\\s\\t]");
+		return new Vector2D(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
 	}
 
 	public Rule[] getRules(String id, String property, MasterScaffold scaffold)

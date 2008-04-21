@@ -388,10 +388,16 @@ path TestImages/banana_peel.png
 #							   RIVER SPRITES 								 #
 ##############################################################################
 
+imgRiverN01
+path TestImages/river_N_01.png
+imgRiverNE01
+path TestImages/river_NE_01.png
+imgRiverNW01
+path TestImages/river_NW_01.png
+imgRiverS01
+path TestImages/river_S_01.png
 imgRiverSE01
 path TestImages/river_SE_01.png
-imgRiverSE02
-path TestImages/river_SE_02.png
-imgRiverSE03
-path TestImages/river_SE_03.png
+imgRiverSW01
+path TestImages/river_SW_01.png
 
