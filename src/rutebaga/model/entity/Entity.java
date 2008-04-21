@@ -25,6 +25,9 @@ import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InstanceType;
 import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
+import rutebaga.model.storefront.EntityStoreFront;
+import rutebaga.model.storefront.StoreInstance;
+import rutebaga.model.storefront.Storefront;
 
 /**
  * Entity stores the state related to an Entity in a physical environment.
@@ -53,6 +56,10 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	private double money;
 	
+	private Team team;
+	
+	private Storefront storeFront;
+
 	private Vector2D facing = new Vector2D(0, 0);
 	
 	//TODO move into AbilitySet
@@ -216,5 +223,18 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	protected Map<Object, EntityEffect> getEffectQueue()
 	{
 		return effectQueue;
+	}
+
+	public Team getTeam() {
+		// TODO Auto-generated method stub
+		return this.team;
+	}
+
+	public boolean hasStoreFront() {
+		return !(storeFront.equals(null));
+	}
+	
+	public Storefront getStoreFront() {
+		return new EntityStoreFront(this);
 	}
 }

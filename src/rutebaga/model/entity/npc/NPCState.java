@@ -31,7 +31,7 @@ public abstract class NPCState
 	protected NPCState()
 	{
 		if (initialState == null)
-			initialState = NPCState.chase;
+			initialState = NPCState.wander;
 	}
 
 	/**

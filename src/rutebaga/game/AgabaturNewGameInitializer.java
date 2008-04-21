@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.util.Properties;
 import java.util.Random;
 
+import rutebaga.appearance.AnimatedAppearanceDef;
 import rutebaga.appearance.EntityAppearanceManager;
 import rutebaga.appearance.StaticAppearanceDef;
 import rutebaga.commons.math.ConstantValueProvider;
@@ -13,6 +14,7 @@ import rutebaga.model.effect.AreaEffectType;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.npc.NPCEntity;
+import rutebaga.model.entity.npc.NPCType;
 import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.environment.ChainedMatrixConvertor;
 import rutebaga.model.environment.Environment;
@@ -246,9 +248,31 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		int xMin = mapBounds[0];
 		int yMin = mapBounds[2];
 
+//		for (int i = 0; i < numNpcs; i++)
+//		{
+//			NPCEntity<?> npc1 = new NPCEntity(null);
+//			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
+//
+//			EntityAppearanceManager manager = new EntityAppearanceManager(npc1);
+//			manager.setStanding(((EntityType<?>) scaffold.get("entityDefault"))
+//					.getStanding());
+//			manager.setWalking(((EntityType<?>) scaffold.get("entityDefault"))
+//					.getWalking());
+//			npc1.setAppearanceManager(manager);
+//
+//			npc1.whiteListTerrainTypes(grassTerrain, waterTerrain);
+//			npc1.setTarget(avatar);
+//
+//			Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
+//					random.nextInt(yRng) + yMin);
+//			rutebaga.commons.Log.log("placing npc at " + location);
+//			environment.add(npc1, location);
+//		}
+
 		for (int i = 0; i < numNpcs; i++)
 		{
-			NPCEntity<?> npc1 = new NPCEntity(null);
+			NPCEntity<?> npc1 = ((NPCType<?>) scaffold.get("npcBlueNPC")).makeInstance();
+
 			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 
 			EntityAppearanceManager manager = new EntityAppearanceManager(npc1);
@@ -280,10 +304,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 			Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
 					random.nextInt(yRng) + yMin);
-			rutebaga.commons.Log.log("placing npc at " + location);
 			environment.add(npc1, location);
 		}
-
+		
 		world = new World();
 		world.add(environment);
 

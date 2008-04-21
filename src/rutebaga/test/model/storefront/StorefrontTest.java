@@ -31,29 +31,33 @@ public class StorefrontTest {
 		shield.setDefaultPrice(100.0);
 		items.add(shield);
 		
-		Storefront vendingMachine = new VendingMachine(items);
-		
 		InstanceType<Entity> entityType = new EntityType<Entity>();
 		
 		Entity entity = entityType.makeInstance();
-		entity.getWallet().addTo(entity, 1000);
+		entity.addToMoney(1);
 		
-		System.out.println(entity.getWallet().getValue(entity));
-		
-		StoreInstance vendingInstance = vendingMachine.getInstance(entity);
-		vendingInstance.setStoreInstanceBargainSkill(150);
-		vendingInstance.setUserBargainSkill(1000000000);
-		
-		Collection<Item> itemsForSale = vendingInstance.getItems();
+		Entity entity1 = entityType.makeInstance();
+		entity1.addToMoney(1000);
+		entity1.getInventory().accept(sword);
 		
 		System.out.println(entity.getInventory());
+		System.out.println(entity1.getInventory());
 		
-		System.out.println( vendingInstance.sellPriceOf( (Item)itemsForSale.toArray()[1]) );
+		Storefront store = entity1.getStoreFront();
+		StoreInstance storeInstance = store.getInstance(entity);
 		
-		vendingInstance.sell( (Item)itemsForSale.toArray()[1] );
+		Collection<Item> itemsForSale = storeInstance.getItems();
+		
+		System.out.println(itemsForSale);
+		
+		System.out.println( storeInstance.sellPriceOf( (Item)itemsForSale.toArray()[0]) );
+		
+		storeInstance.sell( (Item)itemsForSale.toArray()[0] );
 		
 		System.out.println(entity.getInventory());
+		System.out.println(entity.getMoneyAmount());
 		
-		System.out.println(entity.getWallet().getValue(entity));
+		System.out.println(entity1.getInventory());
+		System.out.println(entity1.getMoneyAmount());
 	}
 }

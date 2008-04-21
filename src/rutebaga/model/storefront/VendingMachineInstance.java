@@ -18,12 +18,7 @@ public class VendingMachineInstance implements StoreInstance {
 		this.entity = entity;
 	}
 
-	public void buy(Item item) {
-		//vending machines cannot buy items
-	}
-
 	public void end() {
-		// TODO Auto-generated method stub
 	}
 
 	public Collection<Item> getItems() {

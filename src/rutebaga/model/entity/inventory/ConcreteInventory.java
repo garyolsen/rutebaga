@@ -144,5 +144,12 @@ public class ConcreteInventory implements Inventory
 
 		return sb.toString();
 	}
+	
+	public Set<Item> getItems() {
+		Set<Item> items = new HashSet<Item>();
+		items.addAll(equipped);
+		items.addAll(unequipped);
+		return items;
+	}
 
 }

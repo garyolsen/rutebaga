@@ -362,3 +362,15 @@ imgFireBall03
 path TestImages/fireball03.png
 imgFireBall04
 path TestImages/fireball04.png
+
+##############################################################################
+#							   RIVER SPRITES 								 #
+##############################################################################
+
+imgRiverSE01
+path TestImages/river_SE_01.png
+imgRiverSE02
+path TestImages/river_SE_02.png
+imgRiverSE03
+path TestImages/river_SE_03.png
+

@@ -28,4 +28,6 @@ public interface Inventory
 	void addSlotAllocation(SlotType type, int qty);
 
 	Entity getOwner();
+	
+	Set<Item> getItems();
 }
