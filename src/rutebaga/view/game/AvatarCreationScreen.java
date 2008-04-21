@@ -21,10 +21,9 @@ public class AvatarCreationScreen extends ViewCompositeComponent {
 		
 		TextLabelComponent label = new TextLabelComponent("Name: ");
 		label.setLocation(getWidth()/2, getHeight()/3);
-		
 		this.addChild(label);
 		
-		TextFieldComponent text = new TextFieldComponent();
+		TextFieldComponent text = new TextFieldComponent(100, 20);
 		text.addTextFieldListener(listener);
 		text.setLocation(getWidth()/2 + 50, getHeight()/3);
 		text.setHasFocus(true);

@@ -1,6 +1,7 @@
 package rutebaga.view.rwt;
 
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,13 @@ public class ScrollDecorator extends ComponentDecorator {
 		super.processMouseMotionEvent(event);
 		return true;
 	}
+	
+	@Override
+	protected boolean processKeyEvent(KeyEvent event) {
+		return getDecoratedComponent().processKeyEvent(event);
+	}
+
+
 
 	private class ScrollVisitor implements ViewVisitor {
 		

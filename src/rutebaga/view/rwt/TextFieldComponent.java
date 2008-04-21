@@ -36,7 +36,7 @@ import rutebaga.view.drawer.FontAttribute;
 public class TextFieldComponent extends ViewComponent
 {
 
-	private StringBuffer contents = new StringBuffer();
+	private StringBuilder contents = new StringBuilder();
 	
 	private ColorAttribute interior = new ColorAttribute(Color.WHITE);
 	private ColorAttribute exterior = new ColorAttribute(Color.BLACK);
@@ -47,11 +47,12 @@ public class TextFieldComponent extends ViewComponent
 	private int cursorDuration = 500; //in milliseconds
 	private long lastTick;
 	private boolean cursorOn = true;
+	private int cursorPosition = 0;
 	
 	public List<TextFieldListener> listeners = new ArrayList<TextFieldListener>();
 	
-	public TextFieldComponent() {
-		this.setBounds(new Rectangle(100,20));
+	public TextFieldComponent(int width, int height) {
+		this.setBounds(new Rectangle(width, height));
 	}
 	
 	public void draw(Drawer draw)
@@ -78,7 +79,7 @@ public class TextFieldComponent extends ViewComponent
 		draw.drawString(p, contents.toString());
 		
 		if(cursorOn) {
-			int width = draw.getFontMetrics().stringWidth(contents.toString() );
+			int width = draw.getFontMetrics().stringWidth(contents.substring(0, cursorPosition));
 			
 			p.x += width;
 			p.y += 2;
@@ -95,7 +96,7 @@ public class TextFieldComponent extends ViewComponent
 				lastTick = System.currentTimeMillis();
 		}
 		
-		if(System.currentTimeMillis() - lastTick > cursorDuration ) {
+		if (System.currentTimeMillis() - lastTick > cursorDuration ) {
 			cursorOn = !cursorOn;
 			lastTick = 0;
 		}
@@ -110,26 +111,46 @@ public class TextFieldComponent extends ViewComponent
 	
 	protected boolean processKeyEvent( KeyEvent e ) {
 		
-		if(e.getID() == KeyEvent.KEY_TYPED) {
-			if(Character.isLetterOrDigit(e.getKeyChar())) {
-				contents.append(e.getKeyChar());
+		if (e.getID() == KeyEvent.KEY_TYPED) {
+			if (!Character.isISOControl(e.getKeyChar()) && Character.isDefined(e.getKeyChar())) {
+				contents.insert(cursorPosition, e.getKeyChar());
+				++cursorPosition;
+				updateListeners();
 			}
-		} else if(e.getID() == KeyEvent.KEY_PRESSED) {
-			if(e.getKeyCode() == KeyEvent.VK_DELETE || e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-				if(contents.length() > 0)
-					contents = contents.deleteCharAt(contents.length() - 1);
-			} else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-				contents.append(" ");
+		} else if (e.getID() == KeyEvent.KEY_PRESSED) {
+			if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+				if (cursorPosition > 0) {
+					contents = contents.deleteCharAt(cursorPosition - 1);
+					--cursorPosition;
+					updateListeners();
+				}
 			}
+			else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+				if (cursorPosition < contents.length()) {
+					contents = contents.deleteCharAt(cursorPosition);
+					updateListeners();
+				}
+			}
+			else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+				if (cursorPosition > 0)
+					--cursorPosition;
+			}
+			else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				if (cursorPosition < contents.length())
+					++cursorPosition;
+			}
+			else if (e.getKeyCode() == KeyEvent.VK_HOME)
+				cursorPosition = 0;
+			else if (e.getKeyCode() == KeyEvent.VK_END)
+				cursorPosition = contents.length();
 		}
-		
-		updateListeners();
 		return true;
 	}
 	
 	private void updateListeners() {
-		for(TextFieldListener listener : listeners)
-			listener.fieldChanged(contents.toString());
+		String string = contents.toString();
+		for (TextFieldListener listener : listeners)
+			listener.fieldChanged(string);
 	}
 
 }
