@@ -1,0 +1,21 @@
+The Commons library contains versatile foundational classes that have been created for the game.
+
+[[module ChildPages]]
+
++ Math
+
+++ Geometry
+
+Geometry classes are used to store geometrical information as well as to perform transformations.
+
+[[image http://rutebaga.wikidot.com/local--files/commons-library/geo-overview.GIF]]
+
++ Logic
+
+Logic classes are used for the determination of rules.
+
+[[image http://rutebaga.wikidot.com/local--files/commons-library/rule-overview.GIF]]
+
++ Collections
+
+The Collections classes provide some basic functionality not available in the Java API.

@@ -1,0 +1,27 @@
+[[f>toc]]
+
++ Overview
+
+The {{ButtonComponent}} class provides the standard ability of drawing a button out to the view that has the ability to be depressed, causing a {{[[[class-overview:Command]]]}} to be fired. 
+
++ Responsibilities
+
+* Call the appropriate draw methods so that its current state of the {{ButtonComponent}} is drawn to the screen
+* Maintain whether it is pressed or not
+* Execute the {{[[[class-overview:Command]]]}} that is associated with it on button press(if any)
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+
++ UML Class Diagram
+
+[[<image ButtonComponent.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

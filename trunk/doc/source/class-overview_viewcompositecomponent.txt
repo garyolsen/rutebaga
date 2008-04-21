@@ -1,0 +1,33 @@
+[[f>toc]]
+
++ Overview
+
+The {{ViewCompositeComponent}} class provides the ability for {{[[[class-overview:ViewComponent]]]}}s to be collected together under a common group. This common group allows for an entire set of {{[[[class-overview:ViewComponent]]]}}s to have their state information (visibility, hasKeyFocus, etc) to be toggled. Additionally, the {{ViewCompositeComponent}} redefines the screen coordinate system such that the coordinates for the {{ViewCompositeComponent}} are the origin of the system and all {{[[[class-overview:ViewComponent]]]}}'s  coordinates are relative to the {{ViewCompositeComponent}}'s origin.
+
++ Responsibilities
+
+* Maintain the set of {{[[[class-overview:ViewComponent]]]}}s within this composition.
+* For all of the {{ViewCompositeComponent}}'s children, set their parentComponent to itself
+* Forward draw calls to its children
+* Redefine the screen coordinate origin for the children
+* Toggle visibility of the entire set of {{[[[class-overview:ViewComponent]]]}}s 
+* Ensure the bounds for the {{ViewCompositeComponent}} encompasses all of its children
+ * This is kept up-to-date via the {{dirtyBounds()}} call to a {{[[[class-overview:ViewComponent]]]}}'s parent
+ * Bound recalculations only occur if the bounds have been flagged dirty and {{getBounds()}} has been called.
+
++ Collaborators
+
+* [[[class-overview:ViewComponent]]]
+* [[[class-overview:Drawer]]]
+
++ UML Class Diagram
+
+[[<image ViewComposite.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

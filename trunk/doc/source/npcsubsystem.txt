@@ -1,0 +1,17 @@
+[[module ChildPages]] 
+**Description**
+The NPC Subsystem is what gives the non-player characters "intelligence."  Their decision-making system is based on a simple FSM which defines the states {{Wander}}, {{Evade}}, {{Chase}}, {{Attack}}.  When provoked, an NPCEntity will exhibit different behavior based on the states of her {{ConcreteNPCBrain}}.
+
+------
+
+**UML**
+[[image http://plaza.ufl.edu/nstamas/OOP/NPCSubsystem.png]]
+
+------
+
+**Example**
+[[image http://plaza.ufl.edu/nstamas/OOP/ExampleAI.png]]
+
+------
+
+[http://plaza.ufl.edu/nstamas/OOP/NPC.uxf NPC.uxf]

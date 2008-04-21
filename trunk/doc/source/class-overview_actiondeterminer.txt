@@ -1,0 +1,29 @@
+[[f>toc]]
+
++ Overview
+
+Given a set of {{[[[class-overview:Instance]]]}}s, {{ActionDeterminer}} produces a list of named {{[[[class-overview:Command]]]}}s in the form of an {{[[[class-overview:ElementalList]]]}}.  {{ActionDeterminer}} exposes a single operation, {{determineActions}}, which uses a {{[[[class-overview:Filter]]]}} to determine which {{[[[class-overview:Instance]]]}} in a set of {{Instance}}s should be targeted.  Once it determines the target, it determines which actions are appropriate for the targeted {{Instance}}.
+
+For instance, if an {{[[[class-overview:Entity]]]}} is present at a Location, it will be targeted and {{Command}}s encapsulating actions appropriate for an {{Entity}}, such as attacking or talking, will be generated.
+
++ Responsibilities
+
+* Determines which {{Instance}} in a set should be targeted.
+* Determines which actions are appropriate for the targeted {{Instance}}.
+
++ Collaborators
+
+{{[[[class-overview:Instance]]]}}s are filtered to determine which one to target.
+An {{[[[class-overview:ElementalList]]]}} is returned containing named {{Command}}s.
+
++ UML Class Diagram
+
+[[image ActionDeterminer.gif]]
+
++ Implementor
+
+Matt
+
++ Tester
+
+Ryan

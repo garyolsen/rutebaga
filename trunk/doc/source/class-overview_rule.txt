@@ -1,0 +1,29 @@
+[[f>toc]]
+
++ Overview
+
+The {{Rule}} interface is a generic interface used for the determination of rules.  These rules are executed in a particular context, which is provided as the generic type parameter to the interface.
+
+Clients of {{Rule}} are not encumbered by the knowledge of how a rule is determined; rather, only whether or not that rule is true or not.  Clients that require chaining of rules (for instance, a supertype that only allows subtypes to add conditions rather than change them) may use the {{[[[class-overview:chainedrule|ChainedRule]]]}} class.  Clients that require a {{Rule}} that is always true or false may use the {{[[[class-overview:staticrule|StaticRule]]]}} class.
+
+{{Rule}} is an instance of the Strategy pattern.
+
++ Responsibilities
+
+{{Rule}} is responsible for determining the status of a logical rule based on the contents of an object representing the context.
+
++ Collaborators
+
+The {{Rule}} interface has no collaborators.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:rule/rule.GIF]]
+
++ Implementor
+
+Gary
+
++ Tester
+
+Will

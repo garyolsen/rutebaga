@@ -1,0 +1,17 @@
+[[module ChildPages]]
+
+The Environment subsystem keeps track of objects (called Instances) that exist within a physical environment (called, appropriately, an Environment).
+
+[[image http://rutebaga.wikidot.com/local--files/environment-subsystem/environment-overview.gif]]
+
+The exact coordinate of an {{Instance}} is its coordinate; the "tile" that it is located within (its discrete location) is its location.
+
+The physical representation has a basic physics engine that operates based on the atomic unit of time, the Tick.  Every Tick, the environment updates the locations and velocity vectors of its instances based upon their applied impulse and force.
+
+Application of an impulse directly affects the velocity of the instance.  This is intended for applications that should result in a constant, transient change to velocity. Examples are viscous force, and complex forces that are internally mediated that result in a constant velocity (such as walking).
+
+Application of a force contributes to the momentum of the instance.  This momentum is not transient; it will continue to move the instance between Ticks, mitigated by the friction present in the environment.  Force should be used for applications that are not internally mediated, like explosive force and force experienced from a projectile.
+
+Instances are able to block other instances from moving into their tiles through their {{blocks}} operation.
+
+Instances can provide friction to their tile through the contributedFriction() operation.

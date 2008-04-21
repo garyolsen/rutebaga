@@ -1,0 +1,5 @@
+The item classes, and inventory.
+
+[[image http://plaza.ufl.edu/nstamas/OOP/Item.jpg]]
+
+[http://plaza.ufl.edu/nstamas/OOP/Item.uxf Item.uxf]

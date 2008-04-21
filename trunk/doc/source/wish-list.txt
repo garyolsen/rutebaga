@@ -1,0 +1,5 @@
+Things we're going to implement when we're done.
+
+* A ranged damage effect has mass and imparts momentum when it strikes its target.
+* Show enemies' hitpoints beneath/next to their appearance on the map view, separate from the 'observation' view (but it might use the observation skill).
+* A damage effect that continues going even after it's hit its target, possibly hitting other targets in its path.

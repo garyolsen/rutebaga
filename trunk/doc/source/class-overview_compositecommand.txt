@@ -1,0 +1,26 @@
+[[f>toc]]
+
++ Overview
+
+{{CompositeCommand}} is an implementation of {{[[[class-overview:Command]]]}} that contains a collection of {{Command}}s which may all be executed ``simultaneously''.  Specifically, when {{CompositeCommand}}'s {{execute}} operation is invoked, it invokes {{execute}} on all {{Command}}s that have been {{add}}ed to it //in no guaranteed order//.  Clients may also specify a {{[[[class-overview:Rule]]]}}, parameterized by {{Iterator<Command>}}, to specify how the {{CompositeCommand}} should respond to {{isFeasible}} queries.  The default feasibility {{Rule}} returns true if and only if the set of {{Command}}s is non-empty and all composited {{Command}}s' {{isFeasible}} operations return true.
+
++ Responsibilities
+
+* {{CompositeCommand}} forwards an execution request to a set of {{Command}}s previously added to itself.
+
++ Collaborators
+
+{{[[[class-overview:Command]]]}}s are composited by {{CompositeCommand}}.
+{{[[[class-overview:Rule]]]}} is used by {{CompositeCommand}} to determine feasibility of its {{Command}} set.
+
++ UML Class Diagram
+
+[[image CompositeCommand.gif]]
+
++ Implementor
+
+Matt
+
++ Tester
+
+Ryan

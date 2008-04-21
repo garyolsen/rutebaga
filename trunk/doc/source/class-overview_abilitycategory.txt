@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+Abilities are separated into categories defined by {{AbilityCategory}}.  These categories are nestable.  This is mainly done to group together abilities that are all categorized as something like boon, bane, or enchantment.  The categorization will also be useful for the {{NPCEntity}} AI.
+
++ Responsibilities
+
+{{AbilityCategory}} is only responsible for storing its parent category.
+
++ Collaborators
+
+{{AbilityCategory}} defines the category of {{[[[class-overview:AbilityType]]]}}.  It groups together the abilities the can be performed by an {{Entity}}.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:abilitycategory/abilitycategory.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Gary

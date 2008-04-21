@@ -1,0 +1,27 @@
+[[f>toc]]
+
++ Overview
+
+The {{ScrollDecorator}} class decorates a {{[[[class-overview:ViewComponent]]]}} with scroll bars allowing the user to view only a small sub-section of the entire contained {{[[[class-overview:ViewComponent]]]}}. Additionally, the {{ScrollDecorator}} provides two buttons that shift the visible sub-section of the contained {{[[[class-overview:ViewComponent]]]}}.
+
++ Responsibilities
+
+* Decorate the {{[[[class-overview:ViewComponent]]]}} with scroll bars, only showing the width x height that is set for the visible scroll area.
+* Provide up and down scroll buttons to shift the visible sub-section.
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+* [[[class-overview:ViewComponent]]]
+
++ UML Class Diagram
+
+[[<image ScrollDecorator.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

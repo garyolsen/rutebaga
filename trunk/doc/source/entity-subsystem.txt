@@ -1,0 +1,5 @@
+[[module ChildPages]]
+
+The Entity subsystem manages all internal aspects of entities.
+
+[[image http://rutebaga.wikidot.com/local--files/entity-subsystem/entity-overview.gif]]

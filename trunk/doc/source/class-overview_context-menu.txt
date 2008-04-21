@@ -1,0 +1,37 @@
+[[f>toc]]
+
++ Overview
+
+The {{ContextMenu}} provides a simple way to create interactable menus. These {{ContextMenu}}s are the method by which commands can be sent to the model. Since {{ContextMenu}}s decorate {{[[[class-overview:ViewComponent]]]}}, any information can be contained within a {{ContextMenu}}, not just options.
+
+{{ContextMenu}}s with respect to the game's usage will entail some of the following:
+* Inventory ContextMenu (a scroll decorated list of items with a button next to each item that will trigger a new ItemOptionsContextMenu)
+* ItemOptions ContextMenu ( a list of buttons to equip, use, drop, unequip etc that is context based on the item )
+* ...
+
+++ Example
+
+[[=image exampleContextRootMenu.png]]
+[[=image TargetContextMenu.png]]
+
++ Responsibilities
+
+* Forward events to the decorated object and the sub-{{ContextMenu}} (if any)
+* Maintain the sub-{{ContextMenu}}
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+* [[[class-overview:ViewComponent]]]
+
++ UML Class Diagram
+
+[[<image ContextMenu.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

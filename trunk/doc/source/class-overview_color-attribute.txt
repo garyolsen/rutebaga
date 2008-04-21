@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{Color Attribute}} provides the ability for {{[[[class-overview:ViewComponent]]]}}s to specify their color without directly calling the {{[[[class-overview:Drawer]]]}}'s individual methods.
+
++ Responsibilities
+
+Describe a {{[[[class-overview:ViewComponent]]]}}'s color.
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+
++ UML Class Diagram
+
+[[<image ColorAttribute.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

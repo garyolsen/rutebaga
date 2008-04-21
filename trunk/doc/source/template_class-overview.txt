@@ -1,0 +1,35 @@
+[[f>toc]]
+
++ Overview
+
+A paragraph (or two) explaining the class's purpose and justifying its existence.
+
++ Responsibilities
+
+Enumerate the class's responsibilities.
+
++ Collaborators
+
+Identify the other classes that this one collaborates with and classify them as clients or subcontractors.
+
+Try to hyperlink to those classes.
+
++ UML Class Diagram
+
+A specification-level diagram showing the class.
+
+You can upload an image at the bottom of the page using the "files" link.
+
+If no UML diagram has been made yet, add the "classes-requiring-uml" tag to this page.
+
++ Implementor
+
+Identify which team member(s) are responsible for implementing this class.
+
+If nobody has been assigned yet, add the "classes-requiring-implementor" tag to this page.
+
++ Tester
+
+Identify which team member(s) are responsible for testing this class.
+
+If nobody has been assigned yet, add the "classes-requiring-tester" tag to this page.

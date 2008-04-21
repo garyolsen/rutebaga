@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{NPCEntityType}} provides a definition of behavior for a particular {{NPCEntity}}.  {{NPCEntityType}}s are shared references for all instances of an {{NPCEntity}}.  {{NPCEntity}} will typically forward all operations to an its {{NPCEntityType}}.
+
++ Responsibilities
+
+{{NPCEntityType}} is responsible for defining the behavior of an {{NPCEntity}}.
+
++ Collaborators
+
+{{ [[[class-overview:NPCEntity]]] }}
+
++ UML Class Diagram
+
+[[image http://plaza.ufl.edu/nstamas/OOP/NPCEntityType.png]]
+
++ Implementor
+
+Nick
+
++ Tester
+
+Will

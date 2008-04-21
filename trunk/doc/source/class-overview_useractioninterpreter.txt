@@ -1,0 +1,33 @@
+[[f>toc]]
+
++ Overview
+
+{{UserActionInterpreter}}s are the core of the Controller subsystem.  Interpreters receive user input from the View, and feed {{[[[class-overview:Command]]]}}s to the View to be displayed to the user.  Interpreters are components of the {{[[[class-overview:GameDaemon]]]}}.  When the daemon activates a {{UserActionInterpreter}}, it calls {{installActionInterpreter}} on the interpreter.  The {{uninstallActionIterpreter}} operation is invoked when an interpreter is deactivated.
+
+{{UserActionInterpreter}}s must offer a {{tick}} method, which will be invoked by the {{GameDaemon}} whenever the interpreter is active.  The {{eventsFallThrough}} attribute signifies to the daemon whether or not this interpreter is //consuming// ticks.  If {{eventsFallThrough}} is **false**, when this interpreter receives a {{tick}} invocation, it should be the final interpreter to receive that notification during that tick.  When {{eventsFallThrough}} is **true**, the daemon is free to notify other active interpreters of the tick after notifying this one.
+
+All interpreters may also accept KeyEvents from the View, which will push these events to the Controller if they are not consumed by the user interface.  This allows interpreters to implement functionality such as key-based movement during game play.  KeyEvents "bubble down" in the same manner that ticks do--when {{eventsFallThrough}} is **false**, KeyEvents are consumed.
+
+
++ Responsibilities
+
+* {{UserActionInterpreter}}s initialize the View for their Controller-state.
+* Generate {{Command}}s to be passed to the View for the user to execute.
+* Interpret unconsumed key events.
+
++ Collaborators
+
+{{[[[class-overview:GameDaemon]]]}} maintains a stack of active {{UserActionInterpreter}}s.
+{{[[[class-overview:ViewFacade]]]}} accepts {{Command}}s from the Interpreter.
+
++ UML Class Diagram
+
+[[image UserActionInterpreter.gif]]
+
++ Implementor
+
+Matt
+
++ Tester
+
+Ryan

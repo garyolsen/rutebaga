@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{EntityEffect}} declares an interface for concrete {{EntityEffect}}s to define how an {{Entity}} is actually affected by the implementing effect.
+
++ Responsibilities
+
+Define an interface for affecting behavior.
+
++ Collaborators
+
+{{ [[[Effect]]] }} is a client of {{EntityEffect}}
+
++ UML Class Diagram
+
+[[image http://plaza.ufl.edu/nstamas/OOP/EntityEffect.png]]
+
++ Implementor
+
+Nick	
+
++ Tester
+
+Gary

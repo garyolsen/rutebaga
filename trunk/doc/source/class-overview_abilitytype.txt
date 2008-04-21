@@ -1,0 +1,35 @@
+[[f>toc]]
+
++ Overview
+
+{{AbilityType}} provides a definition of behavior for a particular ability.  {{AbilityType}}s are shared references for all instances of an ability.  {{AbilityInstance}} will typically defer all operations to its {{AbilityType}}.
+
++ Responsibilities
+
+{{Ability Type}} is responsible for defining the behavior of an ability by specifying appropriate {{Abilliy Action}}s.
+
++ Collaborators
+
+{{[[[class-overview:AbilityInstance]]]}} defers its behavior to an {{AbilityType}}.
+
+{{[[[class-overview:Rule]]]}} is used in determining feasibility and existence for an ability.
+
+{{[[[class-overview:AbilityTargetSource]]]}} provides the {{AbilityType}} with its valid target determination.
+
+{{[[[class-overview:AbilityAction]]]}} is executed when the ability is used.
+
+{{[[[class-overview:ValueProvider]]]}} provides the cooldown value.
+
+{{[[[class-overview:AbilityCategory]]]}} categorizes {{AbilityType}}.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:abilitytype/abilitytype.gif]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Gary

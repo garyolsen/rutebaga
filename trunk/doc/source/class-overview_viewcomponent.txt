@@ -1,0 +1,30 @@
+[[f>toc]]
+
++ Overview
+
+The abstract {{ViewComponent}} class provides the base functionality of all components within the Windowing Toolkit. All components in the Windowing toolkit have many states that are commonly shared such as screen position(x, y), z-index, bounding boxes, etc. This abstract class removes these basic functionalities of a component and encapsulates it all within the {{ViewComponent}} so that all components can be treated equally. Since all basic functionality will be contained within the {{ViewComponent}} each sub-classing component can focus on how to draw itself rather than the tedium of maintaining its other states.
+
++ Responsibilities
+
+* Store screen position (x, y)
+* Store z-index to determine drawing order
+* Maintain the bounds of the component (which can be used for culling or mouse hit detection)
+ *  If the bounds have changed, force a {{dirtyBounds()}} call up to its parents so they may recalculate their bounds
+* Maintain the parent {{ViewComponent}} of this {{ViewComponent}} (if any)
+* Process key, mouse and mouseMotion events that are received from the {{[[[class-overview:EventDispatcher]]]}}
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+
++ UML Class Diagram
+
+[[<image ViewComponent.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

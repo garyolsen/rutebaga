@@ -1,0 +1,246 @@
+This is a copied, merged, annotated, itemized version of Dave's spec.
+
+Copyright notice: unless otherwise noted, all content on this page is the property of Dave Small, and is copied here only for the internal use of this group.  Any inquiry into the original form of the specification should be done at [http://www.cise.ufl.edu/~dts/cop4331/iter1.html Dave Small's website].
+
+[[f>toc]]
+
++ Entities
+
+* a mobile thing 
+* has a specific location 
+* has ability to relocate itself
+* characterized by stats 
+* broadly categorized as either player-controlled or computer-controlled
+
+Required entity types:
+
+* Avatar - represents the player
+* Mount/Vehicle - a creature/machine that an avatar can ride or drive; typically enables improved movement characteristics (e.g., faster or capable of traversing certain terrain types), and
+* NPC - (Non-Player Character) may be adversarial or non-hostile (e.g., monsters and villagers).
+
+++ Skills
+
+There are skills that:
+* all classes can learn
+* are player class specific skills (i.e., unique to that class)
+
+On leveling up a player will be awarded a certain number of skill points to distribute to improving her Avatar's skills. Once a skill point has been allocated to a particular skill, it can not be later reallocated.
+
+The higher a character's skill level, the better the character is at performing the action — at low levels, the chance of failure is high.
+
+Required skills:
+
+* bind wounds - heals some damage—the amount depends on the skill level.
+* bargain - an avatar with a high bargain skill will get better prices when buying/selling items.
+* observation - an avatar with a high observation skill will get more and more accurate hints about the abilities/stats of NPCs (e.g., how much damage the last blow did, how much life force is left, immunity to fire, etc.). Note: with a low skill, the information "observed" may be very inaccurate! [General principle: at high skill levels, rather than revealing everything about an NPC, just a couple of random—but useful—things would be accurately observed—though even at very high skill levels, there should always be a small chance of making a mistaken observation!]
+
++++ Smasher Specific Skills
+
+A Smasher can attempt to wield any weapon she has acquired.
+
+* the probability of a successful hit depends on skill level
+* amount of damage dealt depends on skill level
+
+Three weapons are required for each skill type (for a total of nine).
+
+* one-handed weapon - the higher this skill, the better a Smasher will be when fighting with a one-handed weapon. [Note: one-handed weapons combat is medium damage per blow, medium speed attack]
+* two-handed weapon - self descriptive [Note: two-handed weapons combat is high damage per blow, low speed attack]
+* brawling - fighting with firsts and feet (note: this includes brass-knuckles, spiked gloves, etc. should you wish to have such items in your game). [Note: unarmed combat is low damage per blow, high speed attack]
+
++++ Summoner Specific Skills
+
+A Summoner can attempt to cast any type of spell that she has learned.
+
+* probability of the spell succeeding depends on skill level
+* strength of spell effect depends on skill level
+
+A minimum of three spells are required for each skill type (for a total of nine).  The more powerful the spell, the more mana it should consume.
+
+* enchantment - magic that focuses of influencing another's behavior (e.g, make an NPC fall asleep, be move favorably predisposed to the character, etc.); note: failed enchantment attempts will make the target hostile.
+* boon - magic that heals, temporarily grants (partial) immunities and defensive bonuses, improves stats, and other beneficial things.
+* bane - magic that does damage or harm.
+* staff - out of mana? As a last resort one can try whacking an adversary with one's staff.
+
++++ Sneak Specific Skills
+
+In addition to these skills, the Sneak must have three range weapons (presumably, following the same rules as the Smasher's weapons).
+
+* pick-pocket - self descriptive.
+* detect & remove trap - the higher this skill the more likely the avatar is to notice a trap; once the trap is detected, she may attempt to remove it — the higher her skill the more likely she is to succeed.
+* creep - ability to stealthily move from place to place; movement is slowed while creeping. A successfully creeping character can surprise and back-stab an unwary opponent for extra damage.
+* ranged weapon - self descriptive.
+
+++ Occupations
+
+* defines an entity's abilities
+
+The required occupations are:
+
+* Smasher - specialized in hand-to-hand combat
+* Summoner - specialized in spell-casting (or, if you prefer, "technologies so advanced as to be indistinguishable from magic")
+* Sneak - specialized in ranged weapons, evading detection, finding/removing traps, &c.
+
+++ Stats
+
+* a set of quantified characterizations of an entity's abilities and status
+
++++ Primary Stats
+
+*  Lives left - how many more times the entity can die before the game is over.
+* Strength - primary attribute of the Smasher
+* Agility - primary attribute of the Sneak
+* Intellect - primary attribute of the Summoner
+* Hardiness - measures how resistant a character is to physical abuse
+* Experience - measures how much an entity knows about her occupation; earned by adventuring, solving problems, &c.
+* Movement - the maximum distance an entity may move over ideal terrain per unit time
+
++++ Derived Stats
+
+* Level - measured how "good" the entity is at her occupation; based on experience
+* Life - how close the entity is to death; based upon hardiness and level
+* Mana - how much energy the entity has to fuel her spells; based on intellect and level
+* Offensive rating - damage dealt when attacking; based on the equipped weapon, strength, and level
+* Defensive rating - how difficult it is to successfully attack this entity; based on agility and level
+* Armor rating - armor absorbs a fixed amount of damage; based on equipped armor and hardiness
+
+++ Inventory
+
+* a set of items carried by an entity
+* may be added to or dropped from the inventory
+* items in the inventory may be equipped
+
+++ Equipped Items
+
+* those which an entity is currently wearing/bearing
+* modify the entity's stats
+* when an item is unequipped, it is returned to the inventory
+
+++ Navigation and Interaction
+
+* entities may move—when not blocked
+
++ Items
+
+* an immobile thing
+* has a specific location
+
+Required item types:
+
+* Take-able Item - added to inventory on touch
+* One-shot Item - activated and removed from map when touched by an Entity
+* Interactive Item - (potentially) activated on touch; activation may require possession of a specific item or completion of a sequence of actions (e.g., quest or puzzle)
+* Obstacle - makes tile permanently impassable
+
+The spec also states that "other item types" are required, such as potions.
+
++ Maps
+
+* consist of a hexagonal grid of locations
+* discrete locations in the game world are geometrically hexagonal
+* each location has a terrain type
+* each location may contain entities and items
+* each location may be associated with an area-effect
+
+The game shall be played on a hextile (hexagonal tile) map.
+
+Hextiles shall be oriented so that flat sides are parallel to the top and the bottom of the view port. 
+
+++ Terrain Types
+
+* indicate the physical characteristics of the "landscape"
+
+Required terrain types:
+
+* Grass - all first iteration entities can pass
+* Water - no first iteration ground entities can pass
+* Mountains - no first iteration entities can pass
+
+++ Area Effects
+
+* processes that are automatically triggered when an entity enters a place
+
+Required area effects:
+
+* Take damage
+* Heal damage
+* Instant death
+* Level-up (earn enough experience to advance to next level)
+* Teleport (move the avatar to either another position on the same map or to another map)
+* Traps (should not be visible unless successfully observed detected)
+
+++ Rivers
+
+A river tile:
+
+* has a flow direction, which is a force that tries to push movable things to an adjacent outlet tile
+* has a flow rate, which is how hard the “river” pushes
+
+Moving in the same direction as the flow increases the movement rate by the flow rate, whereas movement against it results in the difference.
+
+You are encouraged to provide a visual indicator as to the direction of flow.
+
+Your group may choose to make flow direction mutable.
+
+++ Fog of War
+
+An avatar shall have a radius of visibility.
+
+Any tile within that radius is considered visible.
+
+The size of the radius may be affected by items, potions, the mount being ridden, etc.
+
+There are three kinds of tiles:
+
+# Visible: currently in the line of sight of the player's avatar; terrain type and contents will be displayed.
+# Non-visible: "seen" but are not currently in the line of sight of the avatar; what last seen on the tile will be displayed but will not reflect changes that have occurred since the tile was visible.
+# Shrouded: have never been "seen."
+
+You are encouraged to provide some visual indicator to help players differentiate between visible and non-visible tiles — for those using a graphical display, having an transparent overlay color to "ghost" the tile would be an effective solution.
+
++ Time
+
+Real-time means that “things will happen in the game, even when the player doing nothing but sitting in slack-jawed amazement at the sheer beauty of your intricately modeled, textured, shaded, and animated 3D world.” ;)
+
+For instance, an avatar located on a healing area will recover life points at a constant rate until its maximum is reached; similarly, hanging-out on a damage area will result in a continuing loss of life points until the avatar dies or the player move it out of the area. While not relevant to this iteration, it would not be unreasonable to anticipate that a player who takes no action while their avatar is in the presence of enemies shall quickly discover that the opponents are honorless curs who will attack (and continue to attack). 
+
++ Area Viewport
+
+* a representation of the visible subset of the map in which game play is happening
+* each of the visible locations is represented by a tile
+* tile depicts the terrain type (potentially decorated with a decal), and the entity or item, if any, at that location
+* remains centered on the character
+
+++ Decal
+
+Decals augment the terrain and primarily serve as eye-candy. They do not intrinsically affect game play—though one may be used to mark a tile to indicate an area-effect, &c. This iteration shall define the following decal types: 
+
+* Red Cross
+* Skull and Crossbones
+* Gold Star
+
++ Status Viewport
+
+A representation of the player's current entity's stats. 
+
++ Player Configurable Controls
+
+* configurations should be savable to/loadable from files
+* each player shall be able to have unique control configurations
+
++ Actions
+
+++ Talk
+
+An attempt is made to engage the NPC in conversation; the NPC may be willing to talk and perhaps even engage in trade (e.g., a shopkeeper), or may want to be left alone, or just attack in response.
+
+++ Attack
+
+Combat mechanics are left up to each team to determine. However both skills and (derived) stats must be taken into account.
+
+++ Use Skill
+
+The avatar may attempt to use a skill (e.g., a Sneak might attempt to pick-pocket an NPC).
+
+++ Use Item
+
+The avatar may attempt to use an item.

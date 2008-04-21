@@ -1,0 +1,38 @@
+[[f>toc]]
+
++ Overview
+
+The {{ComponentDecorator}} abstract class provides the basic functionality of decorating a {{[[[class-overview:ViewComponent]]]}} with additional embellishments (e.g., ScrollBars ). 
+
+The {{ComponentDecorator}} is different from that of {{[[[class-overview:ViewCompositeComponent]]]}} in primarily three ways: 
+* The {{ComponentDecorator}} does not have a parent type relationship with the object that it is decorating.
+* The {{ComponentDecorator}} does not redefine the coordinate system for the component it is decorating, it chooses how to position the decorate component based on its own internal formatting strategy.
+* The {{ComponentDecorator}} implies more visual information will be rendered to the screen than merely the {{[[[class-overview:ViewComponent]]]}}, whereas the {{[[[class-overview:ViewCompositeComponent]]]}} class is only a container for {{[[[class-overview:ViewComponent]]]}}s.
+
+
++++ Implementing Classes
+* {{[[[class-overview:Scroll-Decorator|ScrollDecorator]]]}}
+* {{[[[class-overview:Dialog-Decorator|DialogDecorator]]]}}
+
+
++ Responsibilities
+
+* Decorate a {{[[[class-overview:ViewComponent]]]}} with additional visual information
+* Maintain the {{[[[class-overview:ViewComponent]]]}} that it is decorating ( keyFocus, mouseClicks, etc. )
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+* [[[class-overview:ViewComponent]]]
+
++ UML Class Diagram
+
+[[<image ComponentDecorator.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

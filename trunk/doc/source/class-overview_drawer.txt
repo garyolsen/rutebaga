@@ -1,0 +1,26 @@
+[[f>toc]]
+
++ Overview
+
+The Drawer abstract class allows for all information being drawn out by the Windowing Toolkit to be independent from the actual implementation of the drawer ({{Graphics2D}}, {{Java3D}}, etc.). This allows for reuse of the Windowing Toolkit on a variety of mediums without having to revisit the actual {{[[[class-overview:ViewComponent]]]}}s.
+
++ Responsibilities
+
+* Defer actual drawing of primitives to the implementation drawing object ({{Graphics2D}}, etc..)
+* Preserve the state of {{[[[class-overview:Attribute]]]}}s that have been set on the {{Drawer}}.
+
++ Collaborators
+
+{{[[[class-overview:Attribute]]]}}s are applied to the Drawer.
+
++ UML Class Diagram
+
+[[=image Drawer.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

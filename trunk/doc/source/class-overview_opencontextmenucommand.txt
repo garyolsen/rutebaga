@@ -1,0 +1,26 @@
+[[f>toc]]
+
++ Overview
+
+{{OpenContextMenuCommand}} is a high-level convenience class for opening a context menu with a set of Commands in the form of an ElementalList. When executed, an {{OpenContextMenuCommand}} simply asks the View to open a new sub-context menu with the specified list of {{Command}}s (in the form of an {{[[[class-overview:ElementalList]]]}}).  The {{isFeasible}} method always returns **true**.
+
++ Responsibilities
+
+When executed, instructs the View to open a new context menu with its contained set of {{Command}}s.
+
++ Collaborators
+
+{{[[[class-overview:ViewFacade]]]}} receives the request to open a new context menu.
+{{[[[class-overview:ElementalList]]]}} is passed to the View to construct the context menu.
+
++ UML Class Diagram
+
+[[image OpenContextMenuCommand.gif]]
+
++ Implementor
+
+Matt
+
++ Tester
+
+Ryan

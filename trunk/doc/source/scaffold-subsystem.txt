@@ -1,0 +1,31 @@
+[[module ChildPages]]
+
+The Scaffold subsystem is responsible for initializing and providing access to widely-used objects.  As a scaffold is used for building construction, the Scaffold subsystem is used to build up the game data.  Once the game has been built, the scaffold is "taken down" -- i.e., no references to it remain, and it is removed by the garbage collector.
+
+[[image http://rutebaga.wikidot.com/local--files/scaffold-subsystem/scaffold-overview.GIF]]
+
+"Scaffolded" objects are shared instances whose states do not need to be saved.  That is, they are created at game initialization and referenced by other objects, and define behavior, but do not retain state.  They are essentially instances of the Strategy pattern.  For instance, Occupations, EntityTypes, and ItemTypes are scaffolded; Entities and Items are not.  Entities and Items reference their "types", which provide behavior and identification.
+
+The subsystem is composed of "builders" (not in the GoF pattern sense; rather, simply objects that build other objects) that are responsible for creating objects with a certain string key.  These keys are then universally referenced by other builders that require a reference to the object.
+
+An example usage of the scaffold within a builder is as follows:
+
+[[code type="java"]]
+class SmasherBuilder extends Builder
+{
+	public Object create( String key )
+	{
+		return new Occupation();
+	}
+
+	public void initialize( String key, Object object, MasterScaffold scaffold )
+	{
+		if( ! key.equals("SMASHER") ) throw new UnbuildableKeyException(key);
+		Occupation smasher = (Occupation) object;
+		Ability attackAbility = scaffold.get( "ATTACK_ABILITY" );
+		smasher.addAbility( attackAbility );
+	}	
+}
+[[/code]]
+
+This usage can easily be extended to use a more sophisticated construction process.  Builder classes can be instances of the GoF Builder pattern by making the {{Builder}} class a Director that retains mappings from the string keys to the builders used to make them.

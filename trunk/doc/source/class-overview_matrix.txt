@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+A {{Matrix}} is a two-dimensional collection of {{double}} values.  Matrices can have basic mathematical operations applied to them.  These operations return new matrices.  However, matrices are not immutable -- setting a component of the matrix will be reflected to all clients of the object.
+
++ Responsibilities
+
+{{Matrix}} is responsible for storing two-dimensional matrix data and for performing basic operations.
+
++ Collaborators
+
+{{Matrix}} collaborates with {{[[[class-overview:vector|Vector]]]}}.  It is able to provide a representation of itself as an array of {{Vector}}s.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:matrix/matrix.GIF]]
+
++ Implementor
+
+Gary
+
++ Tester
+
+Will

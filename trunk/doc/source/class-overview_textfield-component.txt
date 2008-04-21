@@ -1,0 +1,27 @@
+[[f>toc]]
+
++ Overview
+
+The {{TextFieldComponent}} class allows for user keyboard input to be captured and displayed on screen. The captured information can potentially be used somewhere else by whomever has attached a {{[[[class-overview:TextFieldListener]]]}} to the {{TextFieldComponent}}.
+
++ Responsibilities
+
+* If they TextField has key focus, capture those key inputs and display them within the TextField.
+* Whenever something is being typed into the TextField, notify its listeners of the changes.
+* Store the current state of the string within the TextField.
+
++ Collaborators
+
+* [[[class-overview:Drawer]]]
+
++ UML Class Diagram
+
+[[<image TextFieldComponent.png]]
+
++ Implementor
+
+Ryan
+
++ Tester
+
+Matt

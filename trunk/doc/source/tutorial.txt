@@ -1,0 +1,11 @@
++ Wikidot Features
+
+To add a page, use the box in the nav menu.
+
+To add tags to a page, use the "tags" at the bottom when you are **viewing** a page.
+
+To set the parent of a page (you'll need to do this for your class overviews), use "options" > "parent".
+
+There is a good overview of the syntax [http://www.wikidot.com/doc:wiki-syntax here].
+
+You can upload images and associate them with a page-- use the "files" link at the bottom of the page.

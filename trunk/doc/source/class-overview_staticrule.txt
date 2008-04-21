@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+A static rule is one that is always true or false.  Clients may use {{StaticRule}} when one of its clients requires a rule, and conditions require that the rule be a constant.
+
++ Responsibilities
+
+{{StaticRule}} is responsible for determining a rule based on a constant value.
+
++ Collaborators
+
+{{StaticRule}} has no collaborators.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:staticrule/staticrule.gif]]
+
++ Implementor
+
+Gary
+
++ Tester
+
+Will

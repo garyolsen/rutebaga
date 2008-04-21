@@ -1,0 +1,25 @@
+[[f>toc]]
+
++ Overview
+
+{{AbilityTargetSource}} is used to determine the instances that can be targeted by an ability.
+
++ Responsibilities
+
+{{AbilityTargetSource}} is responsible for providing a set of instances based on the state of the targeting {{AbilityInstance}} and a set of criteria.
+
++ Collaborators
+
+{{AbilityInstance}} provides relevant information about the state of the calling instance.
+
++ UML Class Diagram
+
+[[image http://rutebaga.wikidot.com/local--files/class-overview:abilitytargetsource/abilitytargetsource.GIF]]
+
++ Implementor
+
+Will
+
++ Tester
+
+Gary
