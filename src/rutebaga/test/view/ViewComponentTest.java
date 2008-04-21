@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rutebaga.controller.command.Command;
+import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.rwt.*;
 
@@ -48,28 +49,22 @@ public class ViewComponentTest {
 			scroll.setLocation(500, 200);
 			
 			
-			List<Command> commands = new ArrayList<Command>();
-			commands.add(null);
-			commands.add(null);
-			commands.add(null);
-			commands.add(null);
-			commands.add(null);
+			ConcreteElementalList list = new ConcreteElementalList();
+			list.add("A");
+			list.add("B");
+			list.add("C");
+			list.add("D");
+			list.add("E");
 			
-			List<String> names = new ArrayList<String>();
-			names.add("A");
-			names.add("B");
-			names.add("C");
-			names.add("D");
-			names.add("E");
 			
-			ContextMenu cm = new ContextMenu(commands, names);
+			ContextMenu cm = new ContextMenu(list);
 			cm.setLocation(200, 300);
 			
 			view.addViewComponent(cm);
 			
 			view.addViewComponent(scroll);
 			
-			TextFieldComponent component = new TextFieldComponent();
+			TextFieldComponent component = new TextFieldComponent(200, 20);
 			component.setHasFocus(true);
 			component.setLocation(400,200);
 			
