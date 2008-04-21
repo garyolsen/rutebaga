@@ -11,7 +11,7 @@ appearance	animated imgMarioSouth 2 C
 effects		eeffRaiseExperience
 
 aoeTeleport
-appearance 	static imgPowerUp C
+appearance 	static imgPowerUp01 C
 effects 	eeffTeleport_1
 
 aoeOneShotMana
