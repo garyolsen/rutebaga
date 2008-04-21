@@ -1,10 +1,12 @@
 package rutebaga.controller;
 
+import java.awt.Point;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import rutebaga.commons.logic.Rule;
+import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.AvatarAbilityCommandFactory;
 import rutebaga.controller.command.AvatarEquipmentCommandFactory;
 import rutebaga.controller.command.AvatarInventoryCommandFactory;
@@ -30,6 +32,7 @@ import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.Mount;
 import rutebaga.model.entity.inventory.Inventory;
+import rutebaga.model.entity.npc.Speech;
 import rutebaga.model.entity.stats.StatValue;
 import rutebaga.model.environment.ConcreteInstanceSet;
 import rutebaga.model.environment.Instance;
@@ -38,6 +41,7 @@ import rutebaga.model.item.Item;
 import rutebaga.model.map.Tile;
 import rutebaga.model.storefront.StoreInstance;
 import rutebaga.view.UserInterfaceFacade;
+import rutebaga.view.game.MapComponent;
 
 /**
  * TODO: resolve all the references here once the referenced classes actually
@@ -145,6 +149,8 @@ public class ActionDeterminer
 			command = new CreateStoreBuyMenuCommand(target, queue);
 			list.add("Buy", command);
 		}
+		
+		list.add("Talk", QueueCommand.makeForQueue(new TalkCommand(avatar, target), queue));
 		
 		if(target instanceof Mount) { //TODO GET RID OF THIS!!
 			
@@ -305,6 +311,35 @@ public class ActionDeterminer
 		public void execute() {
 			entity.dismount(mount);
 			facade.clearContextMenuStack();
+		}
+
+		public boolean isFeasible() {
+			return true;
+		}
+		
+	}
+	
+	private class TalkCommand implements Command {
+
+		private Entity<?> avatar, target;
+		
+		public TalkCommand(Entity avatar, Entity target) {
+			this.avatar = avatar;
+			this.target = target;
+		}
+		
+		public void execute() {
+			target.speak(avatar);
+			
+			Collection<Speech> speeches = avatar.getSpeech();
+			
+			if(!speeches.isEmpty()) {
+				for(Speech speech : speeches) {
+					Point p = MapComponent.centerPointOn(avatar, speech.getSpeaker().getCoordinate(), facade.getView().getWidth(), facade.getView().getHeight());
+					facade.createDialogMenu(speech.getSpeech(), new Vector2D(p.x, p.y));
+				break;
+				}
+			}
 		}
 
 		public boolean isFeasible() {
