@@ -9,7 +9,7 @@ reffects		eeffSwordEq_Strength eeffSwordEq_ReduceRings
 
 itemPotion
 name			Potion
-appearance static imgLameEffect C
+appearance animated imgYoshiEgg S
 mass			1.0
 equippable		false
 usable			true
@@ -21,7 +21,7 @@ appearance static imgFireFlower C
 mass			2.0	
 equippable		false
 usable			true
-useeffects		eeffPotion_Health
+useeffects		eeffTonic_MP
 
 itemCoin
 name			Coin
