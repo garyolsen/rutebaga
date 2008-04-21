@@ -111,6 +111,8 @@ public class BoundsTracker implements MovementListener
 	private void recheck()
 	{
 		insideInstances.clear();
+		if(!monitoredInstance.existsInUniverse())
+			return;
 		for (IntVector2D tile : tilesWithinBounds)
 		{
 			insideInstances.addAll(monitoredEnvironment.instancesAt(tile
