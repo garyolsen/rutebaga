@@ -56,11 +56,15 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(
 			0.0);
 
+	private BidirectionalValueProvider<Entity> skillPtStrat;
+
 	private Vector2D facing = new Vector2D(0, 0);
 
 	private Team team;
 	private Storefront storeFront;
 	private double money;
+
+	private SkillLevelManager skillLevelManager = new SkillLevelManager();
 
 	private ValueProvider<Entity> bargainSkillAmount = new ConstantValueProvider<Entity>(
 			1.0);
@@ -94,6 +98,17 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return uid;
 	}
 
+	public int getAvailableSkillPoints()
+	{
+		return (int) skillPtStrat.getValue(this);
+	}
+
+	public void allocateSkillPoints(AbilityCategory category, int qty)
+	{
+		// TODO actually allocate them
+		skillPtStrat.addTo(this, -qty);
+	}
+
 	public boolean isDead()
 	{
 		return deadStrategy == null ? false : deadStrategy.getValue(this) < 0;
@@ -102,6 +117,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public void addAbility(Ability ability)
 	{
 		ability.setEntity(this);
+		if (ability.getCategory() != null)
+			skillLevelManager.getLevel(ability.getCategory());
 		abilities.add(ability);
 	}
 
@@ -279,6 +296,16 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	protected Map<Object, EntityEffect> getEffectQueue()
 	{
 		return effectQueue;
+	}
+
+	public BidirectionalValueProvider<Entity> getSkillPtStrat()
+	{
+		return skillPtStrat;
+	}
+
+	public void setSkillPtStrat(BidirectionalValueProvider<Entity> skillPtStrat)
+	{
+		this.skillPtStrat = skillPtStrat;
 	}
 
 }

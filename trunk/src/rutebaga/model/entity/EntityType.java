@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rutebaga.appearance.EntityAppearanceManager;
+import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.RectBounds2D;
 import rutebaga.commons.math.ValueProvider;
@@ -19,8 +20,10 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private Appearance[][] standing;
 	private ValueProvider<Entity> movementSpeed;
 	private ValueProvider<Entity> bargainSkillAmount;
+	private BidirectionalValueProvider<Entity> skillPtStrat;
 	private ValueProvider<Entity> deadStrategy;
 	private List<AbilityType> abilityTypes = new ArrayList<AbilityType>();
+
 	private int radius;
 
 	public T create()
@@ -62,8 +65,9 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		entity.setAppearanceManager(manager);
 		entity.setMovementSpeedStrat(movementSpeed);
 		entity.setBargainSkill(bargainSkillAmount);
+		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
-		for(AbilityType type : abilityTypes)
+		for (AbilityType type : abilityTypes)
 		{
 			entity.addAbility(type.makeAbility());
 		}
@@ -93,14 +97,17 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	@Override
 	public String toString()
 	{
-		return "EntityType: radius=" + radius + "; movementSpeed=" + movementSpeed + "; " + abilityTypes.size() + " abilities";
+		return "EntityType: radius=" + radius + "; movementSpeed="
+				+ movementSpeed + "; " + abilityTypes.size() + " abilities";
 	}
 
-	public ValueProvider<Entity> getBargainSkillAmount() {
+	public ValueProvider<Entity> getBargainSkillAmount()
+	{
 		return bargainSkillAmount;
 	}
 
-	public void setBargainSkillAmount(ValueProvider<Entity> bargainSkillAmount) {
+	public void setBargainSkillAmount(ValueProvider<Entity> bargainSkillAmount)
+	{
 		this.bargainSkillAmount = bargainSkillAmount;
 	}
 
@@ -112,6 +119,16 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	public void setDeadStrategy(ValueProvider<Entity> deadStrategy)
 	{
 		this.deadStrategy = deadStrategy;
+	}
+
+	public BidirectionalValueProvider<Entity> getSkillPtStrat()
+	{
+		return skillPtStrat;
+	}
+
+	public void setSkillPtStrat(BidirectionalValueProvider<Entity> skillPtStrat)
+	{
+		this.skillPtStrat = skillPtStrat;
 	}
 
 }
