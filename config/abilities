@@ -8,6 +8,12 @@ actions {
 	spawn		source static decFire			
 }
 
+name		MagicMissle
+category	abcatSpells
+actions{
+	damage		dmgTPMagicMissle	10
+}
+
 name		Punch
 category	abcatAttacks
 actions{

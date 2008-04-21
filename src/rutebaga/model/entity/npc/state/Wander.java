@@ -46,7 +46,7 @@ public class Wander extends NPCState
 	public NPCState tick(NPCEntity npc)
 	{
 //		wait++;
-		if (/*wait % 50 == 0*/rand.nextInt(5)==0){
+		if (/*wait % 50 == 0*/rand.nextInt(15)==0){
 			npc.setDirection(new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2));
 			if(rand.nextInt(3)==0)
 				npc.setPausing(true);
