@@ -1,5 +1,7 @@
 package rutebaga.test.scaffold;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -54,6 +56,12 @@ public class StatsBuilderTest
 		StringVisitor v = new StringVisitor();
 		damage.getMagnitudeProvider().getTreeRoot().accept(v);
 		System.out.println(v.getString());
+		
+		List<StatisticId> list = (List<StatisticId>) s.get("globalAllStatsList");
+		for(Object id : list.toArray())
+		{
+			System.out.println(id);
+		}
 	}
 
 }

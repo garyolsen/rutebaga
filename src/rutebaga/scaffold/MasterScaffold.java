@@ -60,8 +60,8 @@ public class MasterScaffold
 			}
 			catch (Exception e)
 			{
-				throw new RuntimeException("Could not get " + id
-						+ " off scaffold", e);
+				e.printStackTrace();
+				throw new RuntimeException();
 			}
 			scaffold.put(id, object);
 			builder.initialize(id, object, this);

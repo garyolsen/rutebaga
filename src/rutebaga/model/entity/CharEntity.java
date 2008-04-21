@@ -1,5 +1,7 @@
 package rutebaga.model.entity;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
+
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.entity.inventory.ConcreteInventory;

@@ -11,6 +11,7 @@ public class DamageType extends StatisticId
 	public DamageType(String name)
 	{
 		super(name);
+		this.setHidden(true);
 	}
 
 	public DamageType getParent()

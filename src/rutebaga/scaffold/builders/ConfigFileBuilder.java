@@ -22,7 +22,10 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 {
 	public String[] availableIds()
 	{
-		return properties.keySet().toArray(new String[0]);
+		ArrayList<String> list = new ArrayList<String>();
+		list.addAll(properties.keySet());
+		list.addAll(getGlobalIds());
+		return list.toArray(new String[0]);
 	}
 
 	public final static Pattern pattern = Pattern
@@ -44,6 +47,8 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 
 	private Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>();
 	private Map<String, Map<String, ArrayList>> innerLists = new HashMap<String, Map<String, ArrayList>>();
+	
+	private ArrayList<String> globalIds = new ArrayList<String>();
 
 	private String currentId;
 	private Map<String, String> current;
@@ -57,6 +62,11 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	public ArrayList<String> getInnerList(String id, String property)
 	{
 		return innerLists.get(id).get(property);
+	}
+	
+	public final ArrayList<String> globalIds()
+	{
+		return globalIds;
 	}
 
 	public void processLine(String readData)
@@ -254,5 +264,10 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			s.setTreeRoot(n);
 			return s;
 		}
+	}
+
+	public ArrayList<String> getGlobalIds()
+	{
+		return globalIds;
 	}
 }
