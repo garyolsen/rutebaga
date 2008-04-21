@@ -231,14 +231,14 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 * @return The ContextMenu that was created.
 	 */
 	public int createDialogMenu(String dialog, Vector2D vector) {
-		TextLabelComponent text = new TextLabelComponent(dialog);
+		TextLabelComponent text = new TextLabelComponent(dialog, TextLabelComponent.CENTER_ALIGNMENT);
 		
 		DialogDecorator decorator = new DialogDecorator(text, 150, 100);
 		
 		decorator.setLocation(vector.getX().intValue(), vector.getY().intValue() - decorator.getHeight());
 		
 		prepareContextStack();
-		contextStack.add(decorator);
+		contextStack.push(decorator);
 		
 		view.addViewComponent(decorator);
 		
@@ -247,7 +247,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 
 	public int createDialogMenu(String dialog) {
 		return createDialogMenu(dialog, new Vector2D(view.getWidth() / 2, view
-				.getHeight() / 2));
+				.getHeight() / 2 - 50));
 	}
 
 	/**

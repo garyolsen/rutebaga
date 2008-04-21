@@ -2,6 +2,7 @@ package rutebaga.view.rwt;
 
 import java.awt.Color;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
@@ -16,10 +17,20 @@ public class DialogDecorator extends ComponentDecorator {
 	public DialogDecorator(TextLabelComponent decorated, int width, int height) {
 		super(decorated);
 		
+		int margin = 20;
+		int decoratedWidth = width - margin;
+		int decoratedHeight = height - margin;
+		decorated.setBounds(new Rectangle(decoratedWidth, decoratedHeight));
 		
 		dialogBox = constructDialogBox(width,height);
 		
 		this.setBounds(dialogBox);
+	}
+	
+	@Override
+	public void setLocation(int x, int y) {
+		getDecoratedComponent().setLocation(x + 10, y + getHeight() / 20);
+		super.setLocation(x, y);
 	}
 	
 	private Area constructDialogBox(int width, int height) {
@@ -39,8 +50,8 @@ public class DialogDecorator extends ComponentDecorator {
 		draw.setAttribute(color);
 		draw.drawShape(getLocation(), dialogBox);
 		
-		ViewComponent vc = this.getDecoratedComponent();
-		vc.setLocation( getX() + (this.getWidth() - vc.getWidth()) /2,   getY() + getHeight()/2 - vc.getHeight()/2);
+		//ViewComponent vc = this.getDecoratedComponent();
+		//vc.setLocation( getX() + (this.getWidth() - vc.getWidth()) /2,   getY() + getHeight()/2 - vc.getHeight()/2);
 		
 		super.draw(draw);
 	}
