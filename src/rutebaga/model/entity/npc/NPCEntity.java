@@ -35,7 +35,6 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	private boolean pausing = true;
 	private Random rand = new Random();
 	private MutableVector2D direction=new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
-	private Stack<Speech> speechStack = new Stack<Speech>();
 	
 	public NPCEntity(InstanceType<T> type)
 	{
@@ -204,16 +203,5 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 		this.pausing = pausing;
 	}
 	
-	public void makeNewSpeech(Entity entity, String speech) {
-		speechStack.push( new Speech(entity, speech) );
-	}
-	
-	public Stack<Speech> getSpeech() {
-		return speechStack;
-	}
-	
-	public void clearSpeech() {
-		speechStack.clear();
-	}
 
 }
