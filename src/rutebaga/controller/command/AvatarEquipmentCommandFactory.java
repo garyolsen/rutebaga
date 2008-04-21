@@ -30,8 +30,6 @@ public class AvatarEquipmentCommandFactory implements CommandFactory<Item> {
 	
 	public ElementalList getCommandListFor(Item item) {
 		ConcreteElementalList list = new ConcreteElementalList();
-		if (facade != null)
-			list.add("Stats", new DisplayItemStatsCommand(facade, item));
 		list.add("Unequip", QueueCommand.makeForQueue(new UnequipCommand(item), queue));
 		return list;
 	}
