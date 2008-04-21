@@ -40,7 +40,7 @@ public class DialogDecorator extends ComponentDecorator {
 		draw.drawShape(getLocation(), dialogBox);
 		
 		ViewComponent vc = this.getDecoratedComponent();
-		vc.setLocation( (this.getWidth() - vc.getWidth()) /2,   getHeight()/2 - vc.getHeight()/2);
+		vc.setLocation( getX() + (this.getWidth() - vc.getWidth()) /2,   getY() + getHeight()/2 - vc.getHeight()/2);
 		
 		super.draw(draw);
 	}
