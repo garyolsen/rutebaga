@@ -17,3 +17,18 @@ decNuke
 
 appearance		animated imgNuke 2 C
 lifetime		20
+
+decShell
+
+appearance		animated imgShell 2 C
+lifetime		21
+
+decBubble
+
+appearance		animated imgBubble 2 C
+lifetime		24
+
+decLife
+
+appearance		animated imgLife 2 C
+lifetime		10
