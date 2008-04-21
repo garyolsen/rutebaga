@@ -1,8 +1,8 @@
 package rutebaga.model.entity.stats;
 
-import rutebaga.commons.math.ValueProvider;
+import rutebaga.commons.math.BidirectionalValueProvider;
 
-public class StatValueProvider extends ValueProvider<Stats>
+public class StatValueProvider extends BidirectionalValueProvider<Stats>
 {
 	private StatisticId statId;
 
@@ -15,6 +15,13 @@ public class StatValueProvider extends ValueProvider<Stats>
 	public double getValue(Stats t)
 	{
 		return t.getValue(statId);
+	}
+
+	@Override
+	public double addTo(Stats t, double value)
+	{
+		t.modifyStat(statId, value);
+		return getValue(t);
 	}
 
 }

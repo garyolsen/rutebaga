@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
+import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
@@ -35,6 +36,8 @@ public class EntityTypeBuilder extends InstanceBuilder
 				"moveSpd", scaffold));
 		type.setDeadStrategy((ValueProvider<Entity>) getValueProvider(id,
 				"deadStrat", scaffold));
+		type.setSkillPtStrat((BidirectionalValueProvider<Entity>) getValueProvider(id,
+				"skillPtStrat", scaffold));
 		
 //		type.setBargainSkillAmount((ValueProvider<Entity>) getValueProvider(id, "bargain", scaffold));
 		

@@ -18,6 +18,21 @@ public class OperationSet
 			return "cos";
 		}
 	}
+	
+	public static class LogOperation extends UnaryOperation
+	{
+		@Override
+		public double calculate(double a)
+		{
+			return Math.log(a);
+		}
+
+		@Override
+		public String getDefaultString()
+		{
+			return "log";
+		}
+	}
 
 	public static class AddOperation extends BinaryOperation
 	{
