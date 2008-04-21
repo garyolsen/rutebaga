@@ -226,11 +226,11 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	{
 		if (!contains(id, property))
 			return new Rule[0];
-		String[] ids = getStringArray(id, property, "[\\w\\t]");
+		String[] ids = getStringArray(id, property, "[\\s\\t]");
 		List<Rule> rules = new ArrayList<Rule>();
 		for (String strId : ids)
 		{
-			DefaultRuleFactory.getInstance().get(strId, scaffold);
+			rules.add(DefaultRuleFactory.getInstance().get(strId, scaffold));
 		}
 		return rules.toArray(new Rule[0]);
 	}

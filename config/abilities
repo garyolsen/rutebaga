@@ -7,6 +7,9 @@ actions {
 	spawn		target static decFire
 	spawn		source static decFire			
 }
+existence	R_static_false
+
+abMagicMissle
 
 name		Magic Missle
 category	abcatSpells
@@ -20,11 +23,15 @@ actions{
 	damage		dmgTpPunch	10
 }
 
+abDeath
+
 name		Death
 category	abcatSpells
 actions{
 	damage		dmgTpDeath
 }
+
+abSneak
 
 name		Sneak Attack
 category	abcatAttacks

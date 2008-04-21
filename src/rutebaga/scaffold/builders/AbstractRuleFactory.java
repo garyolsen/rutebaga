@@ -15,7 +15,7 @@ public abstract class AbstractRuleFactory
 
 	public Rule get(String description, MasterScaffold scaffold)
 	{
-		// FORMAT: VP_[type]_[params] (no spaces allowed)
+		// FORMAT: R_[type]_[params] (no spaces allowed)
 		// params: obj=thing;obj2=thing
 		String[] parts = description.split("_");
 		String type = parts[1];
