@@ -270,6 +270,6 @@ public class ContextMenu extends ViewComponent
 			}
 		}
 			
-		return false;
+		return true;
 	}
 }
