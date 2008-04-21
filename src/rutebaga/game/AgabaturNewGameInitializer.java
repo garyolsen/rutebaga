@@ -117,6 +117,11 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		AreaEffectType damager = (AreaEffectType) scaffold.get("aoeHarm");
 		
 		ItemType<?> sword = (ItemType<?>) scaffold.get("itemSword");
+		ItemType<?> starman = (ItemType<?>) scaffold.get("itemStarman");
+		ItemType<?> mushroom = (ItemType<?>) scaffold.get("itemMushroom");
+		ItemType<?> coin = (ItemType<?>) scaffold.get("itemCoin");
+		ItemType<?> fireflower = (ItemType<?>) scaffold.get("itemFireFlower");
+		ItemType<?> bananapeel = (ItemType<?>) scaffold.get("itemBananaPeel");
 
 		StatisticId hp = (StatisticId) scaffold.get("statHp");
 		StatisticId movement = (StatisticId) scaffold.get("statMovement");
@@ -155,10 +160,29 @@ public class AgabaturNewGameInitializer implements GameInitializer
 							break;
 						}
 					}
-						
-					if(random.nextDouble() < 0.1) {
-						environment.add(sword.makeInstance(), location);
+					else if (random.nextInt(15) == 0){
+						switch(random.nextInt(5)){
+							case 0:
+								environment.add(sword.makeInstance(), location);
+							break;
+							case 1:	
+								environment.add(starman.makeInstance(), location);
+							break;
+							case 2:
+								environment.add(mushroom.makeInstance(), location);
+							break;
+							case 3:
+								environment.add(coin.makeInstance(), location);
+							break;
+							case 4:
+								environment.add(fireflower.makeInstance(), location);
+							break;
+							case 5:
+								environment.add(bananapeel.makeInstance(), location);
+							break;
+							}
 					}
+					
 				}
 				else if (random.nextDouble() < waterTileProb)
 				{

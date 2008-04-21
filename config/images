@@ -363,6 +363,27 @@ path TestImages/fireball03.png
 imgFireBall04
 path TestImages/fireball04.png
 
+imgCoin01
+path TestImages/coin01.png
+imgCoin02
+path TestImages/coin02.png
+imgCoin03
+path TestImages/coin03.png
+imgCoin04
+path TestImages/coin04.png
+
+imgFireFlower
+path TestImages/fire_flower.png
+
+imgMushroom
+path TestImages/mushroom.png
+
+imgStarman
+path TestImages/starman.png
+
+imgBananaPeel
+path TestImages/banana_peel.png
+
 ##############################################################################
 #							   RIVER SPRITES 								 #
 ##############################################################################
