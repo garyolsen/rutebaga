@@ -29,7 +29,7 @@ moveSpd		$vpEntityMovementSpeed
 wallet	$vpEntityWallet
 vRadius		6
 abilities	abThrowFireBall abEggThrow abMarioThrow abYoshiThrow
-movement	whitelist terrWater
+movement	whitelist terrGrass terrWater
 
 entityNPCKoopa
 standing 	imgKoopa
