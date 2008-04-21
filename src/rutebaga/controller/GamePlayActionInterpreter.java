@@ -11,6 +11,7 @@ import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
+import rutebaga.controller.command.CloseContextMenuCommand;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CreateRootContextMenuCommand;
 import rutebaga.controller.command.list.ConcreteElementalList;
@@ -95,6 +96,15 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 
+		keyPressBindings.set(KeyCode.get(KeyEvent.VK_ESCAPE), new Command() {
+			public void execute() {
+				facade.clearContextMenuStack();
+			}
+			public boolean isFeasible() {
+				return true;
+			}
+		});
+		
 		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_SEMICOLON), new Command() {
 			public void execute() {
 				targetNextEntity();
@@ -105,7 +115,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 
-		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_ESCAPE), new Command() {
+		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_F12), new Command() {
 			public void execute() {
 				paused = true;
 				ConcreteElementalList list = new ConcreteElementalList();
