@@ -170,6 +170,128 @@ path TestImages/yoshi_egg04.png
 imgYoshiEgg05
 path TestImages/yoshi_egg05.png
 
+imgPlant01
+path TestImages/plant01.png
+imgPlant02
+path TestImages/plant02.png
+imgPlant03
+path TestImages/plant03.png
+
+
+imgShyguyNorth01
+path TestImages/shyguy_northeast01.png
+imgShyguyNorth02
+path TestImages/shyguy_northeast02.png
+imgShyguyNorth03
+path TestImages/shyguy_northeast03.png
+imgShyguyNorthEast01
+path TestImages/shyguy_northeast01.png
+imgShyguyNorthEast02
+path TestImages/shyguy_northeast02.png
+imgShyguyNorthEast03
+path TestImages/shyguy_northeast03.png
+imgShyguySouthEast01
+path TestImages/shyguy_southeast01.png
+imgShyguySouthEast02
+path TestImages/shyguy_southeast02.png
+imgShyguySouthEast03
+path TestImages/shyguy_southeast03.png
+imgShyguySouth01
+path TestImages/shyguy_southeast01.png
+imgShyguySouth02
+path TestImages/shyguy_southeast02.png
+imgShyguySouth03
+path TestImages/shyguy_southeast03.png
+imgShyguySouthWest01
+path TestImages/shyguy_southwest01.png
+imgShyguySouthWest02
+path TestImages/shyguy_southwest02.png
+imgShyguySouthWest03
+path TestImages/shyguy_southwest03.png
+imgShyguyNorthWest01
+path TestImages/shyguy_northwest01.png
+imgShyguyNorthWest02
+path TestImages/shyguy_northwest02.png
+imgShyguyNorthWest03
+path TestImages/shyguy_northwest03.png
+
+
+imgKoopaNorth01
+path TestImages/koopa_northeast01.png
+imgKoopaNorth02
+path TestImages/koopa_northeast02.png
+imgKoopaNorth03
+path TestImages/koopa_northeast03.png
+imgKoopaNorthEast01
+path TestImages/koopa_northeast01.png
+imgKoopaNorthEast02
+path TestImages/koopa_northeast02.png
+imgKoopaNorthEast03
+path TestImages/koopa_northeast03.png
+imgKoopaSouthEast01
+path TestImages/koopa_southeast01.png
+imgKoopaSouthEast02
+path TestImages/koopa_southeast02.png
+imgKoopaSouthEast03
+path TestImages/koopa_southeast03.png
+imgKoopaSouth01
+path TestImages/koopa_southeast01.png
+imgKoopaSouth02
+path TestImages/koopa_southeast02.png
+imgKoopaSouth03
+path TestImages/koopa_southeast03.png
+imgKoopaSouthWest01
+path TestImages/koopa_southwest01.png
+imgKoopaSouthWest02
+path TestImages/koopa_southwest02.png
+imgKoopaSouthWest03
+path TestImages/koopa_southwest03.png
+imgKoopaNorthWest01
+path TestImages/koopa_northwest01.png
+imgKoopaNorthWest02
+path TestImages/koopa_northwest02.png
+imgKoopaNorthWest03
+path TestImages/koopa_northwest03.png
+
+
+imgGoombaNorth01
+path TestImages/goomba_northeast01.png
+imgGoombaNorth02
+path TestImages/goomba_northeast02.png
+imgGoombaNorth03
+path TestImages/goomba_northeast03.png
+imgGoombaNorthEast01
+path TestImages/goomba_northeast01.png
+imgGoombaNorthEast02
+path TestImages/goomba_northeast02.png
+imgGoombaNorthEast03
+path TestImages/goomba_northeast03.png
+imgGoombaSouthEast01
+path TestImages/goomba_southeast01.png
+imgGoombaSouthEast02
+path TestImages/goomba_southeast02.png
+imgGoombaSouthEast03
+path TestImages/goomba_southeast03.png
+imgGoombaSouth01
+path TestImages/goomba_southeast01.png
+imgGoombaSouth02
+path TestImages/goomba_southeast02.png
+imgGoombaSouth03
+path TestImages/goomba_southeast03.png
+imgGoombaSouthWest01
+path TestImages/goomba_southwest01.png
+imgGoombaSouthWest02
+path TestImages/goomba_southwest02.png
+imgGoombaSouthWest03
+path TestImages/goomba_southwest03.png
+imgGoombaNorthWest01
+path TestImages/goomba_northwest01.png
+imgGoombaNorthWest02
+path TestImages/goomba_northwest02.png
+imgGoombaNorthWest03
+path TestImages/goomba_northwest03.png
+
+
 ##############################################################################
 #							   TILE SPRITES 								 #
 ##############################################################################
