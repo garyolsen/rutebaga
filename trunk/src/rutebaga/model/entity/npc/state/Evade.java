@@ -39,8 +39,12 @@ public class Evade extends NPCState
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-		// TODO: evasion logic
-		return this;
+		if (npc.isDead())
+			return NPCState.dead;
+		else
+		{
+			return this;
+		}
 	}
 
 }

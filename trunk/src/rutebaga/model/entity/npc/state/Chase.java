@@ -55,60 +55,65 @@ public class Chase extends NPCState
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-		if (npc.targetInSight() && npc.targetInRange())
-		{
-			return NPCState.attack;
-			
-		} else if (!(npc.getTarget() == null) && (npc.targetInSight()))
-		{
-			rutebaga.commons.Log.log("I am chasing you!");
-			manager = new AStarNodeLocationManager(npc.getEnvironment(), npc, npc.getTargetTile());
-			List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
-			
-			IntVector2D moveTo = npc.getTile();
-			
-			if ( !(path == null) && !(path.isEmpty()) )
-				{
-					moveTo = path.get(0).getTile();
-					path.remove(0);
-				}
-			
-			MutableVector2D moveVector = new MutableVector2D(moveTo);
-			moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
-			moveVector.becomeUnitVector().multiplyBy(0.03);
-			
-			npc.walk(moveVector);
-			
-			lifetime = 100;
-			lastPath = path;
-			lastTile = npc.getTile();
-			
-			return this;
-		}
-		if( !(lastPath == null) && !lastPath.isEmpty() && (lifetime > 0) )
-		{
-			rutebaga.commons.Log.log(lastTile);
-			rutebaga.commons.Log.log("I lost sight of you. Interest level at: " + lifetime);
-			lifetime--;
-			MutableVector2D moveVector;
-			rutebaga.commons.Log.log("Pathfinding to last known position...");
-			IntVector2D moveTo = lastPath.get(0).getTile();
-			if ( (npc.getTile().getX() != lastTile.getX()) && (npc.getTile().getY() != lastTile.getY()) )
-			{
-				rutebaga.commons.Log.log("Removing tile from list");
-				lastTile = npc.getTile();
-				lastPath.remove(0);
-			}
-			moveVector = new MutableVector2D(moveTo);
-			moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
-			moveVector.becomeUnitVector().multiplyBy(0.03);
-			npc.walk(moveVector);
-			return this;
-		}
+		if (npc.isDead())
+			return NPCState.dead;
 		else
 		{
-			rutebaga.commons.Log.log("Going into hostile wander state!");
-			return NPCState.hostileWander;
+			if (npc.targetInSight() && npc.targetInRange())
+			{
+				return NPCState.attack;
+				
+			} else if (!(npc.getTarget() == null) && (npc.targetInSight()))
+			{
+				rutebaga.commons.Log.log("I am chasing you!");
+				manager = new AStarNodeLocationManager(npc.getEnvironment(), npc, npc.getTargetTile());
+				List<AStarNodeLocationAdapter> path = aStarSearch.findPath(new AStarNodeLocationAdapter(manager, npc.getTile()), new AStarNodeLocationAdapter(manager, npc.getTargetTile()));
+				
+				IntVector2D moveTo = npc.getTile();
+				
+				if ( !(path == null) && !(path.isEmpty()) )
+					{
+						moveTo = path.get(0).getTile();
+						path.remove(0);
+					}
+				
+				MutableVector2D moveVector = new MutableVector2D(moveTo);
+				moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
+				moveVector.becomeUnitVector().multiplyBy(0.03);
+				
+				npc.walk(moveVector);
+				
+				lifetime = 100;
+				lastPath = path;
+				lastTile = npc.getTile();
+				
+				return this;
+			}
+			if( !(lastPath == null) && !lastPath.isEmpty() && (lifetime > 0) )
+			{
+				rutebaga.commons.Log.log(lastTile);
+				rutebaga.commons.Log.log("I lost sight of you. Interest level at: " + lifetime);
+				lifetime--;
+				MutableVector2D moveVector;
+				rutebaga.commons.Log.log("Pathfinding to last known position...");
+				IntVector2D moveTo = lastPath.get(0).getTile();
+				if ( (npc.getTile().getX() != lastTile.getX()) && (npc.getTile().getY() != lastTile.getY()) )
+				{
+					rutebaga.commons.Log.log("Removing tile from list");
+					lastTile = npc.getTile();
+					lastPath.remove(0);
+				}
+				moveVector = new MutableVector2D(moveTo);
+				moveVector.detract(npc.getTile()).divideBy(2.0).accumulate(npc.getTile()).detract(npc.getCoordinate());
+				moveVector.becomeUnitVector().multiplyBy(0.03);
+				npc.walk(moveVector);
+				return this;
+			}
+			else
+			{
+				rutebaga.commons.Log.log("Going into hostile wander state!");
+				return NPCState.hostileWander;
+			}
 		}
 		
 	}

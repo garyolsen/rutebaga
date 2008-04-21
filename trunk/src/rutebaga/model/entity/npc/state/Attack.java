@@ -39,18 +39,23 @@ public class Attack extends NPCState
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-		if (npc.targetInRange() && npc.targetInSight())
-		{
-			// npc.attackTarget();
-			return this;
-		}
-		else if (npc.targetInSight())
-		{
-			return NPCState.chase;
-		}
+		if (npc.isDead())
+			return NPCState.dead;
 		else
 		{
-			return NPCState.wander;
+			if (npc.targetInRange() && npc.targetInSight())
+			{
+				// npc.attackTarget();
+				return this;
+			}
+			else if (npc.targetInSight())
+			{
+				return NPCState.chase;
+			}
+			else
+			{
+				return NPCState.wander;
+			}
 		}
 	}
 

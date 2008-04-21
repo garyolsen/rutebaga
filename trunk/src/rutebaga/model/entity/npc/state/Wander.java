@@ -45,17 +45,22 @@ public class Wander extends NPCState
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-//		wait++;
-		if (/*wait % 50 == 0*/rand.nextInt(15)==0){
-			npc.setDirection(new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2));
-			if(rand.nextInt(3)==0)
-				npc.setPausing(true);
-			else
-				npc.setPausing(false);
+		if (npc.isDead())
+			return NPCState.dead;
+		else
+		{
+			wait++;
+			if (/*wait % 50 == 0*/rand.nextInt(15)==0){
+				npc.setDirection(new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2));
+				if(rand.nextInt(3)==0)
+					npc.setPausing(true);
+				else
+					npc.setPausing(false);
+			}
+			if(!npc.isPausing())
+				npc.walk(npc.getDirection());
+			return this;
 		}
-		if(!npc.isPausing())
-			npc.walk(npc.getDirection());
-		return this;
 	}
 
 }

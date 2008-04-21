@@ -2,6 +2,7 @@ package rutebaga.model.entity.npc;
 
 import rutebaga.model.entity.npc.state.Attack;
 import rutebaga.model.entity.npc.state.Chase;
+import rutebaga.model.entity.npc.state.Dead;
 import rutebaga.model.entity.npc.state.Evade;
 import rutebaga.model.entity.npc.state.HostileWander;
 import rutebaga.model.entity.npc.state.Wander;
@@ -27,6 +28,8 @@ public abstract class NPCState
 	protected static final NPCState evade = new Evade();
 
 	protected static final NPCState attack = new Attack();
+	
+	protected static final NPCState dead = new Dead();
 
 	protected NPCState()
 	{
