@@ -30,5 +30,5 @@ lifetime		24
 
 decLife
 
-appearance		animated imgLife 2 C
+appearance		animated imgLife 2 S
 lifetime		10

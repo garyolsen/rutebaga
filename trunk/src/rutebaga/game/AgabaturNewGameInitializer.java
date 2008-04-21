@@ -127,6 +127,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		AreaEffectType mover = (AreaEffectType) scaffold.get("aoeSpeeder");
 		AreaEffectType damager = (AreaEffectType) scaffold.get("aoeTeleport");
 		
+		AreaEffectType oneshotMP = (AreaEffectType) scaffold.get("aoeOneShotMana");
+		AreaEffectType oneshotHP = (AreaEffectType) scaffold.get("aoeOneShotHealth");
+		
 		ItemType<?> sword = (ItemType<?>) scaffold.get("itemSword");
 		ItemType<?> mushroom = (ItemType<?>) scaffold.get("itemMushroom");
 		ItemType<?> coin = (ItemType<?>) scaffold.get("itemStarman");
@@ -167,16 +170,18 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 				
 					if (random.nextInt(15) == 0){
-						switch(random.nextInt(3)){
+						switch(random.nextInt(4)){
 							case 0:
 								environment.add(healer.makeInstance(), location);
 							break;
-							case 1:	
-								environment.add(mover.makeInstance(), location);
-							break;
-							case 2:
+							case 1:
 								environment.add(damager.makeInstance(), location);
 							break;
+							case 2:
+								environment.add(oneshotHP.makeInstance(), location);
+								break;
+							case 3:
+								environment.add(oneshotMP.makeInstance(), location);
 						}
 					}
 					else if (random.nextInt(15) == 0){
