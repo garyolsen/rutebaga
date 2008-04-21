@@ -13,7 +13,7 @@ appearance static imgLameEffect C
 mass			1.0
 equippable		false
 usable			true
-useeffects		eeffPotion_Healthuseeffects	
+useeffects		eeffPotion_Health
 
 itemFireFlower
 name			Fire Flower
@@ -21,7 +21,7 @@ appearance static imgFireFlower C
 mass			2.0	
 equippable		false
 usable			true
-useeffects		
+useeffects		eeffPotion_Health
 
 itemCoin
 name			Coin
@@ -29,7 +29,7 @@ appearance animated imgCoin 3 C
 mass			3.0	
 equippable		false
 usable			true
-useeffects		
+useeffects		eeffPotion_Health
 
 itemMushroom
 name			Mushroom
@@ -45,7 +45,7 @@ appearance static imgStarman C
 mass			7.0	
 equippable		false
 usable			true
-useeffects		
+useeffects		eeffPotion_Health
 
 itemBananaPeel
 name			Banana Peel

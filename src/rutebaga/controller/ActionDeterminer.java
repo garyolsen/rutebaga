@@ -287,7 +287,6 @@ public class ActionDeterminer
 		}
 		
 		public void execute() {
-			System.out.println("Mounting!");
 			entity.mount(mount);
 			facade.clearContextMenuStack();
 		}

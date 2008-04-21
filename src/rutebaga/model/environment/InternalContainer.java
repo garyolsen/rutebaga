@@ -122,7 +122,6 @@ public final class InternalContainer
 		protected void update(double friction)
 		{
 			if(immobile) return;
-			System.out.println(instance.getMass());
 			double mass = instance.getMass();
 			double frictionCoeff = 0.4;
 			this.momentum.multiplyBy(1 - frictionCoeff);

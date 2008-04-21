@@ -129,7 +129,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		
 		ItemType<?> sword = (ItemType<?>) scaffold.get("itemSword");
 		ItemType<?> mushroom = (ItemType<?>) scaffold.get("itemMushroom");
-		ItemType<?> coin = (ItemType<?>) scaffold.get("itemCoin");
+		ItemType<?> coin = (ItemType<?>) scaffold.get("itemStarman");
 		ItemType<?> fireflower = (ItemType<?>) scaffold.get("itemFireFlower");
 		ItemType<?> bananapeel = (ItemType<?>) scaffold.get("itemBananaPeel");
 		ItemType<?> starman = (ItemType<?>) scaffold.get("itemStarman");
@@ -262,8 +262,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			Object obj = scaffold.get(key);
 			if(obj == null)
 				continue;
-			System.out.println(key + "\t\t" + obj.getClass().getSimpleName()
-					+ "\t\t" + obj);
+			//System.out.println(key + "\t\t" + obj.getClass().getSimpleName() + "\t\t" + obj);
 		}
 
 		avatar1 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();

@@ -28,7 +28,7 @@ public class Gary
 			for (int y = 0; y < 40; y++)
 				environment.add(fire.makeInstance(), new Vector2D(x, y));
 
-		new Thread()
+/*		new Thread()
 		{
 
 			@Override
@@ -40,7 +40,7 @@ public class Gary
 					while (true)
 					{
 						Thread.sleep(1000);
-						System.out.println("something flag: " + Gary.avatar.getFlag("something"));
+						//System.out.println("something flag: " + Gary.avatar.getFlag("something"));
 					}
 				}
 				catch (InterruptedException e)
@@ -50,6 +50,6 @@ public class Gary
 
 			}
 
-		}.start();
+		}.start();*/
 	}
 }
