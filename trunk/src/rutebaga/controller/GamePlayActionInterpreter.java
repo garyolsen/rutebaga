@@ -396,7 +396,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	}
 
 	private void updateTargetedTile() {
-		if (target != null) {
+		if (target != null && target.existsInUniverse()) {
 			// TODO: lol
 			IntVector2D tileCoordinate = avatar.getEnvironment()
 					.getTileConvertor().tileOf(target.getCoordinate());
@@ -405,7 +405,10 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 				retarget();
 				return;
 			}
+			refreshTargetObservable();
+		} else {
+			target = null;
+			facade.clearContextMenuStack();
 		}
-		refreshTargetObservable();
 	}
 }
