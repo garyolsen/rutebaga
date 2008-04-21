@@ -46,17 +46,7 @@ public class KeyCode {
 		return keyCode;
 	}
 	
-	public int hashCode() {
-		return getKeyCode();
-	}
-	
-	public boolean equals(Object o) {
-		if (o instanceof KeyCode)
-			return equals((KeyCode) o);
-		return false;
-	}
-	
-	public boolean equals(KeyCode c) {
-		return getKeyCode() == c.getKeyCode();
+	public String getKeyName() {
+		return KeyEvent.getKeyText(keyCode);
 	}
 }

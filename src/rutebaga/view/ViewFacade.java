@@ -292,7 +292,9 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 *            A ContextMenu to be closed.
 	 */
 	public void closeContextMenu(int menu) {
-
+		if (menu > 0)
+			while (contextStack.size() >= menu)
+				popContextMenu();
 	}
 
 	public void clearContextMenuStack() {

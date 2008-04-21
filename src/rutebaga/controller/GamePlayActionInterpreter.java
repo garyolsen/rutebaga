@@ -14,6 +14,7 @@ import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.CloseContextMenuCommand;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CreateRootContextMenuCommand;
+import rutebaga.controller.command.QueueCommand;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.keyboard.ConcreteKeyBinding;
@@ -71,7 +72,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	}
 
 	private void initializeKeyBindings() {
-		keyPressBindings.set(KeyCode.get(KeyEvent.VK_SPACE), new Command() {
+		keyPressBindings.set("Explode", KeyCode.get(KeyEvent.VK_SPACE), new Command() {
 			public void execute() {
 				explode();
 			}
@@ -81,7 +82,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 
-		keyPressBindings.set(KeyCode.get(KeyEvent.VK_ENTER), new Command() {
+		keyPressBindings.set("Ability0", KeyCode.get(KeyEvent.VK_ENTER), new Command() {
 			public void execute() {
 				GamePlayActionInterpreter.this.avatar
 						.getAbilities()
@@ -96,7 +97,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 
-		keyPressBindings.set(KeyCode.get(KeyEvent.VK_ESCAPE), new Command() {
+		keyPressBindings.set("Close Menu", KeyCode.get(KeyEvent.VK_ESCAPE), new Command() {
 			public void execute() {
 				facade.clearContextMenuStack();
 			}
@@ -105,7 +106,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 		
-		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_SEMICOLON), new Command() {
+		keyReleaseBindings.set("Next Target", KeyCode.get(KeyEvent.VK_TAB), new Command() {
 			public void execute() {
 				targetNextEntity();
 			}
@@ -115,7 +116,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 
-		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_F12), new Command() {
+		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_F12), new Command() {
 			public void execute() {
 				paused = true;
 				ConcreteElementalList list = new ConcreteElementalList();
@@ -238,17 +239,26 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	private void startRebinding(KeyBinding<Command> binding) {
 		rebindingState = binding;
 		paused = true;
-		facade.createDialogMenu("Key Binding!lolz");
+		facade.createDialogMenu("Press a key to bind it to " + binding.getName() + "!");
 	}
 
 	private void completeRebinding(KeyCode code) {
 		if (allowRebinding) {
 			facade.popContextMenu();
 			keyPressBindings.remove(rebindingState);
-			KeyBinding<Command> newBinding = new ConcreteKeyBinding<Command>(code,
-					rebindingState.getBinding());
+			KeyBinding<Command> newBinding = new ConcreteKeyBinding<Command>(rebindingState.getName(),
+					code, rebindingState.getBinding());
 			keyPressBindings.set(newBinding);
 			rebindingState = null;
+			final int menuId  = facade.createDialogMenu("Bound '" + newBinding.getKeyCode().getKeyName() + "' to " + newBinding.getName());
+			QueueCommand.makeForQueue(new Command() {
+				public void execute() {
+					facade.closeContextMenu(menuId);
+				}
+				public boolean isFeasible() {
+					return true;
+				}
+			}, daemon.getCommandQueue(), 100).execute();
 			paused = false;
 		}
 	}

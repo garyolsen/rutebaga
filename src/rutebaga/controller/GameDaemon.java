@@ -413,14 +413,27 @@ public class GameDaemon implements InterpreterManager {
 
 	private static class CommandQueueImpl implements CommandQueue {
 		/**
-		 * The command queue.
+		 * The command queue(s).  We use two so that commands have the
+		 * option of adding themselves back to the command queue.  This
+		 * saves us from the dreaded ConcurrentModificationException.
 		 */
-		private Queue<Command> queue;
+		private Queue<Command> current;
+		private Queue<Command> queue1;
+		private Queue<Command> queue2;
 
 		public CommandQueueImpl() {
-			queue = new LinkedList<Command>();
+			queue1 = new LinkedList<Command>();
+			queue2 = new LinkedList<Command>();
+			current = queue1;
 		}
 
+		private void swapQueues() {
+			if (current == queue1)
+				current = queue2;
+			else
+				current = queue1;
+		}
+		
 		/**
 		 * Allows clients to automatically queue a
 		 * {@link rutebaga.controller.command.Command}.
@@ -430,7 +443,7 @@ public class GameDaemon implements InterpreterManager {
 		 * @see rutebaga.controller.CommandQueue#queueCommand(rutebaga.controller.Command)
 		 */
 		public void queueCommand(Command command) {
-			queue.offer(command);
+			current.offer(command);
 		}
 
 		/**
@@ -438,8 +451,10 @@ public class GameDaemon implements InterpreterManager {
 		 * executing them.
 		 */
 		public void processQueue() {
-			while (!queue.isEmpty()) {
-				Command command = queue.poll();
+			Queue<Command> mine = current;
+			swapQueues();
+			while (!mine.isEmpty()) {
+				Command command = mine.poll();
 				command.execute();
 			}
 		}
