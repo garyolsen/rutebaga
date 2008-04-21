@@ -158,7 +158,6 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			}
 		}
 
-		// Rivers are broken!
 		for (int i = 0; i < 10; i++)
 		{
 			River river = new River();
