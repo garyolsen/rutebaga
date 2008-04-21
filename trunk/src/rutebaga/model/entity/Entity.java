@@ -43,26 +43,33 @@ import rutebaga.model.storefront.Storefront;
  * @author Nick
  * @see EntityType
  */
-public abstract class Entity<T extends Entity<T>> extends Instance<T> implements Named
+public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
+		Named
 {
 	public static int SIGHT_RANGE = 7;
-	
+
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
 	private Bounds2D visionBounds;
 	private Vision vision;
-	
-	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(0.0);
+
+	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(
+			0.0);
 
 	private Vector2D facing = new Vector2D(0, 0);
-	
+
 	private Team team;
 	private Storefront storeFront;
 	private double money;
-	
-	private ValueProvider<Entity> bargainSkillAmount = new ConstantValueProvider<Entity>(1.0);
-	
-	//TODO move into AbilitySet
+
+	private ValueProvider<Entity> bargainSkillAmount = new ConstantValueProvider<Entity>(
+			1.0);
+	/**
+	 * Returns less than zero if the entity is dead.
+	 */
+	private ValueProvider<Entity> deadStrategy;
+
+	// TODO move into AbilitySet
 	private List<Ability> abilities = new ArrayList<Ability>();
 
 	public Entity(InstanceType<T> type)
@@ -86,21 +93,33 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		effectQueue.put(uid, effect);
 		return uid;
 	}
-	
+
+	public boolean isDead()
+	{
+		return deadStrategy == null ? false : deadStrategy.getValue(this) < 0;
+	}
+
 	public void addAbility(Ability ability)
 	{
 		ability.setEntity(this);
 		abilities.add(ability);
 	}
-	
+
+	public void addToMoney(double value)
+	{
+		money = money + value;
+	}
+
 	@Override
 	public final boolean blocks(Instance other)
 	{
-		return ObjectUtility.equals(other.getSetIdentifier(), InstanceSetIdentifier.ENTITY);
-//		return false;
+		return ObjectUtility.equals(other.getSetIdentifier(),
+				InstanceSetIdentifier.ENTITY);
+		// return false;
 	}
-	
-	public boolean canSee(IntVector2D v) {
+
+	public boolean canSee(IntVector2D v)
+	{
 		Vector2D dV = new Vector2D(v.getX(), v.getY());
 		return visionBounds.contains(dV.minus(this.getCoordinate()));
 	}
@@ -109,8 +128,18 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		return Collections.unmodifiableList(abilities);
 	}
-	
+
+	public ValueProvider getBargainSkill()
+	{
+		return bargainSkillAmount;
+	}
+
 	public abstract Stats getDamageResistance();
+
+	public ValueProvider<Entity> getDeadStrategy()
+	{
+		return deadStrategy;
+	}
 
 	public Vector2D getFacing()
 	{
@@ -119,7 +148,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public IntVector2D getFacingTile()
 	{
-		return getEnvironment().getTileOf(getFacing().over(getFacing().getMagnitude()).plus(getTile()));
+		return getEnvironment().getTileOf(
+				getFacing().over(getFacing().getMagnitude()).plus(getTile()));
 	}
 
 	public abstract Inventory getInventory();
@@ -128,6 +158,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public double getLayer()
 	{
 		return DefaultLayers.GROUND.getLayer();
+	}
+
+	public double getMoneyAmount()
+	{
+		return money;
 	}
 
 	public double getMovementSpeed()
@@ -140,14 +175,24 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		return InstanceSetIdentifier.ENTITY;
 	}
-	
+
 	public abstract Stats getStats();
+
+	public Storefront getStoreFront()
+	{
+		return new EntityStoreFront(this);
+	}
+
+	public Team getTeam()
+	{
+		return this.team;
+	}
 
 	public Vision getVision()
 	{
 		return vision;
 	}
-	
+
 	public Bounds2D getVisionBounds()
 	{
 		return visionBounds;
@@ -158,9 +203,14 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return new Wallet();
 	}
 
+	public boolean hasStoreFront()
+	{
+		return !(storeFront.equals(null));
+	}
+
 	public boolean isWalking()
 	{
-		//TODO implement
+		// TODO implement
 		return true;
 	}
 
@@ -169,21 +219,33 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		this.setAppearanceManager(new StaticAppearanceManager(appearance));
 	}
 
+	public void setBargainSkill(ValueProvider<Entity> bargainSkillAmount)
+	{
+		if (bargainSkillAmount != null)
+			this.bargainSkillAmount = bargainSkillAmount;
+	}
+
+	public void setDeadStrategy(ValueProvider<Entity> deadStrategy)
+	{
+		this.deadStrategy = deadStrategy;
+	}
+
 	public void setFacing(Vector2D facing)
 	{
 		this.facing = facing;
 	}
-	
+
 	public void setMovementSpeedStrat(ValueProvider<Entity> movementSpeedStrat)
 	{
 		this.movementSpeedStrat = movementSpeedStrat;
 	}
+
 	public void setVisionBounds(Bounds2D visionBounds)
 	{
 		this.visionBounds = visionBounds;
 		this.vision = new Vision(this);
 	}
-	
+
 	@Override
 	public void tick()
 	{
@@ -199,10 +261,12 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public void walk(Vector2D direction)
 	{
 		double magnitude = direction.getMagnitude();
-		if(magnitude > 0.005) this.facing = direction;
-		this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)/magnitude));
+		if (magnitude > 0.005)
+			this.facing = direction;
+		this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)
+				/ magnitude));
 	}
-	
+
 	private void flushEffectQueue()
 	{
 		for (Object id : getEffectQueue().keySet())
@@ -211,39 +275,10 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		}
 		getEffectQueue().clear();
 	}
-	
+
 	protected Map<Object, EntityEffect> getEffectQueue()
 	{
 		return effectQueue;
-	}
-	
-	public Team getTeam() {
-		return this.team;
-	}
-
-	public boolean hasStoreFront() {
-		return !(storeFront.equals(null));
-	}
-	
-	public Storefront getStoreFront() {
-		return new EntityStoreFront(this);
-	}
-	
-	public ValueProvider getBargainSkill() {
-		return bargainSkillAmount;
-	}
-	
-	public void setBargainSkill(ValueProvider<Entity> bargainSkillAmount) {
-		if( bargainSkillAmount != null)
-			this.bargainSkillAmount = bargainSkillAmount;
-	}
-	
-	public void addToMoney(double value) {
-		money = money + value;
-	}
-	
-	public double getMoneyAmount() {
-		return money;
 	}
 
 }
