@@ -10,7 +10,7 @@ name			Potion
 appearance static imgLameEffect C
 equippable		false
 usable			true
-useeffects		
+useeffects		eeffPotion_Healthuseeffects		
 
 itemFireFlower
 name			Fire Flower
