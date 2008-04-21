@@ -78,9 +78,9 @@ public interface UserInterfaceFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	int createDialogMenu(ElementalList list, Vector2D vector);
+	int createDialogMenu(String dialog, Vector2D vector);
 	
-	int createDialogMenu(ElementalList list);
+	int createDialogMenu(String dialog);
 	
 	/**
 	 * Shows a warning to the player.
