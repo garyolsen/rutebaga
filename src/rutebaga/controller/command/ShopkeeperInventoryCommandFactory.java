@@ -10,11 +10,13 @@ public class ShopkeeperInventoryCommandFactory implements CommandFactory<Item> {
 
 	StoreInstance store;
 	CommandQueue queue;
+	UserInterfaceFacade facade;
 	
 	public ShopkeeperInventoryCommandFactory(StoreInstance store,
 			UserInterfaceFacade facade, CommandQueue queue) {
 		this.store = store;
 		this.queue = queue;
+		this.facade = facade;
 	}
 
 	public ElementalList getCommandListFor(Item item) {
@@ -38,6 +40,7 @@ public class ShopkeeperInventoryCommandFactory implements CommandFactory<Item> {
 		
 		public void execute() {
 			store.sell(item);
+			facade.popContextMenu();
 		}
 	}
 
