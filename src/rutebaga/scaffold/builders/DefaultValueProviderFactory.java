@@ -18,6 +18,9 @@ public class DefaultValueProviderFactory
 		instance.addFactory(new ConvertorVPFactory());
 		instance.addFactory(new FlagVPFactory());
 		instance.addFactory(new SkillLevelVPFactory());
+		
+		System.out.println("valid:");
+		for(String str : instance.getValidTypes()) System.out.println(str);
 	}
 
 	public static ChainedValueProviderFactory getInstance()
