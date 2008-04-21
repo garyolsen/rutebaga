@@ -36,6 +36,10 @@ public class KeyBindingList<C> implements Iterable<KeyBinding<C>> {
 		set(new ConcreteKeyBinding<C>(code, binding));
 	}
 	
+	public void set(String name, KeyCode code, C binding) {
+		set(new ConcreteKeyBinding<C>(name, code, binding));
+	}
+	
 	public KeyBinding<C> get(KeyCode code) {
 		return validIndex(code.getKeyCode()) ? bindings[code.getKeyCode()] : null;
 	}

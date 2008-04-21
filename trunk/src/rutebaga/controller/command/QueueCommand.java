@@ -22,6 +22,8 @@ public class QueueCommand implements Command
 	private final CommandQueue queue;
 
 	private final Command command;
+	
+	private int ticksRemaining;
 
 	/**
 	 * Create a new QueueCommand that will queue the specified {@link Command}
@@ -35,13 +37,14 @@ public class QueueCommand implements Command
 	 *            the {@link Command} to queue when this QueueCommand is
 	 *            executed
 	 */
-	private QueueCommand(CommandQueue queue, Command command)
+	private QueueCommand(Command command, CommandQueue queue, int ticks)
 	{
 		if (queue == null || command == null)
 			throw new NullPointerException(
 					"Parameters to QueueCommand's constructor cannot be null");
 		this.queue = queue;
 		this.command = command;
+		this.ticksRemaining = ticks;
 	}
 
 	/**
@@ -58,9 +61,29 @@ public class QueueCommand implements Command
 	 */
 	public static QueueCommand makeForQueue(Command command, CommandQueue queue)
 	{
-		return new QueueCommand(queue, command);
+		return makeForQueue(command, queue, 1);
 	}
 
+	/**
+	 * Create a new QueueCommand that will queue the specified {@link Command}
+	 * on the given CommandQueue when this QueueCommand is executed.  The given
+	 * command will not be executed until the specified number of ticks have
+	 * passed.
+	 * 
+	 * @param command
+	 *            the CommandQueue to queue on
+	 * @param queue
+	 *            the CommandQueue to queue on
+	 * @return a QueueCommand that will place the {@link Command} on the Queue
+	 *         when executed
+	 * @see Command
+	 */
+	public static QueueCommand makeForQueue(Command command, CommandQueue queue, int tickDelay)
+	{
+		return new QueueCommand(command, queue, tickDelay);
+	}
+
+	
 	/**
 	 * Queues this QueueCommand's component {@link Command} on the CommandQueue
 	 * this QueueCommand was initialized with.
@@ -69,7 +92,10 @@ public class QueueCommand implements Command
 	 */
 	public void execute()
 	{
-		if (command.isFeasible())
+		--ticksRemaining;
+		if (ticksRemaining > 0)
+			queue.queueCommand(this);
+		else if (command.isFeasible())
 			queue.queueCommand(command);
 	}
 

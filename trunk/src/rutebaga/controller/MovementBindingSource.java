@@ -33,12 +33,12 @@ public class MovementBindingSource {
 
 		MovementBindingSource manager = new MovementBindingSource(entity,
 				bindings);
-		manager.setDirectionBinding(KeyCode.get(KeyEvent.VK_Q), NORTHWEST);
-		manager.setDirectionBinding(KeyCode.get(KeyEvent.VK_W), NORTH);
-		manager.setDirectionBinding(KeyCode.get(KeyEvent.VK_E), NORTHEAST);
-		manager.setDirectionBinding(KeyCode.get(KeyEvent.VK_A), SOUTHWEST);
-		manager.setDirectionBinding(KeyCode.get(KeyEvent.VK_S), SOUTH);
-		manager.setDirectionBinding(KeyCode.get(KeyEvent.VK_D), SOUTHEAST);
+		manager.setDirectionBinding("Northwest", KeyCode.get(KeyEvent.VK_Q), NORTHWEST);
+		manager.setDirectionBinding("North", KeyCode.get(KeyEvent.VK_W), NORTH);
+		manager.setDirectionBinding("Northeast", KeyCode.get(KeyEvent.VK_E), NORTHEAST);
+		manager.setDirectionBinding("Southwest", KeyCode.get(KeyEvent.VK_A), SOUTHWEST);
+		manager.setDirectionBinding("South", KeyCode.get(KeyEvent.VK_S), SOUTH);
+		manager.setDirectionBinding("Southeast", KeyCode.get(KeyEvent.VK_D), SOUTHEAST);
 
 		return manager;
 	}
@@ -58,12 +58,12 @@ public class MovementBindingSource {
 			bindings.remove(binding);
 	}
 
-	public void setDirectionBinding(KeyCode code, Vector2D direction) {
+	public void setDirectionBinding(String name, KeyCode code, Vector2D direction) {
 		double angle = direction.getAngle();
 		removeOldKeyBinding(angle);
 		Command command = new MovementCommand(direction);
-		bindings.set(code, command);
-		directions.put(angle, new ConcreteKeyBinding<Command>(code, command));
+		bindings.set(name, code, command);
+		directions.put(angle, new ConcreteKeyBinding<Command>(name, code, command));
 	}
 
 	public Command[] getMovementCommands() {

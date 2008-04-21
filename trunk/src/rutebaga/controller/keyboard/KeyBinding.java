@@ -4,4 +4,6 @@ public interface KeyBinding<C> {
 	KeyCode getKeyCode();
 	
 	C getBinding();
+	
+	String getName();
 }
