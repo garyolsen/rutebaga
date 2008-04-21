@@ -23,7 +23,7 @@ public class AbilityUseListElementFactory implements ListElementFactory<Ability>
 				return QueueCommand.makeForQueue(new AbilityUseCommand<Instance>(element, target), queue);
 			}
 			public String getLabel() {
-				return element.getName();
+				return "Use '" + element.getName() + '\'';
 			}
 		};
 	}

@@ -8,10 +8,14 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 import java.util.Observer;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
@@ -109,6 +113,8 @@ public class ContextMenu extends ViewComponent
 		generateComponents(angularSeparation);
 		
 		setBoundsWithContextTriangles();
+		
+		moveComponents();
 	}
 	
 	private void generateContextTriangles(int angle, int number) {
@@ -141,8 +147,17 @@ public class ContextMenu extends ViewComponent
 		
 		components.clear();
 
+		SortedSet<ListElement> sortedList = new TreeSet<ListElement>(new Comparator<ListElement>() {
+			public int compare(ListElement a, ListElement b) {
+				if ("Close".equals(a.getLabel()))
+					return -1;
+				return a.getLabel().compareToIgnoreCase(b.getLabel());
+			}
+		});
+		for (ListElement element: list)
+			sortedList.add(element);
 		
-		for(ListElement element : list) {
+		for(ListElement element : sortedList) {
 			ButtonComponent button = new ButtonComponent(element.getLabel());
 			button.setCommand(element.getCommand());
 			button.setUntoggledColor(buttonColor);

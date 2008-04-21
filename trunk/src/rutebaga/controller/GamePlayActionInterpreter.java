@@ -43,7 +43,6 @@ import rutebaga.view.game.TargetInstanceObservable;
 public class GamePlayActionInterpreter extends MouseAdapter implements
 		UserActionInterpreter, KeyListener {
 
-	private double lastRebindingMessageId;
 	private KeyBinding<Command> rebindingState;
 	private boolean allowRebinding;
 	private KeyBindingList<Command> keyPressBindings;
@@ -255,7 +254,6 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			return false;
 		}
 		facade.createDialogMenu("'" + code.getKeyName() + "' already bound!  Try again.");
-		lastRebindingMessageId = Math.random();
 		return true;
 	}
 	
@@ -264,35 +262,18 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		paused = true;
 		keyPressBindings.remove(rebindingState);
 		facade.createDialogMenu("Press a key to bind it to " + binding.getName() + "!");
-		lastRebindingMessageId = Math.random();
 	}
 	
 	private void completeRebinding(KeyCode code) {
 		if (allowRebinding) {
-			try {
-				facade.popContextMenu();
-			}
-			catch (EmptyStackException e) {
-				
-			}
+			facade.popContextMenu();
 			if (checkKeyBindingCollision(code))
 				return;
 			KeyBinding<Command> newBinding = new ConcreteKeyBinding<Command>(rebindingState.getName(),
 					code, rebindingState.getBinding());
 			keyPressBindings.set(newBinding);
 			rebindingState = null;
-			final int menuId  = facade.createDialogMenu("Bound '" + newBinding.getKeyCode().getKeyName() + "' to " + newBinding.getName());
-			lastRebindingMessageId = Math.random();
-			final double myRebindingMessageId = lastRebindingMessageId; // Hack
-			QueueCommand.makeForQueue(new Command() {
-				public void execute() {
-					if (myRebindingMessageId == lastRebindingMessageId)
-						facade.closeContextMenu(menuId);
-				}
-				public boolean isFeasible() {
-					return true;
-				}
-			}, daemon.getCommandQueue(), 100).execute();
+			facade.createDialogMenu("Bound '" + newBinding.getKeyCode().getKeyName() + "' to " + newBinding.getName());
 			paused = false;
 		}
 	}

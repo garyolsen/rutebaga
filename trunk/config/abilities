@@ -7,7 +7,7 @@ actions {
 	spawn		target static decBolt
 	entityeffect	source	eeff_Spell_MP	
 }
-existence {
+feasibility {
 	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
@@ -21,7 +21,7 @@ actions {
 	spawn		target static decBeam
 	entityeffect	source	eeff_Spell_MP
 }
-existence {
+feasibility {
 	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
@@ -35,7 +35,7 @@ actions {
 	spawn		target static decNuke
 	entityeffect	source	eeff_Spell_MP
 }
-existence {
+feasibility {
 	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
@@ -45,11 +45,11 @@ abMagicMissle
 
 name		Magic Missle
 category	abcatSpells
-actions{
+actions {
 	damage		dmgTPMagicMissle	10
 	entityeffect	source	eeff_Spell_MP
 }
-existence {
+feasibility {
 	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
@@ -57,7 +57,7 @@ abPunch
 
 name		Punch
 category	abcatAttacks
-actions{
+actions {
 	damage		dmgTpPunch	10
 }
 
@@ -65,11 +65,11 @@ abDeath
 
 name		Death
 category	abcatSpells
-actions{
+actions {
 	damage		dmgTpDeath 1
 	entityeffect	source	eeff_Spell_MP
 }
-existence {
+feasibility {
 	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
@@ -77,10 +77,10 @@ abSneak
 
 name		Sneak Attack
 category	abcatAttacks
-actions{
+actions {
 	damage		dmgTpSneakAttack 1
 	entityeffect	source	eeff_Spell_MP
 }
-existence {
+feasibility {
 	gate 19 VP_@entityStats_VP_stat_statMp
 }

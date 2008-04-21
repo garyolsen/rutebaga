@@ -34,9 +34,9 @@ public class TitleScreen extends ViewCompositeComponent {
 			ButtonComponent button = new ButtonComponent(e.getLabel());
 			button.setCommand(e.getCommand());
 			button.setLocation(xAlign, yAlign);
-			int[] xPoints = {20,40,0};
-			int[] yPoints = {0,20,20};
-			button.setButtonShape( new Polygon(xPoints, yPoints, 3));
+			int[] xPoints = {0,0,50,100,100,50};
+			int[] yPoints = {5,25,30,25,5,0};
+			button.setButtonShape( new Polygon(xPoints, yPoints, 6));
 			
 			this.addChild(button);
 			yAlign += spacing;

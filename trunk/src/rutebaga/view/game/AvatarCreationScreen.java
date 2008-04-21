@@ -20,7 +20,7 @@ public class AvatarCreationScreen extends ViewCompositeComponent {
 		this.setBounds(bounds);
 		
 		TextLabelComponent label = new TextLabelComponent("Name: ");
-		label.setLocation(getWidth()/2, getHeight()/3);
+		label.setLocation(getWidth()/2, getHeight()/3 + 10);
 		this.addChild(label);
 		
 		TextFieldComponent text = new TextFieldComponent(100, 20);

@@ -86,7 +86,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 				for(ViewComponent vc : registerQueue) {
 					registeredComponents.add(0, vc);
 					if(lastMouse != null && vc.getBounds().contains(new Point(lastMouse.getX() - vc.getX(), lastMouse.getY() - vc.getY())))
-						containsMouse.add(vc);
+						containsMouse.add(0, vc);
 				}
 				
 				registerQueue.clear();
@@ -238,7 +238,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			
 			if(vc.getBounds().contains( mouse )) { 
 				if( !containsMouse.contains( vc )) {
-					containsMouse.add(vc);
+					containsMouse.add(0, vc);
 					if (mouseEntered(vc, e))
 						break;
 				} else {
@@ -267,7 +267,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			if(vc.getBounds().contains( mouse )) { 
 				
 				if( !containsMouse.contains( vc )) {
-					containsMouse.add(vc);
+					containsMouse.add(0, vc);
 					if (mouseEntered(vc, e))
 						break;
 				} else {
