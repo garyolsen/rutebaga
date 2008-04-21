@@ -56,6 +56,7 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 				
 				GameInitializer gi = game.getGameInitializer();
 				gi.build();
+				
 				UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), gi.getAvatar());
 
 				gi.getAvatar().setName(name);
