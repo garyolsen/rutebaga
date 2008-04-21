@@ -102,10 +102,15 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		return (int) skillPtStrat.getValue(this);
 	}
+	
+	public int getSkillPoints(AbilityCategory category)
+	{
+		return (int) skillLevelManager.getLevel(category);
+	}
 
 	public void allocateSkillPoints(AbilityCategory category, int qty)
 	{
-		// TODO actually allocate them
+		skillLevelManager.assign(category, qty);
 		skillPtStrat.addTo(this, -qty);
 	}
 
