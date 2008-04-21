@@ -5,6 +5,17 @@ import rutebaga.commons.logic.Rule;
 public class FlagRule implements Rule<Instance>
 {
 	private String flag;
+	private boolean value = true;
+
+	public boolean isValue()
+	{
+		return value;
+	}
+
+	public void setValue(boolean value)
+	{
+		this.value = value;
+	}
 
 	public FlagRule()
 	{
@@ -19,7 +30,7 @@ public class FlagRule implements Rule<Instance>
 
 	public boolean determine(Instance context)
 	{
-		return context.getFlag(flag);
+		return context.getFlag(flag) == value;
 	}
 
 	public String getFlag()

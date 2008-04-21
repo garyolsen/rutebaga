@@ -48,6 +48,96 @@ public class OperationSet
 			return "+";
 		}
 	}
+	
+	public static class AndOperation extends BinaryOperation
+	{
+		@Override
+		public double calculate(double a, double b)
+		{
+			return ( a > 0 ) && ( b > 0) ? 1 : 0;
+		}
+
+		@Override
+		public String getDefaultString()
+		{
+			return "and";
+		}
+	}
+	
+	public static class OrOperation extends BinaryOperation
+	{
+		@Override
+		public double calculate(double a, double b)
+		{
+			return ( a > 0 ) || ( b > 0) ? 1 : 0;
+		}
+
+		@Override
+		public String getDefaultString()
+		{
+			return "or";
+		}
+	}
+	
+	public static class XorOperation extends BinaryOperation
+	{
+		@Override
+		public double calculate(double a, double b)
+		{
+			return ( a > 0 ) ^ ( b > 0) ? 1 : 0;
+		}
+
+		@Override
+		public String getDefaultString()
+		{
+			return "xor";
+		}
+	}
+	
+	public static class NandOperation extends BinaryOperation
+	{
+		@Override
+		public double calculate(double a, double b)
+		{
+			return ( a > 0 ) && ( b > 0) ? 0 : 1;
+		}
+
+		@Override
+		public String getDefaultString()
+		{
+			return "nand";
+		}
+	}
+	
+	public static class NorOperation extends BinaryOperation
+	{
+		@Override
+		public double calculate(double a, double b)
+		{
+			return ( a > 0 ) || ( b > 0) ? 0 : 1;
+		}
+
+		@Override
+		public String getDefaultString()
+		{
+			return "nor";
+		}
+	}
+	
+	public static class NotOperation extends UnaryOperation
+	{
+		@Override
+		public double calculate(double a)
+		{
+			return !( a > 0 ) ? 1 : 0;
+		}
+
+		@Override
+		public String getDefaultString()
+		{
+			return "not";
+		}
+	}
 
 	public static class ASinOperation extends UnaryOperation
 	{

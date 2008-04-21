@@ -62,6 +62,8 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	
 	public ArrayList<String> getInnerList(String id, String property)
 	{
+		if(!innerLists.containsKey(id) || !innerLists.get(id).containsKey(property))
+			return new ArrayList<String>();
 		return innerLists.get(id).get(property);
 	}
 	

@@ -1,6 +1,10 @@
 package rutebaga.scaffold.builders;
 
+import java.util.List;
+
 import rutebaga.commons.logic.Rule;
+import rutebaga.commons.logic.ValueProviderRule;
+import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.effect.AreaEffectType;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
@@ -27,15 +31,18 @@ public class AOEBuilder extends InstanceBuilder
 		super.initialize(id, object, scaffold);
 
 		Object[] effects = getObjectArray(id, "effects", "[\\s\\t]", scaffold);
-		Object[] rules = getObjectArray(id, "rules", "[\\s\\t]", scaffold);
 
 		AreaEffectType type = (AreaEffectType) object;
 
 		for (Object effect : effects)
 			type.getEffects().add((EntityEffect) effect);
 
-		for (Object rule : rules)
-			type.getRules().add((Rule<Entity>) rule);
+		List<String> ruleVPs = getInnerList(id, "rules");
+		for(String vpDesc : ruleVPs)
+		{
+			ValueProvider vp = DefaultValueProviderFactory.getInstance().parse(vpDesc, scaffold);
+			type.getRules().add(new ValueProviderRule(vp));
+		}
 	}
 
 }

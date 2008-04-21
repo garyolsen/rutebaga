@@ -18,6 +18,7 @@ actions{
 }
 
 abPunch
+
 name		Punch
 category	abcatAttacks
 actions{
@@ -29,7 +30,7 @@ abDeath
 name		Death
 category	abcatSpells
 actions{
-	damage		dmgTpDeath
+	damage		dmgTpDeath 1
 }
 
 abSneak
@@ -37,5 +38,5 @@ abSneak
 name		Sneak Attack
 category	abcatAttacks
 actions{
-	damage		dmgTpSneakAttack
+	damage		dmgTpSneakAttack 1
 }

@@ -1,6 +1,9 @@
 aoeHealer
 appearance	animated imgPowerUp 10 C
 effects		eeffHealerAOE_HP
+rules {
+	gate VP_@entityStats_VP_stat_statHp 50
+}
 
 aoeHarm
 appearance	animated imgPlant 5 S
