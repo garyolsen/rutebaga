@@ -3,6 +3,7 @@ package rutebaga.controller;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.LabelDeterminer;
 import rutebaga.controller.command.list.ConcreteElementalList;
+import rutebaga.model.entity.Entity;
 import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 import rutebaga.view.rwt.TextFieldListener;
@@ -56,9 +57,10 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 				
 				GameInitializer gi = game.getGameInitializer();
 				gi.build();
-				UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), gi.getAvatar(), gi.getDisplayedStats());
+				Entity<?>[] avatars = gi.getAvatars();
+				UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), avatars[0], gi.getDisplayedStats());
 
-				gi.getAvatar().setName(name);
+				avatars[0].setName(name);
 				
 				facade.clearWarningBox();
 				// Connascence: you must deactivate this interpreter before activating the new one

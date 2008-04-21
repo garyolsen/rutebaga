@@ -21,7 +21,7 @@ public interface GameInitializer {
 	/**
 	 * @return
 	 */
-	Entity getAvatar();
+	Entity[] getAvatars();
 	
 	/**
 	 * @return

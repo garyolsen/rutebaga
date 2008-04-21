@@ -43,7 +43,7 @@ import rutebaga.scaffold.MasterScaffold;
 
 public class AgabaturNewGameInitializer implements GameInitializer
 {
-	private Entity<?> avatar;
+	private Entity<?> avatar1, avatar2, avatar3;
 	private World world;
 	private MasterScaffold scaffold;
 	private Collection<StatisticId> displayedStats;
@@ -266,8 +266,12 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					+ "\t\t" + obj);
 		}
 
-		avatar = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
-		EntityAppearanceManager wetManager = new EntityAppearanceManager(avatar);
+		avatar1 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
+		avatar2 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
+		avatar3 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
+		EntityAppearanceManager wetManager1 = new EntityAppearanceManager(avatar1);
+		EntityAppearanceManager wetManager2 = new EntityAppearanceManager(avatar2);
+		EntityAppearanceManager wetManager3 = new EntityAppearanceManager(avatar3);
 /*		wetManager.setStanding(((EntityType<?>) scaffold.get("entityWetMario"))
 				.getStanding());
 		wetManager.setWalking(((EntityType<?>) scaffold.get("entityWetMario"))
@@ -276,11 +280,13 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		SlotType hand = (SlotType) scaffold.get("slotHand");
 		
-		avatar.getInventory().addSlotAllocation(hand, 4);
+		avatar1.getInventory().addSlotAllocation(hand, 4);
+		avatar2.getInventory().addSlotAllocation(hand, 4);
+		avatar3.getInventory().addSlotAllocation(hand, 4);
 
-		while (!avatar.existsInUniverse())
+		while (!avatar1.existsInUniverse())
 		{
-			environment.add(avatar, new Vector2D(random.nextInt(mapBounds[1]
+			environment.add(avatar1, new Vector2D(random.nextInt(mapBounds[1]
 					- mapBounds[0])
 					+ mapBounds[0], random.nextInt(mapBounds[3] - mapBounds[2])
 					+ mapBounds[2]));
@@ -345,7 +351,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			npc1.setAppearanceManager(manager);
 
 			npc1.whiteListTerrainTypes(grassTerrain, waterTerrain);
-			npc1.setTarget(avatar);
+			npc1.setTarget(avatar1);
 
 			Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
 					random.nextInt(yRng) + yMin);
@@ -355,20 +361,23 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		world = new World();
 		world.add(environment);
 		
-		Gary.run(environment, scaffold, avatar);
+		Gary.run(environment, scaffold, avatar1);
 
-		Nick.run(environment, scaffold, avatar);
+		Nick.run(environment, scaffold, avatar2);
 
 		
 		// Make sure avatar's stats are all initialized
 		Collection<?> stats = (Collection<?>) scaffold.get("globalAllStatsList");
-		for (Object stat: stats)
-			avatar.getStats().getStatObject((StatisticId) stat);
+		for (Object stat: stats) {
+			avatar1.getStats().getStatObject((StatisticId) stat);
+			avatar2.getStats().getStatObject((StatisticId) stat);
+			avatar3.getStats().getStatObject((StatisticId) stat);
+		}
 	}
 
-	public Entity getAvatar()
+	public Entity[] getAvatars()
 	{
-		return avatar;
+		return new Entity[]{avatar1, avatar2, avatar3};
 	}
 
 	public World getWorld()
