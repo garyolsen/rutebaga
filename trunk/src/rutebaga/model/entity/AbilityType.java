@@ -70,6 +70,6 @@ public class AbilityType
 	@Override
 	public String toString()
 	{
-		return "Ability named " + name + " in category " + category;
+		return "Ability named " + name + " in category " + category + " with " + existenceRule.getRules().size() + " existence rules";
 	}
 }

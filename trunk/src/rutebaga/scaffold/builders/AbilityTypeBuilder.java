@@ -38,9 +38,16 @@ public class AbilityTypeBuilder extends AbstractAbilityBuilder
 			type.getActions().add(action);
 		}
 		
-		Rule[] existenceRules;
-		Rule[] feasibilityRules;
-		AbilityAction[] actions;
+		for(Rule rule : getRules(id, "existence", scaffold))
+		{
+			System.out.println("WORDUP " + rule);
+			type.getExistenceRule().add(rule);
+		}
+		
+		for(Rule rule : getRules(id, "feasibility", scaffold))
+		{
+			type.getFeasibilityRule().add(rule);
+		}
 	}
 
 }

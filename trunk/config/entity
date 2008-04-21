@@ -6,7 +6,7 @@ bargain		$vpEntityBargainSkillAmount
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abPunch
 movement	whitelist terrGrass
 
 entityMario
@@ -16,7 +16,7 @@ moveSpd		$vpEntityMovementSpeed
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abPunch
 movement	whitelist terrGrass
 
 entityWetMario
