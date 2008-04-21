@@ -46,8 +46,9 @@ public class CollectionListElementSource<E> implements ListElementSource<E> {
 			cache.clear();
 			cache.addAll(source);
 		
-			return true;
+			return false;
 		} while (false);
-		return false;
+		
+		return true;
 	}
 }
