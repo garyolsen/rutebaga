@@ -29,7 +29,7 @@ public class Chase extends NPCState
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
-		rutebaga.commons.Log.log("I can't barter and chase at the same time");
+		npc.makeNewSpeech(npc, "I can't barter and chase at the same time");
 		return this;
 	}
 
@@ -48,7 +48,7 @@ public class Chase extends NPCState
 	@Override
 	public NPCState speak(NPCEntity npc)
 	{
-		rutebaga.commons.Log.log("I'm gonna get you!");
+		npc.makeNewSpeech(npc, "I'm gonna get you!");
 		return this;
 	}
 
