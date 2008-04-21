@@ -5,6 +5,7 @@ walking		imgMario
 moveSpd		$vpEntityMovementSpeed
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy	
+wallet	$vpEntityWallet
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow
 movement	whitelist terrGrass terrWater terrMountain

@@ -11,6 +11,8 @@ public interface StoreInstance {
 	
 	public boolean canSell(Item item);
 	
+	public boolean canBuy(Item item);
+	
 	public void buy(Item item);
 	
 	public void sell(Item item);

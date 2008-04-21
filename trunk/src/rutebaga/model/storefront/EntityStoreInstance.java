@@ -9,8 +9,8 @@ import rutebaga.model.item.Item;
 public class EntityStoreInstance implements StoreInstance {
 
 	private EntityStoreFront storeFront;
-	private Entity user;
-	private Entity seller;
+	private Entity<?> user;
+	private Entity<?> seller;
 	
 	public EntityStoreInstance(EntityStoreFront storefront, Entity user, Entity seller) {
 		this.storeFront = storefront;
@@ -98,7 +98,7 @@ public class EntityStoreInstance implements StoreInstance {
 	}
 	
 	private void depositFundsInBuyer(double sellPriceOf) {
-		user.addToMoney(sellPriceOf);
+		user.getWallet().addTo(user,sellPriceOf);
 	}
 
 	private void removeFundsFromSeller(double buyPriceOf) {
