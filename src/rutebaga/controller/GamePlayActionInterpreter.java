@@ -149,8 +149,10 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if (rebindingState != null)
+		if (rebindingState != null) {
 			completeRebinding(KeyCode.get(e.getKeyCode()));
+			return;
+		}
 		allowRebinding = false;
 		KeyBinding<Command> binding = this.keyPressBindings.get(KeyCode.get(e));
 		if (binding != null) {
@@ -162,12 +164,14 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	}
 
 	public void keyReleased(KeyEvent e) {
+		if (rebindingState != null && e.getKeyCode() != KeyEvent.VK_SHIFT)
+			return;
 		allowRebinding = true;
 		KeyBinding<Command> binding = this.keyReleaseBindings.get(KeyCode.get(e));
 		if (binding != null)
 			binding.getBinding().execute();
 	}
-
+	
 	public void keyTyped(KeyEvent e) {
 
 	}
@@ -175,20 +179,18 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	private void startRebinding(KeyBinding<Command> binding) {
 		rebindingState = binding;
 		paused = true;
-		ConcreteElementalList list = new ConcreteElementalList();
-		list.setLabel("Key Binding");
-		facade.createWarningBox(list, true);
+		facade.createDialogMenu("Key Binding!lolz");
 	}
 
 	private void completeRebinding(KeyCode code) {
 		if (allowRebinding) {
+			facade.popContextMenu();
 			keyPressBindings.remove(rebindingState);
 			KeyBinding<Command> newBinding = new ConcreteKeyBinding<Command>(code,
 					rebindingState.getBinding());
 			keyPressBindings.set(newBinding);
 			rebindingState = null;
 			paused = false;
-			facade.clearWarningBox();
 		}
 	}
 
