@@ -79,6 +79,7 @@ public class AreaEffectType extends ConcreteInstanceType<AreaEffect>
 		
 		instance.getEffects().addAll(effects);
 		instance.getRules().addAll(rules.getRules());
+		instance.getActiveRules().addAll(activeRules.getRules());
 		
 		if (bounds != null)
 			instance.setBounds(bounds);

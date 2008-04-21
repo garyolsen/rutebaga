@@ -83,7 +83,6 @@ public class ReversePolishParser implements Parser
 	private ParseTreeNode getNextNode()
 	{
 		String part = parts[currentLocation++];
-		System.out.println(part);
 		ParseTreeNode node;
 		if (operations.contains(part))
 		{

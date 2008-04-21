@@ -2,16 +2,17 @@ aoeHealer
 appearance	animated imgPowerUp 10 C
 effects		eeffHealerAOE_HP
 rules {
-	gate VP_@entityStats_VP_stat_statHp 50
-}
-activeRules {
-	VP_flag_flag;inactive;value;false
+	VP_flag_flag;something;value;false
 }
 
 aoeHarm
 appearance	animated imgPlant 5 S
-effects		eeffHarmAOE_HP
+effects		eeffHarmAOE_HP eeffSetSomeFlagFalse
+
+aoeSpeeder2
+appearance	animated imgMarioNorth 2 C
+effects		eeffMovementAOE_Movement
 
 aoeSpeeder
-appearance	animated imgPowerUp 2 C
-effects		eeffMovementAOE_Movement
+appearance	animated imgMarioSouth 2 C
+effects		eeffSetSomeFlag

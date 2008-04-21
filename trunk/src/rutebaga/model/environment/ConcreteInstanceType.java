@@ -15,8 +15,19 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 	private MovementAttributes movementAttributes = new MovementAttributes();
 	private AppearanceManagerDefinition definition;
 	private String name;
+	private String[] initialFlags;
 	private double mass;
 	
+	public String[] getInitialFlags()
+	{
+		return initialFlags;
+	}
+
+	public void setInitialFlags(String[] initialFlags)
+	{
+		this.initialFlags = initialFlags;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -73,10 +84,16 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 		}
 		if (definition != null)
 			instance.setAppearanceManager(definition.make(instance));
-		
-		instance.setMass(mass);
+	
+		if(initialFlags != null)
+		{
+			for(String flag : initialFlags)
+			{
+				instance.setFlag(flag, true);
+			}
+		}
 	}
-
+	
 	public double getMass() {
 		return mass;
 	}

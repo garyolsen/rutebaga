@@ -14,6 +14,14 @@ type	slot
 slot	slotRing
 value	-1
 
+############################################################################
+#          					     SPELLS                                    #
+############################################################################
+
+eeff_Spell_MP
+type	stat
+stat	statMp
+value	-20
 
 ############################################################################
 #          					     ITEMS                                     #
@@ -33,7 +41,7 @@ value	75
 eeffHealerAOE_HP
 type	stat
 stat	statHp
-value	10
+value	1
 
 eeffMovementAOE_Movement
 type	stat
@@ -43,4 +51,14 @@ value	2
 eeffHarmAOE_HP
 type	stat
 stat	statHp
-value	-10
+value	-1
+
+eeffSetSomeFlag
+type	flag
+flag	something
+value	1
+
+eeffSetSomeFlagFalse
+type	flag
+flag	something
+value	-1

@@ -5,28 +5,41 @@ category	abcatSpells
 actions {
 	damage		dmgTpDemi	max 0.25 / 4 VP_@entityStats_VP_stat_statIntellect		
 	spawn		target static decBolt
+	entityeffect	source	eeff_Spell_MP	
 }
-existence	R_static_true
+existence {
+	gate 19 VP_@entityStats_VP_stat_statMp
+}
+
 
 abDemi
 
 name		Beam
 category	abcatSpells
 actions {
-	damage		dmgTpBeam	10		
+	damage		dmgTpDemi	max 0.25 / 4 VP_@entityStats_VP_stat_statIntellect		
 	spawn		target static decBeam
+	entityeffect	source	eeff_Spell_MP
 }
-existence	R_static_true
+existence {
+	gate 19 VP_@entityStats_VP_stat_statMp
+}
+
 
 abNuke
 
 name		Nuke
 category	abcatSpells
 actions {
-	damage		dmgTpNuke	50
+	damage		dmgTpDemi	max 0.25 / 4 VP_@entityStats_VP_stat_statIntellect		
 	spawn		target static decNuke
+	entityeffect	source	eeff_Spell_MP
 }
-existence	R_static_true
+existence {
+	gate 19 VP_@entityStats_VP_stat_statMp
+}
+
+
 
 abMagicMissle
 
@@ -34,14 +47,10 @@ name		Magic Missle
 category	abcatSpells
 actions{
 	damage		dmgTPMagicMissle	10
+	entityeffect	source	eeff_Spell_MP
 }
-
-abBindWounds
-
-name		Bind Wounds
-category	abcatSpells
-actions{
-	damage		dmgTpHeal
+existence {
+	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
 abPunch
@@ -58,6 +67,10 @@ name		Death
 category	abcatSpells
 actions{
 	damage		dmgTpDeath 1
+	entityeffect	source	eeff_Spell_MP
+}
+existence {
+	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
 abSneak
@@ -66,4 +79,8 @@ name		Sneak Attack
 category	abcatAttacks
 actions{
 	damage		dmgTpSneakAttack 1
+	entityeffect	source	eeff_Spell_MP
+}
+existence {
+	gate 19 VP_@entityStats_VP_stat_statMp
 }

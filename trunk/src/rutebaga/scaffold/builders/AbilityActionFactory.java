@@ -8,7 +8,9 @@ import rutebaga.commons.math.rel.ReversePolishParser;
 import rutebaga.model.entity.AbilityAction;
 import rutebaga.model.entity.Damage;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ability.DamageAction;
+import rutebaga.model.entity.ability.EntityEffectAction;
 import rutebaga.model.entity.ability.SpawnAction;
 import rutebaga.model.entity.ability.SpawnAction.Location;
 import rutebaga.model.entity.ability.SpawnAction.TargetMethod;
@@ -23,7 +25,6 @@ public class AbilityActionFactory
 
 	public AbilityAction get(String description, MasterScaffold scaffold)
 	{
-		System.out.println(description);
 		Matcher m = pattern.matcher(description);
 		m.matches();
 		String type = m.group(NAME_IDX);
@@ -33,7 +34,7 @@ public class AbilityActionFactory
 		if ("damage".equals(type))
 		{
 			// format:
-			// damage	[dam name] [dam expr]
+			// damage [dam name] [dam expr]
 			m = pattern.matcher(expr);
 			m.matches();
 			String damageId = m.group(NAME_IDX);
@@ -49,23 +50,45 @@ public class AbilityActionFactory
 		else if ("spawn".equals(type))
 		{
 			// format:
-			// spawn	[location] [targetmethod] [instancetype]
-			
+			// spawn [location] [targetmethod] [instancetype]
+
 			String[] parts = expr.split("[\\s\\t]");
-			
+
 			String strLocation = parts[0];
 			String strTargetMethod = parts[1];
 			String strInstanceType = parts[2];
-			
+
 			Location location = Location.valueOf(strLocation.toUpperCase());
-			TargetMethod targetMethod = TargetMethod.valueOf(strTargetMethod.toUpperCase());
-			InstanceType instanceType = (InstanceType) scaffold.get(strInstanceType);
-			
+			TargetMethod targetMethod = TargetMethod.valueOf(strTargetMethod
+					.toUpperCase());
+			InstanceType instanceType = (InstanceType) scaffold
+					.get(strInstanceType);
+
 			SpawnAction action = new SpawnAction();
 			action.setLocation(location);
 			action.setTargetMethod(targetMethod);
 			action.setType(instanceType);
+
+			return action;
+		}
+		else if ("entityeffect".equals(type))
+		{
+			// format:
+			// spawn [location] [targetmethod] [instancetype]
+
+			String[] parts = expr.split("[\\s\\t]");
+
+			String strTarget = parts[0];
+			String strEffect = parts[1];
 			
+			EntityEffectAction action = new EntityEffectAction();
+
+			boolean onTarget = "target".equals(strTarget);
+			action.setActOnTarget(onTarget);
+			
+			EntityEffect effect = (EntityEffect) scaffold.get(strEffect);
+			action.setEffect(effect);
+
 			return action;
 		}
 

@@ -10,7 +10,7 @@ default	100
 statMp
 name	MP
 type	concrete
-default	5
+default	45
 
 statMovement		# abstract quantifier; actual speed is specified by vpEntityMovementSpeed
 name	Speed
