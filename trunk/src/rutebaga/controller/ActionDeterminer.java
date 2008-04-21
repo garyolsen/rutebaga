@@ -1,5 +1,6 @@
 package rutebaga.controller;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -12,24 +13,24 @@ import rutebaga.controller.command.CommandQueue;
 import rutebaga.controller.command.CreateContextMenuCommand;
 import rutebaga.controller.command.FixedLabelDeterminer;
 import rutebaga.controller.command.LabelDeterminer;
-import rutebaga.controller.command.QueueCommand;
+import rutebaga.controller.command.ShopkeeperInventoryCommandFactory;
 import rutebaga.controller.command.list.BackedListElementFactory;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.CollectionListElementSource;
 import rutebaga.controller.command.list.DynamicElementalList;
 import rutebaga.controller.command.list.ElementalList;
-import rutebaga.controller.command.list.ListElementFactory;
-import rutebaga.controller.command.list.ListElementSource;
 import rutebaga.controller.command.list.StatsListElementFactory;
 import rutebaga.controller.command.list.StatsListElementSource;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.StatValue;
+import rutebaga.model.environment.ConcreteInstanceSet;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSet;
 import rutebaga.model.item.Item;
 import rutebaga.model.map.Tile;
+import rutebaga.model.storefront.StoreInstance;
 import rutebaga.view.UserInterfaceFacade;
 
 /**
@@ -71,11 +72,20 @@ public class ActionDeterminer
 	 */
 	public ElementalList determineActions(Instance<?> target, CommandQueue queue) {
 		ConcreteElementalList list = new ConcreteElementalList();
-		if (avatar == target)
-			addSelfCommands(list);
+		if (avatar == target) {
+			addSelfCommands(list, queue);
+			addAbilityCommands(list, avatar, queue);
+		}
 		
+		InstanceSet instanceType = new ConcreteInstanceSet();
+		instanceType.add(target);
 		
-		addTargetCommands(list, target);
+		if(instanceType.getEntities().size() != 0 && avatar != target) {
+			Entity<?> entity = (Entity<?>) target;
+			
+			addTargetCommands(list, entity, queue);
+		}
+		
 		list.add("Close", new CloseContextMenuCommand(facade));
 		
 		return list;
@@ -94,66 +104,87 @@ public class ActionDeterminer
 		return null;
 	}
 	
-	private void addSelfCommands(ConcreteElementalList list) {
+	private void addSelfCommands(ConcreteElementalList list, CommandQueue queue) {
 		CreateContextMenuCommand command;
 		
-		command = new CreateInventoryMenuCommand(avatar);
+		command = new CreateInventoryMenuCommand(avatar, queue);
 		command.setUIFacade(facade);
 		list.add("Inventory", command);
 		
-		command = new CreateEquipmentMenuCommand(avatar);
+		command = new CreateEquipmentMenuCommand(avatar, queue);
 		command.setUIFacade(facade);
 		list.add("Equipment", command);
 		
 		command = new CreateStatsDisplayCommand(avatar);
 		command.setUIFacade(facade);
 		list.add("Stats", command);
-
+	}
+	
+	private void addTargetCommands(ConcreteElementalList list, Entity<?> target, CommandQueue queue) {
+		CreateContextMenuCommand command;
+		addAbilityCommands(list, target, queue);
 		
-		command = new CreateAbilitiesMenuCommand(avatar);
+		command = new CreateStatsDisplayCommand(avatar);
+		command.setUIFacade(facade);
+		list.add("Stats", command);
+		
+		if(target.getStoreFront() != null) {
+			target.getStoreFront();
+		}
+	}
+	
+	private void addAbilityCommands(ConcreteElementalList list, Instance<?> target, CommandQueue queue) {
+		CreateContextMenuCommand command;
+		
+		command = new CreateAbilitiesMenuCommand(target, queue);
 		command.setUIFacade(facade);
 		list.add("Abilities", command);
 	}
 	
-	private void addTargetCommands(ConcreteElementalList list, Instance<?> target) {
-		CreateContextMenuCommand command;
+	private ElementalList createCloseableList(ElementalList list) {
+		ConcreteElementalList concreteList = new ConcreteElementalList();
+		concreteList.add(list);
+		concreteList.add("Close", new CloseContextMenuCommand(facade));
 		
-		command = new CreateAbilitiesMenuCommand(target);
-		command.setUIFacade(facade);
-		list.add("Abilities", command);
+		return concreteList;
 	}
 	
 	private class CreateInventoryMenuCommand extends CreateContextMenuCommand {
 		private Entity target;
-		public CreateInventoryMenuCommand(Entity target) {
+		private CommandQueue queue;
+		public CreateInventoryMenuCommand(Entity target, CommandQueue queue) {
 			this.target = target;
+			this.queue = queue;
 		}
 		@Override
 		public void execute() {
 			Inventory inventory = target.getInventory();
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Inventory");
 			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, inventory.getUnequipped());
-			AvatarInventoryCommandFactory commands = new AvatarInventoryCommandFactory(avatar, facade);
+			AvatarInventoryCommandFactory commands = new AvatarInventoryCommandFactory(avatar, facade, queue);
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
-			facade.createSubContextMenu(list);
+			facade.createSubContextMenu(createCloseableList(list));
 		}
 	}
 	
 	private class CreateEquipmentMenuCommand extends CreateContextMenuCommand {
 		private Entity target;
-		public CreateEquipmentMenuCommand(Entity target) {
+		private CommandQueue queue;
+		
+		public CreateEquipmentMenuCommand(Entity target, CommandQueue queue) {
 			this.target = target;
+			this.queue = queue;
 		}
 		@Override
 		public void execute() {
 			Inventory inventory = target.getInventory();
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Equipment");
 			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, inventory.getEquipped());
-			AvatarEquipmentCommandFactory commands = new AvatarEquipmentCommandFactory(avatar, facade);
+			AvatarEquipmentCommandFactory commands = new AvatarEquipmentCommandFactory(avatar, facade, queue);
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
-			facade.createSubContextMenu(list);
+			facade.createSubContextMenu(createCloseableList(list));
 		}
 	}
 	
@@ -169,24 +200,51 @@ public class ActionDeterminer
 			source.setLabel(new FixedLabelDeterminer(target.getName() + "'s Stats"));
 			StatsListElementFactory factory = new StatsListElementFactory(); 
 			DynamicElementalList<StatValue> list = new DynamicElementalList<StatValue>(source, factory);
-			facade.createScrollMenu(list, 10);
+			facade.createSubContextMenu(createCloseableList(list));
 		}
 	}
 	
 	private class CreateAbilitiesMenuCommand extends CreateContextMenuCommand {
 		private Instance target;
-		public CreateAbilitiesMenuCommand(Instance target) {
+		private CommandQueue queue;
+		
+		public CreateAbilitiesMenuCommand(Instance target, CommandQueue queue) {
 			this.target = target;
+			this.queue = queue;
 		}
 		@Override
 		public void execute() {
 			List<Ability> abilities = avatar.getAbilities();
-			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Equipment");
+			LabelDeterminer label = new FixedLabelDeterminer(avatar.getName() + "'s Abilities");
 			CollectionListElementSource<Ability> source = new CollectionListElementSource<Ability>(label, abilities);
-			AvatarAbilityCommandFactory commands = new AvatarAbilityCommandFactory(avatar, target, facade);
+			AvatarAbilityCommandFactory commands = new AvatarAbilityCommandFactory(avatar, target, facade, queue);
 			BackedListElementFactory<Ability> factory = new BackedListElementFactory<Ability>(commands, facade);
 			DynamicElementalList<Ability> list = new DynamicElementalList<Ability>(source, factory);
-			facade.createSubContextMenu(list);
+			facade.createSubContextMenu(createCloseableList(list));
 		}
+	}
+	
+	private class CreateStoreFrontMenuCommand extends CreateContextMenuCommand {
+
+		private Entity<?> target;
+		private CommandQueue queue;
+		
+		public CreateStoreFrontMenuCommand(Entity<?> target, CommandQueue queue) {
+			this.target = target;
+			this.queue = queue;
+		}
+		
+		public void execute() {
+			StoreInstance store = target.getStoreFront().getInstance(avatar);	
+			Collection<Item> items = store.getItems();
+			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Store");
+			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, items);
+			ShopkeeperInventoryCommandFactory commands = new ShopkeeperInventoryCommandFactory(store, facade, queue);
+			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
+			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
+			
+			
+		}
+		
 	}
 }

@@ -12,20 +12,21 @@ public class AvatarAbilityCommandFactory implements CommandFactory<Ability> {
 	private UserInterfaceFacade facade;
 	private Entity<?> avatar;
 	private Instance<?> target;
+	private CommandQueue queue;
 	
 	public AvatarAbilityCommandFactory(Entity<?> avatar, Instance<?> target,
-			UserInterfaceFacade facade) {
+			UserInterfaceFacade facade, CommandQueue queue) {
 
 		this.avatar = avatar;
 		this.target = target;
 		this.facade = facade;
+		this.queue = queue;
 	}
 
 
 	public ElementalList getCommandListFor(Ability element) {
 		ConcreteElementalList list = new ConcreteElementalList();
-		list.add(element.getName(), new AbilityCommand<Instance>(element, target));
-		list.add("Close", new CloseContextMenuCommand(facade));
+		list.add(element.getName(), QueueCommand.makeForQueue(new AbilityCommand<Instance>(element, target), queue));
 		return list;
 	}
 

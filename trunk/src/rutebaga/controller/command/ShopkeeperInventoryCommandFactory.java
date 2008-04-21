@@ -3,10 +3,18 @@ package rutebaga.controller.command;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.item.Item;
+import rutebaga.model.storefront.StoreInstance;
+import rutebaga.view.UserInterfaceFacade;
 
 public class ShopkeeperInventoryCommandFactory implements CommandFactory<Item> {
 
+	StoreInstance store;
 	
+	public ShopkeeperInventoryCommandFactory(StoreInstance store,
+			UserInterfaceFacade facade, CommandQueue queue) {
+		this.store = store;
+	}
+
 	public ElementalList getCommandListFor(Item item) {
 		ConcreteElementalList list = new ConcreteElementalList();
 		list.add("Appraise", new AppraiseCommand(item));
