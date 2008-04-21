@@ -161,7 +161,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 						}
 					}
 					else if (random.nextInt(15) == 0){
-						switch(random.nextInt(5)){
+						switch(random.nextInt(6)){
 							case 0:
 								environment.add(sword.makeInstance(), location);
 							break;
