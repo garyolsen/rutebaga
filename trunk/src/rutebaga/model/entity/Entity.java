@@ -66,8 +66,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private Storefront storeFront;
 	private double money;
 	
-	private int decayTime = 0;
-	private long deathStart = 0l;
+	private int decayTime = 3000; //in milliseconds
+	private long deathTimer = 0l;
 
 	private SkillLevelManager skillLevelManager = new SkillLevelManager();
 
@@ -291,14 +291,21 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	@Override
 	public void tick()
 	{
-		if(isDead() && deathStart == 0) {
-			deathStart = System.currentTimeMillis();
+		if(isDead() && deathTimer == 0) {
+			deathTimer = System.currentTimeMillis();
 		} else if(isDead()) {
-			decayTime -= System.currentTimeMillis();
+			long now = System.currentTimeMillis();
+			decayTime -= now - deathTimer;
+			deathTimer = now;
 		}
+		
 		
 		flushEffectQueue();
 		getVision().tick();
+		
+		if(decayTime <= 0) {
+			//this.getEnvironment().remove(this);
+		}
 	}
 
 	public String toString()
@@ -338,7 +345,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		this.mount = mount;
 	}
 	
-	public Mount getMount(Mount mount) {
+	public Mount getMount() {
 		return mount;
 	}
 	
