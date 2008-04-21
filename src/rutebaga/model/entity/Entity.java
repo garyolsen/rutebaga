@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.sun.corba.se.impl.orbutil.ObjectUtility;
 
+import rutebaga.commons.Log;
 import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.Bounds2D;
@@ -322,6 +323,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		for (Object id : getEffectQueue().keySet())
 		{
+			Log.log(getEffectQueue());
 			getEffectQueue().get(id).affect(this, id);
 		}
 		getEffectQueue().clear();
