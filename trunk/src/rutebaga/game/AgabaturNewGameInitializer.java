@@ -14,6 +14,7 @@ import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.stats.StatisticId;
+import rutebaga.model.environment.ChainedMatrixConvertor;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.MatrixTileConvertor;
@@ -35,6 +36,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 	private World world;
 	private MasterScaffold scaffold;
 
+	private static Environment environment;
+	private static double angle;
+
 	public AgabaturNewGameInitializer(MasterScaffold scaffold)
 	{
 		this.scaffold = scaffold;
@@ -42,17 +46,54 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 	public void build()
 	{
-		double theta = Math.PI / 4;
-		TileConverter rotate = new MatrixTileConvertor(Math.cos(theta), -Math
-				.sin(theta), Math.sin(theta), Math.cos(theta));
-		TileConverter shear = new MatrixTileConvertor(1, -1, 0, 1);
+		angle = 1;
+		MatrixTileConvertor rotate = new MatrixTileConvertor(Math.cos(angle),
+				-Math.sin(angle), Math.sin(angle), Math.cos(angle));
+		MatrixTileConvertor shear = new MatrixTileConvertor(1, -1, 0, 1);
 		double u = 1, v = 1;
-		TileConverter orth = new MatrixTileConvertor(u*u, -u*v, -u*v, v*v, 1/(u*u+v*v));
-		TileConverter parr = new MatrixTileConvertor(0, 0, 0.5, 1);
-		TileConverter scale = new MatrixTileConvertor(2,0,0,2);
-		Environment environment = new Environment(new Hex2DTileConvertor());
-
+		MatrixTileConvertor orth = new MatrixTileConvertor(u * u, -u * v, -u
+				* v, v * v, 1 / (u * u + v * v));
+		MatrixTileConvertor parr = new MatrixTileConvertor(0, 0, 0.5, 1);
+		MatrixTileConvertor scale = new MatrixTileConvertor(1, 0, 0, 1);
+		environment = new Environment(new ChainedMatrixConvertor(
+				new Hex2DTileConvertor(), scale));
+		
 		Properties config = (Properties) scaffold.get("confGame");
+
+		if ("true".equals(config.get("fuckingCrazy")))
+		{
+			new Thread()
+			{
+
+				@Override
+				public void run()
+				{
+					try
+					{
+						while (true)
+						{
+							Thread.sleep(100);
+							angle += 0.05;
+							double factor = (Math.sin(angle) + 2);
+							TileConverter scale = new ChainedMatrixConvertor(
+									new ChainedMatrixConvertor(
+											new Hex2DTileConvertor(),
+											new MatrixTileConvertor(factor, 0,
+													0, factor)),
+									new MatrixTileConvertor(Math.cos(angle),
+											-Math.sin(angle), Math.sin(angle),
+											Math.cos(angle)));
+							environment.setTileConvertor(scale);
+						}
+					}
+					catch (Exception e)
+					{
+
+					}
+				}
+
+			}.start();
+		}
 
 		int size = Integer.parseInt(config.getProperty("size"));
 		int mapBounds[] =
@@ -118,22 +159,23 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		}
 
 		// Rivers are broken!
-		 for (int i = 0; i < 10; i++)
-		 {
-			 River river = new River();
-			 river.setAppearanceManager(new StaticAppearanceDef((Image) scaffold.get("imgLameEffect")));
-			 river.setLocation(new Vector2D(0,i));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addNodeAtTail(0.1, new Vector2D(1,0));
-			 river.addToEnvironment(environment);
-		 }
+		for (int i = 0; i < 10; i++)
+		{
+			River river = new River();
+			river.setAppearanceManager(new StaticAppearanceDef((Image) scaffold
+					.get("imgLameEffect")));
+			river.setLocation(new Vector2D(0, i));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addNodeAtTail(0.1, new Vector2D(1, 0));
+			river.addToEnvironment(environment);
+		}
 
 		if (true)
 		{

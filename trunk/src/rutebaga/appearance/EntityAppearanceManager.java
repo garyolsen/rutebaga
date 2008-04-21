@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.AppearanceManager;
 
@@ -130,8 +131,10 @@ public class EntityAppearanceManager extends AppearanceManager
 
 	private int getDirectionOrdinal(int total)
 	{
-		double offset = 1;
-		double angle = entity.getFacing().getAngle() + (2 + offset) * Math.PI;
+		double offset = 0.75;
+		TileConverter conv = entity.getEnvironment().getTileConvertor();
+		Vector2D direction = conv.toRect(entity.getFacing().plus(entity.getCoordinate())).minus(conv.toRect(entity.getCoordinate()));
+		double angle = direction.getAngle() + (2 + offset) * Math.PI;
 		angle -= 2 * Math.PI * (int) (angle * 0.5 / Math.PI);
 		double proportion = angle * 0.5 / Math.PI;
 		return (int) (proportion * total);
