@@ -17,6 +17,11 @@ public class ChainedBuilder implements Builder
 			subBuilders.put(key, builder);
 		}
 	}
+	
+	protected Builder getBuilder(String id)
+	{
+		return subBuilders.get(id);
+	}
 
 	public String[] availableIds()
 	{

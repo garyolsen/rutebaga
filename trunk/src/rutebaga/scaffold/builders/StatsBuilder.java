@@ -1,5 +1,9 @@
 package rutebaga.scaffold.builders;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,14 +18,21 @@ import rutebaga.scaffold.MasterScaffold;
 
 public class StatsBuilder extends ConfigFileBuilder
 {
-	private AbstractValueProviderFactory factory = DefaultValueProviderFactory.getInstance();
+	private AbstractValueProviderFactory factory = DefaultValueProviderFactory
+			.getInstance();
 	private Parser parser = new ReversePolishParser();
-	
+
 	private Logger logger = Logger.getLogger("StatsBuilder");
-	
+
 	private boolean isDerived(String id)
 	{
 		return "derived".equals(getProperty(id, "type"));
+	}
+
+	public StatsBuilder()
+	{
+		super();
+		super.getGlobalIds().add("globalAllStatsList");
 	}
 
 	@Override
@@ -32,8 +43,12 @@ public class StatsBuilder extends ConfigFileBuilder
 
 	public Object create(String id)
 	{
+		if ("globalAllStatsList".equals(id))
+		{
+			return new ArrayList();
+		}
 		String name = getProperty(id, "name");
-		if(!isDerived(id))
+		if (!isDerived(id))
 		{
 			return new StatisticId(name);
 		}
@@ -45,9 +60,19 @@ public class StatsBuilder extends ConfigFileBuilder
 
 	public void initialize(String id, Object object, MasterScaffold scaffold)
 	{
+		if ("globalAllStatsList".equals(id))
+		{
+			ArrayList list = (ArrayList) object;
+			for (String statId : super.availableIds())
+			{
+				if (!"globalAllStatsList".equals(statId))
+					list.add(scaffold.get(statId));
+			}
+			return;
+		}
 		StatisticId statId = (StatisticId) object;
 		rutebaga.commons.Log.log(id);
-		if(isDerived(id))
+		if (isDerived(id))
 		{
 			rutebaga.commons.Log.log("derived stat");
 			DerivedStatisticId derId = (DerivedStatisticId) statId;
@@ -56,11 +81,15 @@ public class StatsBuilder extends ConfigFileBuilder
 		}
 		else
 		{
-			rutebaga.commons.Log.log("concrete stat " + getProperty(id, "default"));
+			rutebaga.commons.Log.log("concrete stat "
+					+ getProperty(id, "default"));
 			Double init = getDouble(id, "default");
-			if(init != null)
+			if (init != null)
 				statId.setInitialValue(init);
 		}
+		Boolean hidden = getBoolean(id, "hidden");
+		if (hidden != null)
+			statId.setHidden(hidden);
 	}
 
 }

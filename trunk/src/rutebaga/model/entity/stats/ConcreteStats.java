@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,9 +24,61 @@ public class ConcreteStats implements Stats
 		this.parent = parent;
 	}
 
+	public void addHandler(StatEventHandler handler)
+	{
+		this.listeners.add(handler);
+	}
+
 	public Entity getParent()
 	{
 		return parent;
+	}
+
+	public Set<StatisticId> getStatIds()
+	{
+		Set<StatisticId> rval = new HashSet<StatisticId>();
+		for(StatisticId stat : stats.keySet())
+		{
+			if(!stat.isHidden())
+				rval.add(stat);
+		}
+		return rval;
+	}
+
+	public StatValue getStatObject(StatisticId stat)
+	{
+		if (!stats.containsKey(stat))
+		{
+			stats.put(stat, stat.makeStatValue(this));
+		}
+		return stats.get(stat);
+	}
+
+	public double getValue(StatisticId stat)
+	{
+		return getStatObject(stat).getValue();
+	}
+
+	public void modifyStat(StatisticId id, double amount)
+	{
+		modifyStat(new StatModification(id, amount));
+	}
+
+	public void modifyStat(StatModification mod)
+	{
+		this.stats.get(mod.getStat()).addValue(mod.getAmount());
+		notifyHandlers(mod);
+	}
+
+	public void modifyStat(StatModification modification, Object id)
+	{
+		this.statModifications.put(id, modification);
+		getStatObject(modification.getStat()).addValue(modification.getAmount());
+	}
+
+	public void removeHandler(StatEventHandler handler)
+	{
+		this.listeners.remove(handler);
 	}
 
 	@Override
@@ -47,63 +100,17 @@ public class ConcreteStats implements Stats
 		}
 		return sb.toString();
 	}
-
-	public StatValue getStatObject(StatisticId stat)
-	{
-		if (!stats.containsKey(stat))
-		{
-			stats.put(stat, stat.makeStatValue(this));
-		}
-		return stats.get(stat);
-	}
-
-	public double getValue(StatisticId stat)
-	{
-		return getStatObject(stat).getValue();
-	}
-
-	public void modifyStat(StatModification modification, Object id)
-	{
-		this.statModifications.put(id, modification);
-		getStatObject(modification.getStat()).addValue(modification.getAmount());
-	}
-
+	
 	public void undo(Object id)
 	{
 		StatModification modification = this.statModifications.remove(id);
 		getStatObject(modification.getStat()).addValue(-modification.getAmount());
 	}
-
-	public Set<StatisticId> getStatIds()
-	{
-		return Collections.unmodifiableSet(stats.keySet());
-	}
-
-	public void modifyStat(StatModification mod)
-	{
-		this.stats.get(mod.getStat()).addValue(mod.getAmount());
-		notifyHandlers(mod);
-	}
-
+	
 	private void notifyHandlers(StatModification mod)
 	{
 		for(StatEventHandler handler : listeners)
 			handler.onStatChange(this, mod);
-	}
-
-	public void modifyStat(StatisticId id, double amount)
-	{
-		modifyStat(new StatModification(id, amount));
-	}
-	
-	public void addHandler(StatEventHandler handler)
-	{
-		this.listeners.add(handler);
-	}
-	
-	public void removeHandler(StatEventHandler handler)
-	{
-		this.listeners.remove(handler);
 	}
 
 }
