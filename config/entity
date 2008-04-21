@@ -5,3 +5,27 @@ moveSpd		$vpEntityMovementSpeed
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
 movement	whitelist terrGrass
+
+entityNPCKoopa
+standing 	imgKoopa
+walking		imgKoopa
+moveSpd		$vpEntityMovementSpeed	
+vRadius		10
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+movement	whitelist terrGrass
+
+entityNPCGoomba
+standing 	imgGoomba
+walking		imgGoomba
+moveSpd		$vpEntityMovementSpeed	
+vRadius		10
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+movement	whitelist terrGrass
+
+entityNPCShyguy
+standing 	imgShyguy
+walking		imgShyguy
+moveSpd		$vpEntityMovementSpeed	
+vRadius		10
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+movement	whitelist terrGrass

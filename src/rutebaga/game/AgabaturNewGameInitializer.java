@@ -242,10 +242,27 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 
 			EntityAppearanceManager manager = new EntityAppearanceManager(npc1);
-			manager.setStanding(((EntityType<?>) scaffold.get("entityDefault"))
-					.getStanding());
-			manager.setWalking(((EntityType<?>) scaffold.get("entityDefault"))
-					.getWalking());
+
+			switch(random.nextInt(3)){
+				case 0:
+				manager.setStanding(((EntityType<?>) scaffold.get("entityNPCGoomba"))
+							.getStanding());
+					manager.setWalking(((EntityType<?>) scaffold.get("entityNPCGoomba"))
+							.getWalking());
+				break;
+				case 1:
+					manager.setStanding(((EntityType<?>) scaffold.get("entityNPCKoopa"))
+								.getStanding());
+						manager.setWalking(((EntityType<?>) scaffold.get("entityNPCKoopa"))
+								.getWalking());
+					break;
+				case 2:
+					manager.setStanding(((EntityType<?>) scaffold.get("entityNPCShyguy"))
+								.getStanding());
+						manager.setWalking(((EntityType<?>) scaffold.get("entityNPCShyguy"))
+								.getWalking());
+					break;
+			}
 			npc1.setAppearanceManager(manager);
 
 			npc1.whiteListTerrainTypes(grassTerrain, waterTerrain);
