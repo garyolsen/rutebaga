@@ -24,3 +24,9 @@ type		dmgPhysical
 function	min 0 - amount / &VP_@entityStats_VP_stat_statHardiness 10 
 # function	amount
 dstat		statHp
+
+dmgTpDeath
+
+type		dmgMagical
+function	* &VP_@entityStats_VP_stat_statHp gate random 0 10 5
+dstat		statHp
