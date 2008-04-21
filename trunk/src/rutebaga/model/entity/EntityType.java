@@ -76,14 +76,12 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		entity.setBargainSkill(bargainSkillAmount);
 		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
-<<<<<<< .mine
 		entity.setTeam(team);
 		
 		for (AbilityType type : abilityTypes)
 		{
 			entity.addAbility(type.makeAbility());
 		}
-=======
 		entity.setWallet(wallet);
 
 		if (abilityTypes != null)
@@ -92,7 +90,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 				if (type != null)
 					entity.addAbility(type.makeAbility());
 			}
->>>>>>> .r560
+		
 		entity.setVisionBounds(new RectBounds2D(new Vector2D(radius, radius)));
 	}
 
