@@ -1,6 +1,5 @@
 package rutebaga.model.entity;
 
-import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.model.entity.inventory.ConcreteInventory;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.ConcreteStats;
@@ -10,6 +9,7 @@ import rutebaga.model.environment.InstanceType;
 public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 {
 	private ConcreteStats stats = new ConcreteStats(this);
+	private ConcreteStats damageResistance = new ConcreteStats(this);
 
 	private ConcreteInventory inventory = new ConcreteInventory(this);
 
@@ -27,7 +27,6 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	@Override
 	public double getMass()
 	{
-		// TODO Auto-generated method stub
 		return 1.0;
 	}
 
@@ -35,6 +34,12 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	public Stats getStats()
 	{
 		return stats;
+	}
+
+	@Override
+	public Stats getDamageResistance()
+	{
+		return damageResistance;
 	}
 
 }

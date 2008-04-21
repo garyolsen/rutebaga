@@ -1,16 +1,33 @@
 package rutebaga.model.entity;
 
-public class DamageType
-{
-	private String id;
+import rutebaga.model.entity.stats.StatValue;
+import rutebaga.model.entity.stats.StatisticId;
+import rutebaga.model.entity.stats.Stats;
 
-	public String getId()
+public class DamageType extends StatisticId
+{
+	private DamageType parent;
+
+	public DamageType(String name)
 	{
-		return id;
+		super(name);
 	}
 
-	public void setId(String id)
+	public DamageType getParent()
 	{
-		this.id = id;
+		return parent;
+	}
+
+	@Override
+	public StatValue makeStatValue(Stats stats)
+	{
+		ChainedConcreteStatValue value = new ChainedConcreteStatValue(parent, this, stats);
+		value.setValue(getInitialValue());
+		return value;
+	}
+
+	public void setParent(DamageType parent)
+	{
+		this.parent = parent;
 	}
 }

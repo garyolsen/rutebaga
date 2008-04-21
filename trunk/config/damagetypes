@@ -1,5 +1,6 @@
 dmgPhysical
 name	"Physical"
+
 dmgConcussive
 parent	dmgPhysical
 name	"Concussive"
@@ -10,6 +11,7 @@ name	"Explosive"
 
 dmgBlunt
 parent dmgPhysical
+name	"Blunt"
 
 dmgMagical
 name	"Magical"

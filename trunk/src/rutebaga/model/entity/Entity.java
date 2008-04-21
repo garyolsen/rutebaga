@@ -56,34 +56,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	
 	private Vector2D facing = new Vector2D(0, 0);
 	
-	public Vector2D getFacing()
-	{
-		return facing;
-	}
-
-	public void setFacing(Vector2D facing)
-	{
-		this.facing = facing;
-	}
-
-	public String toString()
-	{
-		return "Entity named " + name;
-	}
-	
 	//TODO move into AbilitySet
 	private List<Ability> abilities = new ArrayList<Ability>();
-	
-	public List<Ability> getAbilities()
-	{
-		return Collections.unmodifiableList(abilities);
-	}
-	
-	public void addAbility(Ability ability)
-	{
-		ability.setEntity(this);
-		abilities.add(ability);
-	}
 
 	public Entity(InstanceType<T> type)
 	{
@@ -92,7 +66,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		// XXX: connascence of timing
 		vision = new Vision(this);
 	}
-	
+
 	/**
 	 * Queues an effect to be applied to this entity.
 	 * 
@@ -106,6 +80,45 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		effectQueue.put(uid, effect);
 		return uid;
 	}
+	
+	public void addAbility(Ability ability)
+	{
+		ability.setEntity(this);
+		abilities.add(ability);
+	}
+	
+	public void addToMoney(double value) {
+		money = money + value;
+	}
+	
+	@Override
+	public final boolean blocks(Instance other)
+	{
+		return ObjectUtility.equals(other.getSetIdentifier(), InstanceSetIdentifier.ENTITY);
+//		return false;
+	}
+	
+	public boolean canSee(IntVector2D v) {
+		Vector2D dV = new Vector2D(v.getX(), v.getY());
+		return visionBounds.contains(dV.minus(this.getCoordinate()));
+	}
+
+	public List<Ability> getAbilities()
+	{
+		return Collections.unmodifiableList(abilities);
+	}
+	
+	public abstract Stats getDamageResistance();
+
+	public Vector2D getFacing()
+	{
+		return facing;
+	}
+
+	public IntVector2D getFacingTile()
+	{
+		return getEnvironment().getTileOf(getFacing().over(getFacing().getMagnitude()).plus(getTile()));
+	}
 
 	public abstract Inventory getInventory();
 
@@ -115,44 +128,92 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return DefaultLayers.GROUND.getLayer();
 	}
 
+	public double getMoneyAmount() {
+		return money;
+	}
+
+	public double getMovementSpeed()
+	{
+		return this.movementSpeedStrat.getValue(this);
+	}
+
 	public String getName()
 	{
 		return name;
 	}
 
+	@Override
+	public InstanceSetIdentifier getSetIdentifier()
+	{
+		return InstanceSetIdentifier.ENTITY;
+	}
+	
 	public abstract Stats getStats();
 
 	public Vision getVision()
 	{
 		return vision;
 	}
-
+	
 	public Bounds2D getVisionBounds()
 	{
 		return visionBounds;
+	}
+
+	public BidirectionalValueProvider<Entity> getWallet()
+	{
+		return new Wallet();
+	}
+
+	public boolean isWalking()
+	{
+		//TODO implement
+		return true;
+	}
+
+	public void setAppearance(Appearance appearance)
+	{
+		this.setAppearanceManager(new StaticAppearanceManager(appearance));
+	}
+
+	public void setFacing(Vector2D facing)
+	{
+		this.facing = facing;
+	}
+	
+	public void setMovementSpeedStrat(ValueProvider<Entity> movementSpeedStrat)
+	{
+		this.movementSpeedStrat = movementSpeedStrat;
 	}
 
 	public void setName(String name)
 	{
 		this.name = name;
 	}
-
+	
 	public void setVisionBounds(Bounds2D visionBounds)
 	{
 		this.visionBounds = visionBounds;
 		this.vision = new Vision(this);
 	}
 	
-	public boolean canSee(IntVector2D v) {
-		Vector2D dV = new Vector2D(v.getX(), v.getY());
-		return visionBounds.contains(dV.minus(this.getCoordinate()));
-	}
-
 	@Override
 	public void tick()
 	{
 		flushEffectQueue();
 		getVision().tick();
+	}
+
+	public String toString()
+	{
+		return "Entity named " + name;
+	}
+
+	public void walk(Vector2D direction)
+	{
+		double magnitude = direction.getMagnitude();
+		if(magnitude > 0.005) this.facing = direction;
+		this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)/magnitude));
 	}
 	
 	private void flushEffectQueue()
@@ -163,68 +224,9 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		}
 		getEffectQueue().clear();
 	}
-
+	
 	protected Map<Object, EntityEffect> getEffectQueue()
 	{
 		return effectQueue;
-	}
-
-	@Override
-	public final boolean blocks(Instance other)
-	{
-		return ObjectUtility.equals(other.getSetIdentifier(), InstanceSetIdentifier.ENTITY);
-//		return false;
-	}
-
-	@Override
-	public InstanceSetIdentifier getSetIdentifier()
-	{
-		return InstanceSetIdentifier.ENTITY;
-	}
-
-	public void setMovementSpeedStrat(ValueProvider<Entity> movementSpeedStrat)
-	{
-		this.movementSpeedStrat = movementSpeedStrat;
-	}
-	
-	public void walk(Vector2D direction)
-	{
-		double magnitude = direction.getMagnitude();
-		if(magnitude > 0.005) this.facing = direction;
-		this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)/magnitude));
-	}
-
-	public void setAppearance(Appearance appearance)
-	{
-		this.setAppearanceManager(new StaticAppearanceManager(appearance));
-	}
-	
-	public double getMovementSpeed()
-	{
-		return this.movementSpeedStrat.getValue(this);
-	}
-	
-	public BidirectionalValueProvider<Entity> getWallet()
-	{
-		return new Wallet();
-	}
-
-	public void addToMoney(double value) {
-		money = money + value;
-	}
-
-	public double getMoneyAmount() {
-		return money;
-	}
-	
-	public boolean isWalking()
-	{
-		//TODO implement
-		return true;
-	}
-	
-	public IntVector2D getFacingTile()
-	{
-		return getEnvironment().getTileOf(getFacing().over(getFacing().getMagnitude()).plus(getTile()));
 	}
 }

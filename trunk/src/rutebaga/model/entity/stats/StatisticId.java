@@ -40,7 +40,7 @@ public class StatisticId
 	
 	public StatValue makeStatValue(Stats stats)
 	{
-		ConcreteStatValue value = new ConcreteStatValue(this);
+		ConcreteStatValue value = new ConcreteStatValue(this, stats);
 		value.setValue(initialValue);
 		return value;
 	}

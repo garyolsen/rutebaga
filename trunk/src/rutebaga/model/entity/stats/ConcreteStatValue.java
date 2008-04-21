@@ -5,11 +5,13 @@ public class ConcreteStatValue implements StatValue
 	// FIXME add stat range
 	private final StatisticId id;
 	private double value;
+	private final Stats parent;
 
-	public ConcreteStatValue(StatisticId id) {
+	public ConcreteStatValue(StatisticId id, Stats parent) {
 		if (id == null)
 			throw new NullPointerException();
 		this.id = id;
+		this.parent = parent;
 	}
 
 	/* (non-Javadoc)
@@ -38,5 +40,10 @@ public class ConcreteStatValue implements StatValue
 	public void setValue(double value)
 	{
 		this.value = value;
+	}
+
+	public Stats getParent()
+	{
+		return parent;
 	}
 }
