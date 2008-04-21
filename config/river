@@ -1,19 +1,40 @@
 rivDefaultRiver
 			
 location		2 2
-force			0.3
+force			0.5
 nodes {
 1 0
 1 0
 1 0
 1 0
 1 0
+0 1
+0 1
+0 1
+0 1
+0 1
+-1 0
+-1 0
+-1 0
+-1 0
+-1 0
+-1 0
+-1 0
+0 -1
+0 -1
+0 -1
+0 -1
+0 -1
+0 -1
+0 -1
+1 0
 }
+#specify in order N,NE,SE,S,SW,NW
 images {
-static imgRiverN01 C
-static imgRiverNE01 C
 animated imgMarioNorth 10 C
-static imgRiverS01 C
-static imgRiverSW01 C
-static imgRiverNW01 C
+animated imgMarioNorth 10 C
+animated imgMarioNorth 10 C
+animated imgMarioNorth 10 C
+animated imgMarioNorth 10 C
+animated imgMarioNorth 10 C
 }
