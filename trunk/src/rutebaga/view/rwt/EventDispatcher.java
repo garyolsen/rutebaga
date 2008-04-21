@@ -84,7 +84,7 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		if(registerQueue.size() > 0)
 			synchronized(registerQueue) {
 				for(ViewComponent vc : registerQueue) {
-					registeredComponents.add(vc);
+					registeredComponents.add(0, vc);
 					if(lastMouse != null && vc.getBounds().contains(new Point(lastMouse.getX() - vc.getX(), lastMouse.getY() - vc.getY())))
 						containsMouse.add(vc);
 				}
@@ -239,14 +239,17 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 			if(vc.getBounds().contains( mouse )) { 
 				if( !containsMouse.contains( vc )) {
 					containsMouse.add(vc);
-					mouseEntered(vc, e);
+					if (mouseEntered(vc, e))
+						break;
 				} else {
-					vc.processMouseMotionEvent( e );
+					if (vc.processMouseMotionEvent( e ))
+						break;
 				}
 			} else {
 				if( containsMouse.contains( vc )) {
 					containsMouse.remove(vc);
-					mouseExited(vc, e);
+					if (mouseExited(vc, e))
+						break;
 				}
 			}
 		}
@@ -265,14 +268,17 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 				
 				if( !containsMouse.contains( vc )) {
 					containsMouse.add(vc);
-					mouseEntered(vc, e);
+					if (mouseEntered(vc, e))
+						break;
 				} else {
-					vc.processMouseMotionEvent( e );
+					if (vc.processMouseMotionEvent( e ))
+						break;
 				}
 			} else {
 				if( containsMouse.contains( vc )) {
 					containsMouse.remove(vc);
-					mouseExited(vc, e);
+					if (mouseExited(vc, e))
+						break;
 				}
 			}
 		}
@@ -281,12 +287,12 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 		lastMouse = e;
 	}
 	
-	private void mouseEntered(ViewComponent vc, MouseEvent e) {
-		vc.processMouseMotionEvent( createMouseEvent( MouseEvent.MOUSE_ENTERED, e) );
+	private boolean mouseEntered(ViewComponent vc, MouseEvent e) {
+		return vc.processMouseMotionEvent( createMouseEvent( MouseEvent.MOUSE_ENTERED, e) );
 	}
 	
-	private void mouseExited(ViewComponent vc, MouseEvent e) {
-		vc.processMouseMotionEvent( createMouseEvent( MouseEvent.MOUSE_EXITED, e) );
+	private boolean mouseExited(ViewComponent vc, MouseEvent e) {
+		return vc.processMouseMotionEvent( createMouseEvent( MouseEvent.MOUSE_EXITED, e) );
 	}
 	
 	private MouseEvent createMouseEvent( int type, MouseEvent e ) {
