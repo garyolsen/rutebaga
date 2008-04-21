@@ -16,7 +16,7 @@ moveSpd		$vpEntityMovementSpeed
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abBolt abNuke
 movement	whitelist terrGrass
 
 entityWetMario
