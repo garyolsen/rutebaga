@@ -363,6 +363,48 @@ path TestImages/fireball03.png
 imgFireBall04
 path TestImages/fireball04.png
 
+imgBeam01
+path TestImages/beam01.png
+imgBeam02
+path TestImages/beam02.png
+imgBeam03
+path TestImages/beam03.png
+imgBeam04
+path TestImages/beam04.png
+imgBeam05
+path TestImages/beam05.png
+imgBeam06
+path TestImages/beam06.png
+imgBeam07
+path TestImages/beam07.png
+imgBeam08
+path TestImages/beam08.png
+imgBeam09
+path TestImages/beam09.png
+imgBeam10
+path TestImages/beam10.png
+imgBeam11
+path TestImages/beam11.png
+imgBeam12
+path TestImages/beam12.png
+imgBeam13
+path TestImages/beam13.png
+imgBeam14
+path TestImages/beam14.png
+imgBeam15
+path TestImages/beam15.png
+imgBeam16
+path TestImages/beam16.png
+imgBeam17
+path TestImages/beam17.png
+imgBeam18
+path TestImages/beam18.png
+imgBeam19
+path TestImages/beam19.png
+imgBeam20
+path TestImages/beam20.png
+
+
 imgCoin01
 path TestImages/coin01.png
 imgCoin02

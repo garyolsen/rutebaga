@@ -2,3 +2,8 @@ decFire
 
 appearance		animated imgFireBall 3 C
 lifetime		100
+
+decBeam
+
+appearance		animated imgBeam 2 C
+lifetime		40
