@@ -401,6 +401,9 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		this.name = name;
 	}
 	
-	
+	public void remove()
+	{
+		this.getEnvironment().remove(this);
+	}
 
 }
