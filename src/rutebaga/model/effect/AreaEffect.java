@@ -104,10 +104,11 @@ public class AreaEffect extends Instance<AreaEffect>
 			set.addAll(boundsTracker.getInstances());
 		for (Entity entity : set.getEntities())
 		{
-			for (EntityEffect effect : effects)
-			{
-				entity.accept(effect);
-			}
+			if (rules.determine(entity))
+				for (EntityEffect effect : effects)
+				{
+					entity.accept(effect);
+				}
 		}
 	}
 

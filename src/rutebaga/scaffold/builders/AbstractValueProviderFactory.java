@@ -40,6 +40,8 @@ public abstract class AbstractValueProviderFactory
 
 	public ValueProvider parse(String expr, MasterScaffold scaffold)
 	{
+		if(expr == null || expr.equals(""))
+			return null;
 		ValueProviderASTVisitor v = new ValueProviderASTVisitor(this, scaffold);
 		new ReversePolishParser().parse(expr).accept(v);
 		return v.getValueProvider();

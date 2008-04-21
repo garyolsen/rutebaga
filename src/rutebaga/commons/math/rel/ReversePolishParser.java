@@ -63,8 +63,10 @@ public class ReversePolishParser implements Parser
 
 	public ParseTreeNode parse(String expression)
 	{
-		parts = expression.split("[\\s]+");
+		parts = expression.split("[\\s\\t]");
 		currentLocation = 0;
+		while (parts[currentLocation].equals(""))
+			currentLocation++;
 		return getNextNode();
 	}
 
@@ -81,6 +83,7 @@ public class ReversePolishParser implements Parser
 	private ParseTreeNode getNextNode()
 	{
 		String part = parts[currentLocation++];
+		System.out.println(part);
 		ParseTreeNode node;
 		if (operations.contains(part))
 		{
@@ -104,7 +107,8 @@ public class ReversePolishParser implements Parser
 			catch (NumberFormatException e)
 			{
 				if (part.substring(0, 1).equals("&"))
-					node = new ValueProviderNode(factory.get(part.substring(1), scaffold));
+					node = new ValueProviderNode(factory.get(part.substring(1),
+							scaffold));
 				else
 					node = new SymbolNode(part);
 			}
