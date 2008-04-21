@@ -61,25 +61,28 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	public void initialize(T entity)
 	{
 		super.initialize(entity);
-		
-		if(standing != null && walking != null) {
-			EntityAppearanceManager manager = new EntityAppearanceManager(entity);
+
+		if (standing != null && walking != null)
+		{
+			EntityAppearanceManager manager = new EntityAppearanceManager(
+					entity);
 			manager.setStanding(standing);
 			manager.setWalking(walking);
 			entity.setAppearanceManager(manager);
 		}
-		
 
 		entity.setMovementSpeedStrat(movementSpeed);
 		entity.setBargainSkill(bargainSkillAmount);
 		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
 		entity.setWallet(wallet);
-		
-		for (AbilityType type : abilityTypes)
-		{
-			entity.addAbility(type.makeAbility());
-		}
+
+		if (abilityTypes != null)
+			for (AbilityType type : abilityTypes)
+			{
+				if (type != null)
+					entity.addAbility(type.makeAbility());
+			}
 		entity.setVisionBounds(new RectBounds2D(new Vector2D(radius, radius)));
 	}
 
@@ -139,12 +142,14 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	{
 		this.skillPtStrat = skillPtStrat;
 	}
-	
-	public void setDecayTime(int decayTime) {
+
+	public void setDecayTime(int decayTime)
+	{
 		this.decayTime = decayTime;
 	}
-	
-	public int getDecayTime() {
+
+	public int getDecayTime()
+	{
 		return decayTime;
 	}
 
