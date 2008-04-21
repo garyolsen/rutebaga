@@ -309,7 +309,8 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	}
 
 	private void prepareContextStack() {
-		view.removeViewComponent(contextStack.peek());
+		if (!contextStack.isEmpty())
+			view.removeViewComponent(contextStack.peek());
 	}
 
 	public View getView() {
