@@ -6,6 +6,7 @@ import java.util.Random;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
 import rutebaga.model.environment.AStarNodeLocationAdapter;
@@ -29,7 +30,6 @@ public class Chase extends NPCState
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
-		npc.makeNewSpeech(npc, "I can't barter and chase at the same time");
 		return this;
 	}
 
@@ -46,9 +46,9 @@ public class Chase extends NPCState
 	}
 
 	@Override
-	public NPCState speak(NPCEntity npc)
+	public NPCState speak(NPCEntity npc, Entity entity)
 	{
-		npc.makeNewSpeech(npc, "I'm gonna get you!");
+		entity.recieveSpeech(npc, "I'm gonna get you!");
 		return this;
 	}
 

@@ -1,5 +1,6 @@
 package rutebaga.model.entity.npc;
 
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.npc.state.Attack;
 import rutebaga.model.entity.npc.state.Chase;
 import rutebaga.model.entity.npc.state.Dead;
@@ -55,7 +56,7 @@ public abstract class NPCState
 	 * @return The resulting NPCState.
 	 * @see NPCEntity
 	 */
-	public abstract NPCState speak(NPCEntity npc);
+	public abstract NPCState speak(NPCEntity npc, Entity entity);
 
 	/**
 	 * Returns the state that results from bartering.

@@ -1,5 +1,6 @@
 package rutebaga.model.entity.npc.state;
 
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
 
@@ -13,7 +14,6 @@ public class Attack extends NPCState
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
-		npc.makeNewSpeech(npc, "I'm super mad. I'm in no mood for bartering!");
 		return this;
 	}
 
@@ -30,9 +30,9 @@ public class Attack extends NPCState
 	}
 
 	@Override
-	public NPCState speak(NPCEntity npc)
+	public NPCState speak(NPCEntity npc, Entity entity)
 	{
-		npc.makeNewSpeech(npc, "I'm attacking you! Be very afraid!");
+		entity.recieveSpeech(npc, "I'm attacking you! Be very afraid!");
 		return this;
 	}
 

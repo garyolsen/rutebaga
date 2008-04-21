@@ -99,7 +99,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	 */
 	public Stack<Speech> speak(Entity entity)
 	{
-		brain.speak(this);
+		brain.speak(this, entity);
 		return getSpeech();
 	}
 

@@ -1,5 +1,7 @@
 package rutebaga.model.entity.npc;
 
+import rutebaga.model.entity.Entity;
+
 /**
  * NPCBrain specifies the interface that a ConcreteNPCBrain must support,
  * allowing seamless swapping of different ConcreteNPCBrains. The operations it
@@ -27,7 +29,7 @@ public interface NPCBrain
 	 * @param npc
 	 *            The {@link NPCEntity} controlled by this NPCBrain.
 	 */
-	public void speak(NPCEntity npc);
+	public void speak(NPCEntity npc, Entity entity);
 
 	/**
 	 * A method called on by the {@link NPCEntity} owning this NPCBrain to
