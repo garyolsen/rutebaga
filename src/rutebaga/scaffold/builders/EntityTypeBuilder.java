@@ -38,6 +38,8 @@ public class EntityTypeBuilder extends InstanceBuilder
 				"deadStrat", scaffold));
 		type.setSkillPtStrat((BidirectionalValueProvider<Entity>) getValueProvider(id,
 				"skillPtStrat", scaffold));
+		type.setWallet((BidirectionalValueProvider<Entity>) getValueProvider(id,
+				"wallet", scaffold));
 		
 //		type.setBargainSkillAmount((ValueProvider<Entity>) getValueProvider(id, "bargain", scaffold));
 		

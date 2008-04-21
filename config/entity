@@ -5,6 +5,7 @@ moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
+wallet	$vpEntityWallet
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
 movement	whitelist terrGrass
@@ -15,6 +16,7 @@ walking		imgMario
 moveSpd		$vpEntityMovementSpeed	
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
+wallet	$vpEntityWallet
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abBolt abNuke abBindWounds
 movement	whitelist terrGrass
@@ -23,6 +25,7 @@ entityWetMario
 standing 	imgMarioWet
 walking		imgMarioWet
 moveSpd		$vpEntityMovementSpeed	
+wallet	$vpEntityWallet
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
 movement	whitelist terrGrass
@@ -32,6 +35,7 @@ standing 	imgKoopa
 walking		imgKoopa
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
+wallet	$vpEntityWallet
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
 movement	whitelist terrGrass
@@ -41,6 +45,7 @@ standing 	imgGoomba
 walking		imgGoomba
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount		
+wallet	$vpEntityWallet
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
 movement	whitelist terrGrass
@@ -50,6 +55,7 @@ standing 	imgShyguy
 walking		imgShyguy
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
+wallet	$vpEntityWallet
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
 movement	whitelist terrGrass

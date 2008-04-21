@@ -62,6 +62,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 			0.0);
 
 	private BidirectionalValueProvider<Entity> skillPtStrat;
+	private BidirectionalValueProvider<Entity> wallet;
 
 	private Vector2D facing = new Vector2D(0, 0);
 
@@ -110,27 +111,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return uid;
 	}
 
-	public int getAvailableSkillPoints()
-	{
-		return (int) skillPtStrat.getValue(this);
-	}
-	
-	public int getSkillPoints(AbilityCategory category)
-	{
-		return (int) skillLevelManager.getLevel(category);
-	}
-
-	public void allocateSkillPoints(AbilityCategory category, int qty)
-	{
-		skillLevelManager.assign(category, qty);
-		skillPtStrat.addTo(this, -qty);
-	}
-
-	public boolean isDead()
-	{
-		return deadStrategy == null ? false : deadStrategy.getValue(this) < 0;
-	}
-
 	public void addAbility(Ability ability)
 	{
 		ability.setEntity(this);
@@ -138,10 +118,16 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 			skillLevelManager.getLevel(ability.getCategory());
 		abilities.add(ability);
 	}
-
+	
 	public void addToMoney(double value)
 	{
 		money = money + value;
+	}
+
+	public void allocateSkillPoints(AbilityCategory category, int qty)
+	{
+		skillLevelManager.assign(category, qty);
+		skillPtStrat.addTo(this, -qty);
 	}
 
 	@Override
@@ -162,9 +148,26 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return visionBounds.contains(dV.minus(this.getCoordinate()));
 	}
 
+	public void dismount(Mount mount) {
+		mount.dismount(this);
+	}
+
 	public List<Ability> getAbilities()
 	{
 		return Collections.unmodifiableList(abilities);
+	}
+
+	@Override
+	public Appearance getAppearance() {
+		if(mount != null)
+			return mount.getAppearance();
+
+		return super.getAppearance();
+	}
+
+	public int getAvailableSkillPoints()
+	{
+		return (int) skillPtStrat.getValue(this);
 	}
 
 	public ValueProvider getBargainSkill()
@@ -172,11 +175,31 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return bargainSkillAmount;
 	}
 
+	@Override
+	public Vector2D getCoordinate() {
+		if(mount != null)
+			return mount.getCoordinate();
+		
+		return super.getCoordinate();
+	}
+
 	public abstract Stats getDamageResistance();
 
 	public ValueProvider<Entity> getDeadStrategy()
 	{
 		return deadStrategy;
+	}
+
+	public int getDecayTime() {
+		return decayTime;
+	}
+
+	@Override
+	public Environment getEnvironment() {
+		if(mount != null)
+			return mount.getEnvironment();
+		
+		return super.getEnvironment();
 	}
 
 	public Vector2D getFacing()
@@ -209,6 +232,10 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return money;
 	}
 
+	public Mount getMount() {
+		return mount;
+	}
+
 	public double getMovementSpeed()
 	{
 		return this.movementSpeedStrat.getValue(this);
@@ -218,6 +245,20 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public InstanceSetIdentifier getSetIdentifier()
 	{
 		return InstanceSetIdentifier.ENTITY;
+	}
+
+	public int getSkillPoints(AbilityCategory category)
+	{
+		return (int) skillLevelManager.getLevel(category);
+	}
+
+	public BidirectionalValueProvider<Entity> getSkillPtStrat()
+	{
+		return skillPtStrat;
+	}
+
+	public Collection<Speech> getSpeech() {
+		return Collections.unmodifiableCollection(speechStack);
 	}
 
 	public abstract Stats getStats();
@@ -247,12 +288,22 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public BidirectionalValueProvider<Entity> getWallet()
 	{
-		return new Wallet();
+		return wallet;
 	}
 
 	public boolean hasStoreFront()
 	{
 		return !(storeFront.equals(null));
+	}
+
+	public boolean isDead()
+	{
+		return deadStrategy == null ? false : deadStrategy.getValue(this) < 0;
+	}
+
+	@Override
+	public boolean isMobile() {
+		return !isDead();
 	}
 
 	public boolean isWalking()
@@ -261,20 +312,32 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return true;
 	}
 
+	public void mount(Mount mount) {
+		mount.mount(this);
+	}
+
+	public void recieveSpeech(Entity entity, String speech) {
+		speechStack.push( new Speech(entity, speech) );
+	}
+	
 	public void setAppearance(Appearance appearance)
 	{
 		this.setAppearanceManager(new StaticAppearanceManager(appearance));
 	}
-
+	
 	public void setBargainSkill(ValueProvider<Entity> bargainSkillAmount)
 	{
 		if (bargainSkillAmount != null)
 			this.bargainSkillAmount = bargainSkillAmount;
 	}
-
+	
 	public void setDeadStrategy(ValueProvider<Entity> deadStrategy)
 	{
 		this.deadStrategy = deadStrategy;
+	}
+	
+	public void setDecayTime(int decayTime) {
+		this.decayTime = decayTime;
 	}
 
 	public void setFacing(Vector2D facing)
@@ -282,9 +345,18 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		this.facing = facing;
 	}
 
+	public void setMount(Mount mount) {
+		this.mount = mount;
+	}
+	
 	public void setMovementSpeedStrat(ValueProvider<Entity> movementSpeedStrat)
 	{
 		this.movementSpeedStrat = movementSpeedStrat;
+	}
+
+	public void setSkillPtStrat(BidirectionalValueProvider<Entity> skillPtStrat)
+	{
+		this.skillPtStrat = skillPtStrat;
 	}
 
 	public void setVisionBounds(Bounds2D visionBounds)
@@ -293,6 +365,15 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		this.vision = new Vision(this);
 	}
 
+	public void setWallet(BidirectionalValueProvider<Entity> wallet)
+	{
+		this.wallet = wallet;
+	}
+	
+	public void speak(Entity entity) {
+		entity.recieveSpeech(this, "Hello.");
+	}
+	
 	@Override
 	public void tick()
 	{
@@ -313,12 +394,12 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 			this.getEnvironment().remove(this);
 		}
 	}
-
+	
 	public String toString()
 	{
 		return "Entity named " + getName();
 	}
-
+	
 	public void walk(Vector2D direction)
 	{
 		if(mount != null) {
@@ -331,7 +412,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 					/ magnitude));
 		}
 	}
-
+	
+	private void clearSpeech() {
+		speechStack.clear();
+	}
+	
 	private void flushEffectQueue()
 	{
 		for (Object id : getEffectQueue().keySet())
@@ -345,85 +430,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	protected Map<Object, EntityEffect> getEffectQueue()
 	{
 		return effectQueue;
-	}
-	
-	public void setMount(Mount mount) {
-		this.mount = mount;
-	}
-	
-	public Mount getMount() {
-		return mount;
-	}
-	
-	public void mount(Mount mount) {
-		mount.mount(this);
-	}
-	
-	public void dismount(Mount mount) {
-		mount.dismount(this);
-	}
-
-	@Override
-	public Vector2D getCoordinate() {
-		if(mount != null)
-			return mount.getCoordinate();
-		
-		return super.getCoordinate();
-	}
-
-	@Override
-	public Environment getEnvironment() {
-		if(mount != null)
-			return mount.getEnvironment();
-		
-		return super.getEnvironment();
-	}
-	
-	public BidirectionalValueProvider<Entity> getSkillPtStrat()
-	{
-		return skillPtStrat;
-	}
-
-	public void setSkillPtStrat(BidirectionalValueProvider<Entity> skillPtStrat)
-	{
-		this.skillPtStrat = skillPtStrat;
-	}
-
-	@Override
-	public Appearance getAppearance() {
-		if(mount != null)
-			return mount.getAppearance();
-
-		return super.getAppearance();
-	}
-
-	@Override
-	public boolean isMobile() {
-		return !isDead();
-	}
-	
-	public int getDecayTime() {
-		return decayTime;
-	}
-	
-	public void setDecayTime(int decayTime) {
-		this.decayTime = decayTime;
-	}
-	
-	public void speak(Entity entity) {
-		entity.recieveSpeech(this, "Hello.");
-	}
-	
-	public void recieveSpeech(Entity entity, String speech) {
-		speechStack.push( new Speech(entity, speech) );
-	}
-	
-	public Collection<Speech> getSpeech() {
-		return Collections.unmodifiableCollection(speechStack);
-	}
-	
-	private void clearSpeech() {
-		speechStack.clear();
 	}
 
 }

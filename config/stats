@@ -41,6 +41,10 @@ statExperience
 name	Experience
 default	0
 
+statCurrency
+name	Currency
+default	100
+
 ##########################################################
 # 				    DERIVED STATS						 #
 ##########################################################
