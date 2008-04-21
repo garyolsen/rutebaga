@@ -13,6 +13,7 @@ import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.GameInitializer;
 import rutebaga.game.testing.Gary;
+import rutebaga.game.testing.Nick;
 import rutebaga.model.effect.AreaEffectType;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
@@ -45,6 +46,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 	private static Environment environment;
 	private static double angle;
+	
+	public static Entity trackedEntity;
 
 	public AgabaturNewGameInitializer(MasterScaffold scaffold)
 	{
@@ -300,6 +303,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		for (int i = 0; i < numNpcs; i++)
 		{
 			NPCEntity<?> npc1 = ((NPCType<?>) scaffold.get("npcBlueNPC")).makeInstance();
+			
+			trackedEntity = npc1;
 
 			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 
@@ -339,6 +344,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		world.add(environment);
 		
 		Gary.run(environment, scaffold, avatar);
+
+		Nick.run(environment, scaffold, avatar);
 
 		
 		// Make sure avatar's stats are all initialized

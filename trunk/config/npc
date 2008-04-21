@@ -2,7 +2,9 @@ npcBlueNPC
 team	teamBlue
 standing 	imgMario
 walking		imgMario
-moveSpd		$vpEntityMovementSpeed	
+moveSpd		$vpEntityMovementSpeed
+deadStrat	$vpEntityDeadStrategy
+skillPtStrat	$vpEntitySkillPtStrategy	
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow
 movement	whitelist terrGrass
