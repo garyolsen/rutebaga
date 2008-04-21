@@ -240,6 +240,8 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 		prepareContextStack();
 		contextStack.add(decorator);
 		
+		view.addViewComponent(decorator);
+		
 		return contextStack.size();
 	}
 
