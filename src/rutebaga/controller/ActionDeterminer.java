@@ -16,11 +16,13 @@ import rutebaga.controller.command.FixedLabelDeterminer;
 import rutebaga.controller.command.LabelDeterminer;
 import rutebaga.controller.command.ShopkeeperInventoryCommandFactory;
 import rutebaga.controller.command.list.AbilityListElementSource;
+import rutebaga.controller.command.list.AbilityUseListElementFactory;
 import rutebaga.controller.command.list.BackedListElementFactory;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.CollectionListElementSource;
 import rutebaga.controller.command.list.DynamicElementalList;
 import rutebaga.controller.command.list.ElementalList;
+import rutebaga.controller.command.list.ListElementFactory;
 import rutebaga.controller.command.list.StatsListElementFactory;
 import rutebaga.controller.command.list.StatsListElementSource;
 import rutebaga.model.entity.Ability;
@@ -97,12 +99,14 @@ public class ActionDeterminer
 		Set<Entity> entities = instances.getEntities();
 		if (entities.size() != 0)
 			return entities.iterator().next();
+		/* No more targeting items or tiles kthxbye
 		Set<Item> items = instances.getItems();
 		if (items.size() != 0)
 			return items.iterator().next();
 		Set<Tile> tiles = instances.getTiles();
 		if (tiles.size() != 0)
 			return tiles.iterator().next();
+		*/
 		return null;
 	}
 	
@@ -218,8 +222,13 @@ public class ActionDeterminer
 		@Override
 		public void execute() {
 			AbilityListElementSource source = new AbilityListElementSource(avatar.getAbilities());
-			AvatarAbilityCommandFactory commands = new AvatarAbilityCommandFactory(avatar, target, facade, queue);
-			BackedListElementFactory<Ability> factory = new BackedListElementFactory<Ability>(commands, facade);
+			ListElementFactory<Ability> factory;
+			if (avatar == target) {
+				AvatarAbilityCommandFactory commands = new AvatarAbilityCommandFactory(avatar, target, facade, queue);
+				factory = new BackedListElementFactory<Ability>(commands, facade);
+			}
+			else
+				factory = new AbilityUseListElementFactory(target, queue);
 			DynamicElementalList<Ability> list = new DynamicElementalList<Ability>(source, factory);
 			facade.createSubContextMenu(createCloseableList(list));
 		}

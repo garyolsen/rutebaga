@@ -28,7 +28,7 @@ public class AvatarAbilityCommandFactory implements CommandFactory<Ability> {
 
 	public ElementalList getCommandListFor(final Ability element) {
 		ConcreteElementalList list = new ConcreteElementalList();
-		list.add(element.getName(), QueueCommand.makeForQueue(new AbilityCommand<Instance>(element, target), queue));
+		list.add(element.getName(), QueueCommand.makeForQueue(new AbilityUseCommand<Instance>(element, target), queue));
 		if (avatar.getAvailableSkillPoints() > 0 && avatar == target) {
 			list.add(new LabelDeterminer() {
 				public String getLabel() {
@@ -45,26 +45,6 @@ public class AvatarAbilityCommandFactory implements CommandFactory<Ability> {
 			});
 		}
 		return list;
-	}
-
-	
-	private class AbilityCommand<T> implements Command {
-
-		private Ability<T> ability;
-		private T target;
-		
-		public AbilityCommand(Ability<T> ability, T target ) {
-			this.ability = ability;
-			this.target = target;
-		}
-		
-		public void execute() {
-			ability.act(target);
-		}
-
-		public boolean isFeasible() {
-			return ability.isFeasible();
-		}
 	}
 
 	private class AssignSkillPointCommand<T> implements Command {
