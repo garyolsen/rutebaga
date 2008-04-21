@@ -24,8 +24,10 @@ public abstract class AbstractValueProviderFactory
 		if (params.length == 1)
 			paramMap.put("default", params[0]);
 		else
-			for (int idx = 0; idx < params.length; idx++)
+			for (int idx = 0; idx < params.length; idx += 2)
+			{
 				paramMap.put(params[idx], params[idx + 1]);
+			}
 		try
 		{
 			return get(type, paramMap, scaffold);
@@ -40,7 +42,7 @@ public abstract class AbstractValueProviderFactory
 
 	public ValueProvider parse(String expr, MasterScaffold scaffold)
 	{
-		if(expr == null || expr.equals(""))
+		if (expr == null || expr.equals(""))
 			return null;
 		ValueProviderASTVisitor v = new ValueProviderASTVisitor(this, scaffold);
 		new ReversePolishParser().parse(expr).accept(v);

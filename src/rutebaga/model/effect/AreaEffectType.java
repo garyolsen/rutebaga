@@ -17,16 +17,16 @@ public class AreaEffectType extends ConcreteInstanceType<AreaEffect>
 	private int blockingRate;
 	private Bounds2D bounds;
 	private ChainedRule<Entity> rules = new ChainedRule<Entity>(true);
+	private ChainedRule<AreaEffect> activeRules = new ChainedRule<AreaEffect>(true);
+
+	public ChainedRule<AreaEffect> getActiveRules()
+	{
+		return activeRules;
+	}
 
 	public int getBlockingRate()
 	{
 		return blockingRate;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "AOE with blocking=" + blockingRate + " and " + effects.size() + " effects";
 	}
 
 	public Bounds2D getBounds()
@@ -44,6 +44,11 @@ public class AreaEffectType extends ConcreteInstanceType<AreaEffect>
 		return rules;
 	}
 
+	public void setActiveRules(ChainedRule<AreaEffect> activeRules)
+	{
+		this.activeRules = activeRules;
+	}
+
 	public void setBlockingRate(int blockingRate)
 	{
 		this.blockingRate = blockingRate;
@@ -52,6 +57,12 @@ public class AreaEffectType extends ConcreteInstanceType<AreaEffect>
 	public void setBounds(Bounds2D bounds)
 	{
 		this.bounds = bounds;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "AOE with blocking=" + blockingRate + " and " + effects.size() + " effects";
 	}
 
 
