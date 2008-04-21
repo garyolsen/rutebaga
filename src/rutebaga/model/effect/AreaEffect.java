@@ -103,6 +103,8 @@ public class AreaEffect extends Instance<AreaEffect>
 
 	private void act()
 	{
+		if(!activeRules.determine(this))
+			return;
 		InstanceSet set = new ConcreteInstanceSet();
 		if (boundsTracker == null)
 			set.addAll(this.getCoexistantInstances());
@@ -118,7 +120,6 @@ public class AreaEffect extends Instance<AreaEffect>
 		}
 	}
 
-	@Override
 	public void setMass(double mass) {
 		// area effects have infinite mass
 	}

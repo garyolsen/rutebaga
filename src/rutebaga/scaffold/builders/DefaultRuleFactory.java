@@ -1,6 +1,7 @@
 package rutebaga.scaffold.builders;
 
 import rutebaga.scaffold.builders.rulefactories.EntityItemRuleFactory;
+import rutebaga.scaffold.builders.rulefactories.FlagRuleFactory;
 import rutebaga.scaffold.builders.rulefactories.StaticRuleFactory;
 import rutebaga.scaffold.builders.vpfactories.ConvertorVPFactory;
 import rutebaga.scaffold.builders.vpfactories.StatVPFactory;
@@ -15,6 +16,7 @@ public class DefaultRuleFactory
 		instance = new ChainedRuleFactory();
 		instance.addFactory(new EntityItemRuleFactory());
 		instance.addFactory(new StaticRuleFactory());
+		instance.addFactory(new FlagRuleFactory());
 	}
 
 	public static ChainedRuleFactory getInstance()

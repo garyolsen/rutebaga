@@ -23,6 +23,7 @@ public class FlagRuleFactory extends AbstractRuleFactory
 	protected Rule get(String type, Map<String, String> params,
 			MasterScaffold scaffold)
 	{
+		System.out.println("LAAAAA");
 		String flag = params.get("flag");
 		Boolean value = Boolean.parseBoolean(params.get("value"));
 		

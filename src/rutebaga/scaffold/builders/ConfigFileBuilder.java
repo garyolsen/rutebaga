@@ -88,6 +88,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			else
 			{
 				activeInnerList.add(readData);
+				return;
 			}
 		}
 		else

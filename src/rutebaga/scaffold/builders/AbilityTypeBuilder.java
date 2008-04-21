@@ -1,8 +1,11 @@
 package rutebaga.scaffold.builders;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import rutebaga.commons.logic.Rule;
+import rutebaga.commons.logic.ValueProviderRule;
+import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.AbilityAction;
 import rutebaga.model.entity.AbilityCategory;
@@ -38,15 +41,20 @@ public class AbilityTypeBuilder extends AbstractAbilityBuilder
 			type.getActions().add(action);
 		}
 		
-		for(Rule rule : getRules(id, "existence", scaffold))
+		List<String> vps;
+		
+		vps = getInnerList(id, "existence");
+		for(String vp : vps)
 		{
-			System.out.println("WORDUP " + rule);
-			type.getExistenceRule().add(rule);
+			ValueProvider p = DefaultValueProviderFactory.getInstance().parse(vp, scaffold);
+			type.getExistenceRule().add(new ValueProviderRule(p));
 		}
 		
-		for(Rule rule : getRules(id, "feasibility", scaffold))
+		vps = getInnerList(id, "feasibility");
+		for(String vp : vps)
 		{
-			type.getFeasibilityRule().add(rule);
+			ValueProvider p = DefaultValueProviderFactory.getInstance().parse(vp, scaffold);
+			type.getExistenceRule().add(new ValueProviderRule(p));
 		}
 	}
 

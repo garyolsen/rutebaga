@@ -57,6 +57,9 @@ public abstract class InstanceBuilder<T extends ConcreteInstanceType> extends
 			instance.setAppearanceDefinition(appDef);
 		else
 			instance.setAppearanceDefinition(new StaticAppearanceDef());
+		
+		String[] flags = getStringArray(id, "flags", "[\\s\\t]");
+		instance.setInitialFlags(flags);
 
 	}
 }

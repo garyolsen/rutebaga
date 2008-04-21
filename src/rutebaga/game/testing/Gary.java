@@ -40,12 +40,7 @@ public class Gary
 					while (true)
 					{
 						Thread.sleep(1000);
-						Instance instance = fire.makeInstance();
-						while (!instance.existsInUniverse())
-						{
-							Gary.environment.add(instance, new Vector2D(random
-									.nextInt(40), random.nextInt(40)));
-						}
+						System.out.println("something flag: " + Gary.avatar.getFlag("something"));
 					}
 				}
 				catch (InterruptedException e)
@@ -55,6 +50,6 @@ public class Gary
 
 			}
 
-		};
+		}.start();
 	}
 }
