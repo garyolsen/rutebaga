@@ -1,0 +1,5 @@
+dmgTpDemi
+
+type		dmgMagical
+function	/ &VP_@entityStats_VP_stat_statHp amount
+dstat		statHp

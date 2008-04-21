@@ -11,6 +11,7 @@ import rutebaga.commons.math.rel.ParseTreeVisitor;
 import rutebaga.commons.math.rel.SymbolNode;
 import rutebaga.commons.math.rel.UnaryNode;
 import rutebaga.commons.math.rel.ValueNode;
+import rutebaga.commons.math.rel.ValueProviderNode;
 import rutebaga.scaffold.MasterScaffold;
 
 public class ValueProviderASTVisitor implements ParseTreeVisitor
@@ -58,6 +59,11 @@ public class ValueProviderASTVisitor implements ParseTreeVisitor
 	public void visitValueNode(ValueNode node)
 	{
 		p = new ConstantValueProvider(node.getValue());
+	}
+
+	public void visitValueProviderNode(ValueProviderNode<?> node)
+	{
+		throw new UnsupportedOperationException();
 	}
 
 }

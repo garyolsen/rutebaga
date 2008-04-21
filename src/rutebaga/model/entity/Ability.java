@@ -55,12 +55,12 @@ public class Ability<T> implements Named
 		//FIXME: fix me
 		return true;
 	}
-	
+
 	public boolean exists()
 	{
 		return existenceRule.determine(entity);
 	}
-
+	
 	public AbilityCategory getCategory()
 	{
 		return category;
@@ -69,6 +69,11 @@ public class Ability<T> implements Named
 	public Vector2D getCoordinate()
 	{
 		return entity.getCoordinate();
+	}
+
+	public Entity getEntity()
+	{
+		return entity;
 	}
 
 	public Environment getEnvironment()

@@ -6,4 +6,5 @@ public interface ParseTreeVisitor
 	void visitUnaryNode(UnaryNode node);
 	void visitSymbolNode(SymbolNode node);
 	void visitValueNode(ValueNode node);
+	void visitValueProviderNode(ValueProviderNode<?> node);
 }
