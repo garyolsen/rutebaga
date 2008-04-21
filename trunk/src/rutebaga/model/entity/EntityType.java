@@ -77,13 +77,8 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
 		entity.setTeam(team);
-		
-		for (AbilityType type : abilityTypes)
-		{
-			entity.addAbility(type.makeAbility());
-		}
 		entity.setWallet(wallet);
-
+		
 		if (abilityTypes != null)
 			for (AbilityType type : abilityTypes)
 			{
