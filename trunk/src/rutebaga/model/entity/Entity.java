@@ -308,7 +308,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		getVision().tick();
 		
 		if(decayTime <= 0) {
-			//this.getEnvironment().remove(this);
+			this.getEnvironment().remove(this);
 		}
 	}
 
