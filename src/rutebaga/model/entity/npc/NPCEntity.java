@@ -1,6 +1,9 @@
 package rutebaga.model.entity.npc;
 
+import java.util.Random;
+
 import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.MutableVector2D;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
@@ -24,7 +27,10 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 
 	private Entity target;
 	private NPCBrain brain;
-
+	private boolean pausing = true;
+	private Random rand = new Random();
+	private MutableVector2D direction=new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
+	
 	public NPCEntity(InstanceType<T> type)
 	{
 		super(type);
@@ -172,6 +178,22 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	public NPCBrain getBrain()
 	{
 		return this.brain;
+	}
+
+	public MutableVector2D getDirection() {
+		return direction;
+	}
+
+	public void setDirection(MutableVector2D direction) {
+		this.direction = direction;
+	}
+
+	public boolean isPausing() {
+		return pausing;
+	}
+
+	public void setPausing(boolean pausing) {
+		this.pausing = pausing;
 	}
 
 }

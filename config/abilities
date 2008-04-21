@@ -8,3 +8,8 @@ actions {
 	spawn		source static decFire			
 }
 
+name		Punch
+category	abcatAttacks
+actions{
+	damage		dmgTpPunch	10
+}

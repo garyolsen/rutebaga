@@ -15,8 +15,6 @@ public class Wander extends NPCState
 	
 	private int wait = 0;
 	private Random rand = new Random();
-	private MutableVector2D direction=new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
-	private boolean pausing = false;
 	
 	@Override
 	public NPCState barter(NPCEntity npc)
@@ -47,13 +45,16 @@ public class Wander extends NPCState
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-		wait++;
-		if (wait % 50 == 0){
-			direction=new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
-			pausing=rand.nextBoolean();
+//		wait++;
+		if (/*wait % 50 == 0*/rand.nextInt(5)==0){
+			npc.setDirection(new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2));
+			if(rand.nextInt(3)==0)
+				npc.setPausing(true);
+			else
+				npc.setPausing(false);
 		}
-		if(!pausing)
-			npc.walk(direction);
+		if(!npc.isPausing())
+			npc.walk(npc.getDirection());
 		return this;
 	}
 
