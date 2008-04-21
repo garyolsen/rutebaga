@@ -459,4 +459,9 @@ public class Environment
 	{
 		return tileConvertor.tileOf(coordinate);
 	}
+
+	public void setTileConvertor(TileConverter tileConvertor)
+	{
+		this.tileConvertor = tileConvertor;
+	}
 }
