@@ -146,7 +146,7 @@ public class ActionDeterminer
 			list.add("Buy", command);
 		}
 		
-		if(target instanceof Mount) {
+		if(target instanceof Mount) { //TODO GET RID OF THIS!!
 			
 			QueueCommand qC = QueueCommand.makeForQueue(new MountCommand((Mount) target, avatar), queue);
 			list.add("Mount", qC);
