@@ -8,5 +8,8 @@ value	min / VP_@entityStats_VP_stat_statMovement 100 0.4
 vpEntityDeadStrategy	# returns less than zero if the entity is dead
 value	- VP_@entityStats_VP_stat_statHp 10
 
+vpEntitySkillPtStrategy		# provides access to total skill points
+value	VP_@entityStats_VP_stat_statTotalSkillPts
+
 vpEntityBargainSkillAmount
 value 1.0

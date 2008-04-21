@@ -41,15 +41,19 @@ statExperience
 name	Experience
 default	0
 
-statLevel
-name	Level
-type	concrete  
-default	1
-
-
 ##########################################################
 # 				    DERIVED STATS						 #
 ##########################################################
+
+statLevel
+name	Level
+type	derived  
+value	floor / log + VP_stat_statExperience 100 log 1.2 
+
+statTotalSkillPts
+name	Total Skill Points
+type	derived  
+value	* VP_stat_statLevel 5
 
 statDefRating
 name	Defensive Rating
