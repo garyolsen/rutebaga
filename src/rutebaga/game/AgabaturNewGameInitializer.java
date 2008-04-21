@@ -1,6 +1,7 @@
 package rutebaga.game;
 
 import java.awt.Image;
+import java.util.Collection;
 import java.util.Properties;
 import java.util.Random;
 
@@ -351,6 +352,11 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		
 		Gary.run(environment, scaffold, avatar);
 
+		
+		// Make sure avatar's stats are all initialized
+		Collection<?> stats = (Collection<?>) scaffold.get("globalAllStatsList");
+		for (Object stat: stats)
+			avatar.getStats().getStatObject((StatisticId) stat);
 	}
 
 	public Entity getAvatar()

@@ -55,8 +55,6 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	private TargetInstanceObservable observable = new TargetInstanceObservable();
 	private Instance<?> target;
 
-	private Vector2D viewCenter;
-
 	public GamePlayActionInterpreter(World world, Entity<?> avatar) {
 		this.world = world;
 		this.avatar = avatar;
@@ -86,12 +84,8 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 		keyPressBindings.set("Ability0", KeyCode.get(KeyEvent.VK_ENTER), new Command() {
 			public void execute() {
-				GamePlayActionInterpreter.this.avatar
-						.getAbilities()
-						.get(0)
-						.act(
-								target != null ? target
-										: GamePlayActionInterpreter.this.avatar);
+				GamePlayActionInterpreter.this.avatar.getAbilities().get(0)
+						.act(target != null ? target : GamePlayActionInterpreter.this.avatar);
 			}
 
 			public boolean isFeasible() {
@@ -108,7 +102,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 		
-		keyReleaseBindings.set("Next Target", KeyCode.get(KeyEvent.VK_TAB), new Command() {
+		keyReleaseBindings.set("Next Target", KeyCode.get(KeyEvent.VK_SEMICOLON), new Command() {
 			public void execute() {
 				targetNextEntity();
 			}
@@ -118,9 +112,10 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 
-		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_F12), new Command() {
+		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_DELETE), new Command() {
 			public void execute() {
 				paused = true;
+				facade.clearContextMenuStack();
 				ConcreteElementalList list = new ConcreteElementalList();
 				list.setLabel("Are you sure you want to quit?");
 				list.add("Yes", new Command() {
@@ -170,8 +165,6 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		this.daemon = daemon;
 
 		this.actionDeterminer.setUIFacade(facade);
-		this.viewCenter = new Vector2D(facade.getView().getWidth() / 2, facade
-				.getView().getHeight() / 2);
 	}
 
 	public void tick() {
@@ -324,7 +317,6 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			set.addAll(environment.instancesAt(tileCoordinates));
 			return set;
 		}
-
 		return null;
 	}
 
@@ -360,10 +352,8 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			ElementalList list = actionDeterminer.determineActions(target,
 					daemon.getCommandQueue());
 			if (list != null) {
-				CreateRootContextMenuCommand command = new CreateRootContextMenuCommand(
-						list);
+				CreateRootContextMenuCommand command = new CreateRootContextMenuCommand(list);
 				command.setUIFacade(facade);
-				command.setLocation(viewCenter);
 				daemon.getCommandQueue().queueCommand(command);
 			}
 		}
@@ -416,5 +406,4 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		}
 		refreshTargetObservable();
 	}
-
 }

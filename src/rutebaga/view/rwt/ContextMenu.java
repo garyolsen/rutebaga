@@ -58,7 +58,7 @@ public class ContextMenu extends ViewComponent
 	
 	private ElementalList list;
 	
-	private List<ViewComponent> components = new ArrayList<ViewComponent>();
+	private List<ButtonComponent> components = new ArrayList<ButtonComponent>();
 	
 	private int currentContextHover;
 	
@@ -78,7 +78,9 @@ public class ContextMenu extends ViewComponent
 	
 	public void draw(Drawer draw) {
 		if (list.hasChanged(this))
-			initContextMenu();
+			synchronized(this) {
+				initContextMenu();
+			}
 		
 		draw.setAttribute(contextHover);
 		
@@ -111,24 +113,23 @@ public class ContextMenu extends ViewComponent
 	private void generateContextTriangles(int angle, int number) {
 		int currentAngle = 0;
 		
-		synchronized(contextTriangles) {
-			contextTriangles.clear();
-			
-			for(int i=0; i < number; i++) {
-				Polygon poly = new Polygon();
-				
-				poly.addPoint(0, 0);
-				
-				poly.addPoint( (int) (contextMenuRadius * Math.cos(Math.toRadians(currentAngle))), (int) (contextMenuRadius * Math.sin(Math.toRadians(currentAngle))));
-				
-				currentAngle += angle;
-				
-				poly.addPoint( (int) (contextMenuRadius * Math.cos(Math.toRadians(currentAngle))), (int) (contextMenuRadius * Math.sin(Math.toRadians(currentAngle))));
-				
-				contextTriangles.add(poly);
-				
-			}
+		contextTriangles.clear();
+
+		for (int i = 0; i < number; i++) {
+			Polygon poly = new Polygon();
+
+			poly.addPoint(0, 0);
+
+			poly.addPoint((int) (contextMenuRadius * Math.cos(Math.toRadians(currentAngle))), (int) (contextMenuRadius * Math.sin(Math.toRadians(currentAngle))));
+
+			currentAngle += angle;
+
+			poly.addPoint((int) (contextMenuRadius * Math.cos(Math.toRadians(currentAngle))), (int) (contextMenuRadius * Math.sin(Math.toRadians(currentAngle))));
+
+			contextTriangles.add(poly);
+
 		}
+
 		
 	}
 	
@@ -206,10 +207,13 @@ public class ContextMenu extends ViewComponent
 		
 		int currentAngle = 0;
 		
-		synchronized(components) {
+		synchronized(this) {
 			
-			for(ViewComponent component : components) {
-				component.setLocation( getX() + (int) ( componentSize * Math.cos(Math.toRadians(currentAngle + angle/2)) ), getY() + (int) ( componentSize * Math.sin(Math.toRadians(currentAngle + angle/2)) ));
+			for(ButtonComponent component : components) {
+				int mySize = componentSize;
+				if (component.isHighlighted())
+					mySize *= 2.5;
+				component.setLocation( getX() + (int) ( mySize * Math.cos(Math.toRadians(currentAngle + angle/2)) ), getY() + (int) ( mySize * Math.sin(Math.toRadians(currentAngle + angle/2)) ));
 				
 				currentAngle += angle;
 			}
@@ -240,13 +244,11 @@ public class ContextMenu extends ViewComponent
 	protected boolean processMouseEvent( MouseEvent event ) {
 		int i = 0;
 		
-		synchronized(contextTriangles) {
+		synchronized(this) {
 			for(Polygon s : contextTriangles) {
 				if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
 					currentContextHover = i;
-					synchronized(components) {
-						return components.get(i).processMouseEvent(event);
-					}
+					return components.get(i).processMouseEvent(event);
 				}
 				
 				i++;
@@ -258,11 +260,17 @@ public class ContextMenu extends ViewComponent
 	
 	protected boolean processMouseMotionEvent( MouseEvent event ) { 
 		int i = 0;
+		boolean changed = false;
 		
-		synchronized(contextTriangles) {
+		synchronized(this) {
 			for(Polygon s : contextTriangles) {
 				if(s.contains( event.getX() - this.getX(), event.getY() - this.getY())) {
+					if (i == currentContextHover)
+						break;
+					components.get(currentContextHover).setHighlighted(false);
 					currentContextHover = i;
+					components.get(i).setHighlighted(true);
+					moveComponents();
 					break;
 				}
 				

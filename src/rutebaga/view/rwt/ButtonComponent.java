@@ -17,12 +17,14 @@ public class ButtonComponent extends ViewComponent {
 	
 	private Command command;
 	
-	private CompositeAttribute untoggled, toggled, text;
+	private CompositeAttribute untoggled, toggled, text, shadow, normalText, normalShadow, highlightedText, highlightedShadow;
 	
 	private ColorAttribute untoggledColor = new ColorAttribute(Color.GRAY);
 	private ColorAttribute toggledColor = new ColorAttribute(Color.DARK_GRAY);
 	
 	private FontAttribute font;
+	private FontAttribute normalFont;
+	private FontAttribute highlightedFont;
 
 	public ButtonComponent() {
 		this("");
@@ -33,7 +35,8 @@ public class ButtonComponent extends ViewComponent {
 		this.label = label;
 		
 		
-		font = new FontAttribute( new Font("Arial", Font.BOLD, 12));
+		font = normalFont = new FontAttribute( new Font("Arial", Font.BOLD, 12));
+		highlightedFont = new FontAttribute( new Font("Arial", Font.BOLD, 18));
 		
 		untoggled = new CompositeAttribute();
 		untoggled.addAttribute( untoggledColor );
@@ -41,10 +44,22 @@ public class ButtonComponent extends ViewComponent {
 		toggled = new CompositeAttribute();
 		toggled.addAttribute( toggledColor );
 		
-		text = new CompositeAttribute();
+		text = normalText = new CompositeAttribute();
 		text.addAttribute( font );
-		text.addAttribute( new ColorAttribute( Color.BLACK ) );
+		text.addAttribute( new ColorAttribute( Color.WHITE ) );
 		
+		shadow = normalShadow = new CompositeAttribute();
+		shadow.addAttribute( font );
+		shadow.addAttribute( new ColorAttribute( Color.BLACK ) );
+	
+		highlightedText = new CompositeAttribute();
+		highlightedText.addAttribute( highlightedFont );
+		highlightedText.addAttribute( new ColorAttribute( Color.WHITE ) );
+		
+		highlightedShadow = new CompositeAttribute();
+		highlightedShadow.addAttribute( highlightedFont );
+		highlightedShadow.addAttribute( new ColorAttribute( Color.BLACK ) );
+	
 		
 		this.setBounds( 0, 0, 100, 40 );
 		
@@ -69,8 +84,16 @@ public class ButtonComponent extends ViewComponent {
 		centeredText.x = (int)getBounds().getBounds().getX() + this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
 		centeredText.y = (int)getBounds().getBounds().getY() + this.getLocation().y + (getHeight() / 2) + ( font.getFont().getSize() / 2 );
 		
+		draw.setAttribute( shadow );
+		draw.drawString( centeredText , label);
+
+		--centeredText.x;
+		--centeredText.y;
+		
 		draw.setAttribute( text );
 		draw.drawString( centeredText , label);
+		
+		
 		
 	}
 	
@@ -84,6 +107,12 @@ public class ButtonComponent extends ViewComponent {
 		centeredText.x = (int)getBounds().getBounds().getX() + this.getLocation().x + (getWidth() / 2) - ( fm.stringWidth(label) / 2 );
 		centeredText.y = (int)getBounds().getBounds().getY() + this.getLocation().y + (getHeight() / 2) + ( font.getFont().getSize() / 2 );
 		
+		draw.setAttribute(shadow);
+		draw.drawString( centeredText , label);
+
+		--centeredText.x;
+		--centeredText.y;
+
 		draw.setAttribute(text);
 		draw.drawString( centeredText , label);
 	}
@@ -123,4 +152,20 @@ public class ButtonComponent extends ViewComponent {
 		toggledColor.setColor(color);
 	}
 
+	public void setHighlighted(boolean highlight) {
+		if (highlight) {
+			font = highlightedFont;
+			text = highlightedText;
+			shadow = highlightedShadow;
+		}
+		else {
+			font = normalFont;
+			text = normalText;
+			shadow = normalShadow;
+		}
+	}
+	
+	public boolean isHighlighted() {
+		return font == highlightedFont;
+	}
 }
