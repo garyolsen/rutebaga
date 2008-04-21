@@ -33,11 +33,15 @@ public class VendingMachineInstance implements StoreInstance {
 	}
 
 	public void sell(Item item) {
-		if (userHasSufficientFunds(sellPriceOf(item)))
+		if (canSell(item))
 		{
 			removeFunds(sellPriceOf(item));
 			item.giveTo(entity.getInventory());
 		}
+	}
+	
+	public boolean canSell(Item item ) {
+		return userHasSufficientFunds(sellPriceOf(item));
 	}
 
 	public double sellPriceOf(Item item) {
