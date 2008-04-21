@@ -39,7 +39,12 @@ public class RandomEffect extends TargetableEffect<RandomEffect, Instance> {
 
 	@Override
 	public double getMass() {
-		return 1;
+		return 1.0;
+	}
+
+	@Override
+	public void setMass(double mass) {
+		//does nothing
 	}
 
 }

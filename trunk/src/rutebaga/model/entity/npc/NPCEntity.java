@@ -7,14 +7,19 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
+import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
+import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.Team;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
+import rutebaga.model.environment.ConcreteInstanceSet;
+import rutebaga.model.environment.InstanceSet;
 import rutebaga.model.environment.InstanceType;
 
 /**
@@ -75,7 +80,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	 */
 	public boolean targetInRange()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -204,6 +209,20 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	
 	public void makeSpeech(Entity entity, String speech) {
 		
+	}
+	
+	public Object accept(EntityEffect effect)
+	{
+		InstanceSet instanceSet = new ConcreteInstanceSet(); 
+		instanceSet.addAll(this.getVision().getActiveSet());
+		for ( Entity entity : instanceSet.getEntities())
+		{
+			if (entity.getTeam() !=  this.getTeam()) {
+				this.takeHostileGesture(entity);
+				break;
+			}
+		}
+		return super.accept(effect);
 	}
 
 }

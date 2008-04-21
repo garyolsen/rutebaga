@@ -8,6 +8,7 @@ import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
+import rutebaga.model.entity.Team;
 import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.scaffold.MasterScaffold;
 
@@ -49,6 +50,8 @@ public class EntityTypeBuilder extends InstanceBuilder
 		type.setStanding(getAnimatedAppearances(standingId, scaffold));
 		type.setWalking(getAnimatedAppearances(walkingId, scaffold));
 		type.setRadius(this.getInteger(id, "vRadius"));
+		
+		type.setTeam((Team)getObjectFor(id, "team", scaffold));
 		
 		type.setDecayTime(this.contains(id, "vDecayTime") ? this.getInteger(id, "vDecayTime") : 0);
 		

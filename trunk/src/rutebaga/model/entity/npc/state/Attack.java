@@ -1,5 +1,9 @@
 package rutebaga.model.entity.npc.state;
 
+import java.util.Collection;
+import java.util.Random;
+
+import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCState;
@@ -11,6 +15,9 @@ import rutebaga.model.entity.npc.NPCState;
 public class Attack extends NPCState
 {
 
+	Random rand = new Random();
+	int wait;
+	
 	@Override
 	public NPCState barter(NPCEntity npc)
 	{
@@ -45,17 +52,26 @@ public class Attack extends NPCState
 		{
 			if (npc.targetInRange() && npc.targetInSight())
 			{
-				// npc.attackTarget();
-				return this;
-			}
-			else if (npc.targetInSight())
-			{
-				return NPCState.chase;
+				if (rand.nextDouble() < 0.01)
+				{
+					Collection<Ability> abilities = npc.getAbilities();
+					int index = rand.nextInt(npc.getAbilities().size());
+					int counter = 0;
+					for ( Ability ability : abilities ) {
+						if (counter == index) {
+							if ( ability.isFeasible() )
+							{
+								ability.act(npc.getTarget());
+								break;
+							}
+						}
+						counter++;
+					}
+				}
+			return this;
 			}
 			else
-			{
-				return NPCState.wander;
-			}
+				return NPCState.chase;
 		}
 	}
 
