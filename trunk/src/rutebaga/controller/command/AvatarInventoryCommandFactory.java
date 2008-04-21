@@ -3,20 +3,19 @@ package rutebaga.controller.command;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.item.Item;
+import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 
 public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 	
-	private CharEntity avatar;
-	private ViewFacade facade;
+	private final Entity<?> avatar;
+	private final UserInterfaceFacade facade;
 	
-	public void setAvatar(CharEntity avatar) {
-		this.avatar = avatar;
-	}
-	
-	public void setFacade(ViewFacade facade) {
-		this.facade = facade;
+	public AvatarInventoryCommandFactory(final Entity<?> charEntity, final UserInterfaceFacade uiFacade) {
+		this.avatar = charEntity;
+		this.facade = uiFacade;
 	}
 	
 	public ElementalList getCommandListFor(Item item) {
@@ -37,11 +36,12 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 		}
 		
 		public boolean isFeasible() {
-			return false;
+			return true;
 		}
 		
 		public void execute() {
-			
+			avatar.getInventory().drop(item);
+			facade.clearContextMenuStack();
 		}
 	}
 	
@@ -58,7 +58,8 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 		}
 		
 		public void execute() {
-			
+			avatar.getInventory().equip(item);
+			facade.clearContextMenuStack();
 		}
 	}
 }

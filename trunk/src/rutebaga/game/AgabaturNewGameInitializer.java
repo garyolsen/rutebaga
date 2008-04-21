@@ -21,6 +21,8 @@ import rutebaga.model.environment.MovementAttributeSet;
 import rutebaga.model.environment.PolarTileConvertor;
 import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.World;
+import rutebaga.model.item.ItemType;
+import rutebaga.model.item.SlotType;
 import rutebaga.model.map.River;
 import rutebaga.model.map.TerrainType;
 import rutebaga.model.map.Tile;
@@ -68,6 +70,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		AreaEffectType healer = (AreaEffectType) scaffold.get("aoeHealer");
 		AreaEffectType mover = (AreaEffectType) scaffold.get("aoeSpeeder");
+		
+		ItemType<?> sword = (ItemType<?>) scaffold.get("itemSword");
 
 		StatisticId hp = (StatisticId) scaffold.get("statHp");
 		StatisticId movement = (StatisticId) scaffold.get("statMovement");
@@ -95,6 +99,11 @@ public class AgabaturNewGameInitializer implements GameInitializer
 						environment.add(healer.makeInstance(), location);
 					else if (random.nextDouble() < 0.1)
 						environment.add(mover.makeInstance(), location);
+					
+					
+					if(random.nextDouble() < 0.1) {
+						environment.add(sword.makeInstance(), location);
+					}
 				}
 				else if (random.nextDouble() < waterTileProb)
 				{
@@ -166,6 +175,11 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		}
 
 		avatar = ((EntityType<?>) scaffold.get("entityDefault")).makeInstance();
+		
+
+		SlotType hand = (SlotType) scaffold.get("slotHand");
+		
+		avatar.getInventory().addSlotAllocation(hand, 4);
 
 		while (!avatar.existsInUniverse())
 		{

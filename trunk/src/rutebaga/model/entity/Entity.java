@@ -51,7 +51,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	
 	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(0.0);
 
-	private String name;
 	private double money;
 	
 	private Vector2D facing = new Vector2D(0, 0);
@@ -137,11 +136,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return this.movementSpeedStrat.getValue(this);
 	}
 
-	public String getName()
-	{
-		return name;
-	}
-
 	@Override
 	public InstanceSetIdentifier getSetIdentifier()
 	{
@@ -185,12 +179,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		this.movementSpeedStrat = movementSpeedStrat;
 	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	
 	public void setVisionBounds(Bounds2D visionBounds)
 	{
 		this.visionBounds = visionBounds;
@@ -206,7 +194,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public String toString()
 	{
-		return "Entity named " + name;
+		return "Entity named " + getName();
 	}
 
 	public void walk(Vector2D direction)

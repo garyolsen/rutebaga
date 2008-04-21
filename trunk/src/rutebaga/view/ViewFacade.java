@@ -201,9 +201,9 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 
 		ViewCompositeComponentWrapper vcc = new ViewCompositeComponentWrapper(list);
 
-		ScrollDecorator scroll = new ScrollDecorator(vcc, pageSize * 10, 50);
+		ScrollDecorator scroll = new ScrollDecorator(vcc, pageSize * 20, 50);
 
-		scroll.setLocation(vector.getX().intValue(), vector.getY().intValue());
+		scroll.setLocation(vector.getX().intValue() - scroll.getWidth()/2, vector.getY().intValue() - scroll.getHeight()/2);
 
 		view.addViewComponent(scroll);
 

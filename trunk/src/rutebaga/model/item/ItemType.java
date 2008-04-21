@@ -15,12 +15,11 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 	private List<EntityEffect> permanentEffects = new ArrayList<EntityEffect>();
 	private List<ReversibleEntityEffect> reversibleEffects = new ArrayList<ReversibleEntityEffect>();
 
-	private String name;
 
 	@Override
 	public String toString()
 	{
-		return "ItemType " + name + "("
+		return "ItemType " + getName() + "("
 				+ (equippable ? "must be equipped" : "may be equipped")
 				+ ") with " + permanentEffects.size() + " perms and "
 				+ reversibleEffects.size() + " reversible";
@@ -29,11 +28,6 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 	public SlotAllocation getAllocation()
 	{
 		return allocation;
-	}
-
-	public String getName()
-	{
-		return name;
 	}
 
 	public List<EntityEffect> getPermanentEffects()
@@ -61,11 +55,6 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 		this.equippable = equippable;
 	}
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
 	public void setPermanentEffects(List<EntityEffect> permanentEffects)
 	{
 		this.permanentEffects = permanentEffects;
@@ -87,7 +76,6 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 	protected void initialize(T instance)
 	{
 		super.initialize(instance);
-		instance.setName(name);
 		if (equippable)
 		{
 			EquippableAspect equip = new EquippableAspect();

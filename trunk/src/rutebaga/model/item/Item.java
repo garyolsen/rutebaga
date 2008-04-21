@@ -3,7 +3,6 @@ package rutebaga.model.item;
 import java.util.List;
 
 import rutebaga.model.DefaultLayers;
-import rutebaga.model.Named;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
@@ -13,13 +12,11 @@ import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InstanceType;
 
-public class Item<T extends Item<T>> extends Instance<T> implements Named
+public class Item<T extends Item<T>> extends Instance<T>
 {
 	private EquippableAspect equippableAspect;
 
 	private Double defaultPrice;
-	private String name;
-
 	public Item(InstanceType<T> type)
 	{
 		super(type);
@@ -48,11 +45,6 @@ public class Item<T extends Item<T>> extends Instance<T> implements Named
 	@Override
 	public double getMass() {
 		return 1.0;
-	}
-
-	public String getName()
-	{
-		return name;
 	}
 
 	public List<EntityEffect> getPermanentEquipEffects()
@@ -86,11 +78,6 @@ public class Item<T extends Item<T>> extends Instance<T> implements Named
 	public void setDefaultPrice(Double defaultPrice)
 	{
 		this.defaultPrice = defaultPrice;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
 	}
 
 	@Override

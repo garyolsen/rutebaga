@@ -6,10 +6,11 @@ import java.util.List;
 import rutebaga.commons.logic.ChainedRule;
 import rutebaga.commons.logic.Rule;
 import rutebaga.commons.math.Vector2D;
+import rutebaga.model.Named;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 
-public class Ability<T>
+public class Ability<T> implements Named
 {
 	private AbilityCategory category;
 
