@@ -319,6 +319,8 @@ public class MapComponent extends ViewComponent implements TargetInstanceObserve
 	}
 	
 	protected boolean processMouseMotionEvent( MouseEvent event ) {
+		if (event.getID() == MouseEvent.MOUSE_EXITED)
+			mouseOverTile = null;
 		trackMouseLocation(event.getPoint());
 		
 		return false;
