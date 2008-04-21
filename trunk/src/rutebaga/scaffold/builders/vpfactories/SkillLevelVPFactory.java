@@ -18,7 +18,7 @@ public class SkillLevelVPFactory extends AbstractValueProviderFactory
 	static
 	{
 		types = new HashSet<String>();
-		types.add("stat");
+		types.add("skill");
 	}
 
 	@Override
