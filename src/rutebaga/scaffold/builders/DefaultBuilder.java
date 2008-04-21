@@ -26,6 +26,7 @@ public class DefaultBuilder extends ChainedBuilder
 		register(new AbilityTypeBuilder());
 		register(new DecalTypeBuilder());
 		register(new RiverBuilder());
+		register(new TeamBuilder());
 		for(String id : this.availableIds())
 		{
 			System.out.println(id + "\t\t" + this.getBuilder(id));

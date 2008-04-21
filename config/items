@@ -18,7 +18,7 @@ useeffects		eeffPotion_Healthuseeffects
 itemFireFlower
 name			Fire Flower
 appearance static imgFireFlower C
-mass			100.0	
+mass			2.0	
 equippable		false
 usable			true
 useeffects		

@@ -62,13 +62,15 @@ public abstract class TargetableEffect<Self extends TargetableEffect<Self, Targe
 			this.getEnvironment().remove(this);
 			return;
 		}
-		double impulseMag = impulse.getValue((Self) this);
-		MutableVector2D direction = new MutableVector2D(target.getCoordinate());
-		direction.detract(this.getCoordinate());
-		direction.becomeUnitVector();
-		direction.multiplyBy(impulseMag);
-		applyImpulse(direction);
-		tickLogic();
+		if(target.existsInUniverse()) {
+			double impulseMag = impulse.getValue((Self) this);
+			MutableVector2D direction = new MutableVector2D(target.getCoordinate());
+			direction.detract(this.getCoordinate());
+			direction.becomeUnitVector();
+			direction.multiplyBy(impulseMag);
+			applyImpulse(direction);
+			tickLogic();
+		}
 	}
 
 	protected abstract void tickLogic();

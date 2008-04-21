@@ -432,4 +432,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return effectQueue;
 	}
 
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
 }

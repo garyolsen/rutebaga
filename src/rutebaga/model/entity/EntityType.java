@@ -24,6 +24,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private BidirectionalValueProvider<Entity> wallet;
 	private ValueProvider<Entity> deadStrategy;
 	private List<AbilityType> abilityTypes = new ArrayList<AbilityType>();
+	private Team team;
 
 	private int radius;
 	private int decayTime;
@@ -75,6 +76,14 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		entity.setBargainSkill(bargainSkillAmount);
 		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
+<<<<<<< .mine
+		entity.setTeam(team);
+		
+		for (AbilityType type : abilityTypes)
+		{
+			entity.addAbility(type.makeAbility());
+		}
+=======
 		entity.setWallet(wallet);
 
 		if (abilityTypes != null)
@@ -83,6 +92,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 				if (type != null)
 					entity.addAbility(type.makeAbility());
 			}
+>>>>>>> .r560
 		entity.setVisionBounds(new RectBounds2D(new Vector2D(radius, radius)));
 	}
 
@@ -151,6 +161,10 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	public int getDecayTime()
 	{
 		return decayTime;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 
 	public BidirectionalValueProvider<Entity> getWallet()

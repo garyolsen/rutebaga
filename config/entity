@@ -11,6 +11,7 @@ abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
 movement	whitelist terrGrass
 
 entityMario
+team		teamRed
 standing 	imgMario
 walking		imgMario
 moveSpd		$vpEntityMovementSpeed	
@@ -27,7 +28,7 @@ walking		imgMarioWet
 moveSpd		$vpEntityMovementSpeed	
 wallet	$vpEntityWallet
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+abilities	abThrowFireBall abEggThrow abMarioThrow abYoshiThrow
 movement	whitelist terrGrass
 
 entityNPCKoopa
