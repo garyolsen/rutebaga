@@ -58,4 +58,10 @@ public class Bumper extends Instance
 		return InstanceSetIdentifier.EFFECT;
 	}
 
+	@Override
+	public void setMass(double mass) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

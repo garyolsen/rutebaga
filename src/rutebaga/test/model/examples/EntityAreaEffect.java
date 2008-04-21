@@ -103,4 +103,10 @@ public class EntityAreaEffect extends Instance<EntityAreaEffect>
 		return effects;
 	}
 
+	@Override
+	public void setMass(double mass) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -68,6 +68,12 @@ public class ViewComponentTest {
 			component.setHasFocus(true);
 			component.setLocation(400,200);
 			
+			DialogDecorator dialog = new DialogDecorator(new TextLabelComponent("Please bind a key for Walk!"), 150, 100);
+			dialog.setLocation(200,200);
+			
+			view.addViewComponent(dialog);
+			
+			
 			view.addViewComponent(component);
 			
 			while(true)
