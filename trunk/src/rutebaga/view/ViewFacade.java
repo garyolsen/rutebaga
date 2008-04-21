@@ -1,6 +1,7 @@
 package rutebaga.view;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -115,8 +116,8 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 			ElementalList list, Command accept, Command cancel) {
 		clearView();
 
-		view.addViewComponent(new AvatarCreationScreen(view.getWidth(), view
-				.getHeight(), listener, list, accept, cancel));
+		Rectangle dimensions = new Rectangle(view.getWidth(), view.getHeight());
+		view.addViewComponent(new AvatarCreationScreen(dimensions, listener, list, accept, cancel));
 	}
 
 	public void createGamePlayScreen(Entity avatar,
