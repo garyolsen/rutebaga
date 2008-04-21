@@ -31,10 +31,10 @@ nodes {
 }
 #specify in order N,NE,SE,S,SW,NW
 images {
-animated imgMarioNorth 10 C
-animated imgMarioNorth 10 C
-animated imgMarioNorth 10 C
-animated imgMarioNorth 10 C
-animated imgMarioNorth 10 C
-animated imgMarioNorth 10 C
+static imgRiverN01 C
+static imgRiverNE01 C
+static imgRiverSE01 C
+static imgRiverS01 C
+static imgRiverSW01 C
+static imgRiverNW01 C
 }
