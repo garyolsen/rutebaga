@@ -1,16 +1,19 @@
 package rutebaga.model.entity;
 
+import rutebaga.commons.math.ConstantValueProvider;
+import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.entity.inventory.ConcreteInventory;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.ConcreteStats;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.InstanceType;
+import rutebaga.model.storefront.EntityStoreFront;
+import rutebaga.model.storefront.Storefront;
 
 public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 {
 	private ConcreteStats stats = new ConcreteStats(this);
 	private ConcreteStats damageResistance = new ConcreteStats(this);
-
 	private ConcreteInventory inventory = new ConcreteInventory(this);
 
 	public CharEntity(InstanceType<T> type)
@@ -41,5 +44,5 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	{
 		return damageResistance;
 	}
-
+	
 }

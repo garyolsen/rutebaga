@@ -3,6 +3,9 @@ package rutebaga.test.model.storefront;
 import java.util.Collection;
 import java.util.HashSet;
 
+import rutebaga.commons.math.ConstantValueProvider;
+import rutebaga.commons.math.ValueProvider;
+import rutebaga.commons.math.ValueProviderPointer;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
@@ -34,10 +37,12 @@ public class StorefrontTest {
 		InstanceType<Entity> entityType = new EntityType<Entity>();
 		
 		Entity entity = entityType.makeInstance();
-		entity.addToMoney(1);
+		entity.setBargainSkill (new ConstantValueProvider<Entity>(1000) );
+		entity.addToMoney(1000);
 		
 		Entity entity1 = entityType.makeInstance();
 		entity1.addToMoney(1000);
+		entity1.setBargainSkill (new ConstantValueProvider<Entity>(1.0) );
 		entity1.getInventory().accept(sword);
 		
 		System.out.println(entity.getInventory());

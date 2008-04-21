@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rutebaga.appearance.EntityAppearanceManager;
+import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.RectBounds2D;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.Vector2D;
@@ -17,6 +18,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private Appearance[][] walking;
 	private Appearance[][] standing;
 	private ValueProvider<Entity> movementSpeed;
+	private ValueProvider<Entity> bargainSkillAmount;
 	private List<AbilityType> abilityTypes = new ArrayList<AbilityType>();
 	private int radius;
 
@@ -58,6 +60,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		manager.setWalking(walking);
 		entity.setAppearanceManager(manager);
 		entity.setMovementSpeedStrat(movementSpeed);
+		entity.setBargainSkill(bargainSkillAmount);
 		for(AbilityType type : abilityTypes)
 		{
 			entity.addAbility(type.makeAbility());
@@ -89,6 +92,14 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	public String toString()
 	{
 		return "EntityType: radius=" + radius + "; movementSpeed=" + movementSpeed + "; " + abilityTypes.size() + " abilities";
+	}
+
+	public ValueProvider<Entity> getBargainSkillAmount() {
+		return bargainSkillAmount;
+	}
+
+	public void setBargainSkillAmount(ValueProvider<Entity> bargainSkillAmount) {
+		this.bargainSkillAmount = bargainSkillAmount;
 	}
 
 }

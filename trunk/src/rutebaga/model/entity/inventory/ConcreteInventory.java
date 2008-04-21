@@ -151,5 +151,11 @@ public class ConcreteInventory implements Inventory
 		items.addAll(unequipped);
 		return items;
 	}
+	
+	public boolean remove(Item item) {
+		if (equipped.contains(item))
+			return false;
+		return unequipped.remove(item);
+	}
 
 }
