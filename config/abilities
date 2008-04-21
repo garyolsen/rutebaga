@@ -19,3 +19,9 @@ category	abcatAttacks
 actions{
 	damage		dmgTpPunch	10
 }
+
+name		Death
+category	abcatSpells
+actions{
+	dmgTpDeath
+}
