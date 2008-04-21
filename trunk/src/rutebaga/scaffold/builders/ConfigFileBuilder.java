@@ -153,7 +153,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			MasterScaffold scaffold)
 	{
 		if(!contains(id, property))
-			return null;
+			return new Rule[0];
 		String[] ids = getStringArray(id, property, "[\\w\\t]");
 		List<Rule> rules = new ArrayList<Rule>();
 		for(String strId : ids)
@@ -166,7 +166,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	public String[] getStringArray(String id, String property, String regexp)
 	{
 		if(!contains(id, property))
-			return null;
+			return new String[0];
 		String prop = getProperty(id, property);
 		if (prop == null)
 			return new String[0];
@@ -178,7 +178,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			MasterScaffold scaffold)
 	{
 		if(!contains(id, property))
-			return null;
+			return new Object[0];
 		ArrayList list = new ArrayList();
 		for (String scaffId : getStringArray(id, property, regexp))
 		{
