@@ -1,28 +1,17 @@
 aoeHealer
 appearance	animated imgPowerUp 10 C
 effects		eeffHealerAOE_HP
-rules {
-	VP_flag_flag;something;value;false
-}
 
 aoeHarm
 appearance	animated imgPlant 5 S
 effects		eeffHarmAOE_HP eeffSetSomeFlagFalse
-
-aoeSpeeder2
-appearance	animated imgMarioNorth 2 C
-effects		eeffMovementAOE_Movement
-
-aoeSpeeder
-appearance	animated imgMarioSouth 2 C
-effects		eeffSetSomeFlag
 
 aoeRaiseExperience
 appearance	animated imgMarioSouth 2 C
 effects		eeffRaiseExperience
 
 aoeTeleport
-appearance 	static imgCheese C
+appearance 	static imgPowerUp C
 effects 	eeffTeleport_1
 
 aoeOneShotMana
@@ -31,6 +20,6 @@ effects 	eeffTonic_MP
 remove		true
 
 aoeOneShotHealth
-appearance 	static imgPowerUp C
+appearance 	static imgCheese C
 effects 	eeffPotion_Health
 remove		true
