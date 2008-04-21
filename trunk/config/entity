@@ -4,6 +4,7 @@ walking		imgMario
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
 deadStrat	$vpEntityDeadStrategy
+skillPtStrat	$vpEntitySkillPtStrategy
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
 movement	whitelist terrGrass
@@ -13,6 +14,7 @@ standing 	imgMario
 walking		imgMario
 moveSpd		$vpEntityMovementSpeed	
 deadStrat	$vpEntityDeadStrategy
+skillPtStrat	$vpEntitySkillPtStrategy
 vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
 movement	whitelist terrGrass
