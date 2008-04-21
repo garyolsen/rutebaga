@@ -1,17 +1,19 @@
 package rutebaga.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vehicle
 {
 
-	private Entity mountedEntity;
+	private List<ReversibleEntityEffect> entityEffects = new ArrayList<ReversibleEntityEffect>();
 
-	public Entity getMountedEntity()
-	{
-		return mountedEntity;
+	public List<ReversibleEntityEffect> getEntityEffects() {
+		return entityEffects;
 	}
-
-	public void setMountedEntity(Entity mountedEntity)
-	{
-		this.mountedEntity = mountedEntity;
+	
+	
+	public double getMass() {
+		return 0.0;
 	}
 }
