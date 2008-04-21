@@ -1,7 +1,8 @@
 confGame
 npcQty 12
 size 30
-grassTileProb 1
+grassTileProb .8
 waterTileProb .5
+mountainTileProb .5
 showTreasure false
 fuckingCrazy false

@@ -135,7 +135,11 @@ public class ButtonComponent extends ViewComponent {
 
 	@Override
 	protected boolean processMouseMotionEvent(MouseEvent event) {
-		if (event.getID() == MouseEvent.MOUSE_ENTERED)
+		if (event.getID() == MouseEvent.MOUSE_DRAGGED) {
+			if (command != null && command.isFeasible())
+				command.execute();
+		}
+		else if (event.getID() == MouseEvent.MOUSE_ENTERED)
 			hover = true;
 		else if (event.getID() == MouseEvent.MOUSE_EXITED)
 			hover = false;
