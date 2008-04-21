@@ -13,7 +13,7 @@ abDemi
 name		Beam
 category	abcatSpells
 actions {
-	damage		dmgTpDemi	max 0.25 / 4 VP_@entityStats_VP_stat_statIntellect		
+	damage		dmgTpBeam	10		
 	spawn		target static decBeam
 }
 existence	R_static_true
@@ -23,7 +23,7 @@ abNuke
 name		Nuke
 category	abcatSpells
 actions {
-	damage		dmgTpDemi	max 0.25 / 4 VP_@entityStats_VP_stat_statIntellect		
+	damage		dmgTpNuke	50
 	spawn		target static decNuke
 }
 existence	R_static_true
@@ -34,6 +34,14 @@ name		Magic Missle
 category	abcatSpells
 actions{
 	damage		dmgTPMagicMissle	10
+}
+
+abBindWounds
+
+name		Bind Wounds
+category	abcatSpells
+actions{
+	damage		dmgTpHeal
 }
 
 abPunch
