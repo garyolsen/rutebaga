@@ -16,7 +16,7 @@ public class Item<T extends Item<T>> extends Instance<T>
 {
 	private EquippableAspect equippableAspect;
 
-	private Double defaultPrice;
+	private Double defaultPrice = 100.0;
 	public Item(InstanceType<T> type)
 	{
 		super(type);
