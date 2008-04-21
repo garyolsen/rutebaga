@@ -1,8 +1,9 @@
 confGame
-npcQty 0
+npcQty 30
 size 20
 grassTileProb .9
 waterTileProb .01
 mountainTileProb .01
 showTreasure false
-fuckingCrazy false
+useHex true
+crazy false

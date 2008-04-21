@@ -17,7 +17,7 @@ name Shell
 category	abcatSpells
 actions{
 	tempentityeffect  eeff_Hardiness 500
-	spawn		target	static decBubble
+	spawn		target	static decShell
 	entityeffect	source	eeff_Spell_MP	
 }
 feasibility {
@@ -30,7 +30,7 @@ abHeal
 name Heal
 category	abcatSpells
 actions{
-	damage		dmgTpHeal	- 0 10
+	damage		dmgTpHeal 	* + VP_skill_abcatSpells 1 -5	
 	spawn		target	static decLife
 	entityeffect	source	eeff_Spell_MP	
 }
