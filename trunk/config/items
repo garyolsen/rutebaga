@@ -11,3 +11,39 @@ appearance static imgLameEffect C
 equippable		false
 usable			true
 useeffects		
+
+itemFireFlower
+name			Fire Flower
+appearance static imgFireFlower C
+equippable		false
+usable			true
+useeffects		
+
+itemCoin
+name			Coin
+appearance animated imgCoin 3 C
+equippable		false
+usable			true
+useeffects		
+
+itemMushroom
+name			Mushroom
+appearance static imgMushroom C
+equippable		false
+usable			true
+useeffects		
+
+itemStarman
+name			Starman
+appearance static imgStarman C
+equippable		false
+usable			true
+useeffects		
+
+itemBananaPeel
+name			Banana Peel
+appearance static imgBananaPeel C
+equippable		false
+usable			true
+useeffects		
+
