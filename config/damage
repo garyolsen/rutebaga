@@ -3,3 +3,11 @@ dmgTpDemi
 type		dmgMagical
 function	/ &VP_@entityStats_VP_stat_statHp amount
 dstat		statHp
+
+
+
+dmgTpHeal
+
+type		dmgMagical
+function	* + / &VP_@entityStats_VP_stat_statIntellect 10 amount gate random 0 20 10
+dstat		statHp

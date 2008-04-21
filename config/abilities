@@ -3,6 +3,8 @@ abDemi	# reduces a target's HP by 1/4
 name		Demi
 category	abcatSpells
 actions {
-	damage		dmgTpDemi	4		
+	damage		dmgTpDemi	/ 4 VP_@entityStats_VP_stat_statIntellect		
+	spawn		target static decFire
+	spawn		source static decFire			
 }
 
