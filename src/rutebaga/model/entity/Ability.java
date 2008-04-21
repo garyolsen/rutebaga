@@ -31,7 +31,8 @@ public class Ability<T> implements Named
 		if (isFeasible())
 		{
 			for (AbilityAction<T> action : actions)
-				action.act(this, target);
+				if(action != null)
+					action.act(this, target);
 		}
 	}
 

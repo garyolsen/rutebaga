@@ -97,10 +97,9 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	 * 
 	 * @see NPCEntityType
 	 */
-	public Stack<Speech> speak(Entity entity)
+	public void speak(Entity entity)
 	{
 		brain.speak(this, entity);
-		return getSpeech();
 	}
 
 	/**

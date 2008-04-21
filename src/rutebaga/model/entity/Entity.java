@@ -1,6 +1,7 @@
 package rutebaga.model.entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -305,6 +306,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		
 		
 		flushEffectQueue();
+		clearSpeech();
 		getVision().tick();
 		
 		if(decayTime <= 0) {
@@ -408,15 +410,19 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		this.decayTime = decayTime;
 	}
 	
+	public void speak(Entity entity) {
+		entity.recieveSpeech(this, "Hello.");
+	}
+	
 	public void recieveSpeech(Entity entity, String speech) {
 		speechStack.push( new Speech(entity, speech) );
 	}
 	
-	public Stack<Speech> getSpeech() {
-		return speechStack;
+	public Collection<Speech> getSpeech() {
+		return Collections.unmodifiableCollection(speechStack);
 	}
 	
-	public void clearSpeech() {
+	private void clearSpeech() {
 		speechStack.clear();
 	}
 
