@@ -157,5 +157,18 @@ public class ConcreteInventory implements Inventory
 			return false;
 		return unequipped.remove(item);
 	}
+	
+	public double getWeight() {
+		double weight = 0.0;
+		for (Item item : equipped)
+		{
+			weight = item.getMass() + weight;
+		}
+		for (Item item : unequipped)
+		{
+			weight = item.getMass() + weight;
+		}
+		return weight;
+	}
 
 }

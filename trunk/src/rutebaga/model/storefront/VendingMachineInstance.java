@@ -65,4 +65,9 @@ public class VendingMachineInstance implements StoreInstance {
 	{
 		entity.getWallet().addTo(entity, -amount);
 	}
+
+	public void buy(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
 }
