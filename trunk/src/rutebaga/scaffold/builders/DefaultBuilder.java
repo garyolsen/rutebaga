@@ -24,6 +24,7 @@ public class DefaultBuilder extends ChainedBuilder
 		register(new DamageBuilder());
 		register(new DamageTypeBuilder());
 		register(new AbilityTypeBuilder());
+		register(new DecalTypeBuilder());
 	}
 
 }

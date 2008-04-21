@@ -1,0 +1,4 @@
+decFire
+
+appearance		animated imgFireBall 3 C
+lifetime		100

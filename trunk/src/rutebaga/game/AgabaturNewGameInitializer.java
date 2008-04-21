@@ -10,6 +10,7 @@ import rutebaga.appearance.StaticAppearanceDef;
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.GameInitializer;
+import rutebaga.game.testing.Gary;
 import rutebaga.model.effect.AreaEffectType;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
@@ -323,6 +324,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		
 		world = new World();
 		world.add(environment);
+		
+		Gary.run(environment, scaffold, avatar);
 
 	}
 

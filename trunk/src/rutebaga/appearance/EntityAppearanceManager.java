@@ -57,8 +57,10 @@ public class EntityAppearanceManager extends AppearanceManager {
 		@Override
 		Appearance getAppearance() {
 			Appearance dirApps[] = walking[getDirectionOrdinal(directions)];
-			return dirApps[(currentFrame / (getWalkingWait() + 1))
-					% dirApps.length];
+			if(entity.getVelocity().getMagnitude() < 0.005)
+				return dirApps[0];
+			return dirApps[((currentFrame / (getWalkingWait() + 1))
+					% (dirApps.length-1))+1];
 		}
 
 		@Override
