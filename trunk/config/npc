@@ -1,0 +1,8 @@
+npcBlueNPC
+team	teamBlue
+standing 	imgMario
+walking		imgMario
+moveSpd		$vpEntityMovementSpeed	
+vRadius		10
+abilities	abEggThrow abMarioThrow abYoshiThrow
+movement	whitelist terrGrass

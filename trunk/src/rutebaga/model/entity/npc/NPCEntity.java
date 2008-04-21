@@ -24,7 +24,6 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 
 	private Entity target;
 	private NPCBrain brain;
-	private Team team;
 
 	public NPCEntity(InstanceType<T> type)
 	{
@@ -175,11 +174,4 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 		return this.brain;
 	}
 
-	public Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
-	}
 }

@@ -20,6 +20,7 @@ public class DefaultBuilder extends ChainedBuilder
 		register(new TileTypeBuilder());
 		register(new TerrainTypeBuilder());
 		register(new AbilityCategoryBuilder());
+		register(new NPCTypeBuilder());
 	}
 
 }

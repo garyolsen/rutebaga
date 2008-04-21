@@ -11,7 +11,6 @@ public class Team {
 
 	private String name;
 	private Map<Team, HostilityRating> hostilityMap = new HashMap();
-	private Collection<Entity> entities = new HashSet<Entity>();
 
 	public Team(String name) {
 		this.name = name;
@@ -25,12 +24,28 @@ public class Team {
 		this.name = name;
 	}
 	
-	public void addEntityTo(Entity entity) {
-		entities.add(entity);
+	public void changeHostility(Team team, double amount) {
+		if (hostilityMap.containsKey(team))
+		{
+			HostilityRating hostility = hostilityMap.get(team);
+			hostility.setRating(hostility.getRating() + amount);
+		} else
+		{
+			HostilityRating hostility = new HostilityRating(amount);
+			hostilityMap.put(team, hostility);
+		}
 	}
 	
-	public Collection<Entity> getEntities() {
-		return entities;
+	public void changeHostility(Entity entity, double amount) {
+		if (hostilityMap.containsKey(entity.getTeam()))
+		{
+			HostilityRating hostility = hostilityMap.get(entity.getTeam());
+			hostility.setRating(hostility.getRating() + amount);
+		} else
+		{
+			HostilityRating hostility = new HostilityRating(amount);
+			hostilityMap.put(entity.getTeam(), hostility);
+		}
 	}
 
 }
