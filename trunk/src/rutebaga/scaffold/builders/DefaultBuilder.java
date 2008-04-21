@@ -23,6 +23,7 @@ public class DefaultBuilder extends ChainedBuilder
 		register(new NPCTypeBuilder());
 		register(new DamageBuilder());
 		register(new DamageTypeBuilder());
+		register(new AbilityTypeBuilder());
 	}
 
 }

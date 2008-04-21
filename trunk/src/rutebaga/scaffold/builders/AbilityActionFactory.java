@@ -14,30 +14,29 @@ import rutebaga.scaffold.MasterScaffold;
 
 public class AbilityActionFactory
 {
-	private static Pattern pattern = Pattern.compile("[\\s\\t]*(\\w+)[\\s\\t]*(.*)");
-	private static int NAME_IDX = 1;
-	private static int EXPR_IDX = 2;
-	
-	private static Pattern damage_pattern = Pattern.compile("(\\w+)[\\s\\t]*(.*)");
-	private static int DAMAGE_DAMAGE_ID = 1;
-	private static int DAMAGE_EXPR = 2;
+	private static Pattern pattern = ConfigFileBuilder.pattern;
+	private static int NAME_IDX = ConfigFileBuilder.NAME_GP;
+	private static int EXPR_IDX = ConfigFileBuilder.VALUE_GP;
 	
 	public AbilityAction get(String description, MasterScaffold scaffold)
 	{
+		System.out.println(description);
 		Matcher m = pattern.matcher(description);
+		m.matches();
 		String type = m.group(NAME_IDX);
 		String expr = m.group(EXPR_IDX);
 		m = null;
 		
 		if("damage".equals(type))
 		{
-			m = damage_pattern.matcher(expr);
-			String damageId = m.group(DAMAGE_DAMAGE_ID);
-			String damageExpr = m.group(DAMAGE_EXPR);
+			m = pattern.matcher(expr);
+			m.matches();
+			String damageId = m.group(NAME_IDX);
+			String damageExpr = m.group(EXPR_IDX);
 			
 			Damage damage = (Damage) scaffold.get(damageId);
 			
-			ValueProvider<Entity> vp = DefaultValueProviderFactory.getInstance().get(damageExpr, scaffold);
+			ValueProvider<Entity> vp = DefaultValueProviderFactory.getInstance().parse(damageExpr, scaffold);
 			
 			return new DamageAction(vp, damage);
 		}

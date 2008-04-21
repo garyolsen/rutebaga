@@ -25,17 +25,27 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 		return properties.keySet().toArray(new String[0]);
 	}
 
-	private static Pattern pattern = Pattern
-			.compile("(#.*)?([^\\s\\t]+)?[\\s\\t]*(.*?)[\\s\\t]*(#.*)?"); // matches
+	public final static Pattern pattern = Pattern
+			.compile("[\\s\\t]*(#.*)?([^\\s\\t]+)?[\\s\\t]*(.*?)[\\s\\t]*(#.*)?"); // matches
+
+	private static Pattern multilineStartPattern = Pattern
+			.compile("[\\s\\t]*(\\w+)[\\s\\t]*\\{.*");
+	private static int MULTILINE_NAME_IDX = 1;
+	private static Pattern multilineEndPattern = Pattern.compile(".*\\}.*");
+	
 	// each
 	// line,
 	// excluding
 	// comments
-	private static int NAME_GP = 2; // the group of the name
-	private static int VALUE_GP = 3; // the group of the value
+	public static int NAME_GP = 2; // the group of the name
+	public static int VALUE_GP = 3; // the group of the value
+
+	private ArrayList activeInnerList;
 
 	private Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>();
+	private Map<String, Map<String, ArrayList>> innerLists = new HashMap<String, Map<String, ArrayList>>();
 
+	private String currentId;
 	private Map<String, String> current;
 
 	public ConfigFileBuilder()
@@ -43,11 +53,47 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 		String path = getDefaultFileName();
 		new FileProcessor().execute(this, path);
 	}
+	
+	public ArrayList<String> getInnerList(String id, String property)
+	{
+		return innerLists.get(id).get(property);
+	}
 
 	public void processLine(String readData)
 	{
 		if (readData == null || readData.equals(""))
 			return;
+
+		if (activeInnerList != null)
+		{
+			Matcher endMatcher = multilineEndPattern.matcher(readData);
+			if (endMatcher.matches())
+			{
+				activeInnerList = null;
+				return;
+			}
+			else
+			{
+				activeInnerList.add(readData);
+			}
+		}
+		else
+		{
+			Matcher startMatcher = multilineStartPattern.matcher(readData);
+			if (startMatcher.matches())
+			{
+				String propertyName = startMatcher.group(MULTILINE_NAME_IDX);
+				activeInnerList = new ArrayList();
+				if (innerLists.get(currentId) == null)
+				{
+					innerLists.put(currentId, new HashMap<String, ArrayList>());
+				}
+				innerLists.get(currentId).put(propertyName, activeInnerList);
+				
+				return;
+			}
+		}
+
 		Matcher m = pattern.matcher(readData);
 		String[] tokens = null;
 		if (m.matches())
@@ -66,6 +112,8 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			return;
 		if (tokens[1] == null || tokens[1].equals(""))
 		{
+			// this is a new id
+			currentId = tokens[0];
 			rutebaga.commons.Log.log();
 			current = new HashMap<String, String>();
 			properties.put(tokens[0], current);
@@ -84,7 +132,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	protected Object getObjectFor(String id, String property,
 			MasterScaffold scaffold)
 	{
-		if(!contains(id, property))
+		if (!contains(id, property))
 			return null;
 		if (scaffold.get(id) != null)
 			return scaffold.get(properties.get(id).get(property));
@@ -112,19 +160,20 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 
 	public Double getDouble(String id, String property)
 	{
-		if(!contains(id, property))
+		if (!contains(id, property))
 			return null;
 		return Double.parseDouble(getProperty(id, property));
 	}
-	
+
 	public boolean contains(String id, String property)
 	{
-		return getProperty(id, property) != null && !getProperty(id, property).equals("");
+		return getProperty(id, property) != null
+				&& !getProperty(id, property).equals("");
 	}
 
 	public Boolean getBoolean(String id, String property)
 	{
-		if(!contains(id, property))
+		if (!contains(id, property))
 			return null;
 		return Boolean.parseBoolean(getProperty(id, property));
 	}
@@ -132,7 +181,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	public ValueProvider getValueProvider(String id, String property,
 			MasterScaffold scaffold)
 	{
-		if(!contains(id, property))
+		if (!contains(id, property))
 			return null;
 		String expr = getProperty(id, property);
 		if (expr.charAt(0) == '$')
@@ -148,15 +197,14 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 			return v.getValueProvider();
 		}
 	}
-	
-	public Rule[] getRules(String id, String property,
-			MasterScaffold scaffold)
+
+	public Rule[] getRules(String id, String property, MasterScaffold scaffold)
 	{
-		if(!contains(id, property))
+		if (!contains(id, property))
 			return new Rule[0];
 		String[] ids = getStringArray(id, property, "[\\w\\t]");
 		List<Rule> rules = new ArrayList<Rule>();
-		for(String strId : ids)
+		for (String strId : ids)
 		{
 			DefaultRuleFactory.getInstance().get(strId, scaffold);
 		}
@@ -165,7 +213,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 
 	public String[] getStringArray(String id, String property, String regexp)
 	{
-		if(!contains(id, property))
+		if (!contains(id, property))
 			return new String[0];
 		String prop = getProperty(id, property);
 		if (prop == null)
@@ -177,7 +225,7 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 	public Object[] getObjectArray(String id, String property, String regexp,
 			MasterScaffold scaffold)
 	{
-		if(!contains(id, property))
+		if (!contains(id, property))
 			return new Object[0];
 		ArrayList list = new ArrayList();
 		for (String scaffId : getStringArray(id, property, regexp))
@@ -186,11 +234,11 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 		}
 		return list.toArray();
 	}
-	
+
 	public SymbolicFunction getFunction(String id, String property,
 			MasterScaffold scaffold)
 	{
-		if(!contains(id, property))
+		if (!contains(id, property))
 			return null;
 		String expr = getProperty(id, property);
 		if (expr.charAt(0) == '$')
@@ -199,7 +247,9 @@ public abstract class ConfigFileBuilder implements Builder, ReaderProcessor
 		}
 		else
 		{
-			ParseTreeNode n = new ReversePolishParser(DefaultValueProviderFactory.getInstance(), scaffold).parse(expr);
+			ParseTreeNode n = new ReversePolishParser(
+					DefaultValueProviderFactory.getInstance(), scaffold)
+					.parse(expr);
 			SymbolicFunction s = new SymbolicFunction();
 			s.setTreeRoot(n);
 			return s;

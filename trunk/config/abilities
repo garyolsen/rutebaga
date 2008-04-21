@@ -1,5 +1,8 @@
-abHarm
-name	Harm
-{
-		
+abDemi	# reduces a target's HP by 1/4
+
+name		Demi
+category	abcatSpells
+actions {
+	damage		dmgTpDemi	4		
 }
+

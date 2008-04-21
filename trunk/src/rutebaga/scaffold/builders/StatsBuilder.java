@@ -57,7 +57,9 @@ public class StatsBuilder extends ConfigFileBuilder
 		else
 		{
 			rutebaga.commons.Log.log("concrete stat " + getProperty(id, "default"));
-			statId.setInitialValue(getDouble(id, "default"));
+			Double init = getDouble(id, "default");
+			if(init != null)
+				statId.setInitialValue(init);
 		}
 	}
 

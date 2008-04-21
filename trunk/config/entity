@@ -4,7 +4,7 @@ walking		imgMario
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
 movement	whitelist terrGrass
 
 entityMario
@@ -12,7 +12,7 @@ standing 	imgMario
 walking		imgMario
 moveSpd		$vpEntityMovementSpeed	
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
 movement	whitelist terrGrass
 
 entityWetMario
