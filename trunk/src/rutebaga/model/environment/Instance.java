@@ -416,4 +416,6 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 		}
 	}
 
+	public abstract void setMass(double mass);
+
 }

@@ -202,5 +202,8 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 		this.pausing = pausing;
 	}
 	
+	public void makeSpeech(Entity entity, String speech) {
+		
+	}
 
 }

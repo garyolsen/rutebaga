@@ -66,4 +66,9 @@ public class Decal extends Instance
 			remove();
 	}
 
+	@Override
+	public void setMass(double mass) {
+		// can't set decal's mass
+	}
+
 }

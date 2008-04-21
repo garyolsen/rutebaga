@@ -44,6 +44,11 @@ public abstract class InstanceBuilder<T extends ConcreteInstanceType> extends
 		}
 		instance.setMovementAttributes(attr);
 		instance.setName( getProperty(id, "name") );
+		
+		if (getDouble(id, "mass") != null)
+			instance.setMass( getDouble(id, "mass") );
+		else
+			instance.setMass( 1.0 );
 
 		String appManDesc = getProperty(id, "appearance");
 		AppearanceManagerDefinition appDef = AppearanceDefFactory.getInstance()

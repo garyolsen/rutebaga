@@ -32,4 +32,6 @@ public interface Inventory
 	Set<Item> getItems();
 	
 	boolean remove(Item item);
+	
+	public double getWeight();
 }

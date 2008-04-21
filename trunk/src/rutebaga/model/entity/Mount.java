@@ -17,6 +17,7 @@ public class Mount<T extends Mount<T>> extends Entity<T> {
 
 	private Entity mountee;
 	private Vehicle vehicle;
+	private double mass = 1.0;
 	
 	private List<EntityEffect> onDismount = new ArrayList<EntityEffect>();
 
@@ -129,6 +130,11 @@ public class Mount<T extends Mount<T>> extends Entity<T> {
 			mountee.accept(effect);
 			
 		return null;
+	}
+
+	@Override
+	public void setMass(double mass) {
+		this.mass = mass;
 	}
 
 }
