@@ -5,7 +5,7 @@ lifetime		100
 
 decBeam
 
-appearance		animated imgBeam 2 C
+appearance		animated imgBeam 2 S
 lifetime		38
 
 decBolt

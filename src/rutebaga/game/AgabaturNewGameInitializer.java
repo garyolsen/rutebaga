@@ -1,6 +1,5 @@
 package rutebaga.game;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,6 +17,7 @@ import rutebaga.controller.GameInitializer;
 import rutebaga.game.testing.Gary;
 import rutebaga.game.testing.Nick;
 import rutebaga.model.effect.AreaEffectType;
+import rutebaga.model.entity.AbilityCategory;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.npc.NPCEntity;
@@ -29,6 +29,7 @@ import rutebaga.model.environment.Hex2DTileConvertor;
 import rutebaga.model.environment.MatrixTileConvertor;
 import rutebaga.model.environment.MovementAttributeSet;
 import rutebaga.model.environment.PolarTileConvertor;
+import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.World;
 import rutebaga.model.environment.appearance.Appearance;
@@ -40,6 +41,7 @@ import rutebaga.model.map.TerrainType;
 import rutebaga.model.map.Tile;
 import rutebaga.model.map.TileType;
 import rutebaga.scaffold.MasterScaffold;
+import sun.security.krb5.Config;
 
 public class AgabaturNewGameInitializer implements GameInitializer
 {
@@ -50,7 +52,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 	private static Environment environment;
 	private static double angle;
-	
+
 	public static Entity trackedEntity;
 
 	public AgabaturNewGameInitializer(MasterScaffold scaffold)
@@ -69,12 +71,17 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				* v, v * v, 1 / (u * u + v * v));
 		MatrixTileConvertor parr = new MatrixTileConvertor(0, 0, 0.5, 1);
 		MatrixTileConvertor scale = new MatrixTileConvertor(1, 0, 0, 1);
-		environment = new Environment(new ChainedMatrixConvertor(
-				new Hex2DTileConvertor(), scale));
-		
+
 		Properties config = (Properties) scaffold.get("confGame");
 
-		if ("true".equals(config.get("fuckingCrazy")))
+		if (config.get("useHex").equals("true"))
+			environment = new Environment(new ChainedMatrixConvertor(
+					new Hex2DTileConvertor(), scale));
+		else
+			environment = new Environment(new ChainedMatrixConvertor(
+					new Rect2DTileConvertor(), scale));
+
+		if ("true".equals(config.get("crazy")))
 		{
 			new Thread()
 			{
@@ -126,10 +133,13 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		AreaEffectType healer = (AreaEffectType) scaffold.get("aoeHealer");
 		AreaEffectType mover = (AreaEffectType) scaffold.get("aoeSpeeder");
 		AreaEffectType damager = (AreaEffectType) scaffold.get("aoeTeleport");
-		
-		AreaEffectType oneshotMP = (AreaEffectType) scaffold.get("aoeOneShotMana");
-		AreaEffectType oneshotHP = (AreaEffectType) scaffold.get("aoeOneShotHealth");
-		
+		AreaEffectType harm = (AreaEffectType) scaffold.get("aoeHarm");
+
+		AreaEffectType oneshotMP = (AreaEffectType) scaffold
+				.get("aoeOneShotMana");
+		AreaEffectType oneshotHP = (AreaEffectType) scaffold
+				.get("aoeOneShotHealth");
+
 		ItemType<?> sword = (ItemType<?>) scaffold.get("itemSword");
 		ItemType<?> mushroom = (ItemType<?>) scaffold.get("itemMushroom");
 		ItemType<?> coin = (ItemType<?>) scaffold.get("itemStarman");
@@ -140,12 +150,12 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		StatisticId hp = (StatisticId) scaffold.get("statHp");
 		StatisticId mana = (StatisticId) scaffold.get("statMp");
 		StatisticId exp = (StatisticId) scaffold.get("statExperience");
-		
+
 		displayedStats = new ArrayList<StatisticId>();
 		displayedStats.add(hp);
 		displayedStats.add(mana);
 		displayedStats.add(exp);
-		
+
 		StatisticId movement = (StatisticId) scaffold.get("statMovement");
 
 		TerrainType grassTerrain = (TerrainType) scaffold.get("terrGrass");
@@ -168,45 +178,54 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				{
 					tile = grass.makeInstance();
 
-				
-					if (random.nextInt(15) == 0){
-						switch(random.nextInt(4)){
-							case 0:
-								environment.add(healer.makeInstance(), location);
+					if (random.nextInt(15) == 0)
+					{
+						switch (random.nextInt(5))
+						{
+						case 0:
+							environment.add(healer.makeInstance(), location);
 							break;
-							case 1:
-								environment.add(damager.makeInstance(), location);
+						case 1:
+							environment.add(damager.makeInstance(), location);
 							break;
-							case 2:
-								environment.add(oneshotHP.makeInstance(), location);
-								break;
-							case 3:
-								environment.add(oneshotMP.makeInstance(), location);
+						case 2:
+							environment.add(oneshotHP.makeInstance(), location);
+							break;
+						case 3:
+							environment.add(oneshotMP.makeInstance(), location);
+							break;
+						case 4:
+							environment.add(harm.makeInstance(), location);
+							break;
 						}
 					}
-					else if (random.nextInt(15) == 0){
-						switch(random.nextInt(6)){
-							case 0:
-								environment.add(sword.makeInstance(), location);
+					else if (random.nextInt(15) == 0)
+					{
+						switch (random.nextInt(6))
+						{
+						case 0:
+							environment.add(sword.makeInstance(), location);
 							break;
-							case 1:	
-								environment.add(starman.makeInstance(), location);
+						case 1:
+							environment.add(starman.makeInstance(), location);
 							break;
-							case 2:
-								environment.add(mushroom.makeInstance(), location);
+						case 2:
+							environment.add(mushroom.makeInstance(), location);
 							break;
-							case 3:
-								environment.add(coin.makeInstance(), location);
+						case 3:
+							environment.add(coin.makeInstance(), location);
 							break;
-							case 4:
-								environment.add(fireflower.makeInstance(), location);
+						case 4:
+							environment
+									.add(fireflower.makeInstance(), location);
 							break;
-							case 5:
-								environment.add(bananapeel.makeInstance(), location);
+						case 5:
+							environment
+									.add(bananapeel.makeInstance(), location);
 							break;
-							}
+						}
 					}
-					
+
 				}
 				else if (random.nextDouble() < waterTileProb)
 				{
@@ -261,29 +280,42 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				}
 			}
 		}
-		
+
 		for (String key : scaffold.getKeys())
 		{
 			Object obj = scaffold.get(key);
-			if(obj == null)
+			if (obj == null)
 				continue;
-			//System.out.println(key + "\t\t" + obj.getClass().getSimpleName() + "\t\t" + obj);
+			// System.out.println(key + "\t\t" + obj.getClass().getSimpleName()
+			// + "\t\t" + obj);
 		}
 
 		avatar1 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
-		avatar2 = ((EntityType<?>) scaffold.get("entityWetMario")).makeInstance();
+		avatar2 = ((EntityType<?>) scaffold.get("entityWetMario"))
+				.makeInstance();
 		avatar3 = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
-		EntityAppearanceManager wetManager1 = new EntityAppearanceManager(avatar1);
-		EntityAppearanceManager wetManager2 = new EntityAppearanceManager(avatar2);
-		EntityAppearanceManager wetManager3 = new EntityAppearanceManager(avatar3);
-/*		wetManager.setStanding(((EntityType<?>) scaffold.get("entityWetMario"))
-				.getStanding());
-		wetManager.setWalking(((EntityType<?>) scaffold.get("entityWetMario"))
-				.getWalking());
-		avatar.setAppearanceManager(wetManager);*/
+		EntityAppearanceManager wetManager1 = new EntityAppearanceManager(
+				avatar1);
+		EntityAppearanceManager wetManager2 = new EntityAppearanceManager(
+				avatar2);
+		EntityAppearanceManager wetManager3 = new EntityAppearanceManager(
+				avatar3);
+		
+		SneakAbility ability = new SneakAbility(movement);
+		ability.setMovement(movement);
+		ability.setCategory((AbilityCategory) scaffold.get("abcatAttacks"));
+		ability.setName("Sneak");
+		avatar1.addAbility(ability);
+		/*
+		 * wetManager.setStanding(((EntityType<?>)
+		 * scaffold.get("entityWetMario")) .getStanding());
+		 * wetManager.setWalking(((EntityType<?>)
+		 * scaffold.get("entityWetMario")) .getWalking());
+		 * avatar.setAppearanceManager(wetManager);
+		 */
 
 		SlotType hand = (SlotType) scaffold.get("slotHand");
-		
+
 		avatar1.getInventory().addSlotAllocation(hand, 4);
 		avatar2.getInventory().addSlotAllocation(hand, 4);
 		avatar3.getInventory().addSlotAllocation(hand, 4);
@@ -317,56 +349,58 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		int xMin = mapBounds[0];
 		int yMin = mapBounds[2];
 
-//		for (int i = 0; i < numNpcs; i++)
-//		{
-//			NPCEntity<?> npc1 = new NPCEntity(null);
-//			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
-//
-//			EntityAppearanceManager manager = new EntityAppearanceManager(npc1);
-//			manager.setStanding(((EntityType<?>) scaffold.get("entityDefault"))
-//					.getStanding());
-//			manager.setWalking(((EntityType<?>) scaffold.get("entityDefault"))
-//					.getWalking());
-//			npc1.setAppearanceManager(manager);
-//
-//			npc1.whiteListTerrainTypes(grassTerrain, waterTerrain);
-//			npc1.setTarget(avatar);
-//
-//			Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
-//					random.nextInt(yRng) + yMin);
-//			rutebaga.commons.Log.log("placing npc at " + location);
-//			environment.add(npc1, location);
-//		}
+		// for (int i = 0; i < numNpcs; i++)
+		// {
+		// NPCEntity<?> npc1 = new NPCEntity(null);
+		// npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
+		//
+		// EntityAppearanceManager manager = new EntityAppearanceManager(npc1);
+		// manager.setStanding(((EntityType<?>) scaffold.get("entityDefault"))
+		// .getStanding());
+		// manager.setWalking(((EntityType<?>) scaffold.get("entityDefault"))
+		// .getWalking());
+		// npc1.setAppearanceManager(manager);
+		//
+		// npc1.whiteListTerrainTypes(grassTerrain, waterTerrain);
+		// npc1.setTarget(avatar);
+		//
+		// Vector2D location = new Vector2D(random.nextInt(xRng) + xMin,
+		// random.nextInt(yRng) + yMin);
+		// rutebaga.commons.Log.log("placing npc at " + location);
+		// environment.add(npc1, location);
+		// }
 
 		for (int i = 0; i < numNpcs; i++)
 		{
-			NPCEntity<?> npc1 = ((NPCType<?>) scaffold.get("npcBlueNPC")).makeInstance();
-			
+			NPCEntity<?> npc1 = ((NPCType<?>) scaffold.get("npcBlueNPC"))
+					.makeInstance();
+
 			trackedEntity = npc1;
 
 			npc1.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.09));
 
 			EntityAppearanceManager manager = new EntityAppearanceManager(npc1);
 
-			switch(random.nextInt(3)){
-				case 0:
-				manager.setStanding(((EntityType<?>) scaffold.get("entityNPCGoomba"))
-							.getStanding());
-					manager.setWalking(((EntityType<?>) scaffold.get("entityNPCGoomba"))
-							.getWalking());
+			switch (random.nextInt(3))
+			{
+			case 0:
+				manager.setStanding(((EntityType<?>) scaffold
+						.get("entityNPCGoomba")).getStanding());
+				manager.setWalking(((EntityType<?>) scaffold
+						.get("entityNPCGoomba")).getWalking());
 				break;
-				case 1:
-					manager.setStanding(((EntityType<?>) scaffold.get("entityNPCKoopa"))
-								.getStanding());
-						manager.setWalking(((EntityType<?>) scaffold.get("entityNPCKoopa"))
-								.getWalking());
-					break;
-				case 2:
-					manager.setStanding(((EntityType<?>) scaffold.get("entityNPCShyguy"))
-								.getStanding());
-						manager.setWalking(((EntityType<?>) scaffold.get("entityNPCShyguy"))
-								.getWalking());
-					break;
+			case 1:
+				manager.setStanding(((EntityType<?>) scaffold
+						.get("entityNPCKoopa")).getStanding());
+				manager.setWalking(((EntityType<?>) scaffold
+						.get("entityNPCKoopa")).getWalking());
+				break;
+			case 2:
+				manager.setStanding(((EntityType<?>) scaffold
+						.get("entityNPCShyguy")).getStanding());
+				manager.setWalking(((EntityType<?>) scaffold
+						.get("entityNPCShyguy")).getWalking());
+				break;
 			}
 			npc1.setAppearanceManager(manager);
 
@@ -377,18 +411,19 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					random.nextInt(yRng) + yMin);
 			environment.add(npc1, location);
 		}
-		
+
 		world = new World();
 		world.add(environment);
-		
-		Gary.run(environment, scaffold, avatar1);
 
-		Nick.run(environment, scaffold, avatar2);
+		// Gary.run(environment, scaffold, avatar1);
 
-		
+		// Nick.run(environment, scaffold, avatar2);
+
 		// Make sure avatar's stats are all initialized
-		Collection<?> stats = (Collection<?>) scaffold.get("globalAllStatsList");
-		for (Object stat: stats) {
+		Collection<?> stats = (Collection<?>) scaffold
+				.get("globalAllStatsList");
+		for (Object stat : stats)
+		{
 			avatar1.getStats().getStatObject((StatisticId) stat);
 			avatar2.getStats().getStatObject((StatisticId) stat);
 			avatar3.getStats().getStatObject((StatisticId) stat);
@@ -397,7 +432,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 	public Entity[] getAvatars()
 	{
-		return new Entity[]{avatar1, avatar2, avatar3};
+		return new Entity[]
+		{ avatar1, avatar2, avatar3 };
 	}
 
 	public World getWorld()
@@ -405,7 +441,8 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		return world;
 	}
 
-	public Collection<StatisticId> getDisplayedStats() {
+	public Collection<StatisticId> getDisplayedStats()
+	{
 		return displayedStats;
 	}
 
