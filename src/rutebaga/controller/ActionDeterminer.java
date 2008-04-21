@@ -14,6 +14,7 @@ import rutebaga.controller.command.CommandQueue;
 import rutebaga.controller.command.CreateContextMenuCommand;
 import rutebaga.controller.command.FixedLabelDeterminer;
 import rutebaga.controller.command.LabelDeterminer;
+import rutebaga.controller.command.QueueCommand;
 import rutebaga.controller.command.ShopkeeperInventoryCommandFactory;
 import rutebaga.controller.command.list.AbilityListElementSource;
 import rutebaga.controller.command.list.AbilityUseListElementFactory;
@@ -27,6 +28,7 @@ import rutebaga.controller.command.list.StatsListElementFactory;
 import rutebaga.controller.command.list.StatsListElementSource;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.Mount;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.StatValue;
 import rutebaga.model.environment.ConcreteInstanceSet;
@@ -76,20 +78,25 @@ public class ActionDeterminer
 	 */
 	public ElementalList determineActions(Instance<?> target, CommandQueue queue) {
 		ConcreteElementalList list = new ConcreteElementalList();
-		if (avatar == target) {
+		if (avatar == target || avatar.getMount() == target) {
 			addSelfCommands(list, queue);
 			addAbilityCommands(list, avatar, queue);
-		}
-		
-		InstanceSet instanceType = new ConcreteInstanceSet();
-		instanceType.add(target);
-		
-		if(instanceType.getEntities().size() != 0 && avatar != target) {
-			Entity<?> entity = (Entity<?>) target;
+			if(avatar.getMount() != null) {
+				QueueCommand qC = QueueCommand.makeForQueue(new DismountCommand(avatar.getMount(), avatar), queue);
+				list.add("Dismount", qC);
+			}
 			
-			addTargetCommands(list, entity, queue);
+		}  else {
+			
+			InstanceSet instanceType = new ConcreteInstanceSet();
+			instanceType.add(target);
+			
+			if(instanceType.getEntities().size() != 0 && avatar != target) {
+				Entity<?> entity = (Entity<?>) target;
+				
+				addTargetCommands(list, entity, queue);
+			}
 		}
-		
 		list.add("Close", new CloseContextMenuCommand(facade));
 		
 		return list;
@@ -137,6 +144,12 @@ public class ActionDeterminer
 		if(target.getStoreFront() != null) {
 			command = new CreateStoreBuyMenuCommand(target, queue);
 			list.add("Buy", command);
+		}
+		
+		if(target instanceof Mount) {
+			
+			QueueCommand qC = QueueCommand.makeForQueue(new MountCommand((Mount) target, avatar), queue);
+			list.add("Mount", qC);
 		}
 	}
 	
@@ -252,6 +265,50 @@ public class ActionDeterminer
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
 			facade.createSubContextMenu(createCloseableList(list));
+		}
+		
+	}
+	
+	
+	private class MountCommand implements Command {
+
+		private Mount mount;
+		private Entity entity;
+		
+		public MountCommand(Mount mount, Entity avatar) {
+			this.mount = mount;
+			this.entity = avatar;
+		}
+		
+		public void execute() {
+			System.out.println("Mounting!");
+			entity.mount(mount);
+			facade.clearContextMenuStack();
+		}
+
+		public boolean isFeasible() {
+			return true;
+		}
+		
+	}
+	
+	private class DismountCommand implements Command {
+
+		private Mount mount;
+		private Entity entity;
+		
+		public DismountCommand(Mount mount, Entity avatar) {
+			this.mount = mount;
+			this.entity = avatar;
+		}
+		
+		public void execute() {
+			entity.dismount(mount);
+			facade.clearContextMenuStack();
+		}
+
+		public boolean isFeasible() {
+			return true;
 		}
 		
 	}
