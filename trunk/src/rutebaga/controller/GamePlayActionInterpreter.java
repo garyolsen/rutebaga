@@ -397,7 +397,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 	private void updateTargetedTile() {
 		if (target != null) {
-			// FIXME: lol
+			// TODO: lol
 			IntVector2D tileCoordinate = avatar.getEnvironment()
 					.getTileConvertor().tileOf(target.getCoordinate());
 			if (!avatar.canSee(tileCoordinate)) {

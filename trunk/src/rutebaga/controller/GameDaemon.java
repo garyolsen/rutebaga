@@ -146,10 +146,15 @@ public class GameDaemon implements InterpreterManager {
 		view.addMouseListener(mouseProcessor);
 		this.ticker.setListener(new TickListener() {
 			public void tick() {
-				GameDaemon.this.keyBuffer.poll(keyProcessor);
-				GameDaemon.this.commandQueue.processQueue();
-				GameDaemon.this.tick();
-				GameDaemon.this.view.renderFrame();
+				try {
+					GameDaemon.this.keyBuffer.poll(keyProcessor);
+					GameDaemon.this.commandQueue.processQueue();
+					GameDaemon.this.tick();
+					GameDaemon.this.view.renderFrame();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		/*
