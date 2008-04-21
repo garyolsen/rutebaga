@@ -400,7 +400,8 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			refreshTargetObservable();
 		} else {
 			target = null;
-			facade.clearContextMenuStack();
+			if (facade != null)
+				facade.clearContextMenuStack();
 		}
 	}
 }
