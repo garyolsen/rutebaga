@@ -8,7 +8,7 @@ actions {
 	spawn		source static decFire			
 }
 
-name		MagicMissle
+name		Magic Missle
 category	abcatSpells
 actions{
 	damage		dmgTPMagicMissle	10
@@ -23,5 +23,11 @@ actions{
 name		Death
 category	abcatSpells
 actions{
-	dmgTpDeath
+	damage		dmgTpDeath
+}
+
+name		Sneak Attack
+category	abcatAttacks
+actions{
+	damage		dmgTpSneakAttack
 }
