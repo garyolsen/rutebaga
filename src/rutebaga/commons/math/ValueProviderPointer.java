@@ -1,6 +1,6 @@
 package rutebaga.commons.math;
 
-public class ValueProviderPointer<T> extends ValueProvider<T>
+public class ValueProviderPointer<T> extends BidirectionalValueProvider<T>
 {
 	private ValueProvider<T> ref;
 
@@ -29,5 +29,18 @@ public class ValueProviderPointer<T> extends ValueProvider<T>
 	public void setRef(ValueProvider<T> ref)
 	{
 		this.ref = ref;
+	}
+
+	@Override
+	public double addTo(T t, double value)
+	{
+		try
+		{
+			return ((BidirectionalValueProvider<T>) ref).addTo(t, value);
+		}
+		catch (Exception e)
+		{
+			throw new UnsupportedOperationException();
+		}
 	}
 }
