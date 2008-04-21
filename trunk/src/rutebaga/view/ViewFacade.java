@@ -16,8 +16,10 @@ import rutebaga.model.entity.Entity;
 import rutebaga.view.game.*;
 import rutebaga.view.rwt.ButtonComponent;
 import rutebaga.view.rwt.ContextMenu;
+import rutebaga.view.rwt.DialogDecorator;
 import rutebaga.view.rwt.ScrollDecorator;
 import rutebaga.view.rwt.TextFieldListener;
+import rutebaga.view.rwt.TextLabelComponent;
 import rutebaga.view.rwt.View;
 import rutebaga.view.rwt.ViewComponent;
 import rutebaga.view.rwt.ViewCompositeComponent;
@@ -228,12 +230,21 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createDialogMenu(ElementalList list, Vector2D vector) {
-		return 0;
+	public int createDialogMenu(String dialog, Vector2D vector) {
+		TextLabelComponent text = new TextLabelComponent(dialog);
+		
+		DialogDecorator decorator = new DialogDecorator(text, 150, 100);
+		
+		decorator.setLocation(vector.getX().intValue(), vector.getY().intValue() - decorator.getHeight());
+		
+		prepareContextStack();
+		contextStack.add(decorator);
+		
+		return contextStack.size();
 	}
 
-	public int createDialogMenu(ElementalList list) {
-		return createDialogMenu(list, new Vector2D(view.getWidth() / 2, view
+	public int createDialogMenu(String dialog) {
+		return createDialogMenu(dialog, new Vector2D(view.getWidth() / 2, view
 				.getHeight() / 2));
 	}
 

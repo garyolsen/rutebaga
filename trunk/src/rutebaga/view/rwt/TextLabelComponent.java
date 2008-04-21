@@ -65,6 +65,8 @@ public class TextLabelComponent extends ViewComponent {
 			break;
 		}
 		
+		this.setBounds(getX(), getY(), metrics.stringWidth(label), getHeight());
+		
 		draw.drawString(p, label);
 	}
 	
