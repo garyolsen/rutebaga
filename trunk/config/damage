@@ -14,5 +14,5 @@ dstat		statHp
 dmgTpPunch
 
 type		dmgPhysical
-function	/ &VP_@entityStats_VP_stat_statHardiness amount
+function	- amount &VP_@entityStats_VP_stat_statHardiness 
 dstat		statHP
