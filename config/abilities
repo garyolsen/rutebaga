@@ -7,6 +7,9 @@ actions{
 	spawn		target	static decBubble
 	entityeffect	source	eeff_Spell_MP	
 }
+feasibility {
+	gate 19 VP_@entityStats_VP_stat_statMp
+}
 
 abShell
 
@@ -17,6 +20,9 @@ actions{
 	spawn		target	static decShell
 	entityeffect	source	eeff_Spell_MP	
 }
+feasibility {
+	gate 19 VP_@entityStats_VP_stat_statMp
+}
 
 abHeal
 
@@ -26,6 +32,9 @@ actions{
 	damage		dmgTpHeal	- 0 10
 	spawn		target	static decLife
 	entityeffect	source	eeff_Spell_MP	
+}
+feasibility {
+	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
 abBolt
