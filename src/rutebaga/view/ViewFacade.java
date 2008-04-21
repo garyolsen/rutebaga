@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 
@@ -13,11 +14,13 @@ import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.command.list.ListElement;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.stats.StatValue;
 import rutebaga.view.game.*;
 import rutebaga.view.rwt.ButtonComponent;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.DialogDecorator;
 import rutebaga.view.rwt.ScrollDecorator;
+import rutebaga.view.rwt.StatRibbon;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.TextLabelComponent;
 import rutebaga.view.rwt.View;
@@ -123,7 +126,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	}
 
 	public void createGamePlayScreen(Entity avatar,
-			TargetInstanceObservable observable) {
+			TargetInstanceObservable observable, Collection<StatValue> stats) {
 		clearView();
 
 		view.addViewComponent(new MapComponent(observable, avatar, view.getWidth(), view.getHeight()));
@@ -131,9 +134,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 		FPSTextComponent fps = new FPSTextComponent();
 		fps.setFontColor(Color.RED);
 		fps.setLocation(100, 100);
-
 		view.addViewComponent(fps);
 
+		StatRibbon ribbon = new StatRibbon(stats);
+		view.addViewComponent(ribbon);
 	}
 
 	/**

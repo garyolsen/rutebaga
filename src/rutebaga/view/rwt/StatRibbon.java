@@ -1,22 +1,29 @@
 package rutebaga.view.rwt;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.util.Collection;
 
 import rutebaga.controller.command.Command;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.stats.StatValue;
 import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.view.drawer.ColorAttribute;
 import rutebaga.view.drawer.Drawer;
+import rutebaga.view.drawer.FontAttribute;
 
 public class StatRibbon extends ViewComponent {
 	
 	private CloseCommand close = new CloseCommand();
 	private OpenCommand open = new OpenCommand();
 	
-	private ColorAttribute color = new ColorAttribute(Color.GRAY);
+	private ColorAttribute backgroundColor = new ColorAttribute(Color.GRAY);
+	private ColorAttribute textColor = new ColorAttribute(Color.BLACK);
+	private ColorAttribute barColor = new ColorAttribute(Color.YELLOW);
+	private FontAttribute font = new FontAttribute(new Font("Arial", Font.BOLD, 12));
 	
 	private ButtonComponent button;
 	
@@ -25,28 +32,45 @@ public class StatRibbon extends ViewComponent {
 	
 	private boolean toggled = false;
 	
-	private int HEIGHT = 30;
+	private int buttonWidth = 14;
 	
-	private Entity entity;
-	private StatisticId id1, id2;
+	private int barHeight = 20;
+	private int barSpacing = 4;
+	private int margin = 5;
+	private int borderWidth = 2;
+	
+	private Collection<StatValue> stats;
 
-	public StatRibbon(Entity entity, StatisticId id1, StatisticId id2) {
+	public StatRibbon(Collection<StatValue> stats) {
 		button = new ButtonComponent(">");
-		button.setBounds(0, 0, 10, HEIGHT);
+		button.setBounds(0, 0, buttonWidth, (barHeight + barSpacing) * stats.size() + margin * 2 - barSpacing);
 		button.setCommand(open);
 		this.setBounds(button.getBounds());
 		
-		this.entity = entity;
-		this.id1 = id1;
-		this.id2 = id2;
+		this.stats = stats;
 	}
 	
 	public void draw(Drawer draw) {
-		draw.setAttribute(color);
-		draw.drawRectangle(getLocation(), (toggled) ? openX : closedX , HEIGHT);
+		draw.setAttribute(backgroundColor);
+		draw.drawRectangle(getLocation(), (toggled) ? openX : closedX , getHeight());
 		if(toggled) {
-			draw.drawString(new Point(getX() + openX/4, HEIGHT*3/4), id1.getName() + entity.getStats().getStatObject(id1));
-			draw.drawString(new Point(getX() + openX/2, HEIGHT*3/4), id2.getName() + entity.getStats().getStatObject(id1));
+			draw.setAttribute(font);
+			int fontHeight = draw.getFontMetrics().getMaxAscent() + draw.getFontMetrics().getMaxDescent();
+			int y = getY() + margin;
+			
+			for (StatValue stat: stats) {
+				draw.setAttribute(textColor);
+				draw.drawRectangle(new Point(getX() + margin, y), openX - margin * 2, barHeight);
+				draw.setAttribute(barColor);
+				draw.drawRectangle(new Point(getX() + margin + borderWidth, y + borderWidth), openX - margin * 2 - borderWidth * 2, barHeight - borderWidth * 2);
+				draw.setAttribute(textColor);
+				draw.drawString(new Point(getX() + margin * 2, y + fontHeight), stat.getId().getName());
+				String value = (int) stat.getValue() + "";
+				int textWidth = draw.getFontMetrics().stringWidth(value);
+				draw.drawString(new Point(getX() + openX - textWidth - margin * 2, y + fontHeight), value);
+				y += barHeight + barSpacing;
+			}
+			//draw.drawString(new Point(getX() + openX/2, HEIGHT*3/4), id2.getName() + entity.getStats().getStatObject(id1));
 		}
 		button.draw(draw);
 	}
@@ -66,7 +90,7 @@ public class StatRibbon extends ViewComponent {
 		button.setCommand(close);
 		button.setLabel("<");
 
-		this.setBounds(getX(), getY(), openX + 10, HEIGHT);
+		this.setBounds(getX(), getY(), openX + margin * 2, (barHeight + barSpacing)  * stats.size() + margin * 2 - barSpacing);
 
 		button.setLocation(openX, button.getY());
 	}

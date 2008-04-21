@@ -1,7 +1,10 @@
 package rutebaga.game;
 
-import java.awt.Image;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Random;
 
@@ -43,6 +46,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 	private Entity<?> avatar;
 	private World world;
 	private MasterScaffold scaffold;
+	private Collection<StatisticId> displayedStats;
 
 	private static Environment environment;
 	private static double angle;
@@ -131,6 +135,14 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		ItemType<?> starman = (ItemType<?>) scaffold.get("itemStarman");
 
 		StatisticId hp = (StatisticId) scaffold.get("statHp");
+		StatisticId mana = (StatisticId) scaffold.get("statMp");
+		StatisticId exp = (StatisticId) scaffold.get("statExperience");
+		
+		displayedStats = new ArrayList<StatisticId>();
+		displayedStats.add(hp);
+		displayedStats.add(mana);
+		displayedStats.add(exp);
+		
 		StatisticId movement = (StatisticId) scaffold.get("statMovement");
 
 		TerrainType grassTerrain = (TerrainType) scaffold.get("terrGrass");
@@ -362,6 +374,10 @@ public class AgabaturNewGameInitializer implements GameInitializer
 	public World getWorld()
 	{
 		return world;
+	}
+
+	public Collection<StatisticId> getDisplayedStats() {
+		return displayedStats;
 	}
 
 }

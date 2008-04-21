@@ -29,5 +29,4 @@ public class AgabaturGame implements Game
 		}
 		return new AgabaturNewGameInitializer(scaffold);
 	}
-
 }

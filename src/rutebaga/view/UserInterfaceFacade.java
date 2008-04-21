@@ -1,9 +1,12 @@
 package rutebaga.view;
 
+import java.util.Collection;
+
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.stats.StatValue;
 import rutebaga.view.game.TargetInstanceObservable;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.TextFieldListener;
@@ -28,7 +31,7 @@ public interface UserInterfaceFacade {
 			ElementalList list, Command accept, Command cancel);
 	
 	
-	void createGamePlayScreen(Entity avatar, TargetInstanceObservable observable);
+	void createGamePlayScreen(Entity avatar, TargetInstanceObservable observable, Collection<StatValue> stats);
 
 	/**
 	 * Spawns a ContextMenu at the {@link Vector} location provided.
