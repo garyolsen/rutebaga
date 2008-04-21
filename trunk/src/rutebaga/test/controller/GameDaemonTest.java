@@ -1,6 +1,5 @@
 package rutebaga.test.controller;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import rutebaga.controller.Game;
@@ -26,8 +25,6 @@ public class GameDaemonTest
 		daemon.tick();
 
 		daemon.deactivate(i3);
-
-		daemon.actionPerformed(null);
 
 		daemon.deactivate(i1);
 	}
@@ -65,12 +62,6 @@ public class GameDaemonTest
 		public void uninstallActionInterpreter()
 		{
 			rutebaga.commons.Log.log(name + " received an uninstall request");
-		}
-
-		public void actionPerformed(ActionEvent arg0)
-		{
-			rutebaga.commons.Log.log(name
-					+ " received an actionPerformed ActionEvent");
 		}
 
 		public void keyPressed(KeyEvent arg0)
