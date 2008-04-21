@@ -1,18 +1,44 @@
 package rutebaga.model.entity;
 
-public abstract class AbilityType
+import java.util.ArrayList;
+import java.util.List;
+
+import rutebaga.commons.logic.ChainedRule;
+import rutebaga.commons.logic.Rule;
+
+public class AbilityType
 {
 	private String name;
 	private AbilityCategory category;
-	
+
+	private ChainedRule<Entity> feasibilityRule = new ChainedRule<Entity>(true);
+	private ChainedRule<Entity> existenceRule = new ChainedRule<Entity>(true);
+
+	private List<AbilityAction> actions = new ArrayList<AbilityAction>();
+
+	public List<AbilityAction> getActions()
+	{
+		return actions;
+	}
+
 	public AbilityCategory getCategory()
 	{
 		return category;
 	}
 
-	public void setCategory(AbilityCategory category)
+	public ChainedRule<Entity> getExistenceRule()
 	{
-		this.category = category;
+		return existenceRule;
+	}
+
+	public ChainedRule<Entity> getFeasibilityRule()
+	{
+		return feasibilityRule;
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 
 	public Ability makeAbility()
@@ -21,12 +47,19 @@ public abstract class AbilityType
 		ability.setType(this);
 		ability.setName(name);
 		ability.setCategory(category);
+
+		ability.addExistenceRule(existenceRule);
+		ability.addFeasibilityRule(feasibilityRule);
+
+		for (AbilityAction action : actions)
+			ability.addAction(action);
+		
 		return ability;
 	}
 
-	public String getName()
+	public void setCategory(AbilityCategory category)
 	{
-		return name;
+		this.category = category;
 	}
 
 	public void setName(String name)

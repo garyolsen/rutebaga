@@ -49,7 +49,6 @@ public class HostileWander extends NPCState {
 		else
 		{	
 //			wait++;
-//			System.out.println(wait);
 //			if ( (wait % 10) == 0)
 //			{
 //				direction = new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);

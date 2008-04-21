@@ -26,7 +26,7 @@ public class ImageBuilder extends ConfigFileBuilder
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			new RuntimeException("Cannot load " + id, e).printStackTrace();
 			return null;
 		}
 	}

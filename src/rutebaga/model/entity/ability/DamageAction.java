@@ -6,11 +6,18 @@ import rutebaga.model.entity.AbilityAction;
 import rutebaga.model.entity.Damage;
 import rutebaga.model.entity.Entity;
 
+/**
+ * Performs an amount of damage on a target. The given value provider uses the
+ * actor as its context.
+ * 
+ * @author Gary
+ * 
+ */
 public class DamageAction implements AbilityAction<Entity>
 {
 	private ValueProvider<Entity> magnitudeProvider;
 	private Damage damage;
-	
+
 	public DamageAction(ValueProvider<Entity> magnitudeProvider, Damage damage)
 	{
 		super();

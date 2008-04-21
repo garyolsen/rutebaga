@@ -28,7 +28,6 @@ public abstract class InstanceBuilder<T extends ConcreteInstanceType> extends
 			if(tokens != null && tokens.length > 0)
 			{
 				String type = tokens[0];
-				System.out.println("type " + type);
 				MovementAttributeSet set;
 				if("whitelist".equals(type))
 				{

@@ -59,19 +59,15 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 	protected abstract T create();
 
 	protected void initialize(T instance)
-	{
-		System.out.println(movementAttributes);
-		
+	{		
 		instance.setName(name);
 		
 		if (movementAttributes != null)
 		{
-			System.out.println("Setting with " + movementAttributes);
 			instance.setMovementAttributes(movementAttributes);
 		}
 		else
 		{
-			System.out.println("No attr present");
 			instance.setMovementAttributes(new MovementAttributes(false));
 		}
 		if (definition != null)

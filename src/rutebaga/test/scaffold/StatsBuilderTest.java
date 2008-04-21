@@ -19,6 +19,7 @@ import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.scaffold.Builder;
 import rutebaga.scaffold.MasterScaffold;
+import rutebaga.scaffold.builders.AbilityTypeBuilder;
 import rutebaga.scaffold.builders.DefaultBuilder;
 import rutebaga.scaffold.builders.StatsBuilder;
 
@@ -33,7 +34,8 @@ public class StatsBuilderTest
 		Builder b = new DefaultBuilder();
 		MasterScaffold s = new MasterScaffold();
 		s.registerBuilder(b);
-		s.registerBuilder(new CustomAbilityBuilder());
+//		s.registerBuilder(new CustomAbilityBuilder());
+		s.registerBuilder(new AbilityTypeBuilder());
 		s.build();
 
 		SortedSet<String> keys = new TreeSet<String>();
@@ -42,6 +44,8 @@ public class StatsBuilderTest
 		for (String key : keys)
 		{
 			Object obj = s.get(key);
+			if(obj == null)
+				continue;
 			System.out.println(key + "\t\t" + obj.getClass().getSimpleName()
 					+ "\t\t" + obj);
 		}

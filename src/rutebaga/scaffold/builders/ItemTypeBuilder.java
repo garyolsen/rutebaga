@@ -26,7 +26,8 @@ public class ItemTypeBuilder extends InstanceBuilder
 		ItemType itemType = (ItemType) object;
 
 		// BASIC PROPERTIES
-		itemType.setEquippable(getBoolean(id, "equippable"));
+		Boolean equippable = getBoolean(id, "equippable");
+		itemType.setEquippable(equippable == null ? false : equippable);
 		
 		// ALLOCATIONS
 		// FORMAT: idx*2 -> slot name; idx*2+1 -> qty

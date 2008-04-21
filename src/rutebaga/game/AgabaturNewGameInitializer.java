@@ -227,6 +227,15 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				}
 			}
 		}
+		
+		for (String key : scaffold.getKeys())
+		{
+			Object obj = scaffold.get(key);
+			if(obj == null)
+				continue;
+			System.out.println(key + "\t\t" + obj.getClass().getSimpleName()
+					+ "\t\t" + obj);
+		}
 
 		avatar = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
 		EntityAppearanceManager wetManager = new EntityAppearanceManager(avatar);
