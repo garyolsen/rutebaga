@@ -48,6 +48,8 @@ public class EntityTypeBuilder extends InstanceBuilder
 		type.setWalking(getAnimatedAppearances(walkingId, scaffold));
 		type.setRadius(this.getInteger(id, "vRadius"));
 		
+		type.setDecayTime(this.contains(id, "vDecayTime") ? this.getInteger(id, "vDecayTime") : 0);
+		
 		Object[] abilityTypes = getObjectArray(id, "abilities", "[\\s\\t]", scaffold);
 		for(Object abType : abilityTypes)
 		{
