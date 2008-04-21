@@ -79,7 +79,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 */
 	public void constructFullscreenView() {
 		view = new View(800, 600);
-		//view.setFullscreen();
+		view.setFullscreen();
 	}
 
 	/**
