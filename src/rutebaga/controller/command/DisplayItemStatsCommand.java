@@ -2,15 +2,17 @@ package rutebaga.controller.command;
 
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.model.item.Item;
+import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 
 public class DisplayItemStatsCommand implements Command {
 	
 	private Item item;
-	private ViewFacade facade;
+	private UserInterfaceFacade facade;
 	
-	public DisplayItemStatsCommand(ViewFacade facade, Item item) {
+	public DisplayItemStatsCommand(UserInterfaceFacade facade, Item item) {
 		this.item = item;
+		this.facade = facade;
 	}
 	
 	public boolean isFeasible() {

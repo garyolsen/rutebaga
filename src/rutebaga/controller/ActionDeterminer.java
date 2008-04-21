@@ -1,9 +1,12 @@
 package rutebaga.controller;
 
+import java.util.List;
 import java.util.Set;
 
+import rutebaga.controller.command.AvatarAbilityCommandFactory;
 import rutebaga.controller.command.AvatarEquipmentCommandFactory;
 import rutebaga.controller.command.AvatarInventoryCommandFactory;
+import rutebaga.controller.command.CloseContextMenuCommand;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandQueue;
 import rutebaga.controller.command.CreateContextMenuCommand;
@@ -68,11 +71,13 @@ public class ActionDeterminer
 	 */
 	public ElementalList determineActions(Instance<?> target, CommandQueue queue) {
 		ConcreteElementalList list = new ConcreteElementalList();
-		for (Ability<?> ability: avatar.getAbilities())
-			if (ability.canActOn(target))
-				list.add(ability.getName(), QueueCommand.makeForQueue(new AbilityCommand(ability, target), queue));
 		if (avatar == target)
 			addSelfCommands(list);
+		
+		
+		addTargetCommands(list, target);
+		list.add("Close", new CloseContextMenuCommand(facade));
+		
 		return list;
 	}
 	
@@ -103,8 +108,17 @@ public class ActionDeterminer
 		command = new CreateStatsDisplayCommand(avatar);
 		command.setUIFacade(facade);
 		list.add("Stats", command);
+
 		
 		command = new CreateAbilitiesMenuCommand(avatar);
+		command.setUIFacade(facade);
+		list.add("Abilities", command);
+	}
+	
+	private void addTargetCommands(ConcreteElementalList list, Instance<?> target) {
+		CreateContextMenuCommand command;
+		
+		command = new CreateAbilitiesMenuCommand(target);
 		command.setUIFacade(facade);
 		list.add("Abilities", command);
 	}
@@ -119,10 +133,10 @@ public class ActionDeterminer
 			Inventory inventory = target.getInventory();
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Inventory");
 			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, inventory.getUnequipped());
-			AvatarInventoryCommandFactory commands = new AvatarInventoryCommandFactory();
+			AvatarInventoryCommandFactory commands = new AvatarInventoryCommandFactory(avatar, facade);
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
-			facade.createScrollMenu(list, 10);
+			facade.createSubContextMenu(list);
 		}
 	}
 	
@@ -136,10 +150,10 @@ public class ActionDeterminer
 			Inventory inventory = target.getInventory();
 			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Equipment");
 			CollectionListElementSource<Item> source = new CollectionListElementSource<Item>(label, inventory.getEquipped());
-			AvatarEquipmentCommandFactory commands = new AvatarEquipmentCommandFactory();
+			AvatarEquipmentCommandFactory commands = new AvatarEquipmentCommandFactory(avatar, facade);
 			BackedListElementFactory<Item> factory = new BackedListElementFactory<Item>(commands, facade);
 			DynamicElementalList<Item> list = new DynamicElementalList<Item>(source, factory);
-			facade.createScrollMenu(list, 10);
+			facade.createSubContextMenu(list);
 		}
 	}
 	
@@ -160,39 +174,19 @@ public class ActionDeterminer
 	}
 	
 	private class CreateAbilitiesMenuCommand extends CreateContextMenuCommand {
-		private Entity target;
-		public CreateAbilitiesMenuCommand(Entity target) {
+		private Instance target;
+		public CreateAbilitiesMenuCommand(Instance target) {
 			this.target = target;
 		}
 		@Override
 		public void execute() {
-			/*
-			StatsListElementSource source = new StatsListElementSource();
-			source.setStats(target.getStats());
-			source.setLabel(new FixedLabelDeterminer(target.getName() + "'s Stats"));
-			StatsListElementFactory factory = new StatsListElementFactory(); 
+			List<Ability> abilities = avatar.getAbilities();
+			LabelDeterminer label = new FixedLabelDeterminer(target.getName() + "'s Equipment");
+			CollectionListElementSource<Ability> source = new CollectionListElementSource<Ability>(label, abilities);
+			AvatarAbilityCommandFactory commands = new AvatarAbilityCommandFactory(avatar, target, facade);
+			BackedListElementFactory<Ability> factory = new BackedListElementFactory<Ability>(commands, facade);
 			DynamicElementalList<Ability> list = new DynamicElementalList<Ability>(source, factory);
-			facade.createScrollMenu(list, 10);
-			*/
-		}
-	}
-	
-	private class AbilityCommand<T> implements Command {
-
-		private Ability<T> ability;
-		private T target;
-		
-		public AbilityCommand(Ability<T> ability, T target ) {
-			this.ability = ability;
-			this.target = target;
-		}
-		
-		public void execute() {
-			ability.act(target);
-		}
-
-		public boolean isFeasible() {
-			return ability.isFeasible();
+			facade.createSubContextMenu(list);
 		}
 	}
 }

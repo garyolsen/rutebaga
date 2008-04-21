@@ -14,7 +14,16 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 {
 	private MovementAttributes movementAttributes = new MovementAttributes();
 	private AppearanceManagerDefinition definition;
-
+	private String name;
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public AppearanceManagerDefinition getAppearanceDefinition()
 	{
 		return definition;
@@ -52,6 +61,9 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 	protected void initialize(T instance)
 	{
 		System.out.println(movementAttributes);
+		
+		instance.setName(name);
+		
 		if (movementAttributes != null)
 		{
 			System.out.println("Setting with " + movementAttributes);

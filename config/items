@@ -1,11 +1,13 @@
 itemSword
 name			Sword
+appearance static imgLameEffect C
 equippable		true
-allocation		slotHand	2
+allocation		slotHand	1
 reffects		eeffSwordEq_Strength eeffSwordEq_ReduceRings
 
 itemPotion
 name			Potion
+appearance static imgLameEffect C
 equippable		false
 usable			true
 useeffects		

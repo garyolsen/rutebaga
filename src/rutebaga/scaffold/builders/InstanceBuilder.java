@@ -20,6 +20,8 @@ public abstract class InstanceBuilder<T extends ConcreteInstanceType> extends
 
 		MovementAttributes attr = new MovementAttributes();
 		String attrDesc = getProperty(id, "movement");
+
+		
 		if (attrDesc != null)
 		{
 			String[] tokens = attrDesc.split("[\\s\\t]");
@@ -42,6 +44,7 @@ public abstract class InstanceBuilder<T extends ConcreteInstanceType> extends
 			}
 		}
 		instance.setMovementAttributes(attr);
+		instance.setName( getProperty(id, "name") );
 
 		String appManDesc = getProperty(id, "appearance");
 		AppearanceManagerDefinition appDef = AppearanceDefFactory.getInstance()

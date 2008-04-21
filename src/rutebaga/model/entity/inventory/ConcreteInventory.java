@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import rutebaga.commons.math.Vector2D;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
@@ -50,6 +51,8 @@ public class ConcreteInventory implements Inventory
 	{
 		this.unequipped.remove(item);
 		this.equipped.remove(item);
+		
+		parent.getEnvironment().add(item, new Vector2D( parent.getFacingTile() ));
 	}
 
 	public void equip(Item<?> item)

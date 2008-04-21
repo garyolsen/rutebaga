@@ -8,6 +8,7 @@ import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
+import rutebaga.model.Named;
 import rutebaga.model.environment.InstanceSetIdentifier;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
@@ -27,7 +28,7 @@ import rutebaga.model.map.TerrainType;
  * @author Gary LosHuertos
  * 
  */
-public abstract class Instance<T extends Instance<T>> implements Layerable, Locatable
+public abstract class Instance<T extends Instance<T>> implements Layerable, Locatable, Named
 {
 	private long id = UIDProvider.getLongUID();
 	
@@ -40,6 +41,8 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	private double friction = 0;
 	private boolean tickable = true;
 	private Set<MovementListener> movementListeners = new HashSet<MovementListener>();
+	private String name;
+	
 
 	public Instance(InstanceType<T> type)
 	{
@@ -389,5 +392,15 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 	{
 		return ObjectUtils.equals(this.type, other.type);
 	}
+
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 
 }

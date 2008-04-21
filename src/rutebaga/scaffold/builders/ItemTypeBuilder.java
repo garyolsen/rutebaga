@@ -26,7 +26,6 @@ public class ItemTypeBuilder extends InstanceBuilder
 		ItemType itemType = (ItemType) object;
 
 		// BASIC PROPERTIES
-		itemType.setName(getProperty(id, "name"));
 		itemType.setEquippable(getBoolean(id, "equippable"));
 		
 		// ALLOCATIONS

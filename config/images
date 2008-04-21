@@ -224,10 +224,6 @@ path TestImages/mountain_tile06.png
 
 imgLameEffect
 path TestImages/stupidEffect.png
-path TestImages/mountain_tile06.png
-
-imgLameEffect
-path TestImages/stupidEffect.png
 
 imgPowerUp01
 path TestImages/power_up01.png
