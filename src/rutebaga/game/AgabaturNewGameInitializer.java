@@ -228,8 +228,13 @@ public class AgabaturNewGameInitializer implements GameInitializer
 			}
 		}
 
-		avatar = ((EntityType<?>) scaffold.get("entityDefault")).makeInstance();
-		
+		avatar = ((EntityType<?>) scaffold.get("entityMario")).makeInstance();
+		EntityAppearanceManager wetManager = new EntityAppearanceManager(avatar);
+/*		wetManager.setStanding(((EntityType<?>) scaffold.get("entityWetMario"))
+				.getStanding());
+		wetManager.setWalking(((EntityType<?>) scaffold.get("entityWetMario"))
+				.getWalking());
+		avatar.setAppearanceManager(wetManager);*/
 
 		SlotType hand = (SlotType) scaffold.get("slotHand");
 		

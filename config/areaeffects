@@ -3,7 +3,7 @@ appearance	animated imgPowerUp 10 C
 effects		eeffHealerAOE_HP
 
 aoeHarm
-appearance	animated imgPlant 5 C
+appearance	animated imgPlant 5 N
 effects		eeffHarmAOE_HP
 
 aoeSpeeder

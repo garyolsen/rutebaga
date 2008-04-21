@@ -25,6 +25,7 @@ public class EntityAppearanceManager extends AppearanceManager
 		@Override
 		void tick()
 		{
+			System.out.println("standing");
 			if (entity.isWalking())
 			{
 				changeState(new Walking());
@@ -64,6 +65,7 @@ public class EntityAppearanceManager extends AppearanceManager
 		@Override
 		void tick()
 		{
+			System.out.println("walking");
 			if (!entity.isWalking())
 			{
 				changeState(new Standing());
@@ -73,7 +75,35 @@ public class EntityAppearanceManager extends AppearanceManager
 		}
 
 	}
+/*
+	private class Swimming extends State
+	{
+		private int currentFrame;
+		private int directions = standing.length;
+		int wait = 0;
 
+		@Override
+		Appearance getAppearance()
+		{
+			Appearance dirApps[] = swimming[getDirectionOrdinal(directions)];
+			return dirApps[(currentFrame / (getSwimmingWait() + 1))
+					% dirApps.length];
+		}
+
+		@Override
+		void tick()
+		{
+			if (!entity.isWalking())
+			{
+				changeState(new Standing());
+				currentState.tick();
+			}
+			currentFrame++;
+		}
+
+	}
+*/
+	
 	private Entity entity;
 
 	private Appearance[][] walking;
