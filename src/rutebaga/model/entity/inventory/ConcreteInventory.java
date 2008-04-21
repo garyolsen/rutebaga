@@ -36,6 +36,7 @@ public class ConcreteInventory implements Inventory
 	public void accept(Item item)
 	{
 		this.unequipped.add(item);
+		recalculateWeight();
 	}
 
 	public void addSlotAllocation(SlotType type, int qty)
@@ -172,11 +173,11 @@ public class ConcreteInventory implements Inventory
 		double m = 0.0;
 		for (Item i : equipped)
 		{
-			m = i.getMass() + weight;
+			m = i.getMass() + m;
 		}
 		for (Item i : unequipped)
 		{
-			m = i.getMass() + weight;
+			m = i.getMass() + m;
 		}
 		weight = m;
 	}

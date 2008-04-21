@@ -24,7 +24,6 @@ public class AreaEffect extends Instance<AreaEffect>
 	private BoundsTracker boundsTracker;
 	private ChainedRule<Entity> rules = new ChainedRule<Entity>(true);
 	private ChainedRule<AreaEffect> activeRules = new ChainedRule<AreaEffect>(true);
-	private double mass = 1.0;
 
 	public AreaEffect(InstanceType<AreaEffect> type)
 	{
