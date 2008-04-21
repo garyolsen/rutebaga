@@ -3,9 +3,9 @@ appearance	animated imgPowerUp 10 C
 effects		eeffHealerAOE_HP
 
 aoeHarm
-appearance	static imgLameEffect C
+appearance	animated imgPlant 5 C
 effects		eeffHarmAOE_HP
 
 aoeSpeeder
-appearance	static imgMarioNorth01 C
+appearance	animated imgPowerUp 2 C
 effects		eeffMovementAOE_Movement

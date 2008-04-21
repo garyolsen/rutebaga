@@ -111,6 +111,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		AreaEffectType healer = (AreaEffectType) scaffold.get("aoeHealer");
 		AreaEffectType mover = (AreaEffectType) scaffold.get("aoeSpeeder");
+		AreaEffectType damager = (AreaEffectType) scaffold.get("aoeHarm");
 		
 		ItemType<?> sword = (ItemType<?>) scaffold.get("itemSword");
 
@@ -136,12 +137,22 @@ public class AgabaturNewGameInitializer implements GameInitializer
 				if ((x == 0 && y == 0) || random.nextDouble() < grassTileProb)
 				{
 					tile = grass.makeInstance();
-					if (random.nextDouble() < 0.1)
-						environment.add(healer.makeInstance(), location);
-					else if (random.nextDouble() < 0.1)
-						environment.add(mover.makeInstance(), location);
-					
-					
+
+				
+					if (random.nextInt(15) == 0){
+						switch(random.nextInt(3)){
+							case 0:
+								environment.add(healer.makeInstance(), location);
+							break;
+							case 1:	
+								environment.add(mover.makeInstance(), location);
+							break;
+							case 2:
+								environment.add(damager.makeInstance(), location);
+							break;
+						}
+					}
+						
 					if(random.nextDouble() < 0.1) {
 						environment.add(sword.makeInstance(), location);
 					}
