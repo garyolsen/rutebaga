@@ -27,6 +27,21 @@ function	min 0 - amount / &VP_@entityStats_VP_stat_statIntellect 10
 dstat		statHp
 
 
+dmgTpAgility
+
+type		dmgMagical
+function	amount
+dstat		statAgility
+
+
+dmgTpProtect
+
+type		dmgMagical
+function	amount
+dstat		statHardiness
+
+
+
 dmgTpHeal
 
 type		dmgMagical
