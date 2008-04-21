@@ -124,11 +124,11 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		AreaEffectType damager = (AreaEffectType) scaffold.get("aoeHarm");
 		
 		ItemType<?> sword = (ItemType<?>) scaffold.get("itemSword");
-		ItemType<?> starman = (ItemType<?>) scaffold.get("itemStarman");
 		ItemType<?> mushroom = (ItemType<?>) scaffold.get("itemMushroom");
 		ItemType<?> coin = (ItemType<?>) scaffold.get("itemCoin");
 		ItemType<?> fireflower = (ItemType<?>) scaffold.get("itemFireFlower");
 		ItemType<?> bananapeel = (ItemType<?>) scaffold.get("itemBananaPeel");
+		ItemType<?> starman = (ItemType<?>) scaffold.get("itemStarman");
 
 		StatisticId hp = (StatisticId) scaffold.get("statHp");
 		StatisticId movement = (StatisticId) scaffold.get("statMovement");

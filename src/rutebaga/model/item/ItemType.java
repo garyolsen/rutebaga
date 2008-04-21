@@ -14,7 +14,7 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 	private SlotAllocation allocation = new SlotAllocation();
 	private List<EntityEffect> permanentEffects = new ArrayList<EntityEffect>();
 	private List<ReversibleEntityEffect> reversibleEffects = new ArrayList<ReversibleEntityEffect>();
-
+	private double mass = 1.0;
 
 	@Override
 	public String toString()
@@ -83,6 +83,15 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 			equip.getPermanentEquipEffects().addAll(permanentEffects);
 			equip.getReversibleEquipEffects().addAll(reversibleEffects);
 			instance.setEquippableAspect(equip);
+			instance.setMass(mass);
 		}
+	}
+
+	public double getMass() {
+		return mass;
+	}
+
+	public void setMass(double mass) {
+		this.mass = mass;
 	}
 }

@@ -51,6 +51,8 @@ public class ItemTypeBuilder extends InstanceBuilder
 		{
 			itemType.getPermanentEffects().add(obj);
 		}
+		
+		itemType.setMass(getDouble(id, "mass"));
 	}
 
 }

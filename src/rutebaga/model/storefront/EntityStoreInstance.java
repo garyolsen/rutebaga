@@ -46,6 +46,18 @@ public class EntityStoreInstance implements StoreInstance {
 	public boolean canSell(Item item) {
 		return userHasSufficientFunds(sellPriceOf(item));
 	}
+	
+	public boolean canBuy(Item item) {
+		return sellerHasSufficientFunds(buyPriceOf(item));
+	}
+
+	private boolean sellerHasSufficientFunds(double amount) {
+		return ( (seller.getWallet().getValue(seller) >= amount) );
+	}
+
+	private double buyPriceOf(Item item) {
+		return Math.min( priceOf(item)*1.9, ((user.getBargainSkill().getValue(user)-seller.getBargainSkill().getValue(seller)) * 1.0) + priceOf(item) );
+	}
 
 	private void depositFundsInSeller(double sellPriceOf) {
 		seller.addToMoney(sellPriceOf);
@@ -71,6 +83,27 @@ public class EntityStoreInstance implements StoreInstance {
 	private void removeFundsFromUser(double amount)
 	{
 		user.getWallet().addTo(user, -amount);
+	}
+
+	public void buy(Item item) {
+		if (canBuy(item))
+		{
+			if (user.getInventory().remove(item))
+			{
+				removeFundsFromSeller(buyPriceOf(item));
+				item.giveTo(seller.getInventory());
+				depositFundsInBuyer(buyPriceOf(item));
+			}
+		}
+	}
+	
+	private void depositFundsInBuyer(double sellPriceOf) {
+		user.addToMoney(sellPriceOf);
+	}
+
+	private void removeFundsFromSeller(double buyPriceOf) {
+		seller.getWallet().addTo(seller, -buyPriceOf);
+		
 	}
 
 }

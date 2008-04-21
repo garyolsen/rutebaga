@@ -1,20 +1,24 @@
 itemSword
 name			Sword
 appearance static imgLameEffect C
+mass			10.0
 equippable		true
 allocation		slotHand	1
 reffects		eeffSwordEq_Strength eeffSwordEq_ReduceRings
 
+
 itemPotion
 name			Potion
 appearance static imgLameEffect C
+mass			1.0
 equippable		false
 usable			true
-useeffects		eeffPotion_Healthuseeffects		
+useeffects		eeffPotion_Healthuseeffects	
 
 itemFireFlower
 name			Fire Flower
 appearance static imgFireFlower C
+mass			0.5	
 equippable		false
 usable			true
 useeffects		
@@ -22,6 +26,7 @@ useeffects
 itemCoin
 name			Coin
 appearance animated imgCoin 3 C
+mass			3.0	
 equippable		false
 usable			true
 useeffects		
@@ -29,6 +34,7 @@ useeffects
 itemMushroom
 name			Mushroom
 appearance static imgMushroom C
+mass			1.0	
 equippable		false
 usable			true
 useeffects		
@@ -36,6 +42,7 @@ useeffects
 itemStarman
 name			Starman
 appearance static imgStarman C
+mass			7.0	
 equippable		false
 usable			true
 useeffects		
@@ -43,7 +50,9 @@ useeffects
 itemBananaPeel
 name			Banana Peel
 appearance static imgBananaPeel C
+mass			0.7	
 equippable		false
 usable			true
-useeffects		
+useeffects
+
 

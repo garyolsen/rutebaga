@@ -15,7 +15,7 @@ import rutebaga.model.environment.InstanceType;
 public class Item<T extends Item<T>> extends Instance<T>
 {
 	private EquippableAspect equippableAspect;
-
+	private double mass = 1.0;
 	private Double defaultPrice = 100.0;
 	public Item(InstanceType<T> type)
 	{
@@ -98,5 +98,9 @@ public class Item<T extends Item<T>> extends Instance<T>
 	public void setEquippableAspect(EquippableAspect equippableAspect)
 	{
 		this.equippableAspect = equippableAspect;
+	}
+
+	public void setMass(double mass) {
+		this.mass = mass;
 	}
 }
