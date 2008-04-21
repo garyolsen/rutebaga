@@ -125,7 +125,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		AreaEffectType healer = (AreaEffectType) scaffold.get("aoeHealer");
 		AreaEffectType mover = (AreaEffectType) scaffold.get("aoeSpeeder");
-		AreaEffectType damager = (AreaEffectType) scaffold.get("aoeHarm");
+		AreaEffectType damager = (AreaEffectType) scaffold.get("aoeTeleport");
 		
 		ItemType<?> sword = (ItemType<?>) scaffold.get("itemSword");
 		ItemType<?> mushroom = (ItemType<?>) scaffold.get("itemMushroom");

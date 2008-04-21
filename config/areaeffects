@@ -16,3 +16,7 @@ effects		eeffMovementAOE_Movement
 aoeSpeeder
 appearance	animated imgMarioSouth 2 C
 effects		eeffSetSomeFlag
+
+aoeTeleport
+appearance 	static imgCheese C
+effects 	eeffTeleport_1
