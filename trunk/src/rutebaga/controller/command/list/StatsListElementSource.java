@@ -3,11 +3,8 @@ package rutebaga.controller.command.list;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Set;
 
 import rutebaga.controller.command.LabelDeterminer;
-import rutebaga.model.entity.stats.ConcreteStatValue;
 import rutebaga.model.entity.stats.StatValue;
 import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.entity.stats.Stats;

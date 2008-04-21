@@ -2,8 +2,11 @@ package rutebaga.view.rwt;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.event.MouseEvent;
 
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.list.ElementalList;
@@ -13,9 +16,12 @@ import rutebaga.view.drawer.Drawer;
 
 public class WarningBox extends ViewCompositeComponent {
 
-	private ColorAttribute boxBackground = new ColorAttribute(new Color(150,150,255,200));
+	private ColorAttribute blockingBackground = new ColorAttribute(new Color(150,150,150,150));
+	private ColorAttribute visibleBackground = new ColorAttribute(new Color(150,150,255,200));
 	
+	Rectangle blockingArea;
 	Rectangle visibleArea;
+	
 	
 	public WarningBox(ElementalList list, Vector2D dimensions) {
 		this(list, dimensions, dimensions);
@@ -23,37 +29,47 @@ public class WarningBox extends ViewCompositeComponent {
 	
 	public WarningBox(ElementalList list, Vector2D visibleDimensions, Vector2D blockingDimensions) {
 		visibleArea = new Rectangle(visibleDimensions.getX().intValue(), visibleDimensions.getY().intValue());
-		Rectangle blockingArea = new Rectangle(blockingDimensions.getX().intValue(), blockingDimensions.getY().intValue());
+		blockingArea = new Rectangle(blockingDimensions.getX().intValue(), blockingDimensions.getY().intValue());
 		if (!blockingArea.contains(visibleArea))
 			visibleArea = blockingArea;
-		setBounds(blockingArea);
+		super.setBounds(blockingArea);
 		
-		int spacing = 50;
-		int xAlign = getX() + this.getWidth()/2 - 50;
-		int yAlign = getY() + (getHeight() - spacing * list.contentSize() - 100) / 2;
+		visibleArea.setLocation((int) (blockingArea.getWidth() - visibleArea.getWidth()) / 2, (int) (blockingArea.getHeight() - visibleArea.getHeight()) / 2);
 		
-		TextLabelComponent label = new TextLabelComponent(list.getLabel());
-		label.setLocation(xAlign, yAlign - 40);
+		TextLabelComponent label = new TextLabelComponent(list.getLabel(), TextLabelComponent.CENTER_ALIGNMENT);
+		Rectangle labelBounds = new Rectangle((int) visibleArea.getWidth(), 30);
+		label.setBounds(labelBounds);
+		label.setLocation((int) visibleArea.getX(), (int) visibleArea.getY());
 		label.setFontColor(Color.RED);
 		label.setFont(new Font("Arial", Font.BOLD, 16));
 		this.addChild(label);
+
+		if (list.contentSize() == 0)
+			return;
 		
-		for(ListElement e : list ) {
+		int verticalSpace = (int) visibleArea.getHeight() - label.getHeight();
+		int spacing = Math.max(verticalSpace / list.contentSize(), 10);
+		int buttonWidth = 200;
+		int buttonHeight = Math.max(spacing - 10, 5);
+		int xPos = (int) (visibleArea.getX() + visibleArea.getWidth() / 2 - buttonWidth / 2);
+		int yPos = (int) (visibleArea.getY() + label.getHeight());
+		
+		for (ListElement e : list) {
 			ButtonComponent button = new ButtonComponent(e.getLabel());
 			button.setCommand(e.getCommand());
-			button.setLocation(xAlign, yAlign);
-			int[] xPoints = {20,40,0};
-			int[] yPoints = {0,20,20};
-			button.setButtonShape( new Polygon(xPoints, yPoints, 3));
-			
+			button.setLocation(xPos, yPos);
+			button.setButtonShape(new Rectangle(0, 0, buttonWidth, buttonHeight));
+
 			this.addChild(button);
-			yAlign += spacing;
+			yPos += spacing;
 		}
 	}
-	
+
 	@Override
 	public void draw(Drawer draw) {
-		draw.setAttribute(boxBackground);
+		draw.setAttribute(blockingBackground);
+		draw.drawShape(getLocation(), blockingArea);
+		draw.setAttribute(visibleBackground);
 		draw.drawShape(getLocation(), visibleArea);
 		draw.setAttribute(null);
 		

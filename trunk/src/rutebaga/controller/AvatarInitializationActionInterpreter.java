@@ -12,6 +12,8 @@ import rutebaga.view.rwt.TextFieldListener;
  */
 public class AvatarInitializationActionInterpreter implements UserActionInterpreter, TextFieldListener {
 
+	private String name;
+	
 	public boolean eventsFallThrough() {
 		// AvatarInitializationActionInterpreter is a 'root' interpreter
 		return false;
@@ -19,20 +21,54 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 
 	public void installActionInterpreter(final GameDaemon daemon, final Game game, final UserInterfaceFacade facade) {
 		Command accept = new Command() {
-			private boolean activated = false;
+			private boolean isExecuting = false;
+
+			private boolean checkName() {
+				if (name == null || "".equals(name)) {
+					ConcreteElementalList list = new ConcreteElementalList();
+					list.setLabel("You need to enter a name.");
+					list.add("OK", new Command() {
+						public void execute() {
+							facade.clearWarningBox();
+						}
+						public boolean isFeasible() {
+							return true;
+						}
+					});
+					facade.createWarningBox(list, true);
+					return false;
+				}
+				return true;
+			}
 			
 			public void execute() {
-				if(!activated) {
-					GameInitializer gi = game.getGameInitializer();
-					gi.build();
-					UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), gi.getAvatar());
-					daemon.activate(gpai);
-					activated = true;
+				isExecuting = true;
+
+				if (!checkName()) {
+					isExecuting = false;
+					return;
 				}
+				
+				ConcreteElementalList list = new ConcreteElementalList();
+				list.setLabel("Initializing your new game...");
+				facade.createWarningBox(list, true);
+				
+				GameInitializer gi = game.getGameInitializer();
+				gi.build();
+				UserActionInterpreter gpai = new GamePlayActionInterpreter(gi.getWorld(), gi.getAvatar());
+
+				gi.getAvatar().setName(name);
+				
+				facade.clearWarningBox();
+				// Connascence: you must deactivate this interpreter before activating the new one
+				daemon.deactivate(AvatarInitializationActionInterpreter.this);
+				daemon.activate(gpai);
+				
+				isExecuting = false;
 			}
 
 			public boolean isFeasible() {
-				return true;
+				return !isExecuting;
 			}
 		};
 
@@ -69,6 +105,6 @@ public class AvatarInitializationActionInterpreter implements UserActionInterpre
 	}
 	
 	public void fieldChanged(String string) {
-		
+		this.name = string;
 	}
 }

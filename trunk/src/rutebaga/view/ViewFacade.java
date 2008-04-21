@@ -245,22 +245,21 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	public void createWarningBox(ElementalList list, boolean blocking) {
 		int width = 400;
 		int height = 200;
-		createWarningBox(list, new Vector2D((view.getWidth() - width) / 2,
-				(view.getHeight() - height) / 2), new Vector2D(400, 200), blocking);
+		createWarningBox(list, new Vector2D((view.getWidth() - width) / 2, (view.getHeight() - height) / 2), new Vector2D(400, 200), blocking);
 	}
 
-	public void createWarningBox(ElementalList list, Vector2D vector, boolean blocking) {
-		createWarningBox(list, new Vector2D(view.getWidth() / 2, view
-				.getHeight() / 2), blocking);
+	public void createWarningBox(ElementalList list, Vector2D location, boolean blocking) {
+		createWarningBox(list, location, new Vector2D(view.getWidth() / 2, view.getHeight() / 2), blocking);
 	}
 
-	private void createWarningBox(ElementalList list, Vector2D location,
-			Vector2D visibleDimensions, boolean blocking) {
+	public void createWarningBox(ElementalList list, Vector2D location, Vector2D visibleDimensions, boolean blocking) {
 		clearWarningBox();
-		Vector2D blockingDimensions = blocking ? new Vector2D(view.getWidth(),
-				view.getHeight()) : visibleDimensions;
+		Vector2D blockingDimensions = blocking ? new Vector2D(view.getWidth(), view.getHeight()) : visibleDimensions;
 		warningBox = new WarningBox(list, visibleDimensions, blockingDimensions);
-		warningBox.setLocation(location.getX().intValue(), location.getY().intValue());
+		if (blocking)
+			warningBox.setLocation(0, 0);
+		else
+			warningBox.setLocation(location.getX().intValue(), location.getY().intValue());
 		view.addViewComponent(warningBox);
 	}
 
