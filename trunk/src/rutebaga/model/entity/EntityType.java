@@ -21,6 +21,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private ValueProvider<Entity> movementSpeed;
 	private ValueProvider<Entity> bargainSkillAmount;
 	private BidirectionalValueProvider<Entity> skillPtStrat;
+	private BidirectionalValueProvider<Entity> wallet;
 	private ValueProvider<Entity> deadStrategy;
 	private List<AbilityType> abilityTypes = new ArrayList<AbilityType>();
 
@@ -73,6 +74,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		entity.setBargainSkill(bargainSkillAmount);
 		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
+		entity.setWallet(wallet);
 		
 		for (AbilityType type : abilityTypes)
 		{
@@ -144,6 +146,16 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	
 	public int getDecayTime() {
 		return decayTime;
+	}
+
+	public BidirectionalValueProvider<Entity> getWallet()
+	{
+		return wallet;
+	}
+
+	public void setWallet(BidirectionalValueProvider<Entity> wallet)
+	{
+		this.wallet = wallet;
 	}
 
 }

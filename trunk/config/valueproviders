@@ -11,5 +11,9 @@ value	VP_@entityStats_VP_stat_statHp - 0.01
 vpEntitySkillPtStrategy		# provides access to total skill points
 value	VP_@entityStats_VP_stat_statTotalSkillPts
 
+vpEntityWallet		# provides access to wallet
+value	VP_@entityStats_VP_stat_statCurrency
+
+
 vpEntityBargainSkillAmount
 value 1.0
