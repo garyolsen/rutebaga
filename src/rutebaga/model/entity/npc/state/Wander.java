@@ -13,9 +13,10 @@ import rutebaga.commons.math.MutableVector2D;
 public class Wander extends NPCState
 {
 	
-	private int direction = 0;
 	private int wait = 0;
 	private Random rand = new Random();
+	private MutableVector2D direction=new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
+	private boolean pausing = false;
 	
 	@Override
 	public NPCState barter(NPCEntity npc)
@@ -46,12 +47,13 @@ public class Wander extends NPCState
 	@Override
 	public NPCState tick(NPCEntity npc)
 	{
-		npc.walk(new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2));
-
 		wait++;
-		if (wait % 10 == 0)
-			direction++;
-		
+		if (wait % 50 == 0){
+			direction=new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
+			pausing=rand.nextBoolean();
+		}
+		if(!pausing)
+			npc.walk(direction);
 		return this;
 	}
 
