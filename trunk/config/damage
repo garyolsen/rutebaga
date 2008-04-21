@@ -34,5 +34,5 @@ dstat		statHp
 dmgTpDeath
 
 type		dmgMagical
-function	* &VP_@entityStats_VP_stat_statHp gate random 0 10 5
+function	&VP_@entityStats_VP_stat_statHp
 dstat		statHp
