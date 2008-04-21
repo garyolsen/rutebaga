@@ -108,9 +108,6 @@ public class EventDispatcher implements KeyListener, MouseListener, MouseMotionL
 	public void keyPressed(KeyEvent e) {
 		flushQueues();
 		
-		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) //TODO remove when controller handles this!
-			System.exit(0);
-		
 		boolean consumed = false;
 		
 		synchronized(registeredComponents) {

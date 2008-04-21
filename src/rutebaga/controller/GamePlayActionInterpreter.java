@@ -95,16 +95,47 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			}
 		});
 
-		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_SEMICOLON),
-				new Command() {
-					public void execute() {
-						targetNextEntity();
-					}
+		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_SEMICOLON), new Command() {
+			public void execute() {
+				targetNextEntity();
+			}
 
+			public boolean isFeasible() {
+				return true;
+			}
+		});
+
+		keyReleaseBindings.set(KeyCode.get(KeyEvent.VK_ESCAPE), new Command() {
+			public void execute() {
+				paused = true;
+				ConcreteElementalList list = new ConcreteElementalList();
+				list.setLabel("Are you sure you want to quit?");
+				list.add("Yes", new Command() {
+					public void execute() {
+						// TODO: save game state!!!OMGsdfsMOSFDAdsfafd
+						System.exit(1);
+					}
 					public boolean isFeasible() {
 						return true;
 					}
 				});
+				list.add("No", new Command() {
+					public void execute() {
+						facade.clearWarningBox();
+						paused = false;
+					}
+					public boolean isFeasible() {
+						return true;
+					}
+				});
+				facade.createWarningBox(list, true);
+			}
+
+			public boolean isFeasible() {
+				return true;
+			}
+		});
+
 	}
 
 	public boolean eventsFallThrough() {
