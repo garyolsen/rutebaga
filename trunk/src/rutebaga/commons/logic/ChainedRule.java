@@ -19,8 +19,7 @@ import rutebaga.model.entity.Entity;
  * @param <T>
  *            the context type
  */
-public class ChainedRule<T> implements Rule<T>
-{
+public class ChainedRule<T> implements Rule<T> {
 	private final boolean defaultValue;
 
 	private Collection<Rule<T>> rules = new LinkedList<Rule<T>>();
@@ -34,18 +33,23 @@ public class ChainedRule<T> implements Rule<T>
 	 *            all rules are true). False implies OR semantics (the rule is
 	 *            false iff all rules are false).
 	 */
-	public ChainedRule(boolean defaultValue)
-	{
+	public ChainedRule(boolean defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 
-	public void add(Rule<T> rule)
-	{
+	/**
+	 * @param rule
+	 *            A rule to add on to this ChainedRule.
+	 */
+	public void add(Rule<T> rule) {
 		this.rules.add(rule);
 	}
 
-	public void addAll(Collection<Rule<T>> rules)
-	{
+	/**
+	 * @param rules
+	 *            A Collection of Rules to add to this ChainedRule.
+	 */
+	public void addAll(Collection<Rule<T>> rules) {
 		this.rules.addAll(rules);
 	}
 
@@ -59,21 +63,25 @@ public class ChainedRule<T> implements Rule<T>
 	 *         value in the given context.
 	 * @see rutebaga.commons.logic.Rule#determine(Object)
 	 */
-	public boolean determine(T context)
-	{
+	public boolean determine(T context) {
 		for (Rule<T> rule : rules)
 			if (rule.determine(context) != defaultValue)
 				return !defaultValue;
 		return defaultValue;
 	}
 
-	public Collection<Rule<T>> getRules()
-	{
+	/**
+	 * @return The collection of all the Rules in this ChainedRule.
+	 */
+	public Collection<Rule<T>> getRules() {
 		return Collections.unmodifiableCollection(rules);
 	}
 
-	public void remove(Rule<Entity> rule)
-	{
+	/**
+	 * @param rule
+	 *            The specific Rule to remove from this ChainedRule.
+	 */
+	public void remove(Rule<Entity> rule) {
 		this.rules.remove(rule);
 	}
 
