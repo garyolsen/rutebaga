@@ -26,6 +26,7 @@ import rutebaga.model.environment.InstanceType;
 import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 //import rutebaga.model.storefront.EntityStoreFront;
+import rutebaga.model.storefront.EntityStoreFront;
 import rutebaga.model.storefront.Storefront;
 
 /**
