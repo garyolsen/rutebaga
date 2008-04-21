@@ -31,4 +31,4 @@ lifetime		36
 decLife
 
 appearance		animated imgLife 4 C
-lifetime		20
+lifetime		50
