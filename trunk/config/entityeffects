@@ -23,6 +23,16 @@ type	stat
 stat	statMp
 value	-20
 
+eeff_Defense
+type	stat
+stat	statDefRating
+value	20
+
+eeff_Hardiness
+type	stat
+stat	statHardiness
+value	20
+
 ############################################################################
 #          					     ITEMS                                     #
 ############################################################################

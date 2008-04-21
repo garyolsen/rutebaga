@@ -1,10 +1,10 @@
 abBubble
 
-name Protect
+name Bubble
 category	abcatSpells
 actions{
-	damage		dmgTpProtect	- 0 3
-	spawn		target	static decShell
+	tempentityeffect  eeff_Defense 500
+	spawn		target	static decBubble
 	entityeffect	source	eeff_Spell_MP	
 }
 feasibility {
@@ -13,10 +13,10 @@ feasibility {
 
 abShell
 
-name Agility
+name Shell
 category	abcatSpells
 actions{
-	damage		dmgTpAgility	- 0 3
+	tempentityeffect  eeff_Hardiness 500
 	spawn		target	static decBubble
 	entityeffect	source	eeff_Spell_MP	
 }
@@ -24,12 +24,13 @@ feasibility {
 	gate 19 VP_@entityStats_VP_stat_statMp
 }
 
+
 abHeal
 
 name Heal
 category	abcatSpells
 actions{
-	damage		dmgTpHeal	- 0 30
+	damage		dmgTpHeal	- 0 10
 	spawn		target	static decLife
 	entityeffect	source	eeff_Spell_MP	
 }
@@ -53,10 +54,10 @@ feasibility {
 
 abDemi
 
-name		Beam
+name		Demi
 category	abcatSpells
 actions {
-	damage		dmgTpNuke 	* + VP_skill_abcatSpells 1 6		
+	damage		dmgTpDemi 4	
 	spawn		target static decBeam
 	entityeffect	source	eeff_Spell_MP
 }

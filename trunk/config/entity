@@ -19,7 +19,7 @@ deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
 wallet	$vpEntityWallet
 vRadius		7
-abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abBolt abNuke abBindWounds abHeal abBubble abShell
+abilities	abThrowFireBall abDemi abBolt abNuke abBindWounds abHeal abBubble abShell
 movement	whitelist terrGrass
 
 entityWetMario
