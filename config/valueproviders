@@ -4,3 +4,6 @@
 
 vpEntityMovementSpeed	# based on the movement stat of the entity
 value	min / VP_@entityStats_VP_stat_statMovement 100 0.4
+
+vpEntityBargainSkillAmount
+value 1.0

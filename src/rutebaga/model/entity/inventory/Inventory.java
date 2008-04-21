@@ -30,4 +30,6 @@ public interface Inventory
 	Entity getOwner();
 	
 	Set<Item> getItems();
+	
+	boolean remove(Item item);
 }

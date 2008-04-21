@@ -26,7 +26,6 @@ import rutebaga.model.environment.InstanceType;
 import rutebaga.model.environment.appearance.Appearance;
 import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.storefront.EntityStoreFront;
-import rutebaga.model.storefront.StoreInstance;
 import rutebaga.model.storefront.Storefront;
 
 /**
@@ -54,13 +53,13 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	
 	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(0.0);
 
-	private double money;
+	private Vector2D facing = new Vector2D(0, 0);
 	
 	private Team team;
-	
 	private Storefront storeFront;
-
-	private Vector2D facing = new Vector2D(0, 0);
+	private double money;
+	
+	private ValueProvider<CharEntity> bargainSkillAmount = new ConstantValueProvider<CharEntity>(1.0);
 	
 	//TODO move into AbilitySet
 	private List<Ability> abilities = new ArrayList<Ability>();
@@ -91,10 +90,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		ability.setEntity(this);
 		abilities.add(ability);
-	}
-	
-	public void addToMoney(double value) {
-		money = money + value;
 	}
 	
 	@Override
@@ -132,10 +127,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public double getLayer()
 	{
 		return DefaultLayers.GROUND.getLayer();
-	}
-
-	public double getMoneyAmount() {
-		return money;
 	}
 
 	public double getMovementSpeed()
@@ -224,9 +215,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		return effectQueue;
 	}
-
+	
 	public Team getTeam() {
-		// TODO Auto-generated method stub
 		return this.team;
 	}
 
@@ -237,4 +227,21 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public Storefront getStoreFront() {
 		return new EntityStoreFront(this);
 	}
+	
+	public ValueProvider getBargainSkill() {
+		return bargainSkillAmount;
+	}
+	
+	public void setBargainSkill(ValueProvider<CharEntity> bargainSkillAmount) {
+		this.bargainSkillAmount = bargainSkillAmount;
+	}
+	
+	public void addToMoney(double value) {
+		money = money + value;
+	}
+	
+	public double getMoneyAmount() {
+		return money;
+	}
+
 }

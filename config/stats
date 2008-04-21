@@ -44,7 +44,7 @@ default	0
 statLevel
 name	Level
 type	concrete  
-default	1	
+default	1
 
 
 ##########################################################
