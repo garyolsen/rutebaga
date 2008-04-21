@@ -43,6 +43,13 @@ public class AOEBuilder extends InstanceBuilder
 			ValueProvider vp = DefaultValueProviderFactory.getInstance().parse(vpDesc, scaffold);
 			type.getRules().add(new ValueProviderRule(vp));
 		}
+		
+		List<String> activeRuleVPs = getInnerList(id, "activeRules");
+		for(String vpDesc : activeRuleVPs)
+		{
+			ValueProvider vp = DefaultValueProviderFactory.getInstance().parse(vpDesc, scaffold);
+			type.getActiveRules().add(new ValueProviderRule(vp));
+		}
 	}
 
 }

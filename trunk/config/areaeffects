@@ -4,6 +4,9 @@ effects		eeffHealerAOE_HP
 rules {
 	gate VP_@entityStats_VP_stat_statHp 50
 }
+activeRules {
+	VP_flag_flag;inactive;value;false
+}
 
 aoeHarm
 appearance	animated imgPlant 5 S

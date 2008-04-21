@@ -23,6 +23,7 @@ public class AreaEffect extends Instance<AreaEffect>
 	private int current = 0;
 	private BoundsTracker boundsTracker;
 	private ChainedRule<Entity> rules = new ChainedRule<Entity>(true);
+	private ChainedRule<AreaEffect> activeRules = new ChainedRule<AreaEffect>(true);
 
 	public AreaEffect(InstanceType<AreaEffect> type)
 	{
@@ -33,6 +34,11 @@ public class AreaEffect extends Instance<AreaEffect>
 	public boolean blocks(Instance other)
 	{
 		return false;
+	}
+
+	public ChainedRule<AreaEffect> getActiveRules()
+	{
+		return activeRules;
 	}
 
 	public int getBlockingRate()
