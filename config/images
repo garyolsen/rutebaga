@@ -473,8 +473,8 @@ imgLife03
 path TestImages/life03.png
 imgLife04
 path TestImages/life04.png
-imgLife05
-path TestImages/life05.png
+#imgLife05
+#path TestImages/life05.png
 
 imgBeam01
 path TestImages/beam01.png
