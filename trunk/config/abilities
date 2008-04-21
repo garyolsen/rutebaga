@@ -17,6 +17,7 @@ actions{
 	damage		dmgTPMagicMissle	10
 }
 
+abPunch
 name		Punch
 category	abcatAttacks
 actions{
