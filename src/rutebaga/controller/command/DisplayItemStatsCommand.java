@@ -1,13 +1,16 @@
 package rutebaga.controller.command;
 
+import java.util.List;
+
 import rutebaga.controller.command.list.ConcreteElementalList;
+import rutebaga.model.entity.ReversibleEntityEffect;
 import rutebaga.model.item.Item;
 import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.ViewFacade;
 
 public class DisplayItemStatsCommand implements Command {
 	
-	private Item item;
+	private Item<?> item;
 	private UserInterfaceFacade facade;
 	
 	public DisplayItemStatsCommand(UserInterfaceFacade facade, Item item) {
@@ -16,15 +19,12 @@ public class DisplayItemStatsCommand implements Command {
 	}
 	
 	public boolean isFeasible() {
-		return true;
+		return false;
 	}
 	
 	public void execute() {
 		ConcreteElementalList itemStats = new ConcreteElementalList();
-		itemStats.setLabel(item.getName() + " stats:");
-		itemStats.add("This is where info");
-		itemStats.add("about the item");
-		itemStats.add("should eventually go");
-		facade.createScrollMenu(itemStats, 5);
+		
+		//facade.createSubContextMenu(itemStats);
 	}
 }

@@ -12,19 +12,21 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 	
 	private final Entity<?> avatar;
 	private final UserInterfaceFacade facade;
+	private CommandQueue queue;
 	
-	public AvatarInventoryCommandFactory(final Entity<?> charEntity, final UserInterfaceFacade uiFacade) {
-		this.avatar = charEntity;
-		this.facade = uiFacade;
+	public AvatarInventoryCommandFactory(Entity<?> avatar, UserInterfaceFacade facade, CommandQueue queue) {
+		this.avatar = avatar;
+		this.facade = facade;
+		this.queue = queue;
 	}
 	
 	public ElementalList getCommandListFor(Item item) {
 		ConcreteElementalList list = new ConcreteElementalList();
-		if (facade != null)
-			list.add("Stats", new DisplayItemStatsCommand(facade, item));
-		list.add("Drop", new DropCommand(item));
+		//if (facade != null) //Stats of an item aren't viewable !
+		//	list.add("Stats", new DisplayItemStatsCommand(facade, item));
+		list.add("Drop", QueueCommand.makeForQueue(new DropCommand(item), queue));
 		if (item.isEquippable())
-			list.add("Equip", new EquipCommand(item));
+			list.add("Equip", QueueCommand.makeForQueue(new EquipCommand(item), queue));
 		return list;
 	}
 	

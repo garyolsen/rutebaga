@@ -12,10 +12,12 @@ public class AvatarEquipmentCommandFactory implements CommandFactory<Item> {
 	
 	private Entity<?> avatar;
 	private UserInterfaceFacade facade;
+	private CommandQueue queue;
 	
-	public AvatarEquipmentCommandFactory(Entity<?> avatar, UserInterfaceFacade facade) {
+	public AvatarEquipmentCommandFactory(Entity<?> avatar, UserInterfaceFacade facade, CommandQueue queue) {
 		this.avatar = avatar;
 		this.facade = facade;
+		this.queue = queue;
 	}
 	
 	public void setAvatar(CharEntity avatar) {
@@ -30,7 +32,7 @@ public class AvatarEquipmentCommandFactory implements CommandFactory<Item> {
 		ConcreteElementalList list = new ConcreteElementalList();
 		if (facade != null)
 			list.add("Stats", new DisplayItemStatsCommand(facade, item));
-		list.add("Unequip", new UnequipCommand(item));
+		list.add("Unequip", QueueCommand.makeForQueue(new UnequipCommand(item), queue));
 		return list;
 	}
 	

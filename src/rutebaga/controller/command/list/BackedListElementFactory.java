@@ -1,5 +1,6 @@
 package rutebaga.controller.command.list;
 
+import rutebaga.controller.command.CloseContextMenuCommand;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CommandFactory;
 import rutebaga.controller.command.CreateSubContextMenuCommand;
@@ -20,7 +21,10 @@ public class BackedListElementFactory<T extends Named> implements ListElementFac
 		// TODO: cache old ListElements here?  Or maybe in the DynamicElementalList itself...
 		return new ListElement() {
 			public Command getCommand() {
-				CreateSubContextMenuCommand command = new CreateSubContextMenuCommand(factory.getCommandListFor(element));
+				ConcreteElementalList list = new ConcreteElementalList();
+				list.add("Close", new CloseContextMenuCommand(facade));
+				list.add(factory.getCommandListFor(element));
+				CreateSubContextMenuCommand command = new CreateSubContextMenuCommand(list);
 				command.setUIFacade(facade);
 				return command;
 			}
