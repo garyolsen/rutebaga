@@ -17,6 +17,20 @@ aoeSpeeder
 appearance	animated imgMarioSouth 2 C
 effects		eeffSetSomeFlag
 
+aoeRaiseExperience
+appearance	animated imgMarioSouth 2 C
+effects		eeffRaiseExperience
+
 aoeTeleport
 appearance 	static imgCheese C
 effects 	eeffTeleport_1
+
+aoeOneShotMana
+appearance 	static imgFireFlower C
+effects 	eeffTonic_MP
+remove		true
+
+aoeOneShotHealth
+appearance 	static imgPowerUp C
+effects 	eeffPotion_Health
+remove		true

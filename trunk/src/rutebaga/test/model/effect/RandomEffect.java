@@ -26,7 +26,7 @@ public class RandomEffect extends TargetableEffect<RandomEffect, Instance> {
 						.getCoordinate().getX(), target.getCoordinate()
 						.getY());
 				direction.detract(this.getCoordinate());
-				direction.multiplyBy((3 - direction.getMagnitude()) / 3);
+				direction.multiplyBy((3 - direction.getMagnitude()) / 20);
 				target.applyMomentum(direction);
 			}
 		}

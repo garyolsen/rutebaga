@@ -36,6 +36,10 @@ public class AOEBuilder extends InstanceBuilder
 
 		for (Object effect : effects)
 			type.getEffects().add((EntityEffect) effect);
+		
+		Boolean remove = getBoolean(id, "remove");
+		if(remove != null)
+			type.setRemove(true);
 
 		List<String> ruleVPs = getInnerList(id, "rules");
 		for(String vpDesc : ruleVPs)

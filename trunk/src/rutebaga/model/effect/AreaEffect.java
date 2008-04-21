@@ -24,6 +24,17 @@ public class AreaEffect extends Instance<AreaEffect>
 	private BoundsTracker boundsTracker;
 	private ChainedRule<Entity> rules = new ChainedRule<Entity>(true);
 	private ChainedRule<AreaEffect> activeRules = new ChainedRule<AreaEffect>(true);
+	private boolean remove = false;
+
+	public boolean isRemove()
+	{
+		return remove;
+	}
+
+	public void setRemove(boolean remove)
+	{
+		this.remove = remove;
+	}
 
 	public AreaEffect(InstanceType<AreaEffect> type)
 	{
@@ -110,14 +121,21 @@ public class AreaEffect extends Instance<AreaEffect>
 			set.addAll(this.getCoexistantInstances());
 		else
 			set.addAll(boundsTracker.getInstances());
+		boolean flag = false;
 		for (Entity entity : set.getEntities())
 		{
 			if (rules.determine(entity))
+			{
 				for (EntityEffect effect : effects)
 				{
 					entity.accept(effect);
 				}
+				flag = true;
+			}
+			if(remove && flag) break;
 		}
+		if(remove && flag)
+			this.remove();
 	}
 
 	public void setMass(double mass) {

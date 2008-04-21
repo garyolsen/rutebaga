@@ -27,6 +27,8 @@ public class Ability<T> implements Named
 
 	public void act(T target)
 	{
+		if(!isFeasible() || !exists())
+			return;
 		rutebaga.commons.Log.log("ACTING!!!");
 		if (isFeasible())
 		{

@@ -18,6 +18,17 @@ public class AreaEffectType extends ConcreteInstanceType<AreaEffect>
 	private Bounds2D bounds;
 	private ChainedRule<Entity> rules = new ChainedRule<Entity>(true);
 	private ChainedRule<AreaEffect> activeRules = new ChainedRule<AreaEffect>(true);
+	private boolean remove = false;
+
+	public boolean isRemove()
+	{
+		return remove;
+	}
+
+	public void setRemove(boolean remove)
+	{
+		this.remove = remove;
+	}
 
 	public ChainedRule<AreaEffect> getActiveRules()
 	{
@@ -80,6 +91,7 @@ public class AreaEffectType extends ConcreteInstanceType<AreaEffect>
 		instance.getEffects().addAll(effects);
 		instance.getRules().addAll(rules.getRules());
 		instance.getActiveRules().addAll(activeRules.getRules());
+		instance.setRemove(remove);
 		
 		if (bounds != null)
 			instance.setBounds(bounds);
