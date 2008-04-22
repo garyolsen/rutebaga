@@ -131,10 +131,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 
 		view.addViewComponent(new MapComponent(observable, avatar, view.getWidth(), view.getHeight()));
 		
-		FPSTextComponent fps = new FPSTextComponent();
+		/*FPSTextComponent fps = new FPSTextComponent();
 		fps.setFontColor(Color.RED);
 		fps.setLocation(100, 100);
-		view.addViewComponent(fps);
+		view.addViewComponent(fps);*/
 
 		StatRibbon ribbon = new StatRibbon(stats);
 		view.addViewComponent(ribbon);

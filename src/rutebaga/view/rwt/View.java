@@ -74,7 +74,7 @@ public class View
 		GraphicsDevice device = env.getDefaultScreenDevice();
 
 		device.setFullScreenWindow(window);
-
+/*
 		device.setDisplayMode(new DisplayMode(800, 600, 16, 60));
 		if(true) return;
 		
@@ -114,7 +114,7 @@ public class View
 			if(ok) break;
 		}
 		if(!ok) device.setDisplayMode(old);
-		
+		*/
 	}
 
 	private void setupDispatcher()

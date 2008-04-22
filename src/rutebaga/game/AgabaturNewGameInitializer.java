@@ -1,15 +1,18 @@
 package rutebaga.game;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
 import rutebaga.appearance.AnimatedAppearanceDef;
 import rutebaga.appearance.AppearanceManagerDefinition;
 import rutebaga.appearance.EntityAppearanceManager;
+import rutebaga.appearance.MountAppearanceManager;
 import rutebaga.appearance.StaticAppearanceDef;
 import rutebaga.commons.math.ConstantValueProvider;
 import rutebaga.commons.math.Vector2D;
@@ -20,6 +23,9 @@ import rutebaga.model.effect.AreaEffectType;
 import rutebaga.model.entity.AbilityCategory;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
+import rutebaga.model.entity.Mount;
+import rutebaga.model.entity.MountType;
+import rutebaga.model.entity.Vehicle;
 import rutebaga.model.entity.npc.NPCEntity;
 import rutebaga.model.entity.npc.NPCType;
 import rutebaga.model.entity.stats.StatisticId;
@@ -33,6 +39,7 @@ import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.World;
 import rutebaga.model.environment.appearance.Appearance;
+import rutebaga.model.environment.appearance.StaticAppearanceManager;
 import rutebaga.model.item.ItemType;
 import rutebaga.model.item.SlotType;
 import rutebaga.model.map.River;
@@ -344,10 +351,36 @@ public class AgabaturNewGameInitializer implements GameInitializer
 					+ mapBounds[2]));
 		}
 
+		MountType mountType = new MountType();
+		mountType.setMass(1.0);
+		mountType.setVehicle(new Vehicle());
+		mountType.setRadius(7);
+		
+		Mount mount = mountType.create();
+		mountType.initialize(mount);
+		mount.blackListTerrainTypes();
+		mount.setMovementSpeedStrat(new ConstantValueProvider<Entity>(.1));
+		mount.setMass(1.0);
+		mount.setVehicle(new Vehicle());
+		MountAppearanceManager mountManager = new MountAppearanceManager(mount);
+		mountManager.setMountedStanding(getAnimatedAppearances("imgMarioMounted", scaffold));
+		mountManager.setMountedWalking(getAnimatedAppearances("imgMarioMounted", scaffold));
+		mountManager.setStanding(getAnimatedAppearances("imgYoshi", scaffold));
+		mountManager.setWalking(getAnimatedAppearances("imgYoshi", scaffold));
+		mount.setAppearanceManager(mountManager);
+		
 		int xRng = mapBounds[1] - mapBounds[0];
 		int yRng = mapBounds[3] - mapBounds[2];
 		int xMin = mapBounds[0];
 		int yMin = mapBounds[2];
+		
+		while (!mount.existsInUniverse())
+		{
+			environment.add(mount, new Vector2D(random.nextInt(mapBounds[1]
+					- mapBounds[0])
+					+ mapBounds[0], random.nextInt(mapBounds[3] - mapBounds[2])
+					+ mapBounds[2]));
+		}
 
 		// for (int i = 0; i < numNpcs; i++)
 		// {
@@ -444,6 +477,36 @@ public class AgabaturNewGameInitializer implements GameInitializer
 	public Collection<StatisticId> getDisplayedStats()
 	{
 		return displayedStats;
+	}
+	
+	private static String[] directionStrings = { "North", "NorthEast", "SouthEast", "South", "SouthWest", "NorthWest" }; 
+	private Appearance[][] getAnimatedAppearances(String name, MasterScaffold scaffold)
+	{
+		List<Appearance[]> list = new ArrayList<Appearance[]>();
+		for(String dirString : directionStrings)
+		{
+			list.add(getAppearancesForDirection(name, dirString, scaffold));
+		}
+		return list.toArray(new Appearance[list.size()][]);
+	}
+	
+	private Appearance[] getAppearancesForDirection(String name, String direction, MasterScaffold scaffold)
+	{
+		boolean stop = false;
+		ArrayList<Appearance> list = new ArrayList<Appearance>();
+		for(int i=1; !stop; i++)
+		{
+			String nStr = String.valueOf(i);
+			if(nStr.length() == 1) nStr = "0" + nStr;
+			String scaffId = name + direction + nStr;
+			if(scaffold.contains(scaffId))
+			{
+				list.add(new Appearance((Image) scaffold.get(scaffId)));
+			}
+			else
+				stop = true;
+		}
+		return list.toArray(new Appearance[list.size()]);
 	}
 
 }
