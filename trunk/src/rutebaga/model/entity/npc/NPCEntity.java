@@ -80,7 +80,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	 */
 	public boolean targetInRange()
 	{
-		return true;
+		return rand.nextBoolean();
 	}
 
 	/**

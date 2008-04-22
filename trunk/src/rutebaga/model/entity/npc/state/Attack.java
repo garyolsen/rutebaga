@@ -70,9 +70,8 @@ public class Attack extends NPCState
 				}
 			return this;
 			}
-			else
-				return NPCState.chase;
 		}
+		return NPCState.chase;
 	}
 
 }
