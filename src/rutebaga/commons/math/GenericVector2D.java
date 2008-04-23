@@ -11,4 +11,5 @@ public interface GenericVector2D<T extends Number, U extends GenericVector2D<T, 
 	T getX();
 	T getY();
 	double getMagnitude();
+	double dot(GenericVector2D other);
 }

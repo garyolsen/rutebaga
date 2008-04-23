@@ -220,4 +220,9 @@ public class Vector2D implements GenericVector2D<Double, Vector2D>
 	{
 		return Math.atan2(getY(), getX());
 	}
+
+	public double dot(GenericVector2D other)
+	{
+		return this.getX()*other.getX().doubleValue() + this.getY()*other.getY().doubleValue();
+	}
 }
