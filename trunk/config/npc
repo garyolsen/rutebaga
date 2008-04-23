@@ -1,12 +1,13 @@
 npcBlueNPC
 team	teamBlue
-standing 	imgMario
-walking		imgMario
+standing 	imgKoopa
+walking		imgKoopa
 moveSpd		$vpEntityMovementSpeed
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy	
+cooldown	$vpEntityCooldownStrategy
 wallet	$vpEntityWallet
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow
+abilities	abBolt
 movement	whitelist terrGrass terrWater terrMountain
 bargain		1.0

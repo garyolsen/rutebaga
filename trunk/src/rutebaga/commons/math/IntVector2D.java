@@ -87,7 +87,7 @@ public class IntVector2D implements GenericVector2D<Integer, IntVector2D>
 	
 	public double dot(GenericVector2D other)
 	{
-		return comp[0]*other.getX().intValue() + comp[1]*other.getY().intValue();
+		return comp[0]*other.getX().doubleValue() + comp[1]*other.getY().doubleValue();
 	}
 	
 	@Override

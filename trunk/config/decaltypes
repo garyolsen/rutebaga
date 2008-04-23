@@ -10,12 +10,12 @@ lifetime		38
 
 decBolt
 
-appearance		animated imgBolt 2 C
+appearance		animated imgBolt 2 S
 lifetime		22
 
 decNuke
 
-appearance		animated imgNuke 2 C
+appearance		animated imgNuke 2 S
 lifetime		20
 
 decShell
@@ -25,7 +25,7 @@ lifetime		32
 
 decBubble
 
-appearance		animated imgBubble 3 C
+appearance		animated imgBubble 3 S
 lifetime		36
 
 decLife

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import rutebaga.commons.math.SymbolicFunction;
+import rutebaga.commons.math.Vector2D;
+import rutebaga.model.effect.TemporaryEffect;
 import rutebaga.model.entity.effect.StatEffect;
 import rutebaga.model.entity.stats.StatisticId;
 
@@ -29,36 +31,7 @@ public class Damage
 	private DamageType type;
 	private SymbolicFunction<Entity> magnitudeProvider;
 	private StatisticId damagedStat;
-
-	public DamageType getType()
-	{
-		return type;
-	}
-
-	public void setType(DamageType type)
-	{
-		this.type = type;
-	}
-
-	public SymbolicFunction<Entity> getMagnitudeProvider()
-	{
-		return magnitudeProvider;
-	}
-
-	public void setMagnitudeProvider(SymbolicFunction<Entity> magnitudeProvider)
-	{
-		this.magnitudeProvider = magnitudeProvider;
-	}
-
-	public StatisticId getDamagedStat()
-	{
-		return damagedStat;
-	}
-
-	public void setDamagedStat(StatisticId dStat)
-	{
-		this.damagedStat = dStat;
-	}
+	private SymbolicFunction<Entity> lifetimeProvider;
 
 	public Object execute(Entity entity, double amount)
 	{
@@ -67,7 +40,57 @@ public class Damage
 		if (type != null)
 			symT.put("defense", entity.getDamageResistance().getValue(type));
 		double statAffectAmount = magnitudeProvider.getValue(symT, entity);
-		EntityEffect eff = new StatEffect(damagedStat, statAffectAmount);
+		ReversibleEntityEffect eff = new StatEffect(damagedStat, statAffectAmount);
+		if(lifetimeProvider != null)
+		{
+			double lifetime = lifetimeProvider.getValue(symT, entity);
+			TemporaryEffect effect = new TemporaryEffect(null);
+			effect.setTarget(entity);
+			effect.setEffect(eff);
+			effect.setLifetime((int) lifetime);
+			entity.getEnvironment().add(effect, new Vector2D(0, 0));
+			return effect.start();
+		}
 		return entity.accept(eff);
+	}
+
+	public StatisticId getDamagedStat()
+	{
+		return damagedStat;
+	}
+
+	public SymbolicFunction<Entity> getLifetimeProvider()
+	{
+		return lifetimeProvider;
+	}
+
+	public SymbolicFunction<Entity> getMagnitudeProvider()
+	{
+		return magnitudeProvider;
+	}
+
+	public DamageType getType()
+	{
+		return type;
+	}
+
+	public void setDamagedStat(StatisticId dStat)
+	{
+		this.damagedStat = dStat;
+	}
+
+	public void setLifetimeProvider(SymbolicFunction<Entity> lifetimeProvider)
+	{
+		this.lifetimeProvider = lifetimeProvider;
+	}
+
+	public void setMagnitudeProvider(SymbolicFunction<Entity> magnitudeProvider)
+	{
+		this.magnitudeProvider = magnitudeProvider;
+	}
+
+	public void setType(DamageType type)
+	{
+		this.type = type;
 	}
 }

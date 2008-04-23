@@ -7,8 +7,10 @@ import rutebaga.commons.logic.ChainedRule;
 import rutebaga.commons.logic.Rule;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.model.Named;
+import rutebaga.model.environment.ConcreteInstanceSet;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
+import rutebaga.model.environment.InstanceSet;
 
 public class Ability<T> implements Named
 {
@@ -32,6 +34,7 @@ public class Ability<T> implements Named
 		rutebaga.commons.Log.log("ACTING!!!");
 		if (isFeasible())
 		{
+			entity.resetCooldown();
 			for (AbilityAction<T> action : actions)
 				if(action != null)
 					action.act(this, target);
@@ -55,7 +58,11 @@ public class Ability<T> implements Named
 
 	public boolean canActOn(Instance<?> i)
 	{
-		//FIXME: fix me
+		if(! (i instanceof Entity))
+			return false;
+		Entity entity = (Entity) i;
+		if(entity.isDead())
+			return false;
 		return true;
 	}
 
@@ -96,6 +103,11 @@ public class Ability<T> implements Named
 
 	public boolean isFeasible()
 	{
+		if(entity.getCooldown() > 0)
+		{
+			System.out.println(entity.getCooldown());
+			return false;
+		}
 		return feasibilityRule.determine(entity);
 	}
 

@@ -46,4 +46,9 @@ public class ConcreteStatValue implements StatValue
 	{
 		return parent;
 	}
+
+	public void setBase(double value)
+	{
+		this.value = value;
+	}
 }

@@ -3,11 +3,15 @@ package rutebaga.model.environment;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
 
 import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
+import rutebaga.commons.math.VectorOps;
 
 /**
  * Convertor for a basic rectangular tile system, within which tile-space is
@@ -30,15 +34,16 @@ public class Hex2DTileConvertor implements TileConverter
 {
 	final static double xratio = Math.sqrt(3) / 2.0;
 	final static double yratio = 1.0 / 2.0;
-	
-	final static double rbar = 40.0/70;
-	final static double eqn_m = -1/(4*rbar-2);
-	final static double eqn_b = -rbar*eqn_m;
-	
+
+	final static double rbar = 40.0 / 70;
+	final static double eqn_m = -1 / (4 * rbar - 2);
+	final static double eqn_b = -rbar * eqn_m;
+
 	final static IntVector2D xPos = new IntVector2D(1, 0);
 	final static IntVector2D xNeg = new IntVector2D(-1, 0);
 	final static IntVector2D yPos = new IntVector2D(0, 1);
 	final static IntVector2D yNeg = new IntVector2D(0, -1);
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -46,22 +51,22 @@ public class Hex2DTileConvertor implements TileConverter
 	 */
 	public IntVector2D tileOf(Vector2D coordinate)
 	{
-		IntVector2D closestCenter = new IntVector2D((int)Math
-				.round(coordinate.getX()), (int)Math.round(coordinate.getY()));
+		IntVector2D closestCenter = new IntVector2D((int) Math.round(coordinate
+				.getX()), (int) Math.round(coordinate.getY()));
 		Vector2D diff = coordinate.minus(closestCenter);
 		Vector2D rect = toRect(diff);
 		double y = rect.getY();
 		double x = rect.getX();
-		if(Math.abs(y) > eqn_m*Math.abs(x) + eqn_b)
+		if (Math.abs(y) > eqn_m * Math.abs(x) + eqn_b)
 		{
-			//rutebaga.commons.Log.log("eqn: y = " + eqn_m + "*x + " + eqn_b);
-			//rutebaga.commons.Log.log();
+			// rutebaga.commons.Log.log("eqn: y = " + eqn_m + "*x + " + eqn_b);
+			// rutebaga.commons.Log.log();
 			int xDiff = (int) Math.signum(x);
 			int yDiff = (int) Math.signum(y);
 			rutebaga.commons.Log.log(xDiff + ", " + yDiff);
 			boolean neg = yDiff == -1;
 			IntVector2D augend;
-			if(xDiff != yDiff)
+			if (xDiff != yDiff)
 			{
 				// use y
 				augend = neg ? yNeg : yPos;
@@ -100,8 +105,12 @@ public class Hex2DTileConvertor implements TileConverter
 	@SuppressWarnings("unchecked")
 	public Vector2D toRect(GenericVector2D coordinate)
 	{
-		double x = xratio * (coordinate.getX().doubleValue() - coordinate.getY().doubleValue());
-		double y = yratio * (coordinate.getX().doubleValue() + coordinate.getY().doubleValue());
+		double x = xratio
+				* (coordinate.getX().doubleValue() - coordinate.getY()
+						.doubleValue());
+		double y = yratio
+				* (coordinate.getX().doubleValue() + coordinate.getY()
+						.doubleValue());
 		return new Vector2D(x, y);
 	}
 
@@ -109,14 +118,28 @@ public class Hex2DTileConvertor implements TileConverter
 	{
 		// FIXME plain wrong.
 		Collection<IntVector2D> rval = new HashSet<IntVector2D>();
-//		rval.add(b);
+		// rval.add(b);
 		return rval;
 	}
 
 	public Vector2D fromRect(GenericVector2D coordinate)
 	{
-		double y = (coordinate.getY().doubleValue()/yratio - coordinate.getX().doubleValue()/xratio)/2;
-		double x = coordinate.getY().doubleValue()/yratio - y; 
+		double y = (coordinate.getY().doubleValue() / yratio - coordinate
+				.getX().doubleValue()
+				/ xratio) / 2;
+		double x = coordinate.getY().doubleValue() / yratio - y;
 		return new Vector2D(x, y);
+	}
+
+	public Collection<IntVector2D> near(IntVector2D tile)
+	{
+		return adjacentTo(tile);
+	}
+
+	public Vector2D closestDirection(Vector2D direction)
+	{
+		double angle = VectorOps.getAngle(direction);
+		double diff = Math.round(angle/(Math.PI/4.0));
+		return new Vector2D(Math.cos(diff*Math.PI/4.0), Math.sin(diff*Math.PI/4.0));
 	}
 }

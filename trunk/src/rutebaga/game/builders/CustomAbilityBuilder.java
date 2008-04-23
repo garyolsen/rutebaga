@@ -2,6 +2,7 @@ package rutebaga.game.builders;
 
 import rutebaga.appearance.AppearanceManagerDefinition;
 import rutebaga.commons.math.ValueProvider;
+import rutebaga.model.entity.Damage;
 import rutebaga.model.environment.MovementAttributes;
 import rutebaga.scaffold.MasterScaffold;
 import rutebaga.scaffold.builders.AbstractAbilityBuilder;
@@ -50,8 +51,18 @@ public class CustomAbilityBuilder extends AbstractAbilityBuilder
 						.getInstance().get(appDefStr, scaffold);
 				effectType.setAppearanceDefinition(def);
 
+				Damage damage = (Damage) scaffold
+						.get(getProperty(id, "damage"));
+				if (damage != null)
+				{
+					double damageAmount = Double.parseDouble(getProperty(id,
+							"dmgamount"));
+					effectType.setDamage(damage);
+					effectType.setDamageAmount(damageAmount);
+				}
+
 				effectType.setMovementAttributes(new MovementAttributes(true));
-				
+
 				type.setEffectType(effectType);
 			}
 

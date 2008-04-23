@@ -15,7 +15,9 @@ import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.Bounds2D;
 import rutebaga.commons.math.ConstantValueProvider;
+import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.RectBounds2D;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.Vector2D;
@@ -56,23 +58,29 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
 
 	private Bounds2D visionBounds;
-	private Vision vision;
+	private ConcreteVision vision;
+	private CompoundVision compoundVision;
+
+	private MutableVector2D currentWalkingDirection = new MutableVector2D(0, 0);
 
 	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(
 			0.0);
 
 	private BidirectionalValueProvider<Entity> skillPtStrat;
 	private BidirectionalValueProvider<Entity> wallet;
+	private ValueProvider<Entity> cooldownProvider;
 
 	private Vector2D facing = new Vector2D(0, 0);
+	
+	private int cooldown = -1;
 
 	private Team team;
 	private Storefront storeFront;
 	private double money;
-	
-	private int decayTime = 3000; //in milliseconds
+
+	private int decayTime = 100; // in milliseconds
 	private long deathTimer = 0l;
-	
+
 	private Stack<Speech> speechStack = new Stack<Speech>();
 
 	private SkillLevelManager skillLevelManager = new SkillLevelManager();
@@ -86,15 +94,17 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	// TODO move into AbilitySet
 	private List<Ability> abilities = new ArrayList<Ability>();
-	
+
 	private Mount mount;
 
 	public Entity(InstanceType<T> type)
 	{
 		super(type);
-		visionBounds = new RectBounds2D(new Vector2D(SIGHT_RANGE, SIGHT_RANGE));
+		visionBounds = new EllipseBounds2D(new Vector2D(SIGHT_RANGE,
+				SIGHT_RANGE));
 		// XXX: connascence of timing
-		vision = new Vision(this);
+		vision = new ConcreteVision(this, visionBounds);
+		compoundVision = new CompoundVision(vision);
 	}
 
 	/**
@@ -118,10 +128,15 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 			skillLevelManager.getLevel(ability.getCategory());
 		abilities.add(ability);
 	}
-	
+
 	public void addToMoney(double value)
 	{
 		money = money + value;
+	}
+
+	public void addVision(Vision vision)
+	{
+		this.compoundVision.add(vision);
 	}
 
 	public void allocateSkillPoints(AbilityCategory category, int qty)
@@ -140,15 +155,16 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public boolean canSee(IntVector2D v)
 	{
-		if(mount != null) 
-			return mount.canSee(v);
-		
-		
-		Vector2D dV = new Vector2D(v.getX(), v.getY());
-		return visionBounds.contains(dV.minus(this.getCoordinate()));
+		return true;
+//		if (mount != null)
+//			return mount.canSee(v);
+//
+//		Vector2D dV = new Vector2D(v.getX(), v.getY());
+//		return visionBounds.contains(dV.minus(this.getCoordinate()));
 	}
 
-	public void dismount(Mount mount) {
+	public void dismount(Mount mount)
+	{
 		mount.dismount(this);
 	}
 
@@ -158,8 +174,9 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	}
 
 	@Override
-	public Appearance getAppearance() {
-		if(mount != null)
+	public Appearance getAppearance()
+	{
+		if (mount != null)
 			return mount.getAppearance();
 
 		return super.getAppearance();
@@ -175,11 +192,22 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return bargainSkillAmount;
 	}
 
+	public int getCooldown()
+	{
+		return cooldown;
+	}
+
+	public ValueProvider<Entity> getCooldownProvider()
+	{
+		return cooldownProvider;
+	}
+
 	@Override
-	public Vector2D getCoordinate() {
-		if(mount != null)
+	public Vector2D getCoordinate()
+	{
+		if (mount != null)
 			return mount.getCoordinate();
-		
+
 		return super.getCoordinate();
 	}
 
@@ -190,31 +218,33 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return deadStrategy;
 	}
 
-	public int getDecayTime() {
+	public int getDecayTime()
+	{
 		return decayTime;
 	}
 
 	@Override
-	public Environment getEnvironment() {
-		if(mount != null)
+	public Environment getEnvironment()
+	{
+		if (mount != null)
 			return mount.getEnvironment();
-		
+
 		return super.getEnvironment();
 	}
 
 	public Vector2D getFacing()
 	{
-		if(mount != null)
+		if (mount != null)
 			return mount.getFacing();
-		
+
 		return facing;
 	}
 
 	public IntVector2D getFacingTile()
 	{
-		if(mount != null)
+		if (mount != null)
 			mount.getFacingTile();
-		
+
 		return getEnvironment().getTileOf(
 				getFacing().over(getFacing().getMagnitude()).plus(getTile()));
 	}
@@ -232,13 +262,20 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return money;
 	}
 
-	public Mount getMount() {
+	public Mount getMount()
+	{
 		return mount;
 	}
 
 	public double getMovementSpeed()
 	{
-		return this.movementSpeedStrat.getValue(this);
+		return this.movementSpeedStrat == null ? 0 : this.movementSpeedStrat
+				.getValue(this);
+	}
+
+	public ConcreteVision getPrimaryVision()
+	{
+		return this.vision;
 	}
 
 	@Override
@@ -257,7 +294,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return skillPtStrat;
 	}
 
-	public Collection<Speech> getSpeech() {
+	public Collection<Speech> getSpeech()
+	{
 		return Collections.unmodifiableCollection(speechStack);
 	}
 
@@ -275,14 +313,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	public Vision getVision()
 	{
-		if(mount != null)
-			return mount.getVision();
-		
-		return vision;
+		return compoundVision;
 	}
 
 	public Bounds2D getVisionBounds()
-	{	
+	{
 		return visionBounds;
 	}
 
@@ -302,7 +337,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	}
 
 	@Override
-	public boolean isMobile() {
+	public boolean isMobile()
+	{
 		return !isDead();
 	}
 
@@ -312,31 +348,44 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return true;
 	}
 
-	public void mount(Mount mount) {
+	public void mount(Mount mount)
+	{
 		mount.mount(this);
 	}
 
-	public void recieveSpeech(Entity entity, String speech) {
-		speechStack.push( new Speech(entity, speech) );
+	public void recieveSpeech(Entity entity, String speech)
+	{
+		speechStack.push(new Speech(entity, speech));
 	}
-	
+
+	public void removeVision(Vision vision)
+	{
+		this.compoundVision.remove(vision);
+	}
+
 	public void setAppearance(Appearance appearance)
 	{
 		this.setAppearanceManager(new StaticAppearanceManager(appearance));
 	}
-	
+
 	public void setBargainSkill(ValueProvider<Entity> bargainSkillAmount)
 	{
 		if (bargainSkillAmount != null)
 			this.bargainSkillAmount = bargainSkillAmount;
 	}
-	
+
+	public void setCooldownProvider(ValueProvider<Entity> cooldownProvider)
+	{
+		this.cooldownProvider = cooldownProvider;
+	}
+
 	public void setDeadStrategy(ValueProvider<Entity> deadStrategy)
 	{
 		this.deadStrategy = deadStrategy;
 	}
-	
-	public void setDecayTime(int decayTime) {
+
+	public void setDecayTime(int decayTime)
+	{
 		this.decayTime = decayTime;
 	}
 
@@ -345,10 +394,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		this.facing = facing;
 	}
 
-	public void setMount(Mount mount) {
+	public void setMount(Mount mount)
+	{
 		this.mount = mount;
 	}
-	
+
 	public void setMovementSpeedStrat(ValueProvider<Entity> movementSpeedStrat)
 	{
 		this.movementSpeedStrat = movementSpeedStrat;
@@ -359,64 +409,98 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		this.skillPtStrat = skillPtStrat;
 	}
 
+	public void setTeam(Team team)
+	{
+		this.team = team;
+	}
+
 	public void setVisionBounds(Bounds2D visionBounds)
 	{
 		this.visionBounds = visionBounds;
-		this.vision = new Vision(this);
+		this.vision.setBounds(visionBounds);
 	}
 
 	public void setWallet(BidirectionalValueProvider<Entity> wallet)
 	{
 		this.wallet = wallet;
 	}
-	
-	public void speak(Entity entity) {
+
+	public void speak(Entity entity)
+	{
 		entity.recieveSpeech(this, "Hello.");
 	}
-	
+
 	@Override
 	public void tick()
 	{
-		if(isDead() && deathTimer == 0) {
+		if (isDead() && deathTimer == 0)
+		{
 			deathTimer = System.currentTimeMillis();
-		} else if(isDead()) {
+		}
+		else if (isDead())
+		{
 			long now = System.currentTimeMillis();
 			decayTime -= now - deathTimer;
 			deathTimer = now;
 		}
 		
-		
+		cooldown -= cooldownProvider.getValue(this);
+		if(cooldown < 0)
+			cooldown = 0;
+
+		applyWalkingImpulse(currentWalkingDirection);
+		currentWalkingDirection = new MutableVector2D(0, 0);
+
 		flushEffectQueue();
 		clearSpeech();
 		getVision().tick();
-		
-		if(decayTime <= 0) {
+
+		if (decayTime <= 0)
+		{
 			this.getEnvironment().remove(this);
 		}
 	}
-	
+
 	public String toString()
 	{
 		return "Entity named " + getName();
 	}
-	
+
 	public void walk(Vector2D direction)
 	{
-		if(mount != null) {
+		if (mount != null)
+		{
 			mount.walk(direction);
-		} else {
-			double magnitude = direction.getMagnitude();
-			if (magnitude > 0.005)
-				this.facing = direction;
-			this.applyImpulse(direction.times(movementSpeedStrat.getValue(this)
-					/ magnitude));
+		}
+		else
+		{
+			this.currentWalkingDirection.accumulate(direction.over(direction
+					.getMagnitude()));
 		}
 	}
-	
-	private void clearSpeech() {
+
+	private void applyWalkingImpulse(MutableVector2D direction)
+	{
+		if (mount != null)
+		{
+			mount.walk(direction);
+		}
+		else
+		{
+			double magnitude = direction.getMagnitude();
+			if (magnitude > 0.005)
+				this.applyImpulse(direction.times(getMovementSpeed()
+						/ magnitude));
+			if (magnitude > 0.005)
+				this.facing = direction;
+		}
+	}
+
+	private void clearSpeech()
+	{
 		speechStack.clear();
 	}
-	
+
 	private void flushEffectQueue()
 	{
 		for (Object id : getEffectQueue().keySet())
@@ -432,8 +516,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return effectQueue;
 	}
 
-	public void setTeam(Team team) {
-		this.team = team;
+	public void resetCooldown()
+	{
+		cooldown = 1000;
 	}
-
 }

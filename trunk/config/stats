@@ -5,7 +5,7 @@
 statHp
 name	HP
 type	concrete
-default	200
+default	50
 
 statMp
 name	MP
@@ -13,36 +13,36 @@ type	concrete
 default	450
 
 statMovement		# abstract quantifier; actual speed is specified by vpEntityMovementSpeed
-name	Speed
+name	Spd
 type	concrete
-default	10
+default	5
 
 statAgility
-name	Agility
+name	Ag
 type	concrete
 default	10
 
 statStrength
-name	Strength
+name	Str
 type	concrete
 default	10
 
 statIntellect
-name	Intellect
+name	Int
 type	concrete
 default	10
 
 statHardiness
-name	Hardiness
+name	Hrd
 type	concrete
 default	1
 
 statExperience
-name	Experience
+name	Exp
 default	0
 
 statCurrency
-name	Currency
+name	Curr
 default	100
 
 ##########################################################
@@ -50,27 +50,27 @@ default	100
 ##########################################################
 
 statLevel
-name	Level
+name	Lvl
 type	derived  
 value	floor / log + VP_stat_statExperience 100 log 1.2 
 
 statTotalSkillPts
-name	Total Skill Points
+name	SkillPts
 type	derived  
 value	* VP_stat_statLevel 5
 
 statDefRating
-name	Defensive Rating
+name	Def
 type	derived  
 value	+ * 4 VP_stat_statLevel * 0.5 VP_stat_statAgility
 
 statOffRating
-name	Offensive Rating
+name	Off
 type	derived
 value	+ * 4 VP_stat_statLevel * 0.5 VP_stat_statStrength
 
 statArmorRating
-name	Armor Rating
+name	Arm
 type	derived
 value	/ VP_stat_statHardiness 10
  

@@ -23,9 +23,11 @@ speed		0.3
 category	abcatAttacks
 
 abThrowFireBall
-name		Throw Fire Ball
+name		Fireball
 type		~abEgg
 appearance	animated imgFireBall 1 C
 lifetime	100
 speed		0.3
 category	abcatAttacks
+damage		dmgTpMagDmg
+dmgamount	2

@@ -79,32 +79,39 @@ public class TemporaryEffect extends Instance implements Targetable
 	@Override
 	public void setMass(double mass)
 	{
-	
+
 	}
 
 	@Override
 	public void tick()
 	{
-		if(life == null)
-		{
-			Object token = target.accept(effect);
-			reverse = effect.getReverseEffect(token);
-			life = lifetime;
-		}
-		else
+		if (life != null)
 		{
 			life--;
-		}
-		if(life < 0)
-		{
-			target.accept(reverse);
-			this.remove();
+
+			if (life < 0)
+			{
+				target.accept(reverse);
+				this.remove();
+			}
 		}
 	}
 
 	public void setTarget(Instance t)
 	{
 		target = (Entity) t;
+	}
+
+	public Object start()
+	{
+		if (life == null)
+		{
+			Object token = target.accept(effect);
+			reverse = effect.getReverseEffect(token);
+			life = lifetime;
+			return token;
+		}
+		throw new RuntimeException();
 	}
 
 }

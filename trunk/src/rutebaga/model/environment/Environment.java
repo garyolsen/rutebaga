@@ -12,7 +12,9 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import rutebaga.commons.math.Bounds2D;
 import rutebaga.commons.math.IntVector2D;
+import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.InternalContainer.Location;
 import rutebaga.model.environment.InternalContainer.PhysicsContainer;
 
@@ -39,6 +41,7 @@ public class Environment
 	private Map<Instance, IntVector2D> reverseTileCache = new HashMap<Instance, IntVector2D>();
 	private Set<MovementListener> listeners = new CopyOnWriteArraySet<MovementListener>();
 	private TileConverter tileConvertor;
+	private EnvironmentAppAttr appearanceAttr;
 
 	private Map<IntVector2D, Double> frictionCache = new HashMap<IntVector2D, Double>();
 
@@ -127,6 +130,11 @@ public class Environment
 		return true;
 	}
 
+	public EnvironmentAppAttr getAppearanceAttr()
+	{
+		return appearanceAttr;
+	}
+
 	public int getDimension()
 	{
 		return tileConvertor.getDimension();
@@ -167,6 +175,16 @@ public class Environment
 		return Collections.unmodifiableSet(tileCache.keySet());
 	}
 
+	public TileConverter getTileConvertor()
+	{
+		return tileConvertor;
+	}
+
+	public IntVector2D getTileOf(Vector2D coordinate)
+	{
+		return tileConvertor.tileOf(coordinate);
+	}
+
 	/**
 	 * @param tile
 	 *            the tile to query
@@ -175,6 +193,32 @@ public class Environment
 	public Set<Instance> instancesAt(IntVector2D tile)
 	{
 		return Collections.unmodifiableSet(getInstanceSetAt(tile));
+	}
+
+	public boolean move(Instance instance, Vector2D coord)
+	{
+		IntVector2D tile = tileConvertor.tileOf(coord);
+		if (blocked(instance, tile, false))
+			return false;
+
+		MovementEvent event = new MovementEvent(instance, instance
+				.getCoordinate(), instance.getTile());
+
+		boolean changedTiles = !tile.equals(instance.getTile());
+		if (changedTiles)
+			dirtyFriction.add(instance.getTile());
+		if (changedTiles)
+			dirtyFriction.add(tile);
+
+		Location location = instance.getLocation();
+		location.setCoordinate(coord);
+		location.setTile(tile);
+
+		updateTileOf(instance);
+
+		notifyListeners(event);
+
+		return true;
 	}
 
 	/**
@@ -209,6 +253,16 @@ public class Environment
 		notifyListeners(event);
 	}
 
+	public void setAppearanceAttr(EnvironmentAppAttr appearanceAttr)
+	{
+		this.appearanceAttr = appearanceAttr;
+	}
+
+	public void setTileConvertor(TileConverter tileConvertor)
+	{
+		this.tileConvertor = tileConvertor;
+	}
+
 	/**
 	 * Advances this environment through time.
 	 */
@@ -217,7 +271,7 @@ public class Environment
 		updatePhysics();
 		performMovement();
 		long time = System.currentTimeMillis();
-		for(Instance instance : instances)
+		for (Instance instance : instances)
 		{
 			instance.instanceTickOps();
 		}
@@ -225,7 +279,8 @@ public class Environment
 		{
 			instance.tick();
 		}
-		rutebaga.commons.Log.log("ticking environment: " + (System.currentTimeMillis()-time));
+		rutebaga.commons.Log.log("ticking environment: "
+				+ (System.currentTimeMillis() - time));
 	}
 
 	/**
@@ -278,8 +333,8 @@ public class Environment
 			if (!listeners.contains(listener))
 				listener.onMovement(event);
 		}
-//		rutebaga.commons.Log.log("notifying listeners: "
-//				+ (System.currentTimeMillis() - time));
+		// rutebaga.commons.Log.log("notifying listeners: "
+		// + (System.currentTimeMillis() - time));
 	}
 
 	/**
@@ -337,63 +392,63 @@ public class Environment
 		return tileCache;
 	}
 
-	public TileConverter getTileConvertor()
-	{
-		return tileConvertor;
-	}
-
 	/**
 	 * Moves child instances based on their velocities.
 	 */
 	protected void performMovement()
 	{
-		long time = System.currentTimeMillis();
 		int moveCt = 0;
 		for (Instance<?> instance : instances)
 		{
 			Vector2D velocity = instance.getVelocity();
+			boolean blocked = false;
+			Vector2D newCoordinate;
+			IntVector2D newTile;
+
 			if (velocity.getMagnitude() <= 0.0001)
 				continue;
-			Vector2D newCoordinate = instance.getCoordinate().plus(velocity);
-			IntVector2D newTile = tileConvertor.tileOf(newCoordinate);
-			Collection<IntVector2D> inBetween = tileConvertor.between(instance
-					.getTile(), newTile);
-			boolean blocked = false;
-			for (IntVector2D blockTile : inBetween)
+
+			do
 			{
-				if (blocked(instance, blockTile, true))
+				velocity = instance.getVelocity();
+				newCoordinate = instance.getCoordinate().plus(velocity);
+				newTile = tileConvertor.tileOf(newCoordinate);
+				blocked = blocked(instance, newTile, true);
+
+				if (blocked)
 				{
-					blocked = true;
-					break;
+					PhysicsContainer physics = instance.getPhysicsContainer();
+					Vector2D axisN = new Vector2D(newTile).minus(
+							instance.getTile()).plus(
+							instance.getVelocity().times(10));
+					Vector2D axis = new Vector2D(-axisN.getY(), axisN.getX());
+					MutableVector2D momentum = Vector2D.getProjection(physics
+							.getVelocity(), axis);
+					momentum.multiplyBy(instance.getMass());
+					physics.setMomentum(momentum);
+					physics.update(frictionCache.get(instance.getTile()));
 				}
 			}
-			blocked = blocked || blocked(instance, newTile, true);
-			if (blocked)
+			while (velocity.getMagnitude() > 0.0001 && blocked);
+
+			if (velocity.getMagnitude() <= 0.0001)
+				continue;
+
+			Location location = instance.getLocation();
+			MovementEvent event = new MovementEvent(instance, instance
+					.getCoordinate(), instance.getTile());
+			if (instance.getFriction() > 0.001)
 			{
-				PhysicsContainer physics = instance.getPhysicsContainer();
-				physics.getMomentum().multiplyBy(0.0);
-				// physics.getAppliedImpulse().multiplyBy(0.0);
-				physics.getVelocity().multiplyBy(0.0);
+				dirtyFriction.add(newTile);
+				dirtyFriction.add(instance.getTile());
 			}
-			else
-			{
-				Location location = instance.getLocation();
-				MovementEvent event = new MovementEvent(instance, instance
-						.getCoordinate(), instance.getTile());
-				if (instance.getFriction() > 0.001)
-				{
-					dirtyFriction.add(newTile);
-					dirtyFriction.add(instance.getTile());
-				}
-				location.setCoordinate(newCoordinate);
-				location.setTile(newTile);
-				updateTileOf(instance);
-				notifyListeners(event);
-				moveCt++;
-			}
+			location.setCoordinate(newCoordinate);
+			location.setTile(newTile);
+			updateTileOf(instance);
+			notifyListeners(event);
+			moveCt++;
 		}
-		rutebaga.commons.Log.log("movement count: " + moveCt + ": "
-				+ (System.currentTimeMillis() - time));
+
 	}
 
 	/**
@@ -406,7 +461,7 @@ public class Environment
 		{
 			IntVector2D tile = instance.getTile();
 			double friction;
-			if(dirtyFriction.contains(tile))
+			if (frictionCache.get(tile) == null || dirtyFriction.contains(tile))
 			{
 				dirtyFriction.remove(tile);
 				friction = frictionAt(tile);
@@ -453,15 +508,5 @@ public class Environment
 	Set<Instance> getTickableInstances()
 	{
 		return tickableInstances;
-	}
-	
-	public IntVector2D getTileOf(Vector2D coordinate)
-	{
-		return tileConvertor.tileOf(coordinate);
-	}
-
-	public void setTileConvertor(TileConverter tileConvertor)
-	{
-		this.tileConvertor = tileConvertor;
 	}
 }

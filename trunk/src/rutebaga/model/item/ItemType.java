@@ -15,8 +15,7 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 	private List<EntityEffect> permanentEffects = new ArrayList<EntityEffect>();
 	private List<ReversibleEntityEffect> reversibleEffects = new ArrayList<ReversibleEntityEffect>();
 	private List<EntityEffect> usableEffects = new ArrayList<EntityEffect>();
-	private double mass = 1.0;
-
+	
 	@Override
 	public String toString()
 	{
@@ -111,17 +110,6 @@ public class ItemType<T extends Item> extends ConcreteInstanceType<T>
 				usable.addEffect(effect);
 			}
 			instance.setUsableAspect(usable);
-		}
-	
-		instance.setMass(mass);
-		
-	}
-
-	public double getMass() {
-		return mass;
-	}
-
-	public void setMass(double mass) {
-		this.mass = mass;
+		}		
 	}
 }

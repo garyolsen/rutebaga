@@ -16,7 +16,7 @@ public class Item<T extends Item<T>> extends Instance<T>
 {
 	private EquippableAspect equippableAspect;
 	private UsableAspect usableAspect;
-	private double mass = 1.0;
+	private double mass = 0.01;
 	private Double defaultPrice = 100.0;
 	public Item(InstanceType<T> type)
 	{
@@ -45,7 +45,7 @@ public class Item<T extends Item<T>> extends Instance<T>
 
 	@Override
 	public double getMass() {
-		return 1.0;
+		return mass;
 	}
 
 	public List<EntityEffect> getPermanentEquipEffects()

@@ -415,6 +415,11 @@ public abstract class Instance<T extends Instance<T>> implements Layerable, Loca
 			updateTickability();
 		}
 	}
+	
+	public void move(Vector2D coordinate)
+	{
+		this.getEnvironment().move(this, coordinate);
+	}
 
 	public abstract void setMass(double mass);
 

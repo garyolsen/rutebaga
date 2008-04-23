@@ -31,6 +31,9 @@ public class DamageBuilder extends ConfigFileBuilder
 		SymbolicFunction<Entity> function = getFunction(id, "function", scaffold);
 		damage.setMagnitudeProvider(function);
 		
+		SymbolicFunction<Entity> lifetime = getFunction(id, "lifetime", scaffold);
+		damage.setLifetimeProvider(lifetime);
+		
 		StatisticId dStat = (StatisticId) getObjectFor(id, "dstat", scaffold);
 		damage.setDamagedStat(dStat);
 	}

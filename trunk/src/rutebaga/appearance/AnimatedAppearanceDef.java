@@ -14,7 +14,8 @@ import rutebaga.model.environment.appearance.Appearance.Orientation;
  * 
  */
 public class AnimatedAppearanceDef implements
-		AppearanceManagerDefinition<Instance> {
+		AppearanceManagerDefinition<Instance>
+{
 	private Image[] images;
 
 	private int wait;
@@ -22,42 +23,46 @@ public class AnimatedAppearanceDef implements
 	private Orientation orientation;
 
 	private int offsetX;
-
 	private int offsetY;
 
 	/**
 	 * 
 	 * @return The images that make up the frames of animation.
 	 */
-	public Image[] getImages() {
+	public Image[] getImages()
+	{
 		return images;
 	}
 
 	/**
 	 * @return The amount this animation is being moved horizontally.
 	 */
-	public int getOffsetX() {
+	public int getOffsetX()
+	{
 		return offsetX;
 	}
 
 	/**
 	 * @return The amount this animation is being moved vertically.
 	 */
-	public int getOffsetY() {
+	public int getOffsetY()
+	{
 		return offsetY;
 	}
 
 	/**
 	 * @return The direction this animation is facing.
 	 */
-	public Orientation getOrientation() {
+	public Orientation getOrientation()
+	{
 		return orientation;
 	}
 
 	/**
 	 * @return The amount of ticks between animation frames.
 	 */
-	public int getWait() {
+	public int getWait()
+	{
 		return wait;
 	}
 
@@ -66,9 +71,11 @@ public class AnimatedAppearanceDef implements
 	 * @return An AppearanceManager using this AnimatedAppearanceDef to
 	 *         represent the provided Instance.
 	 */
-	public AppearanceManager make(Instance instance) {
+	public AppearanceManager make(Instance instance)
+	{
 		Appearance[] appearances = new Appearance[images.length];
-		for (int i = 0; i < images.length; i++) {
+		for (int i = 0; i < images.length; i++)
+		{
 			Image image = images[i];
 			Appearance appearance = new Appearance(image);
 			if (orientation != null)
@@ -86,7 +93,8 @@ public class AnimatedAppearanceDef implements
 	 * @param images
 	 *            The series of images that will animate.
 	 */
-	public void setImages(Image[] images) {
+	public void setImages(Image[] images)
+	{
 		this.images = images;
 	}
 
@@ -94,7 +102,8 @@ public class AnimatedAppearanceDef implements
 	 * @param offsetX
 	 *            The horizontal offset for each frame of this animation.
 	 */
-	public void setOffsetX(int offsetX) {
+	public void setOffsetX(int offsetX)
+	{
 		this.offsetX = offsetX;
 	}
 
@@ -102,7 +111,8 @@ public class AnimatedAppearanceDef implements
 	 * @param offsetY
 	 *            The vertical offset for each frame of this animation.
 	 */
-	public void setOffsetY(int offsetY) {
+	public void setOffsetY(int offsetY)
+	{
 		this.offsetY = offsetY;
 	}
 
@@ -110,7 +120,8 @@ public class AnimatedAppearanceDef implements
 	 * @param orientation
 	 *            The direction that this animation is facing.
 	 */
-	public void setOrientation(Orientation orientation) {
+	public void setOrientation(Orientation orientation)
+	{
 		this.orientation = orientation;
 	}
 
@@ -118,7 +129,8 @@ public class AnimatedAppearanceDef implements
 	 * @param wait
 	 *            The amount of ticks between animation frames.
 	 */
-	public void setWait(int wait) {
+	public void setWait(int wait)
+	{
 		this.wait = wait;
 	}
 

@@ -16,7 +16,7 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 	private AppearanceManagerDefinition definition;
 	private String name;
 	private String[] initialFlags;
-	private double mass;
+	private Double mass;
 	
 	public String[] getInitialFlags()
 	{
@@ -73,6 +73,9 @@ public abstract class ConcreteInstanceType<T extends Instance> implements
 	protected void initialize(T instance)
 	{		
 		instance.setName(name);
+		
+		if(mass != null)
+			instance.setMass(mass);
 		
 		if (movementAttributes != null)
 		{

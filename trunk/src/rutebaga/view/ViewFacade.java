@@ -78,8 +78,8 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 * @see rutebaga.view.rwt.View#View(int, int)
 	 */
 	public void constructFullscreenView() {
-		view = new View(800, 600);
-		//view.setFullscreen();
+		view = new View(1024, 768);
+		view.setFullscreen();
 	}
 
 	/**
@@ -135,6 +135,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 		fps.setFontColor(Color.RED);
 		fps.setLocation(100, 100);
 		view.addViewComponent(fps);*/
+		
 
 		StatRibbon ribbon = new StatRibbon(stats);
 		view.addViewComponent(ribbon);
@@ -312,6 +313,15 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 		view.removeViewComponent(contextStack.pop());
 		if (contextStack.size() > 0)
 			view.addViewComponent(contextStack.peek());
+	}
+	
+	public ContextMenu getActiveContextMenu()
+	{
+		if(contextStack.isEmpty())
+			return null;
+		if(contextStack.peek() instanceof ContextMenu)
+			return (ContextMenu) contextStack.peek();
+		return null;
 	}
 
 	private void prepareContextStack() {

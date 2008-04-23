@@ -34,6 +34,8 @@ public interface TileConverter
 	 * @return the set of adjacent tile-space coordinates
 	 */
 	Collection<IntVector2D> adjacentTo(IntVector2D tile);
+	
+	Collection<IntVector2D> near(IntVector2D tile);
 
 	/**
 	 * @return the dimension of this space definition
@@ -51,4 +53,6 @@ public interface TileConverter
 	public Collection<IntVector2D> between(IntVector2D a, IntVector2D b);
 	
 	Vector2D fromRect(GenericVector2D coordinate);
+	
+	Vector2D closestDirection(Vector2D direction);
 }

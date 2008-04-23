@@ -65,4 +65,6 @@ public interface Stats
 	void modifyStat(StatModification mod);
 	
 	void modifyStat(StatisticId id, double amount);
+	
+	void setBaseValue(StatisticId id, double amount);
 }

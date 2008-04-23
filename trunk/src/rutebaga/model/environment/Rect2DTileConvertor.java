@@ -7,6 +7,7 @@ import java.util.HashSet;
 import rutebaga.commons.math.GenericVector2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
+import rutebaga.commons.math.VectorOps;
 
 /**
  * Convertor for a basic rectangular tile system, within which tile-space is
@@ -27,8 +28,9 @@ import rutebaga.commons.math.Vector2D;
  */
 public class Rect2DTileConvertor implements TileConverter
 {
-	final static double xratio = Math.sqrt(3)/2.0;
-	final static double yratio = 1.0/2.0;
+	final static double xratio = Math.sqrt(3) / 2.0;
+	final static double yratio = 1.0 / 2.0;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -36,7 +38,8 @@ public class Rect2DTileConvertor implements TileConverter
 	 */
 	public IntVector2D tileOf(Vector2D coordinate)
 	{
-		return new IntVector2D((int) Math.round(coordinate.getX().doubleValue()), (int) Math
+		return new IntVector2D((int) Math
+				.round(coordinate.getX().doubleValue()), (int) Math
 				.round(coordinate.getY().doubleValue()));
 	}
 
@@ -63,7 +66,8 @@ public class Rect2DTileConvertor implements TileConverter
 	@SuppressWarnings("unchecked")
 	public Vector2D toRect(GenericVector2D coordinate)
 	{
-		return new Vector2D(coordinate.getX().doubleValue(), coordinate.getY().doubleValue());
+		return new Vector2D(coordinate.getX().doubleValue(), coordinate.getY()
+				.doubleValue());
 	}
 
 	public Collection<IntVector2D> between(IntVector2D a, IntVector2D b)
@@ -98,6 +102,26 @@ public class Rect2DTileConvertor implements TileConverter
 
 	public Vector2D fromRect(GenericVector2D coordinate)
 	{
-		return new Vector2D(coordinate.getX().doubleValue(), coordinate.getY().doubleValue());
+		return new Vector2D(coordinate.getX().doubleValue(), coordinate.getY()
+				.doubleValue());
+	}
+
+	public Collection<IntVector2D> near(IntVector2D tile)
+	{
+		ArrayList<IntVector2D> rval = new ArrayList<IntVector2D>();
+		for (int x = -1; x <= 1; x++)
+			for (int y = -1; y <= -1; y++)
+			{
+				if (x != 0 || y != 0)
+					rval.add(new IntVector2D(tile.getX() + x, tile.getY() + y));
+			}
+		return rval;
+	}
+
+	public Vector2D closestDirection(Vector2D direction)
+	{
+		double angle = VectorOps.getAngle(direction);
+		double diff = Math.round(angle/(Math.PI/8.0));
+		return new Vector2D(Math.cos(diff*Math.PI/8.0), Math.sin(diff*Math.PI/8.0));
 	}
 }

@@ -1,6 +1,9 @@
 aoeHealer
 appearance	animated imgPowerUp 10 C
 effects		eeffHealerAOE_HP
+entityrules {
+	VP_item_itemKey	
+}
 
 aoeHarm
 appearance	animated imgPlant 5 S

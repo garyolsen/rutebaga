@@ -1,10 +1,27 @@
+#############################################################
+#						SPELLS								#
+#############################################################
+
+abSlow
+
+name Slow
+category	abcatSpells
+actions{
+	damage		dmgTpSlow	2
+	spawn		target	follow decBubble
+	entityeffect	source	eeff_Spell_MP	
+}
+feasibility {
+	gate 19 VP_@entityStats_VP_stat_statMp
+}
+
 abBubble
 
 name Bubble
 category	abcatSpells
 actions{
 	tempentityeffect  eeff_Defense 500
-	spawn		target	static decBubble
+	spawn		target	follow decBubble
 	entityeffect	source	eeff_Spell_MP	
 }
 feasibility {
@@ -17,7 +34,7 @@ name Shell
 category	abcatSpells
 actions{
 	tempentityeffect  eeff_Hardiness 500
-	spawn		target	static decShell
+	spawn		target	follow decShell
 	entityeffect	source	eeff_Spell_MP	
 }
 feasibility {
@@ -30,8 +47,8 @@ abHeal
 name Heal
 category	abcatSpells
 actions{
-	damage		dmgTpHeal 	* + VP_skill_abcatSpells 1 -5	
-	spawn		target	static decLife
+	damage		dmgTpHeal 	* + VP_skill_abcatSpells 30 -1	
+	spawn		target	follow decLife
 	entityeffect	source	eeff_Spell_MP	
 }
 feasibility {
@@ -43,8 +60,8 @@ abBolt
 name		Bolt
 category	abcatSpells
 actions {
-	damage		dmgTpNuke 	* + VP_skill_abcatSpells 1 5
-	spawn		target static decBolt
+	damage		dmgTpNuke 	+ VP_skill_abcatSpells 30	
+	spawn		target follow decBolt
 	entityeffect	source	eeff_Spell_MP	
 }
 feasibility {
@@ -58,7 +75,7 @@ name		Demi
 category	abcatSpells
 actions {
 	damage		dmgTpDemi 4	
-	spawn		target static decBeam
+	spawn		target follow decBeam
 	entityeffect	source	eeff_Spell_MP
 }
 feasibility {
@@ -71,8 +88,8 @@ abNuke
 name		Nuke
 category	abcatSpells
 actions {
-	damage		dmgTpNuke 	* + VP_skill_abcatSpells 1 10		
-	spawn		target static decNuke
+	damage		dmgTpNuke 	+ VP_skill_abcatSpells 30 -1		
+	spawn		target follow decNuke
 	entityeffect	source	eeff_Spell_MP
 }
 feasibility {

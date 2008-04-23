@@ -30,7 +30,6 @@ public class StatEffect extends ReversibleEntityEffect
 	@Override
 	protected void affect(Entity entity, Object id)
 	{
-		//System.out.println("affecting");
 		// XXX LOD violation
 		entity.getStats().modifyStat(modification, id);
 	}
