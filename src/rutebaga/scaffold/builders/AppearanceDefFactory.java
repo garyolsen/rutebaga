@@ -27,6 +27,8 @@ public class AppearanceDefFactory
 	public AppearanceManagerDefinition get(String description,
 			MasterScaffold scaffold)
 	{
+		try
+		{
 		// FORMAT
 		// animated [imageStart] waitTime orientation (offset)
 		// static [image] orientation (offset)
@@ -41,6 +43,11 @@ public class AppearanceDefFactory
 			return getStatic(tokens, scaffold);
 		}
 		return null;
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException("Failed while parsing \"" + description + "\"", e);
+		}
 	}
 
 	private AppearanceManagerDefinition getAnimated(String[] tokens,
@@ -51,6 +58,11 @@ public class AppearanceDefFactory
 		String imageName = tokens[1];
 		String waitString = tokens[2];
 		String orienataionName = tokens[3];
+		if(tokens.length >= 6)
+		{
+			def.setOffsetX(Integer.parseInt(tokens[4]));
+			def.setOffsetY(Integer.parseInt(tokens[5]));
+		}
 
 		boolean done = false;
 		ArrayList<Image> images = new ArrayList<Image>();
@@ -93,6 +105,12 @@ public class AppearanceDefFactory
 
 		String imageName = tokens[1];
 		String orientationName = tokens[2];
+		
+		if(tokens.length >= 5)
+		{
+			def.setOffsetX(Integer.parseInt(tokens[3]));
+			def.setOffsetY(Integer.parseInt(tokens[4]));
+		}
 
 		Image image = (Image) scaffold.get(imageName);
 		def.setImage(image);

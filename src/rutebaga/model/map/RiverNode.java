@@ -53,12 +53,10 @@ public class RiverNode extends Instance<RiverNode> {
 	@Override
 	public void tick() {
 		Collection<Instance> instances = this.getCoexistantInstances();
-//		System.out.println(instances);
 		if (next != null)
 		{
 			//current = previous.getCurrent()*factor;
 			for (Instance instance : instances) {
-//				System.out.println(getTile().minus(previous.getTile()));
 				instance.applyImpulse( new Vector2D(next.getTile()).minus(getTile()).times(factor) );
 			}
 		}

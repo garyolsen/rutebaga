@@ -78,7 +78,6 @@ public class EntityAppearanceManager extends AppearanceManager {
 	private Entity entity;
 
 	private Appearance[][] walking;
-
 	private Appearance[][] standing;
 
 	private State currentState;
@@ -149,7 +148,7 @@ public class EntityAppearanceManager extends AppearanceManager {
 	}
 
 	private int getDirectionOrdinal(int total) {
-		double offset = 0.75;
+		double offset = 0.6125;
 		TileConverter conv = entity.getEnvironment().getTileConvertor();
 		Vector2D direction = conv.toRect(
 				entity.getFacing().plus(entity.getCoordinate())).minus(

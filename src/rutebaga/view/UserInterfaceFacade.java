@@ -15,6 +15,8 @@ import rutebaga.view.rwt.View;
 public interface UserInterfaceFacade {
 	void createTitleScreen(ElementalList list);
 	
+	ContextMenu getActiveContextMenu();
+	
 	/**
 	 * Shows a screen where the user can create a player.
 	 * 

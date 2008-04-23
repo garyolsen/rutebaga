@@ -70,6 +70,7 @@ public class StatRibbon extends ViewComponent {
 				draw.drawString(new Point(getX() + openX - textWidth - margin * 2, y + fontHeight), value);
 				y += barHeight + barSpacing;
 			}
+			
 			//draw.drawString(new Point(getX() + openX/2, HEIGHT*3/4), id2.getName() + entity.getStats().getStatObject(id1));
 		}
 		button.draw(draw);

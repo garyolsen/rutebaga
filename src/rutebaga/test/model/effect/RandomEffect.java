@@ -6,6 +6,9 @@ import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.effect.TargetableEffect;
+import rutebaga.model.entity.Damage;
+import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
 
@@ -13,6 +16,29 @@ public class RandomEffect extends TargetableEffect<RandomEffect, Instance> {
 
 	public RandomEffect(ValueProvider<? super RandomEffect> impulse) {
 		super(null, impulse);
+	}
+	
+	private Damage damageToApply;
+	private double damageAmount;
+
+	public Damage getDamageToApply()
+	{
+		return damageToApply;
+	}
+
+	public void setDamageToApply(Damage damageToApply)
+	{
+		this.damageToApply = damageToApply;
+	}
+
+	public double getDamageAmount()
+	{
+		return damageAmount;
+	}
+
+	public void setDamageAmount(double damageAmount)
+	{
+		this.damageAmount = damageAmount;
 	}
 
 	@Override
@@ -28,6 +54,10 @@ public class RandomEffect extends TargetableEffect<RandomEffect, Instance> {
 				direction.detract(this.getCoordinate());
 				direction.multiplyBy((3 - direction.getMagnitude()) / 20);
 				target.applyMomentum(direction);
+				if(damageToApply != null)
+				{
+					damageToApply.execute((Entity) target, damageAmount);
+				}
 			}
 		}
 	}

@@ -2,14 +2,20 @@ package rutebaga.model.entity;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import rutebaga.appearance.EntityAppearanceManager;
 import rutebaga.commons.math.BidirectionalValueProvider;
 import rutebaga.commons.math.ConstantValueProvider;
+import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.RectBounds2D;
 import rutebaga.commons.math.ValueProvider;
 import rutebaga.commons.math.Vector2D;
+import rutebaga.model.entity.stats.ConcreteStatValue;
+import rutebaga.model.entity.stats.StatisticId;
 import rutebaga.model.environment.ConcreteInstanceType;
 import rutebaga.model.environment.InstanceType;
 import rutebaga.model.environment.appearance.Appearance;
@@ -22,9 +28,11 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private ValueProvider<Entity> bargainSkillAmount;
 	private BidirectionalValueProvider<Entity> skillPtStrat;
 	private BidirectionalValueProvider<Entity> wallet;
+	private ValueProvider<Entity> cooldownProvider;
 	private ValueProvider<Entity> deadStrategy;
 	private List<AbilityType> abilityTypes = new ArrayList<AbilityType>();
 	private Team team;
+	private Map<StatisticId, Double> initialStats = new HashMap<StatisticId, Double>();
 
 	private int radius;
 	private int decayTime;
@@ -74,10 +82,16 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 
 		entity.setMovementSpeedStrat(movementSpeed);
 		entity.setBargainSkill(bargainSkillAmount);
+		entity.setCooldownProvider(cooldownProvider);
 		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
 		entity.setTeam(team);
 		entity.setWallet(wallet);
+		
+		for(StatisticId statId : initialStats.keySet())
+		{
+			entity.getStats().setBaseValue(statId, initialStats.get(statId));
+		}
 		
 		if (abilityTypes != null)
 			for (AbilityType type : abilityTypes)
@@ -86,7 +100,7 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 					entity.addAbility(type.makeAbility());
 			}
 		
-		entity.setVisionBounds(new RectBounds2D(new Vector2D(radius, radius)));
+		entity.setVisionBounds(new EllipseBounds2D(new Vector2D(radius, radius)));
 	}
 
 	public void setMovementSpeed(ValueProvider<Entity> movementSpeed)
@@ -168,6 +182,21 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	public void setWallet(BidirectionalValueProvider<Entity> wallet)
 	{
 		this.wallet = wallet;
+	}
+
+	public Map<StatisticId, Double> getInitialStats()
+	{
+		return initialStats;
+	}
+
+	public ValueProvider<Entity> getCooldownProvider()
+	{
+		return cooldownProvider;
+	}
+
+	public void setCooldownProvider(ValueProvider<Entity> cooldownProvider)
+	{
+		this.cooldownProvider = cooldownProvider;
 	}
 
 }

@@ -2,6 +2,7 @@ package rutebaga.scaffold.builders;
 
 import rutebaga.scaffold.builders.vpfactories.ConvertorVPFactory;
 import rutebaga.scaffold.builders.vpfactories.FlagVPFactory;
+import rutebaga.scaffold.builders.vpfactories.ItemVPFactory;
 import rutebaga.scaffold.builders.vpfactories.SkillLevelVPFactory;
 import rutebaga.scaffold.builders.vpfactories.StatVPFactory;
 import rutebaga.scaffold.builders.vpfactories.ValueProviderVPFactory;
@@ -18,6 +19,7 @@ public class DefaultValueProviderFactory
 		instance.addFactory(new ConvertorVPFactory());
 		instance.addFactory(new FlagVPFactory());
 		instance.addFactory(new SkillLevelVPFactory());
+		instance.addFactory(new ItemVPFactory());
 	}
 
 	public static ChainedValueProviderFactory getInstance()

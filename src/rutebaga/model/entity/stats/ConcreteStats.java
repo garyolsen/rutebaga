@@ -113,4 +113,9 @@ public class ConcreteStats implements Stats
 			handler.onStatChange(this, mod);
 	}
 
+	public void setBaseValue(StatisticId id, double amount)
+	{
+		getStatObject(id).setBase(amount);
+	}
+
 }

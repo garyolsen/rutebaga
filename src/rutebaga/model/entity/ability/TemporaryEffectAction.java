@@ -20,6 +20,18 @@ public class TemporaryEffectAction implements AbilityAction
 		return lifetime;
 	}
 
+	public TemporaryEffectAction()
+	{
+		super();
+	}
+
+	public TemporaryEffectAction(ReversibleEntityEffect effect, int lifetime)
+	{
+		super();
+		this.effect = effect;
+		this.lifetime = lifetime;
+	}
+
 	public void setLifetime(int lifetime)
 	{
 		this.lifetime = lifetime;
@@ -42,6 +54,7 @@ public class TemporaryEffectAction implements AbilityAction
 		effect.setLifetime(lifetime);
 		effect.setTarget((Entity) target);
 		ability.getEnvironment().add(effect, new Vector2D(0, 0));
+		effect.start();
 	}
 
 }

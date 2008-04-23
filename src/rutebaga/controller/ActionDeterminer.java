@@ -29,6 +29,7 @@ import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.command.list.ListElementFactory;
 import rutebaga.controller.command.list.StatsListElementFactory;
 import rutebaga.controller.command.list.StatsListElementSource;
+import rutebaga.controller.command.list.TargetSource;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.Mount;
@@ -64,17 +65,29 @@ import rutebaga.view.game.MapComponent;
  * @see rutebaga.model.environment.Instance
  * @see rutebaga.controller.command.Command
  */
-public class ActionDeterminer
+public class ActionDeterminer implements TargetSource
 {
 	private Entity<?> avatar;
 	private UserInterfaceFacade facade;
+	private TargetSource targetSource;
 	
-	public ActionDeterminer(Entity<?> avatar) {
+	public ActionDeterminer(Entity<?> avatar, TargetSource targetSource) {
 		this.avatar = avatar;
+		this.targetSource = targetSource;
 	}
 	
 	public void setUIFacade(UserInterfaceFacade facade) {
 		this.facade = facade;
+	}
+	
+	public int getTileWidth()
+	{
+		return avatar.getEnvironment().getAppearanceAttr().getTileWidth();
+	}
+	
+	public int getTileHeight()
+	{
+		return avatar.getEnvironment().getAppearanceAttr().getTileWidth();
 	}
 	
 	/**
@@ -154,7 +167,7 @@ public class ActionDeterminer
 			list.add("Sell", command);
 		}
 		
-		list.add("Talk", QueueCommand.makeForQueue(new TalkCommand(avatar, target), queue));
+		list.add("Talk", QueueCommand.makeForQueue(new TalkCommand(avatar, target), queue));		
 		
 		if(target instanceof Mount) { //TODO GET RID OF THIS!!
 			
@@ -244,7 +257,7 @@ public class ActionDeterminer
 		}
 		@Override
 		public void execute() {
-			AbilityListElementSource source = new AbilityListElementSource(avatar.getAbilities());
+			AbilityListElementSource source = new AbilityListElementSource(avatar.getAbilities(), ActionDeterminer.this);
 			ListElementFactory<Ability> factory;
 			if (avatar == target) {
 				AvatarAbilityCommandFactory commands = new AvatarAbilityCommandFactory(avatar, target, facade, queue);
@@ -361,7 +374,7 @@ public class ActionDeterminer
 			
 			if(!speeches.isEmpty()) {
 				for(Speech speech : speeches) {
-					Point p = MapComponent.centerPointOn(avatar, speech.getSpeaker().getCoordinate(), facade.getView().getWidth(), facade.getView().getHeight());
+					Point p = MapComponent.centerPointOn(avatar, speech.getSpeaker().getCoordinate(), facade.getView().getWidth(), facade.getView().getHeight(), getTileWidth(), getTileHeight());
 					facade.createDialogMenu(speech.getSpeech(), new Vector2D(p.x, p.y));
 				break;
 				}
@@ -372,5 +385,10 @@ public class ActionDeterminer
 			return true;
 		}
 		
+	}
+
+	public Instance getTarget()
+	{
+		return targetSource.getTarget();
 	}
 }

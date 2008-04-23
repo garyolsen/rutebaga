@@ -4,28 +4,37 @@ walking		imgMario
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
 deadStrat	$vpEntityDeadStrategy
+cooldown	$vpEntityCooldownStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
 wallet	$vpEntityWallet
 vRadius		10
-abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi
+abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abSlow
 movement	whitelist terrGrass
 
 entityMario
 team		teamRed
 standing 	imgMario
 walking		imgMario
+offsetX		0
+offsetY		10
 moveSpd		$vpEntityMovementSpeed	
 deadStrat	$vpEntityDeadStrategy
+cooldown	$vpEntityCooldownStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
 wallet	$vpEntityWallet
-vRadius		7
-abilities	abThrowFireBall abDemi abBolt abNuke abBindWounds abHeal abBubble abShell
+vRadius		5
+abilities	abThrowFireBall abDemi abBolt abNuke abBindWounds abHeal abBubble abShell abSlow
+initialstats {
+	statHp			1000
+	statMovement	1w0
+}
 movement	whitelist terrGrass
 
 entityWetMario
 standing 	imgMarioWet
 walking		imgMarioWet
 moveSpd		$vpEntityMovementSpeed	
+cooldown	$vpEntityCooldownStrategy
 wallet	$vpEntityWallet
 vRadius		6
 abilities	abThrowFireBall abEggThrow abMarioThrow abYoshiThrow
@@ -34,6 +43,7 @@ movement	whitelist terrGrass terrWater
 entityNPCKoopa
 standing 	imgKoopa
 walking		imgKoopa
+cooldown	$vpEntityCooldownStrategy
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
 wallet	$vpEntityWallet
@@ -44,6 +54,7 @@ movement	whitelist terrGrass
 entityNPCGoomba
 standing 	imgGoomba
 walking		imgGoomba
+cooldown	$vpEntityCooldownStrategy
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount		
 wallet	$vpEntityWallet
@@ -58,6 +69,7 @@ moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
 wallet	$vpEntityWallet
 vRadius		10
+cooldown	$vpEntityCooldownStrategy
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall
 movement	whitelist terrGrass terrWater terrMountain
 
@@ -65,6 +77,7 @@ entityGoomba
 team		teamRed
 standing 	imgMario
 walking		imgMario
+cooldown	$vpEntityCooldownStrategy
 moveSpd		$vpEntityMovementSpeed	
 deadStrat	$vpEntityDeadStrategy
 skillPtStrat	$vpEntitySkillPtStrategy

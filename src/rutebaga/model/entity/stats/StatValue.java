@@ -7,4 +7,6 @@ public interface StatValue
 	double getValue();
 
 	void addValue(double value);
+	
+	void setBase(double value);
 }

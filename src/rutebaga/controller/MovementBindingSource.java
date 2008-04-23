@@ -11,6 +11,7 @@ import rutebaga.controller.keyboard.KeyBinding;
 import rutebaga.controller.keyboard.KeyBindingList;
 import rutebaga.controller.keyboard.KeyCode;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.environment.TileConverter;
 
 public class MovementBindingSource {
 
@@ -20,16 +21,12 @@ public class MovementBindingSource {
 
 	public static MovementBindingSource defaultBindings(Entity entity,
 			KeyBindingList<Command> bindings) {
-		// TODO: Eliminate need for MOVE_SPEED
-		final double MOVE_SPEED = 0.2;
-		final Vector2D SOUTH = new Vector2D(MOVE_SPEED / Math.sqrt(2),
-				MOVE_SPEED / Math.sqrt(2));
-		final Vector2D NORTH = new Vector2D(-MOVE_SPEED / Math.sqrt(2),
-				-MOVE_SPEED / Math.sqrt(2));
-		final Vector2D SOUTHEAST = new Vector2D(MOVE_SPEED, 0);
-		final Vector2D NORTHEAST = new Vector2D(0, -MOVE_SPEED);
-		final Vector2D SOUTHWEST = new Vector2D(0, MOVE_SPEED);
-		final Vector2D NORTHWEST = new Vector2D(-MOVE_SPEED, 0);
+		final Vector2D SOUTH = new Vector2D(0, 1);
+		final Vector2D NORTH = new Vector2D(0, -1);
+		final Vector2D SOUTHEAST = new Vector2D(1, 1);
+		final Vector2D NORTHEAST = new Vector2D(1, -1);
+		final Vector2D SOUTHWEST = new Vector2D(-1, 1);
+		final Vector2D NORTHWEST = new Vector2D(-1, -1);
 
 		MovementBindingSource manager = new MovementBindingSource(entity,
 				bindings);
@@ -82,7 +79,10 @@ public class MovementBindingSource {
 		}
 
 		public void execute() {
-			entity.walk(direction);
+			TileConverter conv = entity.getEnvironment().getTileConvertor();
+			Vector2D tileDirection = new Vector2D(conv.fromRect(direction));
+			tileDirection = conv.closestDirection(tileDirection);
+			entity.walk(tileDirection);
 		}
 
 		public boolean isFeasible() {

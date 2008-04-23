@@ -1,11 +1,13 @@
 package rutebaga.model.environment;
 
 import rutebaga.model.DefaultLayers;
+import rutebaga.model.Targetable;
 
-public class Decal extends Instance
+public class Decal extends Instance implements Targetable<Instance>
 {
 	private double layer = DefaultLayers.AIR.getLayer();
 	private Integer lifetime;
+	private Instance target;
 
 	public Decal(InstanceType type)
 	{
@@ -61,7 +63,13 @@ public class Decal extends Instance
 	public void tick()
 	{
 		if (lifetime != null)
+		{
 			lifetime--;
+			if(target != null && target.existsInUniverse())
+			{
+				move(target.getCoordinate());
+			}
+		}
 		if (lifetime < 0)
 			remove();
 	}
@@ -69,6 +77,11 @@ public class Decal extends Instance
 	@Override
 	public void setMass(double mass) {
 		// can't set decal's mass
+	}
+	
+	public void setTarget(Instance instance)
+	{
+		this.target = instance;
 	}
 
 }

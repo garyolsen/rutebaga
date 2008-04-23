@@ -33,4 +33,9 @@ public class DerivedStatValue implements StatValue
 		return base.getValue(parent) + offset;
 	}
 
+	public void setBase(double value)
+	{
+		this.offset = value;
+	}
+
 }

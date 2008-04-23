@@ -92,13 +92,15 @@ public class ImageSliceBuilder implements Builder, ReaderProcessor
 
 	public void processLine(String line)
 	{
-		if (line == null)
-			return;
+		if (line == null || line.equals(""))
+			return;		
 		String[] parts = line.split("[\\t ]+");
 		for (String part : parts)
 		{
 			rutebaga.commons.Log.log("ITEM: " + part);
 		}
+		if(parts.length == 0)
+			return;
 		rutebaga.commons.Log.log();
 		if (parts.length == 4 && parts[0].equals("file"))
 		{

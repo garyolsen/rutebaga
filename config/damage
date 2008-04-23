@@ -5,6 +5,14 @@ function	* / &VP_@entityStats_VP_stat_statHp amount gate rand 0 20 14
 dstat		statHp
 
 
+dmgTpSlow
+
+type		dmgMagical
+function	/ &VP_@entityStats_VP_stat_statMovement amount
+lifetime	300
+dstat		statMovement
+
+
 dmgTpNuke
 
 type		dmgMagical
@@ -13,6 +21,12 @@ dstat		statHp
 
 
 dmgTpBeam
+
+type		dmgMagical
+function	amount
+dstat		statHp
+
+dmgTpMagDmg
 
 type		dmgMagical
 function	amount

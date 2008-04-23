@@ -1,3 +1,7 @@
+##############################################################
+#					  HEXAGONAL TILES						 #
+##############################################################
+
 tileGrass
 appearance	animated imgHextile 10 C
 terrain		terrGrass
@@ -9,3 +13,75 @@ terrain 	terrWater
 tileMountain
 appearance	animated imgMountainTile 10 C
 terrain 	terrMountain
+
+
+##############################################################
+#					  RECTANGULAR TILES						 #
+##############################################################
+
+# MAIN TILES
+
+tileWMGrass
+appearance	static	imgGrass	C
+terrain		terrGrass
+
+tileWMWater
+appearance	static	imgWater	C
+terrain		terrWater
+
+tileWMMountain
+appearance	static	imgMtnBL	C
+terrain		terrMountain
+
+# POND TILES
+
+tileWMPondTL
+appearance	static	imgPondTL	C
+terrain		terrWater
+
+tileWMPondT
+appearance	static	imgPondT	C
+terrain		terrWater
+
+tileWMPondTR
+appearance	static	imgPondTR	C
+terrain		terrWater
+
+tileWMPondL
+appearance	static	imgPondL	C
+terrain		terrWater
+
+tileWMPondR
+appearance	static	imgPondR	C
+terrain		terrWater
+
+tileWMPondBL
+appearance	static	imgPondBL	C
+terrain		terrWater
+
+tileWMPondB
+appearance	static	imgPondB	C
+terrain		terrWater
+
+tileWMPondBR
+appearance	static	imgPondBR	C
+terrain		terrWater
+
+# ISLAND TILES
+
+tileWMIslandTL
+appearance	static	imgIslandTL	C
+terrain		terrWater
+
+tileWMIslandTR
+appearance	static	imgIslandTR	C
+terrain		terrWater
+
+tileWMIslandBL
+appearance	static	imgIslandBL	C
+terrain		terrWater
+
+tileWMIslandBR
+appearance	static	imgIslandBR	C
+terrain		terrWater
+

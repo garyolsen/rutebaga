@@ -41,14 +41,14 @@ public class AOEBuilder extends InstanceBuilder
 		if(remove != null)
 			type.setRemove(true);
 
-		List<String> ruleVPs = getInnerList(id, "rules");
+		List<String> ruleVPs = getInnerList(id, "entityrules");
 		for(String vpDesc : ruleVPs)
 		{
 			ValueProvider vp = DefaultValueProviderFactory.getInstance().parse(vpDesc, scaffold);
 			type.getRules().add(new ValueProviderRule(vp));
 		}
 		
-		List<String> activeRuleVPs = getInnerList(id, "activeRules");
+		List<String> activeRuleVPs = getInnerList(id, "activerules");
 		for(String vpDesc : activeRuleVPs)
 		{
 			ValueProvider vp = DefaultValueProviderFactory.getInstance().parse(vpDesc, scaffold);
