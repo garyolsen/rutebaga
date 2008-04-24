@@ -88,4 +88,14 @@ public class MatrixTileConvertor implements TileConverter
 		return new Vector2D(x, y);
 	}
 
+	public Vector2D closestDirection(Vector2D direction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<IntVector2D> near(IntVector2D tile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

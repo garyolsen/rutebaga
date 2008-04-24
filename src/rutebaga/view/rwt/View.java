@@ -12,6 +12,7 @@ import java.awt.Transparency;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -29,6 +30,8 @@ public class View
 	private int msecFrame;
 
 	private BufferStrategy strategy;
+	
+	private List<ViewComponent> removalComponents = new ArrayList<ViewComponent>();
 
 	private List<ViewComponent> components = new CopyOnWriteArrayList<ViewComponent>();
 
@@ -166,6 +169,8 @@ public class View
 
 			if (rutebaga.Debug.debug)
 				System.out.println("showing strategy: " + (System.currentTimeMillis() - time));
+			
+			removeComponents();
 		}
 		else
 		{
@@ -194,7 +199,7 @@ public class View
 
 	public void removeViewComponent(ViewComponent vc)
 	{
-		components.remove(vc);
+		removalComponents.add(vc);
 		dispatcher.deregisterComponent(vc);
 	}
 
@@ -206,7 +211,7 @@ public class View
 			dispatcher.deregisterComponent(vc);
 		}
 
-		components.removeAll(vcs);
+		removalComponents.addAll(vcs);
 	}
 
 	private void drawViewComponents()
@@ -217,6 +222,11 @@ public class View
 			vc.draw(drawer);
 			System.out.println(vc + "-->" + (System.currentTimeMillis() - time));
 		}
+	}
+	
+	private void removeComponents() {
+		for(ViewComponent component : removalComponents) 
+			components.remove(component);
 	}
 
 	public void addKeyListener(KeyListener kl)

@@ -49,4 +49,14 @@ public class ChainedMatrixConvertor implements TileConverter
 		return backing.toRect(matrix.toRect(coordinate));
 	}
 
+	public Vector2D closestDirection(Vector2D direction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<IntVector2D> near(IntVector2D tile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
