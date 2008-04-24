@@ -128,7 +128,7 @@ public class AreaEffect extends Instance<AreaEffect>
 			{
 				for (EntityEffect effect : effects)
 				{
-					entity.accept(effect);
+					entity.accept(effect, null);
 				}
 				flag = true;
 			}

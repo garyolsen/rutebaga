@@ -28,7 +28,9 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	private ValueProvider<Entity> bargainSkillAmount;
 	private BidirectionalValueProvider<Entity> skillPtStrat;
 	private BidirectionalValueProvider<Entity> wallet;
+	private BidirectionalValueProvider<Entity> experience;
 	private ValueProvider<Entity> cooldownProvider;
+	private ValueProvider<Entity> experienceCalculation;
 	private ValueProvider<Entity> deadStrategy;
 	private List<AbilityType> abilityTypes = new ArrayList<AbilityType>();
 	private Team team;
@@ -47,6 +49,41 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		return abilityTypes;
 	}
 
+	public ValueProvider<Entity> getBargainSkillAmount()
+	{
+		return bargainSkillAmount;
+	}
+
+	public ValueProvider<Entity> getCooldownProvider()
+	{
+		return cooldownProvider;
+	}
+
+	public ValueProvider<Entity> getDeadStrategy()
+	{
+		return deadStrategy;
+	}
+
+	public int getDecayTime()
+	{
+		return decayTime;
+	}
+
+	public BidirectionalValueProvider<Entity> getExperience()
+	{
+		return experience;
+	}
+
+	public ValueProvider<Entity> getExperienceCalculation()
+	{
+		return experienceCalculation;
+	}
+
+	public Map<StatisticId, Double> getInitialStats()
+	{
+		return initialStats;
+	}
+
 	public ValueProvider<Entity> getMovementSpeed()
 	{
 		return movementSpeed;
@@ -57,6 +94,11 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		return radius;
 	}
 
+	public BidirectionalValueProvider<Entity> getSkillPtStrat()
+	{
+		return skillPtStrat;
+	}
+
 	public Appearance[][] getStanding()
 	{
 		return standing;
@@ -65,6 +107,11 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 	public Appearance[][] getWalking()
 	{
 		return walking;
+	}
+
+	public BidirectionalValueProvider<Entity> getWallet()
+	{
+		return wallet;
 	}
 
 	public void initialize(T entity)
@@ -85,22 +132,56 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		entity.setCooldownProvider(cooldownProvider);
 		entity.setSkillPtStrat(skillPtStrat);
 		entity.setDeadStrategy(deadStrategy);
+		entity.setExperienceCalculation(experienceCalculation);
 		entity.setTeam(team);
+		entity.setExperience(experience);
 		entity.setWallet(wallet);
-		
-		for(StatisticId statId : initialStats.keySet())
+
+		for (StatisticId statId : initialStats.keySet())
 		{
 			entity.getStats().setBaseValue(statId, initialStats.get(statId));
 		}
-		
+
 		if (abilityTypes != null)
 			for (AbilityType type : abilityTypes)
 			{
 				if (type != null)
 					entity.addAbility(type.makeAbility());
 			}
-		
-		entity.setVisionBounds(new EllipseBounds2D(new Vector2D(radius, radius)));
+
+		entity
+				.setVisionBounds(new EllipseBounds2D(new Vector2D(radius,
+						radius)));
+	}
+
+	public void setBargainSkillAmount(ValueProvider<Entity> bargainSkillAmount)
+	{
+		this.bargainSkillAmount = bargainSkillAmount;
+	}
+
+	public void setCooldownProvider(ValueProvider<Entity> cooldownProvider)
+	{
+		this.cooldownProvider = cooldownProvider;
+	}
+
+	public void setDeadStrategy(ValueProvider<Entity> deadStrategy)
+	{
+		this.deadStrategy = deadStrategy;
+	}
+
+	public void setDecayTime(int decayTime)
+	{
+		this.decayTime = decayTime;
+	}
+
+	public void setExperience(BidirectionalValueProvider<Entity> experience)
+	{
+		this.experience = experience;
+	}
+
+	public void setExperienceCalculation(ValueProvider<Entity> experienceCalculation)
+	{
+		this.experienceCalculation = experienceCalculation;
 	}
 
 	public void setMovementSpeed(ValueProvider<Entity> movementSpeed)
@@ -113,9 +194,19 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		this.radius = radius;
 	}
 
+	public void setSkillPtStrat(BidirectionalValueProvider<Entity> skillPtStrat)
+	{
+		this.skillPtStrat = skillPtStrat;
+	}
+
 	public void setStanding(Appearance[][] standing)
 	{
 		this.standing = standing;
+	}
+
+	public void setTeam(Team team)
+	{
+		this.team = team;
 	}
 
 	public void setWalking(Appearance[][] walking)
@@ -123,80 +214,16 @@ public class EntityType<T extends Entity> extends ConcreteInstanceType<T>
 		this.walking = walking;
 	}
 
-	@Override
-	public String toString()
-	{
-		return "EntityType: radius=" + radius + "; movementSpeed="
-				+ movementSpeed + "; " + abilityTypes.size() + " abilities";
-	}
-
-	public ValueProvider<Entity> getBargainSkillAmount()
-	{
-		return bargainSkillAmount;
-	}
-
-	public void setBargainSkillAmount(ValueProvider<Entity> bargainSkillAmount)
-	{
-		this.bargainSkillAmount = bargainSkillAmount;
-	}
-
-	public ValueProvider<Entity> getDeadStrategy()
-	{
-		return deadStrategy;
-	}
-
-	public void setDeadStrategy(ValueProvider<Entity> deadStrategy)
-	{
-		this.deadStrategy = deadStrategy;
-	}
-
-	public BidirectionalValueProvider<Entity> getSkillPtStrat()
-	{
-		return skillPtStrat;
-	}
-
-	public void setSkillPtStrat(BidirectionalValueProvider<Entity> skillPtStrat)
-	{
-		this.skillPtStrat = skillPtStrat;
-	}
-
-	public void setDecayTime(int decayTime)
-	{
-		this.decayTime = decayTime;
-	}
-
-	public int getDecayTime()
-	{
-		return decayTime;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
-	}
-
-	public BidirectionalValueProvider<Entity> getWallet()
-	{
-		return wallet;
-	}
-
 	public void setWallet(BidirectionalValueProvider<Entity> wallet)
 	{
 		this.wallet = wallet;
 	}
 
-	public Map<StatisticId, Double> getInitialStats()
+	@Override
+	public String toString()
 	{
-		return initialStats;
-	}
-
-	public ValueProvider<Entity> getCooldownProvider()
-	{
-		return cooldownProvider;
-	}
-
-	public void setCooldownProvider(ValueProvider<Entity> cooldownProvider)
-	{
-		this.cooldownProvider = cooldownProvider;
+		return "EntityType: radius=" + radius + "; movementSpeed="
+				+ movementSpeed + "; " + abilityTypes.size() + " abilities";
 	}
 
 }

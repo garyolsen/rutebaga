@@ -11,16 +11,22 @@ vRadius		10
 abilities	abEggThrow abMarioThrow abYoshiThrow abThrowFireBall abDemi abSlow
 movement	whitelist terrGrass
 
+
+
+# The default character for users.
+
 entityMario
 team		teamRed
 standing 	imgMario
 walking		imgMario
 offsetX		0
 offsetY		10
-moveSpd		$vpEntityMovementSpeed	
-deadStrat	$vpEntityDeadStrategy
-cooldown	$vpEntityCooldownStrategy
+moveSpd			$vpEntityMovementSpeed	
+deadStrat		$vpEntityDeadStrategy
+cooldown		$vpEntityCooldownStrategy
 skillPtStrat	$vpEntitySkillPtStrategy
+experienceSource	$vpEntityExperienceSource
+experienceCalc		$vpEntityExperienceCalc
 wallet	$vpEntityWallet
 vRadius		5
 abilities	abThrowFireBall abDemi abBolt abNuke abBindWounds abHeal abBubble abShell abSlow
@@ -29,6 +35,8 @@ initialstats {
 	statMovement	10
 }
 movement	whitelist terrGrass
+
+
 
 entityWetMario
 standing 	imgMarioWet

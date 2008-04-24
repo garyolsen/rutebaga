@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.Set;
 
+import com.sun.xml.internal.ws.api.pipe.NextAction;
+
 import legacy.KeyBuffer;
 
 import rutebaga.commons.math.EllipseBounds2D;
@@ -152,8 +154,9 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		{
 			ContextMenu menu = facade.getActiveContextMenu();
 			if (menu == null)
-				return;
-			menu.activate(menu.getCurrent());
+				targetNextEntity();
+			else
+				menu.activate(menu.getCurrent());
 		}
 
 		public boolean isFeasible()
@@ -192,7 +195,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		// }
 		// });
 
-		keyPressBindings.set("AvatarMenu", KeyCode.get(KeyEvent.VK_SEMICOLON),
+		keyPressBindings.set("AvatarMenu", KeyCode.get(KeyEvent.VK_HOME),
 				new OpenAvatarContextMenuCommand());
 
 		// keyPressBindings.set("Ability0", KeyCode.get(KeyEvent.VK_ENTER),
@@ -252,25 +255,27 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		keyReleaseBindings.set("Ctxt0", KeyCode.get(KeyEvent.VK_0),
 				new ExecuteMenuSelectionCommand(0));
 
-		keyReleaseBindings.set("Ctxt Next", KeyCode.get(KeyEvent.VK_OPEN_BRACKET),
-				new ChangeMenuSelectionCommand(-1));
+		keyReleaseBindings.set("Ctxt Next", KeyCode
+				.get(KeyEvent.VK_OPEN_BRACKET), new ChangeMenuSelectionCommand(
+				-1));
 
-		keyReleaseBindings.set("Ctxt Prev", KeyCode.get(KeyEvent.VK_CLOSE_BRACKET),
+		keyReleaseBindings.set("Ctxt Prev", KeyCode
+				.get(KeyEvent.VK_CLOSE_BRACKET),
 				new ChangeMenuSelectionCommand(1));
 
-		keyReleaseBindings.set("Next Target", KeyCode
-				.get(KeyEvent.VK_SPACE), new Command()
-		{
-			public void execute()
-			{
-				targetNextEntity();
-			}
+		keyReleaseBindings.set("Next Target", KeyCode.get(KeyEvent.VK_SPACE),
+				new Command()
+				{
+					public void execute()
+					{
+						targetNextEntity();
+					}
 
-			public boolean isFeasible()
-			{
-				return true;
-			}
-		});
+					public boolean isFeasible()
+					{
+						return true;
+					}
+				});
 
 		Command quitCommand = new Command()
 		{
@@ -316,7 +321,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		};
 		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_DELETE),
 				quitCommand);
-		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_BACK_SPACE),
+		keyReleaseBindings.set("Quit", KeyCode.get(KeyEvent.VK_ESCAPE),
 				quitCommand);
 
 	}
@@ -340,7 +345,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			stats.add(avatar.getStats().getStatObject(id));
 
 		stats.add(new CooldownStatValue(avatar));
-		
+
 		facade.createGamePlayScreen(avatar, observable, stats);
 		daemon.registerAsKeyListener(this);
 		daemon.registerAsMouseListener(this);
@@ -482,7 +487,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 				return;
 			KeyBinding<Command> newBinding = new ConcreteKeyBinding<Command>(
 					rebindingState.getName(), code, rebindingState.getBinding());
-			if(rebindingIsKeyPress)
+			if (rebindingIsKeyPress)
 				keyPressBindings.set(newBinding);
 			else
 				keyReleaseBindings.set(newBinding);
@@ -532,9 +537,9 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		{
 			InstanceSet set = new ConcreteInstanceSet();
 			set.addAll(environment.instancesAt(tileCoordinates));
-			for(IntVector2D adj : converter.near(tileCoordinates))
+			for (IntVector2D adj : converter.near(tileCoordinates))
 			{
-				if(avatar.canSee(adj))
+				if (avatar.canSee(adj))
 				{
 					set.addAll(environment.instancesAt(adj));
 				}

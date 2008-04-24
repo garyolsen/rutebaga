@@ -45,7 +45,10 @@ public class EntityTypeBuilder extends InstanceBuilder
 						id, "skillPtStrat", scaffold));
 		type.setWallet((BidirectionalValueProvider<Entity>) getValueProvider(
 				id, "wallet", scaffold));
+		type.setExperience((BidirectionalValueProvider<Entity>) getValueProvider(
+				id, "experienceSource", scaffold));
 		type.setCooldownProvider(getValueProvider(id, "cooldown", scaffold));
+		type.setExperienceCalculation(getValueProvider(id, "experienceCalc", scaffold));
 
 		// type.setBargainSkillAmount((ValueProvider<Entity>)
 		// getValueProvider(id, "bargain", scaffold));

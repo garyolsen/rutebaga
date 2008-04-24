@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
 
 import com.sun.corba.se.impl.orbutil.ObjectUtility;
 
@@ -56,6 +57,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public static int SIGHT_RANGE = 7;
 
 	private Map<Object, EntityEffect> effectQueue = new HashMap<Object, EntityEffect>();
+	private Map<Object, EffectSource> effectSources = new HashMap<Object, EffectSource>();
 
 	private Bounds2D visionBounds;
 	private ConcreteVision vision;
@@ -68,7 +70,9 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 
 	private BidirectionalValueProvider<Entity> skillPtStrat;
 	private BidirectionalValueProvider<Entity> wallet;
+	private BidirectionalValueProvider<Entity> experience;
 	private ValueProvider<Entity> cooldownProvider;
+	private ValueProvider<Entity> experienceCalculation;
 
 	private Vector2D facing = new Vector2D(0, 0);
 	
@@ -112,12 +116,18 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	 * 
 	 * @param effect
 	 *            the effect to apply
+	 * @param source TODO
 	 * @return the token identifying the effect's application
 	 */
-	public Object accept(EntityEffect effect)
+	public Object accept(EntityEffect effect, EffectSource source)
 	{
 		Object uid = UIDProvider.getUID();
 		effectQueue.put(uid, effect);
+		if(source == null)
+		{
+			new RuntimeException().printStackTrace();
+		}
+		effectSources.put(uid, source);
 		return uid;
 	}
 
@@ -230,6 +240,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 			return mount.getEnvironment();
 
 		return super.getEnvironment();
+	}
+
+	public BidirectionalValueProvider<Entity> getExperience()
+	{
+		return experience;
 	}
 
 	public Vector2D getFacing()
@@ -363,6 +378,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		this.compoundVision.remove(vision);
 	}
 
+	public void resetCooldown()
+	{
+		cooldown = 1000;
+	}
+
 	public void setAppearance(Appearance appearance)
 	{
 		this.setAppearanceManager(new StaticAppearanceManager(appearance));
@@ -387,6 +407,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public void setDecayTime(int decayTime)
 	{
 		this.decayTime = decayTime;
+	}
+
+	public void setExperience(BidirectionalValueProvider<Entity> experience)
+	{
+		this.experience = experience;
 	}
 
 	public void setFacing(Vector2D facing)
@@ -505,8 +530,17 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		for (Object id : getEffectQueue().keySet())
 		{
+			boolean dead = this.isDead();
 			Log.log(getEffectQueue());
-			getEffectQueue().get(id).affect(this, id);
+			EntityEffect effect = getEffectQueue().get(id);
+			effect.affect(this, id);
+			if(!dead && this.isDead())
+			{
+				// I just died
+				EffectSource source = effectSources.get(id);
+				if(source != null)
+					source.onKill(this);
+			}
 		}
 		getEffectQueue().clear();
 	}
@@ -516,8 +550,13 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return effectQueue;
 	}
 
-	public void resetCooldown()
+	public ValueProvider<Entity> getExperienceCalculation()
 	{
-		cooldown = 1000;
+		return experienceCalculation;
+	}
+
+	public void setExperienceCalculation(ValueProvider<Entity> experienceCalculation)
+	{
+		this.experienceCalculation = experienceCalculation;
 	}
 }

@@ -1,6 +1,7 @@
 package rutebaga.model.effect;
 
 import rutebaga.model.Targetable;
+import rutebaga.model.entity.EffectSource;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
@@ -13,6 +14,7 @@ public class TemporaryEffect extends Instance implements Targetable
 	private Integer life;
 	private ReversibleEntityEffect effect;
 	private EntityEffect reverse;
+	private EffectSource source;
 	private Entity target;
 	private int lifetime;
 
@@ -91,7 +93,7 @@ public class TemporaryEffect extends Instance implements Targetable
 
 			if (life < 0)
 			{
-				target.accept(reverse);
+				target.accept(reverse, source);
 				this.remove();
 			}
 		}
@@ -106,12 +108,22 @@ public class TemporaryEffect extends Instance implements Targetable
 	{
 		if (life == null)
 		{
-			Object token = target.accept(effect);
+			Object token = target.accept(effect, source);
 			reverse = effect.getReverseEffect(token);
 			life = lifetime;
 			return token;
 		}
 		throw new RuntimeException();
+	}
+
+	public EffectSource getSource()
+	{
+		return source;
+	}
+
+	public void setSource(EffectSource source)
+	{
+		this.source = source;
 	}
 
 }

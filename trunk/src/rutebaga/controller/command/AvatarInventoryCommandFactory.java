@@ -82,7 +82,7 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 			List<EntityEffect> effects = item.getUsableEffects();
 			
 			for(EntityEffect effect : effects)
-				avatar.accept(effect);
+				avatar.accept(effect, null);
 			
 			avatar.getInventory().remove(item);
 			facade.clearContextMenuStack();

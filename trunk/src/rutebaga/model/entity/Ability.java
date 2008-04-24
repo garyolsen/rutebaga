@@ -105,7 +105,6 @@ public class Ability<T> implements Named
 	{
 		if(entity.getCooldown() > 0)
 		{
-			System.out.println(entity.getCooldown());
 			return false;
 		}
 		return feasibilityRule.determine(entity);
