@@ -16,9 +16,10 @@ import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.Rect2DTileConvertor;
 import rutebaga.model.map.Tile;
 
-/*
+
 public class TestRunner
 {
+	/*
 	public static double MOVE_AMT = 0.1;
 	public static int SCREEN_WIDTH = 640;
 	public static int SCREEN_HEIGHT = 480;
@@ -192,5 +193,6 @@ public class TestRunner
 		if (buffer.isPressed(KeyEvent.VK_I))
 			avatar.applyImpulse(new Vector(0, -MOVE_AMT * 3));
 	}
+	*/
 }
-*/
+

@@ -428,7 +428,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			return false;
 		}
 		facade.createDialogMenu("'" + code.getKeyName()
-				+ "' already bound!  Try again.");
+				+ "' already bound!  Try again.", avatar, avatar);
 		return true;
 	}
 
@@ -448,7 +448,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			keyReleaseBindings.remove(rebindingState);
 		}
 		facade.createDialogMenu("Press a key to bind it to\n"
-				+ binding.getName() + "!");
+				+ binding.getName() + "!", avatar, avatar);
 	}
 
 	private void completeRebinding(KeyCode code)
@@ -467,7 +467,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			rebindingState = null;
 			facade.createDialogMenu("Bound '"
 					+ newBinding.getKeyCode().getKeyName() + "' to "
-					+ newBinding.getName());
+					+ newBinding.getName(), avatar, avatar);
 			paused = false;
 		}
 	}

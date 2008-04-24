@@ -7,6 +7,7 @@ import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.stats.StatValue;
+import rutebaga.model.environment.Instance;
 import rutebaga.view.game.TargetInstanceObservable;
 import rutebaga.view.rwt.ContextMenu;
 import rutebaga.view.rwt.TextFieldListener;
@@ -83,9 +84,7 @@ public interface UserInterfaceFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	int createDialogMenu(String dialog, Vector2D vector);
-	
-	int createDialogMenu(String dialog);
+	int createDialogMenu(String dialog, Entity avatar, Instance speaker);
 	
 	/**
 	 * Shows a warning to the player.

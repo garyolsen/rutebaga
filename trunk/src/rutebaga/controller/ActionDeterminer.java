@@ -373,9 +373,9 @@ public class ActionDeterminer implements TargetSource
 			Collection<Speech> speeches = avatar.getSpeech();
 			
 			if(!speeches.isEmpty()) {
+				
 				for(Speech speech : speeches) {
-					Point p = MapComponent.centerPointOn(avatar, speech.getSpeaker().getCoordinate(), facade.getView().getWidth(), facade.getView().getHeight(), getTileWidth(), getTileHeight());
-					facade.createDialogMenu(speech.getSpeech(), new Vector2D(p.x, p.y));
+					facade.createDialogMenu(speech.getSpeech(), avatar, target);
 				break;
 				}
 			}

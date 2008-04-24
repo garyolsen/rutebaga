@@ -6,6 +6,7 @@ import java.util.List;
 
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ConcreteElementalList;
+import rutebaga.view.game.DialogDecorator;
 import rutebaga.view.game.FPSTextComponent;
 import rutebaga.view.rwt.*;
 
@@ -67,11 +68,7 @@ public class ViewComponentTest {
 			TextFieldComponent component = new TextFieldComponent(200, 20);
 			component.setHasFocus(true);
 			component.setLocation(400,200);
-			
-			DialogDecorator dialog = new DialogDecorator(new TextLabelComponent("Please bind a key for Walk!"), 150, 100);
-			dialog.setLocation(200,200);
-			
-			view.addViewComponent(dialog);
+		
 			
 			
 			view.addViewComponent(component);

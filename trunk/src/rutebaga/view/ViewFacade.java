@@ -15,10 +15,10 @@ import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.command.list.ListElement;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.stats.StatValue;
+import rutebaga.model.environment.Instance;
 import rutebaga.view.game.*;
 import rutebaga.view.rwt.ButtonComponent;
 import rutebaga.view.rwt.ContextMenu;
-import rutebaga.view.rwt.DialogDecorator;
 import rutebaga.view.rwt.ScrollDecorator;
 import rutebaga.view.rwt.StatRibbon;
 import rutebaga.view.rwt.TextFieldListener;
@@ -79,7 +79,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 */
 	public void constructFullscreenView() {
 		view = new View(1024, 768);
-		view.setFullscreen();
+		//view.setFullscreen();
 	}
 
 	/**
@@ -235,12 +235,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createDialogMenu(String dialog, Vector2D vector) {
+	public int createDialogMenu(String dialog, Entity avatar, Instance speaker) {
 		TextLabelComponent text = new TextLabelComponent(dialog, TextLabelComponent.CENTER_ALIGNMENT);
 		
-		DialogDecorator decorator = new DialogDecorator(text, 150, 100);
-		
-		decorator.setLocation(vector.getX().intValue(), vector.getY().intValue() - decorator.getHeight());
+		DialogDecorator decorator = new DialogDecorator(text, avatar, speaker, view);
 		
 		prepareContextStack();
 		contextStack.push(decorator);
@@ -248,11 +246,6 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 		view.addViewComponent(decorator);
 		
 		return contextStack.size();
-	}
-
-	public int createDialogMenu(String dialog) {
-		return createDialogMenu(dialog, new Vector2D(view.getWidth() / 2, view
-				.getHeight() / 2 - 50));
 	}
 
 	/**

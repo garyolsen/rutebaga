@@ -3,17 +3,18 @@ package rutebaga.test.model.environment;
 import rutebaga.model.DefaultLayers;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSetIdentifier;
+import rutebaga.model.environment.InstanceType;
 
-/*
+
 public class TestInstance extends Instance
 {
+	public TestInstance(InstanceType type) {
+		super(type);
+		// TODO Auto-generated constructor stub
+	}
+
 	public String name;
 
-	public TestInstance(String name)
-	{
-		super();
-		this.name = name;
-	}
 
 	@Override
 	public String toString()
@@ -30,12 +31,6 @@ public class TestInstance extends Instance
 				return true;
 		}
 		return false;
-	}
-
-	@Override
-	public double getFriction()
-	{
-		return 0;
 	}
 
 	@Override
@@ -58,9 +53,15 @@ public class TestInstance extends Instance
 	}
 
 	@Override
-	protected InstanceSetIdentifier getSetIdentifier()
-	{
-		return InstanceSetIdentifier.ENTITY;
+	public void setMass(double mass) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public InstanceSetIdentifier getSetIdentifier() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
-*/
+
