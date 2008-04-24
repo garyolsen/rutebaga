@@ -541,6 +541,9 @@ path TestImages/starman.png
 imgBananaPeel
 path TestImages/banana_peel.png
 
+imgPipe
+path TestImages/pipe.png
+
 ##############################################################################
 #							   RIVER SPRITES 								 #
 ##############################################################################
