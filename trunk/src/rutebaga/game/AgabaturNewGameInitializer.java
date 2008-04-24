@@ -87,6 +87,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		AreaEffectType healer = (AreaEffectType) scaffold.get("aoeHealer");
 		environment.add(healer.makeInstance(), new Vector2D(3, 10));
 
+		AreaEffectType teleport = (AreaEffectType) scaffold.get("aoeTeleport");
+		environment.add(teleport.makeInstance(), new Vector2D(4, 10));
+		
 		world = new World();
 		world.add(environment);
 
