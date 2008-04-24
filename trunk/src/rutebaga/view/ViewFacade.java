@@ -299,9 +299,12 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	}
 
 	public void popMenu() {
+		clearMenuStack();
+		/*
 		view.removeViewComponent(contextStack.pop());
 		if (contextStack.size() > 0)
 			view.addViewComponent(contextStack.peek());
+			*/
 	}
 	
 	public Menu getActiveMenu()
