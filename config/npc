@@ -16,4 +16,5 @@ movement	whitelist terrGrass terrWater terrMountain
 bargain		1.0
 initialstats {
 	statMovement	6
+	statAgility		20
 }
