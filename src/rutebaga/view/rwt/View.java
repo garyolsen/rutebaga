@@ -148,6 +148,9 @@ public class View
 	public void renderFrame()
 	{
 		long start = System.currentTimeMillis();
+
+		removeComponents();
+		
 		if (!strategy.contentsLost())
 		{
 			long time = System.currentTimeMillis();
@@ -170,7 +173,6 @@ public class View
 			if (rutebaga.Debug.debug)
 				System.out.println("showing strategy: " + (System.currentTimeMillis() - time));
 			
-			removeComponents();
 		}
 		else
 		{
