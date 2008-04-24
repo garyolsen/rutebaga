@@ -214,11 +214,8 @@ public class MapComponent extends ViewComponent implements
 				|| (targetImage.getWidth(null) != image.getWidth(null) || targetImage
 						.getHeight(null) != image.getHeight(null)))
 		{
-			// targetImage = new BufferedImage(image.getWidth(null), image
-			// .getHeight(null), BufferedImage.TYPE_INT_ARGB_PRE);
-			targetImage = Window.getWindows()[0].getGraphicsConfiguration()
-					.createCompatibleImage(image.getWidth(null),
-							image.getHeight(null), Transparency.BITMASK);
+			targetImage = new BufferedImage(image.getWidth(null), image
+			 .getHeight(null), BufferedImage.TYPE_INT_ARGB_PRE);
 			Graphics g = targetImage.getGraphics();
 			g.setColor(new Color(0, 0, 0, 0));
 			g.drawRect(0, 0, targetImage.getWidth(null), targetImage
