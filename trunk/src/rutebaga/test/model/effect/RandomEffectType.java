@@ -25,7 +25,7 @@ public class RandomEffectType extends ConcreteInstanceType<RandomEffect>
 	@Override
 	protected RandomEffect create()
 	{
-		RandomEffect rval = new RandomEffect(speed);
+		RandomEffect rval = new RandomEffect(speed, null);
 		rval.setLifetime(lifetime);
 		rval.setDamageAmount(damageAmount);
 		rval.setDamageToApply(damage);

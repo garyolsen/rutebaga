@@ -47,43 +47,42 @@ public class View
 		setupWindow(width, height);
 		setupDispatcher();
 		setupDrawer();
-//		start(1000 / 30);
+		// start(1000 / 30);
 	}
 
-//	public void start(int msecFrame)
-//	{
-//		this.msecFrame = msecFrame;
-//		new Thread()
-//		{
-//			public void run()
-//			{
-//				while (true)
-//				{
-//					try
-//					{
-//						long time = System.currentTimeMillis();
-//						renderFrame();
-//						Thread.currentThread().wait();
-//						long diff = View.this.msecFrame
-//								- (System.currentTimeMillis() - time);
-//						if (diff > 0)
-//						{
-//							Thread.sleep(diff);
-//						}
-//					}
-//					catch (Exception e)
-//					{
-//						throw new RuntimeException(e);
-//					}
-//				}
-//			}
-//		}.start();
-//	}
+	// public void start(int msecFrame)
+	// {
+	// this.msecFrame = msecFrame;
+	// new Thread()
+	// {
+	// public void run()
+	// {
+	// while (true)
+	// {
+	// try
+	// {
+	// long time = System.currentTimeMillis();
+	// renderFrame();
+	// Thread.currentThread().wait();
+	// long diff = View.this.msecFrame
+	// - (System.currentTimeMillis() - time);
+	// if (diff > 0)
+	// {
+	// Thread.sleep(diff);
+	// }
+	// }
+	// catch (Exception e)
+	// {
+	// throw new RuntimeException(e);
+	// }
+	// }
+	// }
+	// }.start();
+	// }
 
 	private void setupWindow(int width, int height)
 	{
-		GraphicsEnvironment env = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
 		GraphicsDevice device = env.getDefaultScreenDevice();
 		window = new Frame(device.getDefaultConfiguration());
@@ -100,8 +99,7 @@ public class View
 	 */
 	public void setFullscreen()
 	{
-		GraphicsEnvironment env = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
 		GraphicsDevice device = env.getDefaultScreenDevice();
 
@@ -153,27 +151,28 @@ public class View
 			Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();
 
 			g2d.setBackground(Color.BLACK);
-			g2d.fillRect(0, 0, window.getBounds().width,
-					window.getBounds().height);
+			g2d.fillRect(0, 0, window.getBounds().width, window.getBounds().height);
 
 			drawer.setGraphics2D(g2d);
 
-			System.out.println("filling black background: " + (System.currentTimeMillis() - time));
-			
+			if (rutebaga.Debug.debug)
+				System.out.println("filling black background: " + (System.currentTimeMillis() - time));
+
 			drawViewComponents();
 
 			time = System.currentTimeMillis();
 			strategy.show();
 			drawer.getGraphics2D().dispose();
-			System.out.println("showing strategy: " + (System.currentTimeMillis()-time));
+
+			if (rutebaga.Debug.debug)
+				System.out.println("showing strategy: " + (System.currentTimeMillis() - time));
 		}
 		else
 		{
 			strategy = window.getBufferStrategy();
 		}
 
-		System.out.println("Render Frame Total Time: "
-				+ (System.currentTimeMillis() - start));
+		System.out.println("Render Frame Total Time: " + (System.currentTimeMillis() - start));
 	}
 
 	/**
@@ -253,7 +252,6 @@ public class View
 	public Image makeVolatileImage(int w, int h)
 	{
 
-		return window.getGraphicsConfiguration().createCompatibleImage(w, h,
-				Transparency.BITMASK);
+		return window.getGraphicsConfiguration().createCompatibleImage(w, h, Transparency.BITMASK);
 	}
 }
