@@ -47,7 +47,7 @@ public class AvatarEquipmentCommandFactory implements CommandFactory<Item> {
 		
 		public void execute() {
 			avatar.getInventory().unequip(item);
-			facade.clearContextMenuStack();
+			facade.clearMenuStack();
 		}
 	}
 }

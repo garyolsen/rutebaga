@@ -44,7 +44,7 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 		
 		public void execute() {
 			avatar.getInventory().drop(item);
-			facade.clearContextMenuStack();
+			facade.clearMenuStack();
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 		
 		public void execute() {
 			avatar.getInventory().equip(item);
-			facade.clearContextMenuStack();
+			facade.clearMenuStack();
 		}
 	}
 	
@@ -81,7 +81,7 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 				avatar.accept(effect, null);
 			
 			avatar.getInventory().remove(item);
-			facade.clearContextMenuStack();
+			facade.clearMenuStack();
 		}
 
 		public boolean isFeasible() {

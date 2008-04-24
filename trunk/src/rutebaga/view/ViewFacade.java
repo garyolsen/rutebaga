@@ -1,31 +1,26 @@
 package rutebaga.view;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Stack;
 
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
-import rutebaga.controller.command.list.ListElement;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.stats.StatValue;
 import rutebaga.model.environment.Instance;
 import rutebaga.view.game.*;
-import rutebaga.view.rwt.ButtonComponent;
 import rutebaga.view.rwt.ContextMenu;
+import rutebaga.view.rwt.Menu;
 import rutebaga.view.rwt.ScrollDecorator;
 import rutebaga.view.rwt.StatRibbon;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.TextLabelComponent;
 import rutebaga.view.rwt.View;
 import rutebaga.view.rwt.ViewComponent;
-import rutebaga.view.rwt.ViewCompositeComponent;
 import rutebaga.view.rwt.WarningBox;
 
 /**
@@ -150,8 +145,8 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 *            The location to spawn the menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createRootContextMenu(ElementalList list, Vector2D vector) {
-		clearContextMenuStack();
+	public Menu createRootContextMenu(ElementalList list, Vector2D vector) {
+		clearMenuStack();
 		ContextMenu cm = new ContextMenu(list);
 		cm.setLocation(vector.getX().intValue(), (int) vector.getY()
 						.intValue());
@@ -160,10 +155,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 
 		contextStack.push(cm);
 
-		return contextStack.size();
+		return cm;
 	}
 
-	public int createRootContextMenu(ElementalList list) {
+	public Menu createRootContextMenu(ElementalList list) {
 		return createRootContextMenu(list, new Vector2D(view.getWidth() / 2,
 				view.getHeight() / 2));
 	}
@@ -176,7 +171,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 *            A list of choices for the player.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createSubContextMenu(ElementalList list, Vector2D vector) {
+	public Menu createSubContextMenu(ElementalList list, Vector2D vector) {
 			
 		ContextMenu cm = new ContextMenu(list);
 		cm.setLocation(vector.getX().intValue(), (int)vector.getY().intValue());
@@ -187,10 +182,10 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 		prepareContextStack();
 		contextStack.push(cm);
 		
-		return contextStack.size();
+		return cm;
 	}
 
-	public int createSubContextMenu(ElementalList list) {
+	public Menu createSubContextMenu(ElementalList list) {
 		return createSubContextMenu(list, new Vector2D(view.getWidth() / 2,
 				view.getHeight() / 2));
 	}
@@ -205,7 +200,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 *            The amount of information per scrollable page.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createScrollMenu(ElementalList list, int pageSize, Vector2D vector) {
+	public void createScrollMenu(ElementalList list, int pageSize, Vector2D vector) {
 
 		ViewCompositeComponentWrapper vcc = new ViewCompositeComponentWrapper(list);
 
@@ -217,15 +212,13 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 
 		prepareContextStack();
 		contextStack.add(scroll);
-
-		return contextStack.size();
 	}
 
-	public int createScrollMenu(ElementalList list, int pageSize) {
-		return createScrollMenu(list, pageSize, new Vector2D(
+	public void createScrollMenu(ElementalList list, int pageSize) {
+		createScrollMenu(list, pageSize, new Vector2D(
 				view.getWidth() / 2, view.getHeight() / 2));
 	}
-
+	
 	/**
 	 * Spawns a DialogMenu at the provided {@link Vector} location.
 	 * 
@@ -235,7 +228,7 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	public int createDialogMenu(String dialog, Entity avatar, Instance speaker) {
+	public void createDialogMenu(String dialog, Entity avatar, Instance speaker) {
 		TextLabelComponent text = new TextLabelComponent(dialog, TextLabelComponent.CENTER_ALIGNMENT);
 		
 		DialogDecorator decorator = new DialogDecorator(text, avatar, speaker, view);
@@ -244,8 +237,6 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 		contextStack.push(decorator);
 		
 		view.addViewComponent(decorator);
-		
-		return contextStack.size();
 	}
 
 	/**
@@ -289,31 +280,37 @@ public class ViewFacade implements UserEventSource, UserInterfaceFacade {
 	 * @param menu
 	 *            A ContextMenu to be closed.
 	 */
-	public void closeContextMenu(int menu) {
-		if (menu > 0)
-			while (contextStack.size() >= menu)
-				popContextMenu();
+	public void closeMenu(Menu menu) {
+		if (contextStack.contains(menu))
+			while (!contextStack.isEmpty()) {
+				ViewComponent vc = contextStack.pop();
+				view.removeViewComponent(vc);
+				if (menu.equals(vc))
+					break;
+			}
+				
 	}
 
-	public void clearContextMenuStack() {
+	public void clearMenuStack() {
 		while (!contextStack.isEmpty()) {
 			ViewComponent vc = contextStack.pop();
 			view.removeViewComponent(vc);
 		}
 	}
 
-	public void popContextMenu() {
+	public void popMenu() {
 		view.removeViewComponent(contextStack.pop());
 		if (contextStack.size() > 0)
 			view.addViewComponent(contextStack.peek());
 	}
 	
-	public ContextMenu getActiveContextMenu()
+	public Menu getActiveMenu()
 	{
-		if(contextStack.isEmpty())
-			return null;
-		if(contextStack.peek() instanceof ContextMenu)
-			return (ContextMenu) contextStack.peek();
+		if (!contextStack.isEmpty()) {
+			ViewComponent vc = contextStack.peek();
+			if (vc instanceof Menu) // FIXME: so I don't use instanceof
+				return (Menu) vc;
+		}
 		return null;
 	}
 

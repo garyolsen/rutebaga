@@ -328,7 +328,7 @@ public class ActionDeterminer implements TargetSource
 		
 		public void execute() {
 			entity.mount(mount);
-			facade.clearContextMenuStack();
+			facade.clearMenuStack();
 		}
 
 		public boolean isFeasible() {
@@ -349,7 +349,7 @@ public class ActionDeterminer implements TargetSource
 		
 		public void execute() {
 			entity.dismount(mount);
-			facade.clearContextMenuStack();
+			facade.clearMenuStack();
 		}
 
 		public boolean isFeasible() {

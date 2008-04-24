@@ -45,7 +45,7 @@ public class ShopkeeperSellCommandFactory implements CommandFactory<Item> {
 			StoreInstance instance = target.getStoreFront().getInstance(avatar);
 			instance.buy(item);
 
-			facade.clearContextMenuStack();
+			facade.clearMenuStack();
 		}
 
 		public boolean isFeasible() {
