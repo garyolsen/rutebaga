@@ -2,6 +2,7 @@ package rutebaga.game;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import rutebaga.appearance.EntityAppearanceManager;
 import rutebaga.commons.math.ConstantValueProvider;
@@ -43,6 +44,7 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 	public void build()
 	{
+		Random rand = new Random();
 
 		environment = (Environment) scaffold.get("mapRoom");
 
@@ -75,8 +77,13 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		for (int i = 0; i < 20; i++)
 		{
-			rutebaga.model.environment.Instance instance = ((InstanceType) scaffold
-					.get("npcBlueNPC")).makeInstance();
+			rutebaga.model.environment.Instance instance = null;
+			
+			if(rand.nextBoolean()) {
+				instance = ((InstanceType) scaffold.get("npcBlueNPC")).makeInstance();
+			} else {
+				instance = ((InstanceType) scaffold.get("npcBlueNPC2")).makeInstance();
+			}
 			Vector2D location = new Vector2D(i, 14);
 			environment.add(instance, location);
 		}

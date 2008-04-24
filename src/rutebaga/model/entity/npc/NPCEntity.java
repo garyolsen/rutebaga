@@ -260,7 +260,6 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 					// System.out.println("source is " + entity);
 				if (entity == this)
 					return;
-				System.out.println("Receiving hostile gesture");
 				takeHostileGesture(entity);
 			}
 		}
