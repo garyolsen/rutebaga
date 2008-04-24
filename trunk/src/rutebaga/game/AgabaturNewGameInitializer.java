@@ -3,9 +3,11 @@ package rutebaga.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
+import java.util.Set;
 
 import rutebaga.appearance.EntityAppearanceManager;
 import rutebaga.commons.math.ConstantValueProvider;
+import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.Vector2D;
 import rutebaga.controller.GameInitializer;
 import rutebaga.model.effect.AreaEffectType;
@@ -68,6 +70,9 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		ability.setCategory((AbilityCategory) scaffold.get("abcatAttacks"));
 		ability.setName("Sneak");
 		avatar1.addAbility(ability);
+		
+		ItemType mushroom = (ItemType) scaffold.get("itemPotion");
+		ItemType fireflower = (ItemType) scaffold.get("itemFireFlower");
 
 		SlotType hand = (SlotType) scaffold.get("slotHand");
 
@@ -96,6 +101,21 @@ public class AgabaturNewGameInitializer implements GameInitializer
 
 		AreaEffectType teleport = (AreaEffectType) scaffold.get("aoeTeleport");
 		environment.add(teleport.makeInstance(), new Vector2D(4, 10));
+		
+		Set<IntVector2D> tiles = environment.getTileLocations();
+		
+		for(IntVector2D tile : tiles)
+		{
+			if(environment.instancesAt(tile) == null || environment.instancesAt(tile).size() == 0)
+				continue;
+			
+			double n = rand.nextDouble();
+			
+			if(n < 0.08)
+				environment.add(mushroom.makeInstance(), new Vector2D(tile));
+			else if (n < 0.15)
+				environment.add(fireflower.makeInstance(), new Vector2D(tile));
+		}
 		
 		world = new World();
 		world.add(environment);

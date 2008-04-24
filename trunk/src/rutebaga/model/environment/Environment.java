@@ -59,6 +59,11 @@ public class Environment
 	{
 		this.tileConvertor = convertor;
 	}
+	
+	public Set<IntVector2D> getTileLocations()
+	{
+		return Collections.unmodifiableSet(tileCache.keySet());
+	}
 
 	/**
 	 * Inserts an instance into this environment.

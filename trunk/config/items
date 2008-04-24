@@ -8,7 +8,7 @@ reffects		eeffSwordEq_Strength eeffSwordEq_ReduceRings
 
 
 itemPotion
-name			Potion
+name			Health Egg
 appearance animated imgYoshiEgg 5 S
 mass			0.08
 equippable		false
