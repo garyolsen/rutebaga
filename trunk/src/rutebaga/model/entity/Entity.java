@@ -530,19 +530,25 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		for (Object id : getEffectQueue().keySet())
 		{
-			boolean dead = this.isDead();
 			Log.log(getEffectQueue());
 			EntityEffect effect = getEffectQueue().get(id);
-			effect.affect(this, id);
-			if(!dead && this.isDead())
-			{
-				// I just died
-				EffectSource source = effectSources.get(id);
-				if(source != null)
-					source.onKill(this);
-			}
+			EffectSource source = effectSources.get(id);
+			takeEffect(effect, source, id);
 		}
 		getEffectQueue().clear();
+		effectSources.clear();
+	}
+	
+	protected void takeEffect(EntityEffect effect, EffectSource source, Object id)
+	{
+		boolean dead = this.isDead();
+		effect.affect(this, id);
+		if(!dead && this.isDead())
+		{
+			// I just died
+			if(source != null)
+				source.onKill(this);
+		}
 	}
 
 	protected Map<Object, EntityEffect> getEffectQueue()

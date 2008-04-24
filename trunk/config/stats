@@ -12,11 +12,6 @@ name	MP
 type	concrete
 default	450
 
-statMovement		# abstract quantifier; actual speed is specified by vpEntityMovementSpeed
-name	Spd
-type	concrete
-default	5
-
 statAgility
 name	Ag
 type	concrete
@@ -48,6 +43,12 @@ default	100
 ##########################################################
 # 				    DERIVED STATS						 #
 ##########################################################
+
+statMovement		# abstract quantifier; actual speed is specified by vpEntityMovementSpeed
+name	Spd
+type	derived
+value	VP_stat_statLevel
+default	10
 
 statLevel
 name	Lvl

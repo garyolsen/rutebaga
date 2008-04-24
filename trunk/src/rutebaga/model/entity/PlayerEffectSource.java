@@ -1,5 +1,6 @@
 package rutebaga.model.entity;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,11 @@ public class PlayerEffectSource implements EffectSource
 			double experienceAllocated = e.getExperienceCalculation().getValue(entity);
 			e.getExperience().addTo(e, experienceAllocated/size);
 		}
+	}
+
+	public Collection<Entity> getPlayers()
+	{
+		return players;
 	}
 
 }
