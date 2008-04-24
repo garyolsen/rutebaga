@@ -231,6 +231,7 @@ public class View
 	private void removeComponents() {
 		for(ViewComponent component : removalComponents) 
 			components.remove(component);
+		removalComponents.clear();
 	}
 
 	public void addKeyListener(KeyListener kl)
