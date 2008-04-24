@@ -123,7 +123,6 @@ public class Chase extends NPCState
 			}
 			else
 			{
-				new RuntimeException().printStackTrace();
 				// System.out.println("Going into hostile wander state!");
 				return NPCState.hostileWander;
 			}

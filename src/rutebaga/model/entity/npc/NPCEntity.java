@@ -22,6 +22,7 @@ import rutebaga.model.entity.Team;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
 import rutebaga.model.environment.ConcreteInstanceSet;
+import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceSet;
 import rutebaga.model.environment.InstanceType;
 
@@ -242,6 +243,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 		double currentOffensivity = offensivityStrategy.getValue(this);
 		super.takeEffect(effect, source, id);
 		double diff = offensivityStrategy.getValue(this);
+	
 		// FIXME instanceof
 		if (source instanceof PlayerEffectSource)
 		{
@@ -258,12 +260,24 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 					// System.out.println("source is " + entity);
 				if (entity == this)
 					return;
-				if (hostile)
-					takeHostileGesture(entity);
-				else
-					takeFriendlyGesture(entity);
+				System.out.println("Receiving hostile gesture");
+				takeHostileGesture(entity);
 			}
 		}
+		
+		for(Instance instance : this.getVision().getActiveSet()) {
+			
+			if(instance instanceof Entity) {
+				Entity entity = (Entity) instance;
+				
+				if(entity.getTeam() != this.getTeam()) {
+					takeHostileGesture(entity);
+				}
+				
+			}
+			
+		}
+		
 	}
 
 }
