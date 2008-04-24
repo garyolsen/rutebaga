@@ -1,24 +1,12 @@
 package rutebaga.controller;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class DefaultTickDaemon implements TickDaemon
 {
-
-	private Timer timer;
 	private boolean paused;
 	private TickListener listener;
 	private int msecRate;
 
 	public DefaultTickDaemon(int msecRate) {
-// timer = new Timer(true);
-// timer.schedule(new TimerTask() {
-// public void run() {
-// if (!paused && listener != null)
-// listener.tick();
-// }
-// }, 0, msecRate);
 		this.msecRate = msecRate;
 		new Thread()
 		{
@@ -29,12 +17,12 @@ public class DefaultTickDaemon implements TickDaemon
 					try
 					{
 						long time = System.currentTimeMillis();
-						if(!paused && listener != null)
+						if (!paused && listener != null)
 							listener.tick();
 						long diff = DefaultTickDaemon.this.msecRate - (System.currentTimeMillis() - time);
-						if(diff > 0)
+						if (diff > 0)
 							Thread.sleep(diff);
-						System.out.println(1000.0/(System.currentTimeMillis()-time));
+						System.out.println(1000.0 / (System.currentTimeMillis() - time));
 					}
 					catch(Exception e)
 					{

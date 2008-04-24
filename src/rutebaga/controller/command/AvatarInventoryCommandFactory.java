@@ -4,12 +4,10 @@ import java.util.List;
 
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.ElementalList;
-import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.item.Item;
 import rutebaga.view.UserInterfaceFacade;
-import rutebaga.view.ViewFacade;
 
 public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 	
@@ -25,8 +23,6 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 	
 	public ElementalList getCommandListFor(Item item) {
 		ConcreteElementalList list = new ConcreteElementalList();
-		//if (facade != null) //Stats of an item aren't viewable !
-		//	list.add("Stats", new DisplayItemStatsCommand(facade, item));
 		list.add("Drop", QueueCommand.makeForQueue(new DropCommand(item), queue));
 		if (item.isEquippable())
 			list.add("Equip", QueueCommand.makeForQueue(new EquipCommand(item), queue));
@@ -72,9 +68,9 @@ public class AvatarInventoryCommandFactory implements CommandFactory<Item> {
 	
 	private class UseCommand implements Command {
 		
-		private Item item;
+		private Item<?> item;
 		
-		public UseCommand(Item item) {
+		public UseCommand(Item<?> item) {
 			this.item = item;
 		}
 

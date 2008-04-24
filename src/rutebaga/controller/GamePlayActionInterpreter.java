@@ -7,21 +7,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EmptyStackException;
 import java.util.Set;
-
-import com.sun.xml.internal.ws.api.pipe.NextAction;
-
-import legacy.KeyBuffer;
 
 import rutebaga.commons.math.EllipseBounds2D;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
 import rutebaga.commons.math.Vector2D;
-import rutebaga.controller.command.CloseContextMenuCommand;
 import rutebaga.controller.command.Command;
 import rutebaga.controller.command.CreateRootContextMenuCommand;
-import rutebaga.controller.command.QueueCommand;
 import rutebaga.controller.command.list.ConcreteElementalList;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.command.list.TargetSource;
@@ -43,7 +36,6 @@ import rutebaga.model.environment.TileConverter;
 import rutebaga.model.environment.World;
 import rutebaga.model.map.Tile;
 import rutebaga.view.UserInterfaceFacade;
-import rutebaga.view.ViewFacade;
 import rutebaga.view.game.MapComponent;
 import rutebaga.view.game.TargetInstanceObservable;
 import rutebaga.view.rwt.ContextMenu;
@@ -197,25 +189,6 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 		keyPressBindings.set("AvatarMenu", KeyCode.get(KeyEvent.VK_HOME),
 				new OpenAvatarContextMenuCommand());
-
-		// keyPressBindings.set("Ability0", KeyCode.get(KeyEvent.VK_ENTER),
-		// new Command()
-		// {
-		// public void execute()
-		// {
-		// GamePlayActionInterpreter.this.avatar
-		// .getAbilities()
-		// .get(0)
-		// .act(
-		// target != null ? target
-		// : GamePlayActionInterpreter.this.avatar);
-		// }
-		//
-		// public boolean isFeasible()
-		// {
-		// return true;
-		// }
-		// });
 
 		keyReleaseBindings.set("UseActiveMenu", KeyCode.get(KeyEvent.VK_ENTER),
 				new UseCurrentMenuSelectionCommand());
