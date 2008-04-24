@@ -10,12 +10,14 @@ import java.util.Stack;
 import rutebaga.commons.UIDProvider;
 import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
+import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.CharEntity;
 import rutebaga.model.entity.EffectSource;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.EntityType;
+import rutebaga.model.entity.PlayerEffectSource;
 import rutebaga.model.entity.Team;
 import rutebaga.model.entity.inventory.Inventory;
 import rutebaga.model.entity.stats.Stats;
@@ -36,12 +38,44 @@ import rutebaga.model.environment.InstanceType;
 public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 {
 
+	@Override
+	protected void takeEffect(EntityEffect effect, EffectSource source,
+			Object id)
+	{
+		double currentOffensivity = offensivityStrategy.getValue(this);
+		super.takeEffect(effect, source, id);
+		double diff = offensivityStrategy.getValue(this);
+		// FIXME instanceof
+		if (source instanceof PlayerEffectSource)
+		{
+			boolean hostile;
+			if (diff < 0)
+				hostile = false;
+			else
+				hostile = true;
+			System.out.println("taking gesture: " + hostile + " of " + effect);
+			for (Entity entity : ((PlayerEffectSource) source).getPlayers())
+			{
+				System.out.println("source is " + entity);
+				if(entity == this)
+					return;
+				if (hostile)
+					takeHostileGesture(entity);
+				else
+					takeFriendlyGesture(entity);
+			}
+		}
+	}
+
 	private Entity target;
 	private NPCBrain brain;
 	private boolean pausing = true;
 	private Random rand = new Random();
-	private MutableVector2D direction=new MutableVector2D((rand.nextFloat()-0.5)*0.2, (rand.nextFloat()-0.5)*0.2);
-	
+	private MutableVector2D direction = new MutableVector2D(
+			(rand.nextFloat() - 0.5) * 0.2, (rand.nextFloat() - 0.5) * 0.2);
+
+	private ValueProvider<Entity> offensivityStrategy;
+
 	public NPCEntity(InstanceType<T> type)
 	{
 		super(type);
@@ -49,39 +83,89 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	}
 
 	/**
-	 * A method fired by the environment. It will be forwarded to the
+	 * Instructs this NPCEntity to barter. Will be forwarded to
 	 * {@link NPCEntityType}.
 	 * 
 	 * @see NPCEntityType
 	 */
-	public void tick()
+	public void barter()
 	{
-		super.tick();
-		brain.tick(this);
+		brain.barter(this);
 	}
 
 	/**
-	 * Decides if the current target is in sight based on the
-	 * {@link NPCEntityType}. Will be forwarded to {@link NPCEntityType}.
+	 * Returns this NPCEntity's current {@link NPCBrain}.
 	 * 
-	 * @see NPCEntityType
-	 * @return True if the target is in sight.
+	 * @return The {@link NPCBrain} currently controlling this NPCEntity.
+	 * @see NPCBrain
 	 */
-	public boolean targetInSight()
+	public NPCBrain getBrain()
 	{
-		return getVision().inActiveSet(target);
+		return this.brain;
+	}
+
+	public MutableVector2D getDirection()
+	{
+		return direction;
+	}
+
+	public ValueProvider<Entity> getOffensivityStrategy()
+	{
+		return offensivityStrategy;
 	}
 
 	/**
-	 * Decides if the current target is in attack range based on the
-	 * {@link NPCEntityType}. Will be forwarded to {@link NPCEntityType}.
+	 * Returns this NPCEntity's current target.
 	 * 
-	 * @see NPCEntityType
-	 * @return True if the target is in attack range.
+	 * @see rutebaga.model.entity.Entity
+	 * @return The {@link rutebaga.model.entity.Entity Entity} currently being
+	 *         targeted by this NPCEntity.
 	 */
-	public boolean targetInRange()
+	public Entity getTarget()
 	{
-		return rand.nextBoolean();
+		return target;
+	}
+
+	public IntVector2D getTargetTile()
+	{
+		return target.getTile();
+	}
+
+	public boolean isPausing()
+	{
+		return pausing;
+	}
+
+	public void makeSpeech(Entity entity, String speech)
+	{
+
+	}
+
+	/**
+	 * Sets this NPCEntity's current {@link NPCBrain}.
+	 * 
+	 * @param brain
+	 *            The {@link NPCBrain} to be inserted into this NPCEntity.
+	 * @see NPCBrain
+	 */
+	public void setBrain(NPCBrain brain)
+	{
+		this.brain = brain;
+	}
+
+	public void setDirection(MutableVector2D direction)
+	{
+		this.direction = direction;
+	}
+
+	public void setOffensivityStrategy(ValueProvider<Entity> offensivityStrategy)
+	{
+		this.offensivityStrategy = offensivityStrategy;
+	}
+
+	public void setPausing(boolean pausing)
+	{
+		this.pausing = pausing;
 	}
 
 	/**
@@ -99,30 +183,14 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	/**
 	 * Instructs this NPCEntity to speak. Will be forwarded to
 	 * {@link NPCEntityType}.
-	 * @return 
+	 * 
+	 * @return
 	 * 
 	 * @see NPCEntityType
 	 */
 	public void speak(Entity entity)
 	{
 		brain.speak(this, entity);
-	}
-
-	/**
-	 * Instructs this NPCEntity to take a hostile gesture on the provided
-	 * {@link rutebaga.model.entity.Entity Entity}. Will be forwarded to
-	 * {@link NPCEntityType}.
-	 * 
-	 * @see NPCEntityType
-	 * @param entity
-	 *            The {@link rutebaga.model.entity.Entity Entity} to take a
-	 *            hostile gesture against.
-	 * @see rutebaga.model.entity.Entity
-	 */
-	public void takeHostileGesture(Entity entity)
-	{
-		target = entity;
-		brain.makeHostile(this);
 	}
 
 	/**
@@ -143,87 +211,57 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	}
 
 	/**
-	 * Instructs this NPCEntity to barter. Will be forwarded to
+	 * Instructs this NPCEntity to take a hostile gesture on the provided
+	 * {@link rutebaga.model.entity.Entity Entity}. Will be forwarded to
+	 * {@link NPCEntityType}.
+	 * 
+	 * @see NPCEntityType
+	 * @param entity
+	 *            The {@link rutebaga.model.entity.Entity Entity} to take a
+	 *            hostile gesture against.
+	 * @see rutebaga.model.entity.Entity
+	 */
+	public void takeHostileGesture(Entity entity)
+	{
+		target = entity;
+		brain.makeHostile(this);
+	}
+
+	/**
+	 * Decides if the current target is in attack range based on the
+	 * {@link NPCEntityType}. Will be forwarded to {@link NPCEntityType}.
+	 * 
+	 * @see NPCEntityType
+	 * @return True if the target is in attack range.
+	 */
+	public boolean targetInRange()
+	{
+//		return rand.nextBoolean();
+		return getCooldown() < 5;
+	}
+
+	/**
+	 * Decides if the current target is in sight based on the
+	 * {@link NPCEntityType}. Will be forwarded to {@link NPCEntityType}.
+	 * 
+	 * @see NPCEntityType
+	 * @return True if the target is in sight.
+	 */
+	public boolean targetInSight()
+	{
+		return getVision().inActiveSet(target);
+	}
+
+	/**
+	 * A method fired by the environment. It will be forwarded to the
 	 * {@link NPCEntityType}.
 	 * 
 	 * @see NPCEntityType
 	 */
-	public void barter()
+	public void tick()
 	{
-		brain.barter(this);
-	}
-
-	/**
-	 * Returns this NPCEntity's current target.
-	 * 
-	 * @see rutebaga.model.entity.Entity
-	 * @return The {@link rutebaga.model.entity.Entity Entity} currently being
-	 *         targeted by this NPCEntity.
-	 */
-	public Entity getTarget()
-	{
-		return target;
-	}
-
-	/**
-	 * Sets this NPCEntity's current {@link NPCBrain}.
-	 * 
-	 * @param brain
-	 *            The {@link NPCBrain} to be inserted into this NPCEntity.
-	 * @see NPCBrain
-	 */
-	public void setBrain(NPCBrain brain)
-	{
-		this.brain = brain;
-	}
-	
-	public IntVector2D getTargetTile() {
-		return target.getTile();
-	}
-
-	/**
-	 * Returns this NPCEntity's current {@link NPCBrain}.
-	 * 
-	 * @return The {@link NPCBrain} currently controlling this NPCEntity.
-	 * @see NPCBrain
-	 */
-	public NPCBrain getBrain()
-	{
-		return this.brain;
-	}
-
-	public MutableVector2D getDirection() {
-		return direction;
-	}
-
-	public void setDirection(MutableVector2D direction) {
-		this.direction = direction;
-	}
-
-	public boolean isPausing() {
-		return pausing;
-	}
-
-	public void setPausing(boolean pausing) {
-		this.pausing = pausing;
-	}
-	
-	public void makeSpeech(Entity entity, String speech) {
-		
-	}
-	
-	public Object accept(EntityEffect effect, EffectSource source)
-	{
-		InstanceSet instanceSet = new ConcreteInstanceSet(); 
-		instanceSet.addAll(this.getVision().getActiveSet());
-		for ( Entity entity : instanceSet.getEntities())
-		{
-			if (entity.getTeam() !=  this.getTeam()) {
-				this.takeHostileGesture(entity);
-				break;
-			}
-		}
-		return super.accept(effect, source);
+		super.tick();
+		brain.tick(this);
 	}
 
 }

@@ -79,14 +79,9 @@ public class StatsBuilder extends ConfigFileBuilder
 			ValueProvider<Stats> vp = getValueProvider(id, "value", scaffold);
 			derId.setBase(vp);
 		}
-		else
-		{
-			rutebaga.commons.Log.log("concrete stat "
-					+ getProperty(id, "default"));
-			Double init = getDouble(id, "default");
-			if (init != null)
-				statId.setInitialValue(init);
-		}
+		Double init = getDouble(id, "default");
+		if (init != null)
+			statId.setInitialValue(init);
 		Boolean hidden = getBoolean(id, "hidden");
 		if (hidden != null)
 			statId.setHidden(hidden);

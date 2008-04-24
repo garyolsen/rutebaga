@@ -52,14 +52,14 @@ public class Attack extends NPCState
 		{
 			if (npc.targetInRange() && npc.targetInSight())
 			{
-				if (rand.nextDouble() < 0.01)
+				if (rand.nextDouble() < 0.8)
 				{
 					Collection<Ability> abilities = npc.getAbilities();
 					int index = rand.nextInt(npc.getAbilities().size());
 					int counter = 0;
 					for ( Ability ability : abilities ) {
 						if (counter == index) {
-							if ( ability.isFeasible() )
+							if ( ability.isFeasible() && ability.exists() )
 							{
 								ability.act(npc.getTarget());
 								break;

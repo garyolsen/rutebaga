@@ -1,5 +1,7 @@
 package rutebaga.model.entity.npc;
 
+import rutebaga.commons.math.ValueProvider;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityType;
 import rutebaga.model.entity.Team;
 import rutebaga.model.environment.ConcreteInstanceType;
@@ -7,7 +9,18 @@ import rutebaga.model.environment.ConcreteInstanceType;
 public class NPCType<T extends NPCEntity> extends EntityType<T> {
 
 	private Team team;
+	private ValueProvider<Entity> offensivityStrategy;
 	
+	public ValueProvider<Entity> getOffensivityStrategy()
+	{
+		return offensivityStrategy;
+	}
+
+	public void setOffensivityStrategy(ValueProvider<Entity> offensivityStrategy)
+	{
+		this.offensivityStrategy = offensivityStrategy;
+	}
+
 	public void setTeam(Team team) {
 		this.team = team;
 	}
@@ -20,7 +33,8 @@ public class NPCType<T extends NPCEntity> extends EntityType<T> {
 	public void initialize(T npc) {
 		super.initialize(npc);
 		npc.setBrain(new NPCSimpleBrain());
-		//npc.setTeam(team);
+		npc.setOffensivityStrategy(offensivityStrategy);
+		npc.setTeam(team);
 	}
 
 }

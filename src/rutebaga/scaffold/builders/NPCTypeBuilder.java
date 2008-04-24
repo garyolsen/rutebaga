@@ -24,6 +24,7 @@ public class NPCTypeBuilder extends EntityTypeBuilder{
 		NPCType type = (NPCType) object;
 		
 		type.setTeam((Team) getObjectFor(id, "team", scaffold));
+		type.setOffensivityStrategy(getValueProvider(id, "offensivity", scaffold));
 	}
 
 }
