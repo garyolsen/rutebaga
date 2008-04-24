@@ -11,8 +11,7 @@ public class CloseContextMenuCommand implements Command {
 	}
 	
 	public void execute() {
-		//facade.popMenu();
-		facade.clearMenuStack();
+		facade.popMenu();
 	}
 
 	public boolean isFeasible() {
