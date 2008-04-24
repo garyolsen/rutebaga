@@ -5,8 +5,8 @@ lifetime		100
 
 decBeam
 
-appearance		animated imgBeam 2 S
-lifetime		38
+appearance		animated imgBeam 1 S
+lifetime		19
 
 decBolt
 
@@ -20,7 +20,7 @@ lifetime		20
 
 decShell
 
-appearance		animated imgShell 3 S
+appearance		animated imgShell 3 C
 lifetime		32
 
 decBubble
