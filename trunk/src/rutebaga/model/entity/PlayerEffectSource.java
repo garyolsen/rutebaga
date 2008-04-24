@@ -23,8 +23,10 @@ public class PlayerEffectSource implements EffectSource
 		int size = players.size();
 		for (Entity e : players)
 		{
-			double experienceAllocated = e.getExperienceCalculation().getValue(entity);
-			e.getExperience().addTo(e, experienceAllocated / size);
+			if(e != null && e.getExperienceCalculation() != null) {
+				double experienceAllocated = e.getExperienceCalculation().getValue(entity);
+				e.getExperience().addTo(e, experienceAllocated / size);
+			}
 		}
 	}
 

@@ -126,8 +126,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 					newIdx = newIdx - menu.getSize()
 							* ((int) (menu.getSize() / newIdx));
 				newIdx = newIdx % menu.getSize();
-				System.out.println("Switching to " + newIdx + " from "
-						+ current);
+				// System.out.println("Switching to " + newIdx + " from " + current);
 				menu.select(newIdx);
 			}
 		}

@@ -151,10 +151,10 @@ public class GameDaemon implements InterpreterManager {
 					GameDaemon.this.commandQueue.processQueue();
 					long time = System.currentTimeMillis();
 					GameDaemon.this.tick();
-					System.out.println("model: " + (System.currentTimeMillis()-time));
+					// System.out.println("model: " + (System.currentTimeMillis()-time));
 					time = System.currentTimeMillis();
 					GameDaemon.this.view.renderFrame();
-					System.out.println("view: " + (System.currentTimeMillis()-time));
+					// System.out.println("view: " + (System.currentTimeMillis()-time));
 				}
 				catch (Exception e) {
 					e.printStackTrace();

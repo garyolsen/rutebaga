@@ -59,9 +59,9 @@ public class Chase extends NPCState
 			return NPCState.dead;
 		else
 		{
-			System.out.println("target in sigh: " + npc.targetInSight());
-			System.out.println("target in range: " + npc.targetInRange());
-			System.out.println("target: " + npc.getTarget());
+			//System.out.println("target in sigh: " + npc.targetInSight());
+			//System.out.println("target in range: " + npc.targetInRange());
+			//System.out.println("target: " + npc.getTarget());
 			if (npc.targetInSight() && npc.targetInRange())
 			{
 				return NPCState.attack;
@@ -69,7 +69,7 @@ public class Chase extends NPCState
 			}
 			else if (!(npc.getTarget() == null) && (npc.targetInSight()))
 			{
-				System.out.println("chase");
+				//System.out.println("chase");
 				manager = new AStarNodeLocationManager(npc.getEnvironment(),
 						npc, npc.getTargetTile());
 				List<AStarNodeLocationAdapter> path = aStarSearch.findPath(
@@ -101,8 +101,7 @@ public class Chase extends NPCState
 			if (!(lastPath == null) && !lastPath.isEmpty() && (lifetime > 0))
 			{
 				rutebaga.commons.Log.log(lastTile);
-				System.out.println("I lost sight of you. Interest level at: "
-						+ lifetime);
+				//System.out.println("I lost sight of you. Interest level at: "	+ lifetime);
 				lifetime--;
 				MutableVector2D moveVector;
 				rutebaga.commons.Log
@@ -125,7 +124,7 @@ public class Chase extends NPCState
 			else
 			{
 				new RuntimeException().printStackTrace();
-				System.out.println("Going into hostile wander state!");
+				// System.out.println("Going into hostile wander state!");
 				return NPCState.hostileWander;
 			}
 		}

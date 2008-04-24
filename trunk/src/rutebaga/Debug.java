@@ -2,5 +2,5 @@ package rutebaga;
 
 public class Debug
 {
-	public static boolean debug;
+	public static boolean debug = false;
 }

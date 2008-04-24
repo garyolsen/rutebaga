@@ -95,7 +95,7 @@ public class EntityTypeBuilder extends InstanceBuilder
 			StatisticId statId = (StatisticId) scaffold.get(m
 					.group(ConfigFileBuilder.NAME_GP));
 			double value = Double.valueOf(m.group(ConfigFileBuilder.VALUE_GP));
-			System.out.println("initializing " + statId + " to " + value);
+			//System.out.println("initializing " + statId + " to " + value);
 			type.getInitialStats().put(statId, value);
 		}
 	}
