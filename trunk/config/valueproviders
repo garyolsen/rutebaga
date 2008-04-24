@@ -18,7 +18,7 @@ vpEntityBargainSkillAmount
 value 1.0
 
 vpEntityCooldownStrategy
-value	/ VP_@entityStats_VP_stat_statMovement 1
+value	/ VP_@entityStats_VP_stat_statAgility 1
 
 vpEntityExperienceSource
 value	VP_@entityStats_VP_stat_statExperience

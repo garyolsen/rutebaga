@@ -10,7 +10,7 @@ lifetime		19
 
 decBolt
 
-appearance		animated imgBolt 2 S
+appearance		animated imgBolt 2 S 0 70
 lifetime		22
 
 decNuke

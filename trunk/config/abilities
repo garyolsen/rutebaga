@@ -7,7 +7,8 @@ abSlow
 name Slow
 category	abcatSpells
 actions{
-	damage		dmgTpSlow	2
+	damage		dmgTpSlow_Mv	2
+	damage		dmgTpSlow_Ag	2
 	spawn		target	follow decBubble
 	entityeffect	source	eeff_Spell_MP	
 }
