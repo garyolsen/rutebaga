@@ -18,3 +18,24 @@ initialstats {
 	statMovement	6
 	statAgility		20
 }
+
+npcBlueNPC2
+team	teamBlue
+standing 	imgGoomba
+walking		imgGoomba
+moveSpd			$vpEntityMovementSpeed	
+deadStrat		$vpEntityDeadStrategy
+cooldown		$vpEntityCooldownStrategy
+skillPtStrat	$vpEntitySkillPtStrategy
+experienceSource	$vpEntityExperienceSource
+experienceCalc		$vpEntityExperienceCalc
+offensivity			$vpEntityOffensivity
+wallet	$vpEntityWallet
+vRadius		5
+abilities	abBolt
+movement	whitelist terrGrass terrWater terrMountain
+bargain		1.0
+initialstats {
+	statMovement	6
+	statAgility		20
+}
