@@ -76,12 +76,12 @@ public class MapComponent extends ViewComponent implements
 		long time;
 		time = System.currentTimeMillis();
 		drawMemorySet(draw, avatar.getVision());
-		System.out.println("memory set total: "
-				+ (System.currentTimeMillis() - time));
+		if (rutebaga.Debug.debug)
+			System.out.println("memory set total: " + (System.currentTimeMillis() - time));
 		time = System.currentTimeMillis();
 		drawVisibleSet(draw, avatar.getVision());
-		System.out.println("visible set total: "
-				+ (System.currentTimeMillis() - time));
+		if (rutebaga.Debug.debug)
+			System.out.println("visible set total: " + (System.currentTimeMillis() - time));
 		// drawAvatar(draw);
 
 	}

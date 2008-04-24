@@ -22,7 +22,7 @@ public class DefaultTickDaemon implements TickDaemon
 						long diff = DefaultTickDaemon.this.msecRate - (System.currentTimeMillis() - time);
 						if (diff > 0)
 							Thread.sleep(diff);
-						System.out.println(1000.0 / (System.currentTimeMillis() - time));
+						// System.out.println(1000.0 / (System.currentTimeMillis() - time));
 					}
 					catch(Exception e)
 					{

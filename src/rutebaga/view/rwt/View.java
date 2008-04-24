@@ -177,7 +177,8 @@ public class View
 			strategy = window.getBufferStrategy();
 		}
 
-		System.out.println("Render Frame Total Time: " + (System.currentTimeMillis() - start));
+		if (rutebaga.Debug.debug)
+			System.out.println("Render Frame Total Time: " + (System.currentTimeMillis() - start));
 	}
 
 	/**
@@ -220,7 +221,8 @@ public class View
 		{
 			long time = System.currentTimeMillis();
 			vc.draw(drawer);
-			System.out.println(vc + "-->" + (System.currentTimeMillis() - time));
+			if (rutebaga.Debug.debug)
+				System.out.println(vc + "-->" + (System.currentTimeMillis() - time));
 		}
 	}
 	

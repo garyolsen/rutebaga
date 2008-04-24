@@ -251,11 +251,11 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 			else
 				hostile = true;
 			if (rutebaga.Debug.debug)
-				System.out.println("taking gesture: " + hostile + " of " + effect);
+				// System.out.println("taking gesture: " + hostile + " of " + effect);
 			for (Entity entity : ((PlayerEffectSource) source).getPlayers())
 			{
 				if (rutebaga.Debug.debug)
-					System.out.println("source is " + entity);
+					// System.out.println("source is " + entity);
 				if (entity == this)
 					return;
 				if (hostile)

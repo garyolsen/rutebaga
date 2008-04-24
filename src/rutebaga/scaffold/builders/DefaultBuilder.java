@@ -30,7 +30,7 @@ public class DefaultBuilder extends ChainedBuilder
 		register(new MapBuilder());
 		for(String id : this.availableIds())
 		{
-			System.out.println(id + "\t\t" + this.getBuilder(id));
+			//System.out.println(id + "\t\t" + this.getBuilder(id));
 		}
 	}
 

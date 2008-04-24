@@ -137,7 +137,7 @@ public class MasterScaffold
 	{
 		for (String id : builder.availableIds())
 		{
-			System.out.println("Registering " + id + " with " + builder);
+			//System.out.println("Registering " + id + " with " + builder);
 			builders.put(id, builder);
 		}
 	}
