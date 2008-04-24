@@ -10,7 +10,7 @@ experienceSource	$vpEntityExperienceSource
 experienceCalc		$vpEntityExperienceCalc
 offensivity			$vpEntityOffensivity
 wallet	$vpEntityWallet
-vRadius		10
+vRadius		5
 abilities	abBolt
 movement	whitelist terrGrass terrWater terrMountain
 bargain		1.0
