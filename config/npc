@@ -2,10 +2,12 @@ npcBlueNPC
 team	teamBlue
 standing 	imgKoopa
 walking		imgKoopa
-moveSpd		$vpEntityMovementSpeed
-deadStrat	$vpEntityDeadStrategy
-skillPtStrat	$vpEntitySkillPtStrategy	
-cooldown	$vpEntityCooldownStrategy
+moveSpd			$vpEntityMovementSpeed	
+deadStrat		$vpEntityDeadStrategy
+cooldown		$vpEntityCooldownStrategy
+skillPtStrat	$vpEntitySkillPtStrategy
+experienceSource	$vpEntityExperienceSource
+experienceCalc		$vpEntityExperienceCalc
 wallet	$vpEntityWallet
 vRadius		10
 abilities	abBolt

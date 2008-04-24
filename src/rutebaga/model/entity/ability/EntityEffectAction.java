@@ -2,8 +2,10 @@ package rutebaga.model.entity.ability;
 
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.AbilityAction;
+import rutebaga.model.entity.EffectSource;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
+import rutebaga.model.entity.PlayerEffectSource;
 
 public class EntityEffectAction implements AbilityAction
 {
@@ -32,10 +34,11 @@ public class EntityEffectAction implements AbilityAction
 
 	public void act(Ability ability, Object target)
 	{
+		EffectSource source = new PlayerEffectSource(ability.getEntity());
 		if(!actOnTarget)
-			ability.getEntity().accept(effect);
+			ability.getEntity().accept(effect, source);
 		else
-			((Entity) target).accept(effect);
+			((Entity) target).accept(effect, source);
 	}
 
 }

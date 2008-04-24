@@ -56,7 +56,7 @@ public class RandomEffect extends TargetableEffect<RandomEffect, Instance> {
 				target.applyMomentum(direction);
 				if(damageToApply != null)
 				{
-					damageToApply.execute((Entity) target, damageAmount);
+					damageToApply.execute((Entity) target, damageAmount, null);
 				}
 			}
 		}

@@ -12,22 +12,48 @@ public class AbilityListElementSource implements ListElementSource<Ability>
 
 	private Collection<Ability> abilities;
 	private int feasibleCount = 0;
+	private int disabledCount = 0;
 	private TargetSource targetSource;
-	
+
 	private boolean abilityIsOk(Ability ability)
 	{
-		return ability.isFeasible() && ability.exists() && ability.canActOn(targetSource.getTarget());
+		return ability.isFeasible() && ability.exists()
+				&& ability.canActOn(targetSource.getTarget());
+	}
+	
+	private boolean includeInList(Ability ability)
+	{
+		return abilityIsDisabled(ability) || abilityIsOk(ability);
 	}
 
-	public AbilityListElementSource(Collection<Ability> abilities, TargetSource targetSource)
+	private boolean abilityIsDisabled(Ability ability)
+	{
+		return ability.exists() && ability.canActOn(targetSource.getTarget())
+				&& !ability.isFeasible();
+	}
+
+	private void count(Ability ability)
+	{
+		if (!abilityIsOk(ability))
+		{
+			if (abilityIsDisabled(ability))
+				disabledCount++;
+		}
+		else
+			++feasibleCount;
+	}
+
+	public AbilityListElementSource(Collection<Ability> abilities,
+			TargetSource targetSource)
 	{
 		this.targetSource = targetSource;
 		ArrayList<Ability> doNotWant = new ArrayList<Ability>();
 		for (Ability ability : abilities)
-			if (!abilityIsOk(ability))
+		{
+			count(ability);
+			if (!includeInList(ability))
 				doNotWant.add(ability);
-			else
-				++feasibleCount;
+		}
 		this.abilities = new ArrayList<Ability>();
 		this.abilities.addAll(abilities);
 		this.abilities.removeAll(doNotWant);
@@ -35,7 +61,7 @@ public class AbilityListElementSource implements ListElementSource<Ability>
 
 	public int contentSize()
 	{
-		return feasibleCount;
+		return feasibleCount + disabledCount;
 	}
 
 	public String getLabel()
@@ -46,11 +72,12 @@ public class AbilityListElementSource implements ListElementSource<Ability>
 	public boolean hasChanged(Object object)
 	{
 		int oldFeasibleCount = feasibleCount;
+		int oldDisabledCount = disabledCount;
 		feasibleCount = 0;
+		disabledCount = 0;
 		for (Ability ability : abilities)
-			if (abilityIsOk(ability))
-				++feasibleCount;
-		return (oldFeasibleCount != feasibleCount);
+			count(ability);
+		return (oldFeasibleCount != feasibleCount || oldDisabledCount != disabledCount);
 	}
 
 	public Iterator<Ability> iterator()
@@ -62,7 +89,7 @@ public class AbilityListElementSource implements ListElementSource<Ability>
 	{
 		private Iterator<Ability> backing = abilities.iterator();
 		private Ability current;
-		
+
 		{
 			next();
 		}
@@ -82,8 +109,8 @@ public class AbilityListElementSource implements ListElementSource<Ability>
 					current = backing.next();
 				}
 				while (backing.hasNext()
-						&& !abilityIsOk(current));
-			if(current != null && !abilityIsOk(current))
+						&& !includeInList(current));
+			if (current != null && !includeInList(current))
 				current = null;
 			return rval;
 		}

@@ -33,7 +33,7 @@ public class Damage
 	private StatisticId damagedStat;
 	private SymbolicFunction<Entity> lifetimeProvider;
 
-	public Object execute(Entity entity, double amount)
+	public Object execute(Entity entity, double amount, EffectSource source)
 	{
 		Map<String, Double> symT = new HashMap<String, Double>();
 		symT.put("amount", -amount);
@@ -51,7 +51,7 @@ public class Damage
 			entity.getEnvironment().add(effect, new Vector2D(0, 0));
 			return effect.start();
 		}
-		return entity.accept(eff);
+		return entity.accept(eff, source);
 	}
 
 	public StatisticId getDamagedStat()

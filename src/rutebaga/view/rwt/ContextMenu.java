@@ -51,6 +51,9 @@ public class ContextMenu extends ViewComponent
 {
 	private static Color buttonColor = new Color(0, 0, 255, 70);
 	private static Color buttonToggledColor = new Color(0, 0, 255, 170);
+	
+	private static Color disabledButtonColor = new Color(255, 0, 0, 30);
+	private static Color disabledButtonToggledColor = new Color(255, 0, 0, 30);
 
 	private static ColorAttribute contextHover = new ColorAttribute(new Color(
 			0, 50, 0, 50));
@@ -224,12 +227,22 @@ public class ContextMenu extends ViewComponent
 		for (ListElement element : sortedList)
 		{
 			String label = element.getLabel();
+			Color color, toggledColor;
 			if(element.getCommand() != null)
+			{
 				label += " (" + (currentIdx++) + ")";
+				color = buttonColor;
+				toggledColor = buttonToggledColor;
+			}
+			else
+			{
+				color = disabledButtonColor;
+				toggledColor = disabledButtonToggledColor;
+			}
 			ButtonComponent button = new ButtonComponent(label);
 			button.setCommand(element.getCommand());
-			button.setUntoggledColor(buttonColor);
-			button.setToggledColor(buttonToggledColor);
+			button.setUntoggledColor(color);
+			button.setToggledColor(toggledColor);
 
 			Polygon poly = new Polygon();
 

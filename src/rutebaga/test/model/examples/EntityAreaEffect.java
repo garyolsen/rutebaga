@@ -83,7 +83,7 @@ public class EntityAreaEffect extends Instance<EntityAreaEffect>
 		{
 			for (EntityEffect effect : effects)
 			{
-				entity.accept(effect);
+				entity.accept(effect, null);
 			}
 		}
 	}

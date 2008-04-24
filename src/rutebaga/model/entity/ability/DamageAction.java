@@ -4,7 +4,9 @@ import rutebaga.commons.math.ValueProvider;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.AbilityAction;
 import rutebaga.model.entity.Damage;
+import rutebaga.model.entity.EffectSource;
 import rutebaga.model.entity.Entity;
+import rutebaga.model.entity.PlayerEffectSource;
 
 /**
  * Performs an amount of damage on a target. The given value provider uses the
@@ -28,7 +30,8 @@ public class DamageAction implements AbilityAction<Entity>
 	public void act(Ability<? extends Entity> ability, Entity target)
 	{
 		double amount = magnitudeProvider.getValue(ability.getEntity());
-		damage.execute(target, amount);
+		EffectSource source = new PlayerEffectSource(ability.getEntity());
+		damage.execute(target, amount, source);
 	}
 
 	public Damage getDamage()

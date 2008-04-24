@@ -29,10 +29,10 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 	}
 
 	@Override
-	public Object accept(EntityEffect effect)
+	public Object accept(EntityEffect effect, EffectSource source)
 	{
 		if (isMounted())
-			mountee.accept(effect);
+			mountee.accept(effect, source);
 
 		return null;
 	}
@@ -67,7 +67,7 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 				for (EntityEffect effect : onDismount)
 				{
-					entity.accept(effect);
+					entity.accept(effect, null);
 				}
 
 				onDismount.clear();
@@ -210,7 +210,7 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 			for (ReversibleEntityEffect effect : vehicle.getEntityEffects())
 			{
-				Object id = entity.accept(effect);
+				Object id = entity.accept(effect, null);
 				EntityEffect reverse = effect.getReverseEffect(id);
 				onDismount.add(reverse);
 			}

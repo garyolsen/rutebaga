@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import rutebaga.commons.math.Vector2D;
+import rutebaga.model.entity.EffectSource;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.ReversibleEntityEffect;
@@ -26,6 +27,8 @@ public class ConcreteInventory implements Inventory
 	private SlotAllocation slots = new SlotAllocation();
 	private Map<Item, Set<EntityEffect>> onUnequipEffects = new HashMap<Item, Set<EntityEffect>>();
 	private double weight;
+	
+	private EffectSource asEffectSource = new InventoryEffectSource(this);
 
 	public ConcreteInventory(Entity parent)
 	{
@@ -73,7 +76,7 @@ public class ConcreteInventory implements Inventory
 			for (ReversibleEntityEffect effect : item
 					.getReversibleEquipEffects())
 			{
-				Object id = parent.accept(effect);
+				Object id = parent.accept(effect, asEffectSource);
 				EntityEffect reverse = effect.getReverseEffect(id);
 				unequipEffects.add(reverse);
 			}
@@ -81,7 +84,7 @@ public class ConcreteInventory implements Inventory
 
 			for (EntityEffect effect : item.getPermanentEquipEffects())
 			{
-				parent.accept(effect);
+				parent.accept(effect, asEffectSource);
 			}
 			
 			slots.remove(item.getEquippableAspect().getAllocation());
@@ -117,7 +120,7 @@ public class ConcreteInventory implements Inventory
 	{
 		for (EntityEffect reverse : onUnequipEffects.remove(item))
 		{
-			parent.accept(reverse);
+			parent.accept(reverse, asEffectSource);
 		}
 		slots.add(item.getEquippableAspect().getAllocation());
 		unequipped.add(item);

@@ -12,6 +12,7 @@ import rutebaga.commons.math.IntVector2D;
 import rutebaga.commons.math.MutableVector2D;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.CharEntity;
+import rutebaga.model.entity.EffectSource;
 import rutebaga.model.entity.Entity;
 import rutebaga.model.entity.EntityEffect;
 import rutebaga.model.entity.EntityType;
@@ -211,7 +212,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 		
 	}
 	
-	public Object accept(EntityEffect effect)
+	public Object accept(EntityEffect effect, EffectSource source)
 	{
 		InstanceSet instanceSet = new ConcreteInstanceSet(); 
 		instanceSet.addAll(this.getVision().getActiveSet());
@@ -222,7 +223,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 				break;
 			}
 		}
-		return super.accept(effect);
+		return super.accept(effect, source);
 	}
 
 }
