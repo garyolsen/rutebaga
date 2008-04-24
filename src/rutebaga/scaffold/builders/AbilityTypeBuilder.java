@@ -54,7 +54,7 @@ public class AbilityTypeBuilder extends AbstractAbilityBuilder
 		for(String vp : vps)
 		{
 			ValueProvider p = DefaultValueProviderFactory.getInstance().parse(vp, scaffold);
-			type.getExistenceRule().add(new ValueProviderRule(p));
+			type.getFeasibilityRule().add(new ValueProviderRule(p));
 		}
 	}
 

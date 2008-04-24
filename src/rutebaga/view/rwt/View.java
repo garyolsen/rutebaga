@@ -26,6 +26,7 @@ public class View
 	private Frame window;
 	private EventDispatcher dispatcher;
 	private Graphics2DDrawer drawer;
+	private int msecFrame;
 
 	private BufferStrategy strategy;
 
@@ -46,7 +47,38 @@ public class View
 		setupWindow(width, height);
 		setupDispatcher();
 		setupDrawer();
+//		start(1000 / 30);
 	}
+
+//	public void start(int msecFrame)
+//	{
+//		this.msecFrame = msecFrame;
+//		new Thread()
+//		{
+//			public void run()
+//			{
+//				while (true)
+//				{
+//					try
+//					{
+//						long time = System.currentTimeMillis();
+//						renderFrame();
+//						Thread.currentThread().wait();
+//						long diff = View.this.msecFrame
+//								- (System.currentTimeMillis() - time);
+//						if (diff > 0)
+//						{
+//							Thread.sleep(diff);
+//						}
+//					}
+//					catch (Exception e)
+//					{
+//						throw new RuntimeException(e);
+//					}
+//				}
+//			}
+//		}.start();
+//	}
 
 	private void setupWindow(int width, int height)
 	{
@@ -74,47 +106,24 @@ public class View
 		GraphicsDevice device = env.getDefaultScreenDevice();
 
 		device.setFullScreenWindow(window);
-/*
-		device.setDisplayMode(new DisplayMode(800, 600, 16, 60));
-		if(true) return;
-		
-		DisplayMode old = device.getDisplayMode();
-		DisplayMode[] modes = device.getDisplayModes();
-		List<DisplayMode> rectModes = new LinkedList<DisplayMode>();
-		for (DisplayMode mode : modes)
-		{
-			int w = mode.getWidth();
-			int h = mode.getHeight();
-			if ((3 * w) / h == 4 && mode.getBitDepth() >= 16 )
-			{
-				rectModes.add(mode);
-			}
-		}
-		Collections.sort(rectModes, new Comparator<DisplayMode>() {
-			public int compare(DisplayMode o1, DisplayMode o2)
-			{
-				// return Math.abs(o1.getWidth()-800);
-				return (o1.getWidth() - 800 == 0 ||
-					o1.getBitDepth() > o2.getBitDepth() ||
-					o1.getRefreshRate() > o2.getRefreshRate()) ? 0 : 1;
-			}
-		});
-		boolean ok = false;
-		for(DisplayMode mode : rectModes)
-		{
-			try
-			{
-				device.setDisplayMode(mode);
-				ok = true;
-			}
-			catch( Exception e)
-			{
-				
-			}
-			if(ok) break;
-		}
-		if(!ok) device.setDisplayMode(old);
-		*/
+		/*
+		 * device.setDisplayMode(new DisplayMode(800, 600, 16, 60)); if(true)
+		 * return;
+		 * 
+		 * DisplayMode old = device.getDisplayMode(); DisplayMode[] modes =
+		 * device.getDisplayModes(); List<DisplayMode> rectModes = new
+		 * LinkedList<DisplayMode>(); for (DisplayMode mode : modes) { int w =
+		 * mode.getWidth(); int h = mode.getHeight(); if ((3 * w) / h == 4 &&
+		 * mode.getBitDepth() >= 16 ) { rectModes.add(mode); } }
+		 * Collections.sort(rectModes, new Comparator<DisplayMode>() { public
+		 * int compare(DisplayMode o1, DisplayMode o2) { // return
+		 * Math.abs(o1.getWidth()-800); return (o1.getWidth() - 800 == 0 ||
+		 * o1.getBitDepth() > o2.getBitDepth() || o1.getRefreshRate() >
+		 * o2.getRefreshRate()) ? 0 : 1; } }); boolean ok = false;
+		 * for(DisplayMode mode : rectModes) { try {
+		 * device.setDisplayMode(mode); ok = true; } catch( Exception e) { }
+		 * if(ok) break; } if(!ok) device.setDisplayMode(old);
+		 */
 	}
 
 	private void setupDispatcher()
@@ -140,6 +149,7 @@ public class View
 		long start = System.currentTimeMillis();
 		if (!strategy.contentsLost())
 		{
+			long time = System.currentTimeMillis();
 			Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();
 
 			g2d.setBackground(Color.BLACK);
@@ -148,17 +158,22 @@ public class View
 
 			drawer.setGraphics2D(g2d);
 
+			System.out.println("filling black background: " + (System.currentTimeMillis() - time));
+			
 			drawViewComponents();
 
+			time = System.currentTimeMillis();
 			strategy.show();
 			drawer.getGraphics2D().dispose();
+			System.out.println("showing strategy: " + (System.currentTimeMillis()-time));
 		}
 		else
 		{
 			strategy = window.getBufferStrategy();
 		}
-		
-		rutebaga.commons.Log.log("Render Frame Total Time: " + (System.currentTimeMillis() - start));
+
+		System.out.println("Render Frame Total Time: "
+				+ (System.currentTimeMillis() - start));
 	}
 
 	/**
@@ -186,18 +201,23 @@ public class View
 
 	public void removeAllViewComponents(List<ViewComponent> vcs)
 	{
-		
-		for (ViewComponent vc : vcs) {
+
+		for (ViewComponent vc : vcs)
+		{
 			dispatcher.deregisterComponent(vc);
 		}
-		
+
 		components.removeAll(vcs);
 	}
 
 	private void drawViewComponents()
 	{
 		for (ViewComponent vc : components)
+		{
+			long time = System.currentTimeMillis();
 			vc.draw(drawer);
+			System.out.println(vc + "-->" + (System.currentTimeMillis() - time));
+		}
 	}
 
 	public void addKeyListener(KeyListener kl)
@@ -233,6 +253,7 @@ public class View
 	public Image makeVolatileImage(int w, int h)
 	{
 
-		return window.getGraphicsConfiguration().createCompatibleImage(w, h, Transparency.BITMASK);
+		return window.getGraphicsConfiguration().createCompatibleImage(w, h,
+				Transparency.BITMASK);
 	}
 }

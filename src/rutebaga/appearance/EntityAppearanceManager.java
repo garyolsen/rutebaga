@@ -18,11 +18,12 @@ public class EntityAppearanceManager extends AppearanceManager {
 		private int currentFrame;
 
 		private int directions = standing.length;
+		private int wait = 10;
 
 		@Override
 		Appearance getAppearance() {
 			Appearance dirApps[] = standing[getDirectionOrdinal(directions)];
-			return dirApps[currentFrame % dirApps.length];
+			return dirApps[(currentFrame/wait) % dirApps.length];
 		}
 
 		@Override
@@ -32,7 +33,7 @@ public class EntityAppearanceManager extends AppearanceManager {
 				changeState(new Walking());
 				currentState.tick();
 			}
-			// currentFrame++;
+			 currentFrame++;
 		}
 
 	}

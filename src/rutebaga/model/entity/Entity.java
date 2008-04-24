@@ -247,6 +247,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return experience;
 	}
 
+	public ValueProvider<Entity> getExperienceCalculation()
+	{
+		return experienceCalculation;
+	}
+
 	public Vector2D getFacing()
 	{
 		if (mount != null)
@@ -357,10 +362,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		return !isDead();
 	}
 
+	public abstract boolean isPlayerControlled();
+
 	public boolean isWalking()
 	{
-		// TODO implement
-		return true;
+		return currentWalkingDirection.getMagnitude() > 0.0001;
 	}
 
 	public void mount(Mount mount)
@@ -412,6 +418,11 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public void setExperience(BidirectionalValueProvider<Entity> experience)
 	{
 		this.experience = experience;
+	}
+
+	public void setExperienceCalculation(ValueProvider<Entity> experienceCalculation)
+	{
+		this.experienceCalculation = experienceCalculation;
 	}
 
 	public void setFacing(Vector2D facing)
@@ -503,7 +514,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 					.getMagnitude()));
 		}
 	}
-
+	
 	private void applyWalkingImpulse(MutableVector2D direction)
 	{
 		if (mount != null)
@@ -520,7 +531,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 				this.facing = direction;
 		}
 	}
-
+	
 	private void clearSpeech()
 	{
 		speechStack.clear();
@@ -538,7 +549,12 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 		getEffectQueue().clear();
 		effectSources.clear();
 	}
-	
+
+	protected Map<Object, EntityEffect> getEffectQueue()
+	{
+		return effectQueue;
+	}
+
 	protected void takeEffect(EntityEffect effect, EffectSource source, Object id)
 	{
 		boolean dead = this.isDead();
@@ -549,20 +565,5 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 			if(source != null)
 				source.onKill(this);
 		}
-	}
-
-	protected Map<Object, EntityEffect> getEffectQueue()
-	{
-		return effectQueue;
-	}
-
-	public ValueProvider<Entity> getExperienceCalculation()
-	{
-		return experienceCalculation;
-	}
-
-	public void setExperienceCalculation(ValueProvider<Entity> experienceCalculation)
-	{
-		this.experienceCalculation = experienceCalculation;
 	}
 }

@@ -38,48 +38,20 @@ import rutebaga.model.environment.InstanceType;
 public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 {
 
-	@Override
-	protected void takeEffect(EntityEffect effect, EffectSource source,
-			Object id)
-	{
-		double currentOffensivity = offensivityStrategy.getValue(this);
-		super.takeEffect(effect, source, id);
-		double diff = offensivityStrategy.getValue(this);
-		// FIXME instanceof
-		if (source instanceof PlayerEffectSource)
-		{
-			boolean hostile;
-			if (diff < 0)
-				hostile = false;
-			else
-				hostile = true;
-			System.out.println("taking gesture: " + hostile + " of " + effect);
-			for (Entity entity : ((PlayerEffectSource) source).getPlayers())
-			{
-				System.out.println("source is " + entity);
-				if(entity == this)
-					return;
-				if (hostile)
-					takeHostileGesture(entity);
-				else
-					takeFriendlyGesture(entity);
-			}
-		}
-	}
-
 	private Entity target;
+
 	private NPCBrain brain;
 	private boolean pausing = true;
 	private Random rand = new Random();
 	private MutableVector2D direction = new MutableVector2D(
 			(rand.nextFloat() - 0.5) * 0.2, (rand.nextFloat() - 0.5) * 0.2);
-
 	private ValueProvider<Entity> offensivityStrategy;
 
 	public NPCEntity(InstanceType<T> type)
 	{
 		super(type);
 		this.brain = new NPCSimpleBrain();
+		this.setPlayerControlled(false);
 	}
 
 	/**
@@ -262,6 +234,35 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	{
 		super.tick();
 		brain.tick(this);
+	}
+
+	@Override
+	protected void takeEffect(EntityEffect effect, EffectSource source,
+			Object id)
+	{
+	 	double currentOffensivity = offensivityStrategy.getValue(this);
+		super.takeEffect(effect, source, id);
+		double diff = offensivityStrategy.getValue(this);
+		// FIXME instanceof
+		if (source instanceof PlayerEffectSource)
+		{
+			boolean hostile;
+			if (diff < 0)
+				hostile = false;
+			else
+				hostile = true;
+			System.out.println("taking gesture: " + hostile + " of " + effect);
+			for (Entity entity : ((PlayerEffectSource) source).getPlayers())
+			{
+				System.out.println("source is " + entity);
+				if(entity == this)
+					return;
+				if (hostile)
+					takeHostileGesture(entity);
+				else
+					takeFriendlyGesture(entity);
+			}
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 entityDefault
 standing 	imgMario
+standingSingle	true
 walking		imgMario
 moveSpd		$vpEntityMovementSpeed
 bargain		$vpEntityBargainSkillAmount	
@@ -18,6 +19,7 @@ movement	whitelist terrGrass
 entityMario
 team		teamRed
 standing 	imgMario
+standingSingle	true
 walking		imgMario
 offsetX		0
 offsetY		10
