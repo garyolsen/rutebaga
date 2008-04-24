@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import rutebaga.commons.math.EllipseBounds2D;
@@ -38,7 +39,8 @@ import rutebaga.model.map.Tile;
 import rutebaga.view.UserInterfaceFacade;
 import rutebaga.view.game.MapComponent;
 import rutebaga.view.game.TargetInstanceObservable;
-import rutebaga.view.rwt.ContextMenu;
+import rutebaga.view.rwt.Menu;
+import rutebaga.view.rwt.MenuItem;
 
 public class GamePlayActionInterpreter extends MouseAdapter implements
 		UserActionInterpreter, KeyListener, TargetSource
@@ -93,9 +95,11 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 		public void execute()
 		{
-			ContextMenu menu = facade.getActiveContextMenu();
-			if (menu != null)
-				menu.activate(idx);
+			Menu menu = facade.getActiveMenu();
+			if (menu != null) {
+				List<? extends MenuItem> items = menu.getItems();
+				items.get(idx).activate();
+			}
 		}
 
 		public boolean isFeasible()
@@ -107,27 +111,26 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 	private class ChangeMenuSelectionCommand implements Command
 	{
-		private int amt;
+		private final int shiftAmount;
 
 		public ChangeMenuSelectionCommand(int amt)
 		{
 			super();
-			this.amt = amt;
+			this.shiftAmount = amt;
 		}
 
 		public void execute()
 		{
-			ContextMenu menu = facade.getActiveContextMenu();
-			if (menu != null)
-			{
-				int current = menu.getCurrent();
-				int newIdx = current + amt;
-				if (newIdx < 0)
-					newIdx = newIdx - menu.getSize()
-							* ((int) (menu.getSize() / newIdx));
-				newIdx = newIdx % menu.getSize();
-				// System.out.println("Switching to " + newIdx + " from " + current);
-				menu.select(newIdx);
+			Menu menu = facade.getActiveMenu();
+			if (menu != null) {
+				List<? extends MenuItem> items = menu.getItems();
+				int current = items.indexOf(menu.getSelectedItem());
+				int newIndex = current + shiftAmount;
+				if (newIndex < 0)
+					newIndex = newIndex + items.size();
+				else
+					newIndex = newIndex % items.size();
+				items.get(newIndex).select();
 			}
 		}
 
@@ -143,11 +146,13 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 		public void execute()
 		{
-			ContextMenu menu = facade.getActiveContextMenu();
+			Menu menu = facade.getActiveMenu();
 			if (menu == null)
 				targetNextEntity();
-			else
-				menu.activate(menu.getCurrent());
+			else {
+				MenuItem selected = menu.getSelectedItem();
+				selected.activate();
+			}
 		}
 
 		public boolean isFeasible()
@@ -197,7 +202,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 				{
 					public void execute()
 					{
-						facade.clearContextMenuStack();
+						facade.clearMenuStack();
 					}
 
 					public boolean isFeasible()
@@ -205,7 +210,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 						return true;
 					}
 				});
-
+		
 		keyReleaseBindings.set("Ctxt1", KeyCode.get(KeyEvent.VK_1),
 				new ExecuteMenuSelectionCommand(1));
 		keyReleaseBindings.set("Ctxt2", KeyCode.get(KeyEvent.VK_2),
@@ -228,8 +233,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 				new ExecuteMenuSelectionCommand(0));
 
 		keyReleaseBindings.set("Ctxt Next", KeyCode
-				.get(KeyEvent.VK_OPEN_BRACKET), new ChangeMenuSelectionCommand(
-				-1));
+				.get(KeyEvent.VK_OPEN_BRACKET), new ChangeMenuSelectionCommand(-1));
 
 		keyReleaseBindings.set("Ctxt Prev", KeyCode
 				.get(KeyEvent.VK_CLOSE_BRACKET),
@@ -254,7 +258,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 			public void execute()
 			{
 				paused = true;
-				facade.clearContextMenuStack();
+				facade.clearMenuStack();
 				ConcreteElementalList list = new ConcreteElementalList();
 				list.setLabel("Are you sure you want to quit?");
 				list.add("Yes", new Command()
@@ -351,7 +355,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	private void avatarDied()
 	{
 		paused = true;
-		facade.clearContextMenuStack();
+		facade.clearMenuStack();
 		ConcreteElementalList list = new ConcreteElementalList();
 		list.setLabel("You are pwnd!");
 		list.add("Crap", new Command()
@@ -454,7 +458,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 	{
 		if (allowRebinding)
 		{
-			facade.popContextMenu();
+			facade.popMenu();
 			if (checkKeyBindingCollision(code))
 				return;
 			KeyBinding<Command> newBinding = new ConcreteKeyBinding<Command>(
@@ -554,7 +558,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 
 	private void retarget()
 	{
-		facade.clearContextMenuStack();
+		facade.clearMenuStack();
 		if (target != null)
 		{
 			ElementalList list = actionDeterminer.determineActions(target,
@@ -629,7 +633,7 @@ public class GamePlayActionInterpreter extends MouseAdapter implements
 		{
 			target = null;
 			if (facade != null)
-				facade.clearContextMenuStack();
+				facade.clearMenuStack();
 		}
 	}
 

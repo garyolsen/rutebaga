@@ -3,21 +3,15 @@ package rutebaga.view.rwt;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Random;
-import java.util.Observer;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import rutebaga.controller.command.Command;
 import rutebaga.controller.command.list.ElementalList;
 import rutebaga.controller.command.list.ListElement;
 import rutebaga.view.drawer.ColorAttribute;
@@ -47,7 +41,7 @@ import rutebaga.view.drawer.Drawer;
  * @author Ryan
  * 
  */
-public class ContextMenu extends ViewComponent
+public class ContextMenu extends ViewComponent implements Menu
 {
 	private static Color buttonColor = new Color(0, 0, 255, 70);
 	private static Color buttonToggledColor = new Color(0, 0, 255, 170);
@@ -63,31 +57,10 @@ public class ContextMenu extends ViewComponent
 	private ElementalList list;
 
 	private List<ButtonComponent> components = new ArrayList<ButtonComponent>();
+	private List<MenuItemImpl> menuItems = new ArrayList<MenuItemImpl>();
 
 	private int currentContextHover = 0;
-
-	private boolean dirty;
 	
-	public int getSize()
-	{
-		return components.size();
-	}
-	
-	public void select(int idx)
-	{
-		currentContextHover = idx;
-	}
-	
-	public int getCurrent()
-	{
-		return currentContextHover;
-	}
-	
-	public void executeCurrent()
-	{
-		this.activate(currentContextHover);
-	}
-
 	/**
 	 * Contructs a ContextMenu as a decorator of the specified ViewComponent.
 	 * 
@@ -122,9 +95,9 @@ public class ContextMenu extends ViewComponent
 		{
 			ButtonComponent component = components.get(i);
 			if(i == currentContextHover)
-				component.setHighlighted(true);
+				component.setSelected(true);
 			else
-				component.setHighlighted(false);
+				component.setSelected(false);
 			component.draw(draw);
 		}
 
@@ -143,7 +116,8 @@ public class ContextMenu extends ViewComponent
 
 		generateContextTriangles(angularSeparation, i);
 		generateComponents(angularSeparation);
-
+		generateMenuItems();
+		
 		setBoundsWithContextTriangles();
 
 		moveComponents();
@@ -203,11 +177,11 @@ public class ContextMenu extends ViewComponent
 
 		int i = 0;
 
-		List<Integer> selected = new ArrayList<Integer>();
-		for (int idx = 0; idx < components.size(); idx++)
-			if (components.get(idx).isHighlighted())
-				selected.add(idx);
-
+		ButtonComponent selected = null;
+		for (ButtonComponent bc: components)
+			if (bc.isSelected())
+				selected = bc;
+		
 		components.clear();
 
 		SortedSet<ListElement> sortedList = new TreeSet<ListElement>(
@@ -215,6 +189,7 @@ public class ContextMenu extends ViewComponent
 				{
 					public int compare(ListElement a, ListElement b)
 					{
+						// Move "Close" to the front of the list
 						if ("Close".equals(a.getLabel()))
 							return -1;
 						return a.getLabel().compareToIgnoreCase(b.getLabel());
@@ -310,13 +285,17 @@ public class ContextMenu extends ViewComponent
 
 		}
 
-		for (Integer idx : selected)
-		{
-			if (idx < components.size())
-				components.get(idx).setHighlighted(true);
-		}
+		if (selected != null)
+			selected.setSelected(true);
 	}
 
+	private void generateMenuItems()
+	{
+		this.menuItems.clear();
+		for (int i = 0; i < components.size(); ++i)
+			menuItems.add(new MenuItemImpl(i));
+	}
+	
 	private void moveComponents()
 	{
 		int angle = 0;
@@ -333,7 +312,7 @@ public class ContextMenu extends ViewComponent
 			for (ButtonComponent component : components)
 			{
 				int mySize = getComponentSize();
-				if (component.isHighlighted())
+				if (component.isSelected())
 					mySize = getHighlightedComponentSize();
 				component.setLocation(getX()
 						+ (int) (mySize * Math.cos(Math.toRadians(currentAngle
@@ -392,12 +371,6 @@ public class ContextMenu extends ViewComponent
 		return true;
 	}
 
-	public void activate(int i)
-	{
-		if (i >= 0 && i < components.size())
-			components.get(i).executeCommand();
-	}
-
 	protected boolean processMouseMotionEvent(MouseEvent event)
 	{
 		int i = 0;
@@ -413,11 +386,10 @@ public class ContextMenu extends ViewComponent
 						break;
 					if (currentContextHover >= 0
 							&& currentContextHover < components.size())
-						components.get(currentContextHover).setHighlighted(
-								false);
+						components.get(currentContextHover).setSelected(false);
 					currentContextHover = i;
 					if (i < components.size() && i >= 0)
-						components.get(i).setHighlighted(true);
+						components.get(i).setSelected(true);
 					moveComponents();
 					break;
 				}
@@ -427,5 +399,35 @@ public class ContextMenu extends ViewComponent
 		}
 
 		return true;
+	}
+	
+	public List<? extends MenuItem> getItems() {
+		return Collections.unmodifiableList(menuItems);
+	}
+
+	public MenuItem getSelectedItem() {
+		return menuItems.get(currentContextHover);
+	}
+	
+	private class MenuItemImpl implements MenuItem {
+		private final int index;
+
+		private MenuItemImpl(int index) {
+			this.index = index;
+		}
+		
+		public void activate() {
+			components.get(index).executeCommand();
+		}
+
+		public boolean isSelected() {
+			return (index == currentContextHover);
+		}
+
+		public void select() {
+			components.get(currentContextHover).setSelected(false);
+			currentContextHover = index;
+			components.get(index).setSelected(true);
+		}
 	}
 }

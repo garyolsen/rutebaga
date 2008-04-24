@@ -40,7 +40,7 @@ public class ShopkeeperInventoryCommandFactory implements CommandFactory<Item> {
 		
 		public void execute() {
 			store.sell(item);
-			facade.popContextMenu();
+			facade.popMenu();
 		}
 	}
 

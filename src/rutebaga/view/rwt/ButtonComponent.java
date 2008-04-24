@@ -20,7 +20,7 @@ public class ButtonComponent extends ViewComponent
 	private Command command;
 
 	private CompositeAttribute untoggled, toggled, text, shadow, normalText,
-			normalShadow, highlightedText, highlightedShadow;
+			normalShadow, selectedText, selectedShadow;
 
 	private ColorAttribute untoggledColor = new ColorAttribute(Color.GRAY);
 	private ColorAttribute toggledColor = new ColorAttribute(Color.DARK_GRAY);
@@ -28,7 +28,7 @@ public class ButtonComponent extends ViewComponent
 
 	private FontAttribute font;
 	private FontAttribute normalFont;
-	private FontAttribute highlightedFont;
+	private FontAttribute selectedFont;
 
 	public ButtonComponent()
 	{
@@ -36,18 +36,12 @@ public class ButtonComponent extends ViewComponent
 
 	}
 
-	public void executeCommand()
-	{
-		if (command != null)
-			this.command.execute();
-	}
-
 	public ButtonComponent(String label)
 	{
 		this.label = label;
 
 		font = normalFont = new FontAttribute(new Font("Arial", Font.BOLD, 12));
-		highlightedFont = new FontAttribute(new Font("Arial", Font.BOLD, 18));
+		selectedFont = new FontAttribute(new Font("Arial", Font.BOLD, 18));
 
 		untoggled = new CompositeAttribute();
 		untoggled.addAttribute(untoggledColor);
@@ -63,13 +57,13 @@ public class ButtonComponent extends ViewComponent
 		shadow.addAttribute(font);
 		shadow.addAttribute(new ColorAttribute(Color.BLACK));
 
-		highlightedText = new CompositeAttribute();
-		highlightedText.addAttribute(highlightedFont);
-		highlightedText.addAttribute(new ColorAttribute(Color.WHITE));
+		selectedText = new CompositeAttribute();
+		selectedText.addAttribute(selectedFont);
+		selectedText.addAttribute(new ColorAttribute(Color.WHITE));
 
-		highlightedShadow = new CompositeAttribute();
-		highlightedShadow.addAttribute(highlightedFont);
-		highlightedShadow.addAttribute(new ColorAttribute(Color.BLACK));
+		selectedShadow = new CompositeAttribute();
+		selectedShadow.addAttribute(selectedFont);
+		selectedShadow.addAttribute(new ColorAttribute(Color.BLACK));
 
 		this.setBounds(0, 0, 100, 40);
 
@@ -199,13 +193,13 @@ public class ButtonComponent extends ViewComponent
 		toggledColor.setColor(color);
 	}
 
-	public void setHighlighted(boolean highlight)
+	public void setSelected(boolean selected)
 	{
-		if (highlight)
+		if (selected)
 		{
-			font = highlightedFont;
-			text = highlightedText;
-			shadow = highlightedShadow;
+			font = selectedFont;
+			text = selectedText;
+			shadow = selectedShadow;
 		}
 		else
 		{
@@ -215,8 +209,13 @@ public class ButtonComponent extends ViewComponent
 		}
 	}
 
-	public boolean isHighlighted()
+	public boolean isSelected()
 	{
-		return font == highlightedFont;
+		return font == selectedFont;
+	}
+
+	public void executeCommand() {
+		if (this.command != null)
+			this.command.execute();
 	}
 }

@@ -10,13 +10,14 @@ import rutebaga.model.entity.stats.StatValue;
 import rutebaga.model.environment.Instance;
 import rutebaga.view.game.TargetInstanceObservable;
 import rutebaga.view.rwt.ContextMenu;
+import rutebaga.view.rwt.Menu;
 import rutebaga.view.rwt.TextFieldListener;
 import rutebaga.view.rwt.View;
 
 public interface UserInterfaceFacade {
 	void createTitleScreen(ElementalList list);
 	
-	ContextMenu getActiveContextMenu();
+	Menu getActiveMenu();
 	
 	/**
 	 * Shows a screen where the user can create a player.
@@ -45,9 +46,9 @@ public interface UserInterfaceFacade {
 	 *            The location to spawn the menu.
 	 * @return The ContextMenu that was created.
 	 */
-	int createRootContextMenu(ElementalList list, Vector2D vector);
+	Menu createRootContextMenu(ElementalList list, Vector2D vector);
 	
-	int createRootContextMenu(ElementalList list);
+	Menu createRootContextMenu(ElementalList list);
 
 	/**
 	 * Opens up a ContextMenu when a button in an existing ContextMenu is
@@ -57,9 +58,9 @@ public interface UserInterfaceFacade {
 	 *            A list of choices for the player.
 	 * @return The ContextMenu that was created.
 	 */
-	int createSubContextMenu(ElementalList list, Vector2D vector);
+	Menu createSubContextMenu(ElementalList list, Vector2D vector);
 	
-	int createSubContextMenu(ElementalList list);
+	Menu createSubContextMenu(ElementalList list);
 	
 	/**
 	 * In a ContextMenu, shows a scrollable menu capable of displaying mass
@@ -71,9 +72,9 @@ public interface UserInterfaceFacade {
 	 *            The amount of information per scrollable page.
 	 * @return The ContextMenu that was created.
 	 */
-	int createScrollMenu(ElementalList list, int pageSize, Vector2D vector);
+	void createScrollMenu(ElementalList list, int pageSize, Vector2D vector);
 	
-	int createScrollMenu(ElementalList list, int pageSize);
+	void createScrollMenu(ElementalList list, int pageSize);
 
 	/**
 	 * Spawns a DialogMenu at the provided {@link Vector} location.
@@ -84,7 +85,7 @@ public interface UserInterfaceFacade {
 	 *            The location at which to spawn this menu.
 	 * @return The ContextMenu that was created.
 	 */
-	int createDialogMenu(String dialog, Entity avatar, Instance speaker);
+	void createDialogMenu(String dialog, Entity avatar, Instance speaker);
 	
 	/**
 	 * Shows a warning to the player.
@@ -99,17 +100,17 @@ public interface UserInterfaceFacade {
 	public void clearWarningBox();
 	
 	/**
-	 * Closes a {@link ContextMenu}. This could either be the root, or
+	 * Closes a {@link Menu}. This could either be the root, or
 	 * somewhere in the menu heirarchy.
 	 * 
 	 * @param menu
-	 *            A ContextMenu to be closed.
+	 *            A Menu to be closed.
 	 */
-	void closeContextMenu(int menu);
+	void closeMenu(Menu menu);
 	
-	void clearContextMenuStack();
+	void clearMenuStack();
 	
-	void popContextMenu();
+	void popMenu();
 	
 	View getView();
 }
