@@ -45,10 +45,12 @@ public class EntityTypeBuilder extends InstanceBuilder
 						id, "skillPtStrat", scaffold));
 		type.setWallet((BidirectionalValueProvider<Entity>) getValueProvider(
 				id, "wallet", scaffold));
-		type.setExperience((BidirectionalValueProvider<Entity>) getValueProvider(
-				id, "experienceSource", scaffold));
+		type
+				.setExperience((BidirectionalValueProvider<Entity>) getValueProvider(
+						id, "experienceSource", scaffold));
 		type.setCooldownProvider(getValueProvider(id, "cooldown", scaffold));
-		type.setExperienceCalculation(getValueProvider(id, "experienceCalc", scaffold));
+		type.setExperienceCalculation(getValueProvider(id, "experienceCalc",
+				scaffold));
 
 		// type.setBargainSkillAmount((ValueProvider<Entity>)
 		// getValueProvider(id, "bargain", scaffold));
@@ -61,8 +63,13 @@ public class EntityTypeBuilder extends InstanceBuilder
 		offsetX = offsetX == null ? 0 : offsetX;
 		offsetY = offsetY == null ? 0 : offsetY;
 
-		type.setStanding(getAnimatedAppearances(standingId, scaffold, offsetX,
-				offsetY));
+		if (getBoolean(id, "standingSingle") != null
+				&& getBoolean(id, "standingSingle"))
+			type.setStanding(getStaticAppearances(standingId, scaffold,
+					offsetX, offsetY));
+		else
+			type.setStanding(getAnimatedAppearances(standingId, scaffold,
+					offsetX, offsetY));
 		type.setWalking(getAnimatedAppearances(walkingId, scaffold, offsetX,
 				offsetY));
 		type.setRadius(this.getInteger(id, "vRadius"));
@@ -101,6 +108,21 @@ public class EntityTypeBuilder extends InstanceBuilder
 		{
 			list.add(getAppearancesForDirection(name, dirString, scaffold,
 					offsetX, offsetY));
+		}
+		return list.toArray(new Appearance[list.size()][]);
+	}
+
+	private Appearance[][] getStaticAppearances(String name,
+			MasterScaffold scaffold, int offsetX, int offsetY)
+	{
+		List<Appearance[]> list = new ArrayList<Appearance[]>();
+		for (String dirString : directionStrings)
+		{
+			Appearance[] apps = getAppearancesForDirection(name, dirString,
+					scaffold, offsetX, offsetY);
+			Appearance[] newApps =
+			{ apps[0] };
+			list.add(newApps);
 		}
 		return list.toArray(new Appearance[list.size()][]);
 	}

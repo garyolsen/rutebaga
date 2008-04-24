@@ -39,7 +39,7 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 	public void allocateSkillPoints(AbilityCategory category, int qty)
 	{
-		if(mountee == null)
+		if (mountee == null)
 			super.allocateSkillPoints(category, qty);
 		mountee.allocateSkillPoints(category, qty);
 	}
@@ -57,7 +57,7 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 					entity,
 					new Vector2D(this.getFacingTile().getX(), this
 							.getFacingTile().getY()));
-			
+
 			entity.removeVision(super.getVision());
 
 			if (entity.existsInUniverse())
@@ -78,14 +78,14 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 	public int getAvailableSkillPoints()
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return super.getAvailableSkillPoints();
 		return mountee.getAvailableSkillPoints();
 	}
 
 	public ValueProvider getBargainSkill()
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return super.getBargainSkill();
 		return mountee.getBargainSkill();
 	}
@@ -101,14 +101,14 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 	public ValueProvider getDeadStrategy()
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return super.getDeadStrategy();
 		return mountee.getDeadStrategy();
 	}
 
 	public int getDecayTime()
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return super.getDecayTime();
 		return mountee.getDecayTime();
 	}
@@ -133,7 +133,7 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 	public double getMoneyAmount()
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return getMoneyAmount();
 		return mountee.getMoneyAmount();
 	}
@@ -145,21 +145,21 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 	public double getMovementSpeed()
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return super.getMovementSpeed();
 		return mountee.getMovementSpeed();
 	}
 
 	public int getSkillPoints(AbilityCategory category)
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return super.getSkillPoints(category);
 		return mountee.getSkillPoints(category);
 	}
 
 	public BidirectionalValueProvider getSkillPtStrat()
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return super.getSkillPtStrat();
 		return mountee.getSkillPtStrat();
 	}
@@ -187,7 +187,7 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 	public BidirectionalValueProvider getWallet()
 	{
-		if(mountee == null)
+		if (mountee == null)
 			return super.getWallet();
 		return mountee.getWallet();
 	}
@@ -195,6 +195,12 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 	public boolean isMounted()
 	{
 		return (mountee != null);
+	}
+
+	@Override
+	public boolean isPlayerControlled()
+	{
+		return isMounted() ? mountee.isPlayerControlled() : false;
 	}
 
 	public void mount(Entity entity)
@@ -205,7 +211,7 @@ public class Mount<T extends Mount<T>> extends Entity<T>
 
 			entity.getEnvironment().remove(entity);
 			entity.setMount(this);
-			
+
 			entity.addVision(super.getVision());
 
 			for (ReversibleEntityEffect effect : vehicle.getEntityEffects())

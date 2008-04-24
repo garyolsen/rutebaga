@@ -49,11 +49,13 @@ public class AgabaturNewGameInitializer implements GameInitializer
 		StatisticId hp = (StatisticId) scaffold.get("statHp");
 		StatisticId mana = (StatisticId) scaffold.get("statMp");
 		StatisticId exp = (StatisticId) scaffold.get("statExperience");
+		StatisticId level = (StatisticId) scaffold.get("statLevel");
 
 		displayedStats = new ArrayList<StatisticId>();
 		displayedStats.add(hp);
 		displayedStats.add(mana);
 		displayedStats.add(exp);
+		displayedStats.add(level);
 
 		StatisticId movement = (StatisticId) scaffold.get("statMovement");
 

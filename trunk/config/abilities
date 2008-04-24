@@ -15,8 +15,9 @@ feasibility {
 	gate 19 VP_@entityStats_VP_stat_statMp
 }
 existence {
-
+	gate 2 VP_@entityStats_VP_stat_statLevel
 }
+
 
 abBubble
 

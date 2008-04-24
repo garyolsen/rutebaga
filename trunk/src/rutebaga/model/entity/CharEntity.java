@@ -17,6 +17,7 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	private ConcreteStats stats = new ConcreteStats(this);
 	private ConcreteStats damageResistance = new ConcreteStats(this);
 	private ConcreteInventory inventory = new ConcreteInventory(this);
+	private boolean playerControlled;
 	private double mass = 1.0;
 
 	public CharEntity(InstanceType<T> type)
@@ -51,6 +52,17 @@ public class CharEntity<T extends CharEntity<T>> extends Entity<T>
 	@Override
 	public void setMass(double mass) {
 		this.mass = mass;
+	}
+
+	@Override
+	public boolean isPlayerControlled()
+	{
+		return playerControlled;
+	}
+
+	public void setPlayerControlled(boolean playerControlled)
+	{
+		this.playerControlled = playerControlled;
 	}
 	
 }

@@ -268,9 +268,14 @@ public class Environment
 	 */
 	public void tick()
 	{
+		long time;
+		time = System.currentTimeMillis();
 		updatePhysics();
+		System.out.println("updating physics: " + (System.currentTimeMillis()-time));
+		time = System.currentTimeMillis();
 		performMovement();
-		long time = System.currentTimeMillis();
+		System.out.println("performing movement: " + (System.currentTimeMillis()-time));
+		time = System.currentTimeMillis();
 		for (Instance instance : instances)
 		{
 			instance.instanceTickOps();
@@ -279,7 +284,7 @@ public class Environment
 		{
 			instance.tick();
 		}
-		rutebaga.commons.Log.log("ticking environment: "
+		System.out.println("ticking environment: "
 				+ (System.currentTimeMillis() - time));
 	}
 
