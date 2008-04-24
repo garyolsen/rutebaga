@@ -201,8 +201,7 @@ public class Environment
 		if (blocked(instance, tile, false))
 			return false;
 
-		MovementEvent event = new MovementEvent(instance, instance
-				.getCoordinate(), instance.getTile());
+		MovementEvent event = new MovementEvent(instance, instance.getCoordinate(), instance.getTile());
 
 		boolean changedTiles = !tile.equals(instance.getTile());
 		if (changedTiles)
@@ -242,8 +241,7 @@ public class Environment
 	 */
 	public void remove(Instance instance)
 	{
-		MovementEvent event = new MovementEvent(instance, instance
-				.getCoordinate(), instance.getTile());
+		MovementEvent event = new MovementEvent(instance, instance.getCoordinate(), instance.getTile());
 		instances.remove(instance);
 		IntVector2D tile = reverseTileCache.remove(instance);
 		getInstanceSetAt(tile).remove(instance);
@@ -271,10 +269,12 @@ public class Environment
 		long time;
 		time = System.currentTimeMillis();
 		updatePhysics();
-		System.out.println("updating physics: " + (System.currentTimeMillis()-time));
+		if (rutebaga.Debug.debug)
+			System.out.println("updating physics: " + (System.currentTimeMillis() - time));
 		time = System.currentTimeMillis();
 		performMovement();
-		System.out.println("performing movement: " + (System.currentTimeMillis()-time));
+		if (rutebaga.Debug.debug)
+			System.out.println("performing movement: " + (System.currentTimeMillis() - time));
 		time = System.currentTimeMillis();
 		for (Instance instance : instances)
 		{
@@ -284,8 +284,8 @@ public class Environment
 		{
 			instance.tick();
 		}
-		System.out.println("ticking environment: "
-				+ (System.currentTimeMillis() - time));
+		if (rutebaga.Debug.debug)
+			System.out.println("ticking environment: " + (System.currentTimeMillis() - time));
 	}
 
 	/**
@@ -352,16 +352,14 @@ public class Environment
 	 *            the tile access is being requested to
 	 * @return whether or not access is blocked
 	 */
-	protected boolean blocked(Instance instance, IntVector2D tile,
-			boolean emptyBlocks)
+	protected boolean blocked(Instance instance, IntVector2D tile, boolean emptyBlocks)
 	{
 		HashSet<Instance> instances = tileCache.get(tile);
 		if (instances == null || instances.size() == 0)
 			return emptyBlocks;
 		for (Instance other : instances)
 		{
-			if (other != instance
-					&& (other.blocks(instance) || instance.blocks(other)))
+			if (other != instance && (other.blocks(instance) || instance.blocks(other)))
 				return true;
 		}
 		return false;
@@ -423,12 +421,10 @@ public class Environment
 				if (blocked)
 				{
 					PhysicsContainer physics = instance.getPhysicsContainer();
-					Vector2D axisN = new Vector2D(newTile).minus(
-							instance.getTile()).plus(
+					Vector2D axisN = new Vector2D(newTile).minus(instance.getTile()).plus(
 							instance.getVelocity().times(10));
 					Vector2D axis = new Vector2D(-axisN.getY(), axisN.getX());
-					MutableVector2D momentum = Vector2D.getProjection(physics
-							.getVelocity(), axis);
+					MutableVector2D momentum = Vector2D.getProjection(physics.getVelocity(), axis);
 					momentum.multiplyBy(instance.getMass());
 					physics.setMomentum(momentum);
 					physics.update(frictionCache.get(instance.getTile()));
@@ -440,8 +436,7 @@ public class Environment
 				continue;
 
 			Location location = instance.getLocation();
-			MovementEvent event = new MovementEvent(instance, instance
-					.getCoordinate(), instance.getTile());
+			MovementEvent event = new MovementEvent(instance, instance.getCoordinate(), instance.getTile());
 			if (instance.getFriction() > 0.001)
 			{
 				dirtyFriction.add(newTile);
@@ -476,12 +471,10 @@ public class Environment
 			{
 				friction = frictionCache.get(tile);
 			}
-			instance.getPhysicsContainer().update(
-					frictionCache.get(instance.getTile()));
+			instance.getPhysicsContainer().update(frictionCache.get(instance.getTile()));
 
 		}
-		rutebaga.commons.Log.log("physics update: "
-				+ (System.currentTimeMillis() - time));
+		rutebaga.commons.Log.log("physics update: " + (System.currentTimeMillis() - time));
 	}
 
 	/**

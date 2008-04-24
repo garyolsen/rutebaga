@@ -9,7 +9,7 @@ import rutebaga.test.model.effect.RandomEffectType;
 
 public class CheeseArrowAbilityType extends AbilityType
 {
-	private InstanceType effectType;
+	private RandomEffectType effectType;
 
 	public InstanceType getEffectType()
 	{
@@ -27,7 +27,7 @@ public class CheeseArrowAbilityType extends AbilityType
 		return ability;
 	}
 
-	public void setEffectType(InstanceType effectType)
+	public void setEffectType(RandomEffectType effectType)
 	{
 		this.effectType = effectType;
 	}

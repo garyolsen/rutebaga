@@ -64,10 +64,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private CompoundVision compoundVision;
 
 	private MutableVector2D currentWalkingDirection = new MutableVector2D(0, 0);
-
 	private ValueProvider<Entity> movementSpeedStrat = new ConstantValueProvider<Entity>(
 			0.0);
-
 	private BidirectionalValueProvider<Entity> skillPtStrat;
 	private BidirectionalValueProvider<Entity> wallet;
 	private BidirectionalValueProvider<Entity> experience;
@@ -75,6 +73,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	private ValueProvider<Entity> experienceCalculation;
 
 	private Vector2D facing = new Vector2D(0, 0);
+	
+	private List<Message> messages = new ArrayList<Message>();
 	
 	private int cooldown = -1;
 
@@ -104,6 +104,7 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	public Entity(InstanceType<T> type)
 	{
 		super(type);
+		new MessageDaemon(this);
 		visionBounds = new EllipseBounds2D(new Vector2D(SIGHT_RANGE,
 				SIGHT_RANGE));
 		// XXX: connascence of timing
@@ -123,10 +124,6 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	{
 		Object uid = UIDProvider.getUID();
 		effectQueue.put(uid, effect);
-		if(source == null)
-		{
-			new RuntimeException().printStackTrace();
-		}
 		effectSources.put(uid, source);
 		return uid;
 	}
@@ -469,6 +466,8 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 	@Override
 	public void tick()
 	{
+		messages.clear();
+		
 		if (isDead() && deathTimer == 0)
 		{
 			deathTimer = System.currentTimeMillis();
@@ -565,5 +564,15 @@ public abstract class Entity<T extends Entity<T>> extends Instance<T> implements
 			if(source != null)
 				source.onKill(this);
 		}
+	}
+	
+	public void acceptMessage(Message message)
+	{
+		
+	}
+	
+	public List<Message> getMessages()
+	{
+		return Collections.unmodifiableList(messages);
 	}
 }

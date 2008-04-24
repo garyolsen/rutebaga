@@ -43,8 +43,8 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	private NPCBrain brain;
 	private boolean pausing = true;
 	private Random rand = new Random();
-	private MutableVector2D direction = new MutableVector2D(
-			(rand.nextFloat() - 0.5) * 0.2, (rand.nextFloat() - 0.5) * 0.2);
+	private MutableVector2D direction = new MutableVector2D((rand.nextFloat() - 0.5) * 0.2,
+			(rand.nextFloat() - 0.5) * 0.2);
 	private ValueProvider<Entity> offensivityStrategy;
 
 	public NPCEntity(InstanceType<T> type)
@@ -208,7 +208,7 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	 */
 	public boolean targetInRange()
 	{
-//		return rand.nextBoolean();
+		// return rand.nextBoolean();
 		return getCooldown() < 5;
 	}
 
@@ -237,10 +237,9 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 	}
 
 	@Override
-	protected void takeEffect(EntityEffect effect, EffectSource source,
-			Object id)
+	protected void takeEffect(EntityEffect effect, EffectSource source, Object id)
 	{
-	 	double currentOffensivity = offensivityStrategy.getValue(this);
+		double currentOffensivity = offensivityStrategy.getValue(this);
 		super.takeEffect(effect, source, id);
 		double diff = offensivityStrategy.getValue(this);
 		// FIXME instanceof
@@ -251,11 +250,13 @@ public class NPCEntity<T extends NPCEntity<T>> extends CharEntity<T>
 				hostile = false;
 			else
 				hostile = true;
-			System.out.println("taking gesture: " + hostile + " of " + effect);
+			if (rutebaga.Debug.debug)
+				System.out.println("taking gesture: " + hostile + " of " + effect);
 			for (Entity entity : ((PlayerEffectSource) source).getPlayers())
 			{
-				System.out.println("source is " + entity);
-				if(entity == this)
+				if (rutebaga.Debug.debug)
+					System.out.println("source is " + entity);
+				if (entity == this)
 					return;
 				if (hostile)
 					takeHostileGesture(entity);

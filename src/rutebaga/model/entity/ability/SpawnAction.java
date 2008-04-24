@@ -4,6 +4,7 @@ import rutebaga.commons.math.Vector2D;
 import rutebaga.model.Targetable;
 import rutebaga.model.entity.Ability;
 import rutebaga.model.entity.AbilityAction;
+import rutebaga.model.entity.Entity;
 import rutebaga.model.environment.Environment;
 import rutebaga.model.environment.Instance;
 import rutebaga.model.environment.InstanceType;
