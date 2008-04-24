@@ -74,6 +74,20 @@ feasibility {
 }
 
 
+abBeam
+
+name		Beam
+category	abcatSpells
+actions {
+	damage		dmgTpNuke 	+ VP_skill_abcatSpells 30	
+	spawn		target follow decBeam
+	entityeffect	source	eeff_Spell_MP	
+}
+feasibility {
+	gate 19 VP_@entityStats_VP_stat_statMp
+}
+
+
 abDemi
 
 name		Demi
